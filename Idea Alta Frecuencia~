@@ -1,0 +1,3 @@
+- Tenemos que encontrar una forma de transmitir la mayor cantidad de tiempo posible, minimizando el costo.
+- Suponiendo que tengo una solución óptima, si existe un cachito de tiempo en el que no estoy transmitiendo nada es porque en ese intervalito no hay frecuencias disponibles (si hubiera una la podría usar y la solución sería mejor, pero dijimos que es óptima).  Por otro lado, si en un intervalito de tiempo tengo varias frecuencias que pueda utilizar, seguro estoy usando la más barata (si hubiera una más barata la podría usar y la solución sería mejor, pero dijimos que es óptima).
+- Propuesta: 
