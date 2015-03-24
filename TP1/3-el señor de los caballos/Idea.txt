@@ -1,0 +1,11 @@
+Idea de los caballitos
+Notemos que si yo lleno una fila de caballos, todas las casillas a dos filas de distancia se encuentran amenazadas
+o sea, si yo lleno de caballos la fila 3, la 1,2,4,5 estan amenazadas, y si yo saco un solo caballo,
+alguna de las filas 1,2,3,4,5 va a tener por lo menos una casilla no amenazada
+Eso, y el hecho de que ningun caballo fuera de las filas 1,2,3,4,5 tiene la posibilidad de atacar a las casillas de la
+fila 3, me lleva a pensar que es una forma de obtener soluciones optimas. Ver que esto no funciona para casos bebes,
+como 2x2 y 3x3, pero que del 4x4 en adelante sirven.
+Hay que ver que onda con aquellos casos donde n no es multiplo de 5, pero se arregla.
+Una idea, aunque todavía no sabemos si tiene sentido o no, es independientemente de los caballos que me ponen de principio
+poner estas filas de caballos, junto con los que vienen dados, y hacer un algoritmo que saque aquellos caballos que de
+salir, todavía dejan todas las casillas amenazadas.
