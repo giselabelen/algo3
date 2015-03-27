@@ -9,3 +9,5 @@ Hay que ver que onda con aquellos casos donde n no es multiplo de 5, pero se arr
 Una idea, aunque todavía no sabemos si tiene sentido o no, es independientemente de los caballos que me ponen de principio
 poner estas filas de caballos, junto con los que vienen dados, y hacer un algoritmo que saque aquellos caballos que de
 salir, todavía dejan todas las casillas amenazadas.
+
+ESTO NO VA
