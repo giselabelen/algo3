@@ -1,0 +1,62 @@
+2 casos:
+1) No se salva nadie
+2) Se salva al menos una ciudad
+
+1) NO SE SALVA NADIE
+
+No se salva nadie <-> Mi algoritmo dice que no se salva nadie
+
+-> Supongamos que no se salva nadie, eso quiere decir que no existe ninguna ciudad tal que si yo gasto todo mi presupuesto en enviarle soldados a ella, esta obtenga 1 soldado por cada 10 zombies como mínimo
+
+Entonces supongo P un presupuesto tal que no llegue a cumplir los costos de envío de soldados mínimo para salvar ninguna ciudad.
+
+Particularmente, si p no alcanza para salvar a ninguna ciudad, no alcanza para salvar a la ciudad que menos presupuesto necesita para ser salvada(si hay más de una cuyo costo es el mínimo, en particular no se puede salvar ninguna de ellas)(A)
+
+Por lo tanto, cuando mi algoritmo ordene las ciudades por costo de salvación, que es justamente el costo que tiene conseguir la mínima cantidad de soldados necesarios para salvar esa ciudad, y tome la primer ciudad, que es la que menos presupuesto necesita para ser salvada(o por lo menos una de ellas), por lo dicho en (A), mi algoritmo no tomará esta ciudad puesto que el presupuesto no alcanza, y devolverá que se pueden salvar 0 ciudades, y no enviará tropas, pues el país está perdido, fracasamos, NO SE SALVA NADIE.
+
+<- Supongamos que mi algoritmo dice que no se salva nadie.
+
+Entonces, eso significa que por lo explicado anteriormente, el presupuesto es menor a la ciudad que menos costo requiere por ser salvada(si hay varios mínimos, esto no molesta ya que justamente tienen el mismo costo por salvación)
+
+Pero si el presupuesto es menor a la ciudad (o ciudades) que menos costo requiere por salvarse, entonces el presupuesto es menor al costo de salvar cualquier ciudad.
+
+Si el presupuesto no alcanza para salvar ninguna ciudad, entonces nuevamente, NO SE SALVA NADIE.
+
+
+2)Se salva al menos una ciudad:
+
+LLamemos a la cantidad de ciudades que se salvan, n
+
+Se salvan n ciudades <-> Mi algoritmo dice que se salvan n ciudades
+
+Primero, veamos que aunque se puedan salvar n ciudades, se puede tener que hacer una elección sobre cuales ciudad salvar, por ejemplo si el presupuesto fuera p, y todas las ciudades necesitan p/n para ser salvadas.
+
+Veamos que si todas las ciudades pueden ser salvadas, entonces mi algoritmo las toma a todas, puesto que el presupuesto alcanza a salvar a la ultima ciudad de la lista ordenada por costo por salvación.
+
+Supongamos que no todas las ciudades se pueden salvar.
+
+Dicho esto...
+
+-> Supongamos que se pueden salvar n ciudad. Esto quiere decir que si tomo cualquier conjunto de n ciudades que pueden ser salvadas a la vez, el presupuesto no me alcanza para salvar a ninguna otra ciudad.(B)
+
+Por otro lado, veamos que si un conjunto de n ciudades pueden ser salvadas, entonces significa que el costo para salvar esas ciudades es <= al presupuesto que se tiene. En particular entonces, si existe algún conjunto de n ciudades cuyo costo por ser salvadas todas es menor a p, entonces el conjunto de las n ciudades con menor costo por ser salvadas también tienen una suma de costos por salvación menor a p.(C)
+
+"Luego, cuando mi algoritmo ordene las ciudades por costo de salvación, por lo dicho en C, las primeras n ciudades, que son las de menor costo por salvación, serán salvada, y la próxima ciudad, por lo dicho en B, no, y se marcará que esas ciudades fueron salvadas y cuantos soldados se usaron."
+
+<- Supongamos que mi algoritmo dice que que se salvan n ciudades
+
+Entonces, por como está hecho, la ciudades que se salvan son aquellas que tiene el menor costo por salvación, y no existe ninguna ciudad por fuera de ese conjunto, cuyo costo por salvación sea menor a ninguna de sus ciudades , por lo tanto, esto significa que no existe ningún conjunto de n elementos tal que su costo por salvación sea menor al del primer conjunto, puesto que de existir, entonces debería existir algun conjunto con n elementos que difiera en un solo elemento con el conjunto original, y su costo sea menor.(D)
+
+Por otro lado, por como está hecho, no existe ninguna otra ciudad fuera del conjunto que pueda ser salvada, o sea que el costo por salvación del conjunto + el costo por salvación de cualquier otra ciudad fuera del conjunto es >= al presupuesto. (E)
+
+Supongamos una solución más óptima de n+1 ciudades. 
+
+Entonces no puede suceder que para todo subconjunto de n elementos, ese subconjunto sea mayor o igual en costo que el dado por mi algoritmo, puesto que si eso sucediera,llamemos p al presupuesto, O al conjunto de n elementos con menor costo de salvación dentro de la solución optima, s al elemento que falta, y AA al conjunto dado por mi algoritmo; entonces O != AA, puesto que sino no podría haber solución optima n+1 por E.Luego, s pertence a AA, o no pertenece.
+	Si no pertenece, entonces los costos de O + costo de s no puede ser <= a p, puesto  que por E, AA+ costo de s > p y costos de AA<= costos de O y mi conjunto optimo no es optimo.
+	Si pertenece entonces separemos segun si costos de O es mayor o igual que costos de AA
+	-Si es mayor,dado que AA es minimal en costo por lo dicho en D, y s pertenece a AA, debe existir algun elemento de O que sea mayor en costo que s por pertenecer s al conjunto minimal, y entonces O no sería el subconjunto de menor costo de la solución optima y rompi una premisa
+	-Si es igual, entonces como s pertenece al conjunto minimal, pero s está fuera de O, entonces s tiene mayor o igual costo que cualquier elemento de O, por eso está afuera de O, y s tiene algun elemento dentro de O con su mismo costo, y que no pertenece a AA, sino AA no sería minimal. Pero entonces sumar s o sumar ese elemento de O que no pertenece a AA es lo mismo, y por E, esa suma no puede dar <= p, por lo que mi algoritmo no es optimo.
+
+Y no puede existir por D ningún subconjunto de n elementos cuyo costo por salvación sea menor al conjunto que dio mi algoritmo. 
+
+y por lo tanto como no puede existir una solución más optima de n+1 elementos, no puede ocurrir una solución más optima de n+nada elementos, y por lo tanto la solución con n elementos es la optima.
