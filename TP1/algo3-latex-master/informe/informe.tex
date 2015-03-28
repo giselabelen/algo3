@@ -1,0 +1,169 @@
+\documentclass[a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{charter}   % tipografía
+\usepackage{graphicx}
+\usepackage{makeidx}
+
+\usepackage{float}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{wrapfig}
+\usepackage{listings} % necesario para el resaltado de sintaxis
+\usepackage{caption}
+
+\usepackage{hyperref} % agrega hipervínculos en cada entrada del índice
+\hypersetup{          % (en el pdf)
+    colorlinks=true,
+    linktoc=all,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\input{codesnippet}
+\input{page.layout}
+\usepackage{underscore}
+\usepackage{caratula}
+\usepackage{url}
+\usepackage{color}
+\usepackage{clrscode3e} % necesario para el pseudocodigo (estilo Cormen)
+
+
+
+
+\begin{document}
+
+\lstset{
+  language=C++,                    % (cambiar al lenguaje correspondiente)
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+}
+
+\thispagestyle{empty}
+\materia{Nombre de la materia}
+\submateria{Primero/Segundo Cuatrimestre de (año actual)}
+\titulo{Título del trabajo práctico}
+\subtitulo{Subtítulo del trabajo práctico}
+\integrante{apellido 1, nombre 1}{xxx/yy}{e-mail} % por cada integrante (apellido, nombre) (n° libreta) (e-mail)
+\integrante{apellido 2, nombre 2}{xxx/yy}{e-mail}
+\integrante{apellido 3, nombre 3}{xxx/yy}{e-mail}
+\integrante{apellido n, nombre n}{xxx/yy}{e-mail}
+
+\maketitle
+\newpage
+
+\thispagestyle{empty}
+\vfill
+\begin{abstract}
+    \vspace{0.5cm}
+    Resumen sobre el contenido del trabajo práctico.
+\end{abstract}
+
+\thispagestyle{empty}
+\vspace{1.5cm}
+\tableofcontents
+\newpage
+
+%\normalsize
+
+\newpage
+\section{Objetivos generales}
+
+Descripción de los objetivos generales del trabajo práctico.
+
+
+\newpage
+\section{Plataforma de pruebas}
+
+Descripción de la plataforma de pruebas (hardware, software) utilizada
+para el desarrollo y testeo del trabajo práctico.
+
+
+\newpage
+\section{Problema 1}
+\input{problema1}
+
+\newpage
+\section{Problema 2}
+\input{problema2}
+
+\newpage
+\section{Problema 3}
+\input{problema3}
+
+
+\newpage
+\section{Apéndice 1: acerca de los tests}
+
+Incluye comentarios acerca de los tests utilizados, cómo generarlos y reproducirlos.
+
+
+\newpage
+\section{Apéndice 2: secciones relevantes del código}
+En esta sección, adjuntamos parte del código correspondiente a la resolución de cada problema
+que consideramos más \textbf{relevante}.
+
+\subsection{Código del Problema 1}
+
+\begin{lstlisting}
+int main(){
+  return 0;
+}
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+int main(){
+  return 0;
+}
+\end{lstlisting}
+
+\newpage
+\subsection{Código del Problema 2}
+
+\begin{lstlisting}
+int main(){
+  return 0;
+}
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+int main(){
+  return 0;
+}
+\end{lstlisting}
+
+
+\newpage
+\subsection{Código del Problema 3}
+
+\begin{lstlisting}
+int main(){
+  return 0;
+}
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+int main(){
+  return 0;
+}
+\end{lstlisting}
+
+
+
+\end{document}

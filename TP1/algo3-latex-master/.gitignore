@@ -1,0 +1,7 @@
+informe/*.aux
+informe/*.log
+informe/*.fdb_latexmk
+informe/*.fls
+informe/*.toc
+informe/*.out
+informe/*.pdf
