@@ -6,13 +6,80 @@
 
 using namespace std;
 
+//~ list<transmision> mezclar_freq(list<transmision> trans1, list<transmision> it_trans2)
+//~ {
+	// Variables declaration. 
+	//~ frecuencia_t * b = new frecuencia[high+1-low];
+	//~ int h,i,j,k;
+	//~ h = low;
+	//~ i = 0;
+	//~ j = mid+1;
+	//~ // Merges the two array's into b until the first one is finish
+	//~ while((h <= mid) && (j <= high))
+	//~ {
+		//~ if(a[h].inicio <= a[j].inicio){
+			//~ b[i] = a[h];
+			//~ h++;
+		//~ }else{
+			//~ b[i] = a[j];
+			//~ j++;
+		//~ }
+		//~ i++;
+	//~ }
+	// Completes the array filling in it the missing values
+	//~ if(h > mid)
+	//~ {
+		//~ for(k = j;k <= high;k++)
+		//~ {
+			//~ b[i] = a[k];
+			//~ i++;
+		//~ }
+	//~ }
+	//~ else
+	//~ {
+		//~ for(k = h;k <= mid;k++)
+		//~ {
+			//~ b[i] = a[k];
+			//~ i++;
+		//~ }
+	//~ }
+	//~ // Prints into the original array
+	//~ for(k = 0;k <= high-low;k++) 
+	//~ {
+		//~ a[k+low] = b[k];
+	//~ }
+	//~ delete[] b;
+//~ }
+
+
+//~ list<transmision> frequency_dc(frecuencia* freq, int low, int high, int costo)
+//~ {
+	//~ int mid;
+	//~ list<transmision> trans1;
+	//~ list<transmision> trans2;
+	//~ list<transmision> trans_final;
+    //~ if (low < high)
+    //~ {
+        //~ mid = (low+high)/2;
+        //~ trans1 = frequency_dc(freq,low,mid);
+        //~ trans2 = frequency_dc(freq,mid+1,high);
+		//~ trans_final = mezclar_freq(trans1,trans2);
+    //~ }else{
+			//~ /** ARMAR UNA LISTA DE 1 ELEMENTO **/
+	//~ }
+    //~ return trans_final;
+//~ }
+
+/**********************************************************************/
+/**********************************************************************/
+
 int main()
 {
 /* Lee los datos, separa la información, y llama a las funciones 
  * correspondientes para:
- * 		- 
- * 		- 
- * 		- 
+ * 		- ordenar las frecuencias por tiempo de inicio
+ * 		- hacer el divide and conquer
+ * Finalmente, arma la salida.
  */
 	int i;
     int n;
@@ -20,7 +87,9 @@ int main()
     int costo_por_minuto;
     int start;
     int end;
+	//~ int costo_total;
     frecuencia freq;
+    //~ list<transmision> res;
     
     scanf("%i",&n);	// Levanto la cantidad de frecuencias
     
@@ -43,21 +112,9 @@ int main()
     // Ordeno por tiempo de inicio
     mergesort_ej2(total_freq,0,n-1);
     
-    // Busco la solución "greedy"
-    costo_total = zombie_goloso(cities,n,p);
-    
-    // Ordeno por nombre (orden en el que vinieron en la entrada)
-    mergesort_ej1(cities,0,n-1,1);
+    // Hago el divide and conquer
+     //~ res = frequency_dc(total_freq,low,high,costo_total);
     
     // Armo la salida
-    printf("%i ",costo_total);
-    for (i = 0; i < n; i++)			// Para cada ciudad
-    {
-		if (cities[i].salvar){
-			printf("%i ",cities[i].soldier_req);	// Levanto los datos
-		}else{
-			printf("%i ",0);	// Levanto los datos
-		}
-	}
 	
 }

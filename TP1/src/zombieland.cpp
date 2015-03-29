@@ -35,29 +35,33 @@ void calcular_costo_de_salvacion (ciudad* city, int n)
 
 int zombie_goloso(ciudad* city, int n, int p)
 {
+/* Devuelve la cantidad de ciudades que se salvan */
+
 	int i = 0;
-	int aux;
 	int sum = 0;
 	
 	while ((i < n) && (sum < p))
 	{
-		aux = sum + city[i].costfsafety;
-		if (aux < p){
-			sum = aux;
+		sum = sum + city[i].costfsafety;
+		if (sum < p){
 			city[i].salvar = 1;
 		}
 		i++;
 	}
-	return sum;
+	return i;
 }
+
+/**********************************************************************/
+/**********************************************************************/
 
 int main()
 {
-/* Funcion que lee los datos, separa la información, y llama a las
- * funciones correspondientes para:
+/* Lee los datos, separa la información, y llama a las funciones
+ * correspondientes para:
  * 		- calcular el costo de salvación de cada ciudad
  * 		- ordenar las ciudades por costo de salvación
  * 		- llevar a cabo la parte "golosa"
+ * Finalmente, arma la salida.
  */
 	int i;
     int n;
@@ -65,7 +69,7 @@ int main()
     int num_zombis;
     int num_soldados;
     int costo_por_soldado;
-    int costo_total;
+    int salvacion_total;
     ciudad city;
     
     scanf("%i",&n);	// Levanto la cantidad de ciudades
@@ -98,19 +102,19 @@ int main()
     mergesort_ej1(cities,0,n-1,1);
     
     // Busco la solución "greedy"
-    costo_total = zombie_goloso(cities,n,p);
+    salvacion_total = zombie_goloso(cities,n,p);
     
     // Ordeno por nombre (orden en el que vinieron en la entrada)
     mergesort_ej1(cities,0,n-1,1);
     
     // Armo la salida
-    printf("%i ",costo_total);
+    printf("%i ",salvacion_total);
     for (i = 0; i < n; i++)			// Para cada ciudad
     {
 		if (cities[i].salvar){
-			printf("%i ",cities[i].soldier_req);	// Levanto los datos
+			printf("%i ",cities[i].soldier_req);	// soldados a enviar
 		}else{
-			printf("%i ",0);	// Levanto los datos
+			printf("%i ",0);
 		}
 	}
 	
