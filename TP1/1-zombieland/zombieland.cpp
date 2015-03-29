@@ -1,59 +1,115 @@
+#include <cmath>
+#include <cstdio>
+#include <iostream>
+#include "merge.h"
 #include "zombieland.h"
 
-//funcion que recorre archivo y lo mete en una lista los hace del tipo ciudad,...
-//mete todo donde corresponde... en principio la lista viene ordenada como
-//se tomo del archivo y eso es lo que se pone en los punteros. tambien modifica pn y los pone del archivo
+using namespace std;
 
-lista_t informacion_en_lista (archivo a,int n, int p){
-
-
-
+void calcular_costo_de_salvacion (ciudad* city, int n)
+{
+/* Función que calcula la cantidad de soldados que hacen falta y 
+ * el correspondiente costo, para salvar cada ciudad.
+ * Cálculos: 
+ * 		r = (#zombies-10*#soldados)/10 (redondeando hacia arriba) 
+ * 				-> cant soldados que hacen falta
+ * 		r*costo -> costo total de salvar a esa ciudad	
+ * Cada resultado se coloca en el correspondiente campo de ciudad.
+*/
+	int z;
+	int s;
+	int c;
+	int aux;
+    for(int i = 0; i < n; i++)
+    {
+		z = city[i].cant_zombies;
+		s = city[i].cant_soldados;
+		c = city[i].costfsoldier;
+		aux = z - 10*s;
+		aux = ceil(aux/10);
+		city[i].soldier_req = aux;
+		aux = aux*c;
+		city[i].costfsafety = aux;
+	}
 }
 
-
-//funcion que calcula los costos para salvar cada ciudad, y los pone en su tipo
-// los costos por salvar cada ciudad, viene por zombies-(soldados x 10)= r
-// luego r/10 aproximada siempre para arriba(o sea, 10.2=11) y luego eso x c
-//el resultado debe ir en costfsafety
-
-void calcular_costo_de_salvacion (lista *l, int n){
-
-    ciudad_t *c= (l->primero);
-    int s;
-    for (i=0, i<n, i++){
-
-        s= (c->zombies) - 10*(c->soldados)
-        s= (s/10) * (c->costfsoldier)               //hay que hacer que s/10 devuelve el numero redondeado siempre hacia arriba
-        (c->costfsafety) = s
-        c = (c->sig)
-
-    }
-
+int zombie_goloso(ciudad* city, int n, int p)
+{
+	int i = 0;
+	int aux;
+	int sum = 0;
+	
+	while ((i < n) && (sum < p))
+	{
+		aux = sum + city[i].costfsafety;
+		if (aux < p){
+			sum = aux;
+			city[i].salvar = 1;
+		}
+		i++;
+	}
+	return sum;
 }
 
-//funcion que ordena de menor a mayor segun su costfsafety  (heapsort, o mergesort... por ahi
-//merge es mas tranqui... por ahiiii)
-
-void    funcionqueordena(lista_t *l,int n){
-
-
-
-
-}
-
-
-//funcion que aglomera todo lo arriba escrito y luego va tomando los primeros g
-//elementos de manera tal que la suma de costfsafety de esos g elementos son
-// menores que el Presupuesto pero si tomo el proximo elemento, y le sumo su
-//costfsafety ya es mayor, siendo esta mi respuesta.
-//Esta funcion debe devolver mi formato de salida.
-
-void heroe_tactico_del_pais(archivo a){
-
-    int n= 0;
-    int p= 0;
-    lista_t *l=informacion_en_lista(a,n,p);
-    calcular_costo_de_salvacion(l,n);
-    funcionqueordena(l,n);
-
+int main()
+{
+/* Funcion que lee los datos, separa la información, y llama a las
+ * funciones correspondientes para:
+ * 		- calcular el costo de salvación de cada ciudad
+ * 		- ordenar las ciudades por costo de salvación
+ * 		- llevar a cabo la parte "golosa"
+ */
+	int i;
+    int n;
+    int p;
+    int num_zombis;
+    int num_soldados;
+    int costo_por_soldado;
+    int costo_total;
+    ciudad city;
+    ciudad cities[n];		// Arreglo donde voy a ir metiendo las ciudades
+    
+    scanf("%i",&n);	// Levanto la cantidad de ciudades
+    scanf("%i",&p); // Levanto el presupuesto
+       
+    for (i = 0; i < n; i++)			// Para cada ciudad
+    {
+		scanf("%i",&num_zombis);	// Levanto los datos
+		scanf("%i",&num_soldados);
+		scanf("%i",&costo_por_soldado);
+		city = (ciudad){						// Lleno el struct SALVO
+			.nombre = i,
+			.cant_zombies = num_zombis,
+			.cant_soldados = num_soldados,
+			.soldier_req = 0,					// soldier _req y costfsafety
+			.costfsoldier = costo_por_soldado,
+			.costfsafety = 0,					// que se resuelven después
+			.salvar = 0,
+		};
+		cities[i] = city;					// Guardo la ciudad en el arreglo
+	}
+	
+	// Calculo y completo soldier_req y costfsafety para cada ciudad
+    calcular_costo_de_salvacion(cities,n);
+    
+    // Ordeno por costo de salvación
+    mergesort_ej1(cities,0,n-1,1);
+    
+    // Busco la solución "greedy"
+    costo_total = zombie_goloso(cities,n,p);
+    
+    // Ordeno por nombre (orden en el que vinieron en la entrada)
+    mergesort_ej1(cities,0,n-1,1);
+    
+    // Armo la salida
+    printf("%i ",costo_total);
+    for (i = 0; i < n; i++)			// Para cada ciudad
+    {
+		if (cities[i].salvar){
+			printf("%i ",cities[i].soldier_req);	// Levanto los datos
+		}else{
+			printf("%i ",0);	// Levanto los datos
+		}
+	}
+	
 }

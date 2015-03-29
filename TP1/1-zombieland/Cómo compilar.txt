@@ -1,0 +1,1 @@
+g++ zombieland.cpp merge.cpp -g -o zombieland
