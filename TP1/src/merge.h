@@ -2,9 +2,12 @@
 #define MERGE_H_INCLUDED
 
 #include "zombieland.h"
+#include "altafrecuencia.h"
 
 void merge_ej1(ciudad *a, int low, int high, int mid, bool b);
 void mergesort_ej1(ciudad *a, int low, int high, bool b);
 
+void merge_ej2(frecuencia *a, int low, int high, int mid);
+void mergesort_ej2(frecuencia *a, int low, int high);
 
 #endif // MERGE_H_INCLUDED

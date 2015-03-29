@@ -67,9 +67,11 @@ int main()
     int costo_por_soldado;
     int costo_total;
     ciudad city;
-    ciudad cities[n];		// Arreglo donde voy a ir metiendo las ciudades
     
     scanf("%i",&n);	// Levanto la cantidad de ciudades
+    
+    ciudad cities[n];		// Arreglo donde voy a ir metiendo las ciudades
+    
     scanf("%i",&p); // Levanto el presupuesto
        
     for (i = 0; i < n; i++)			// Para cada ciudad
