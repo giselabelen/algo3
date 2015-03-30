@@ -2,8 +2,36 @@
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+\textbf{
+Tenemos un enlace por el cual podemos transmitir informacion, utilizando distintas frecuanecias.
+Nuestro objetivo es transmitir informacion durante todo el tiempo que sea posible, pero invirtiendo
+la menor cantidad de dinero posible.
+Hay que tener en cuenta lo siguiente:
+}
 
+\begin{itemize}
+	\item vamos a transmitir informacion secuencialmente, es decir solamente se utilizara una frecuencia por intervalo
+		 tiempo 
+	\item cada frecuencia tiene un intervalos <inicio, fin> en el cual puede ser utilizado
+	\item El enlace puede eligir transmitir por cualquiera de las n frecuencias disponibles
+	\item Se puede cambiar la frecuaencia la frecuencia usada a lo largo del tiempo
+\end{itemize}
+
+\textbf{Nuestro algoritmo toma:}
+\begin{itemize}
+	\item n que indica la cantidad frecuencias que puede utilizar el enlace
+	\item tenemos n lineas seguidas, cada linea indica una frecuencia
+	\begin{itemize}
+		\item cada linea tiene campos <c,i,f> que indican costo por minuto, inicio y fin del intervalo de disponibilidad
+	\end{itemize}
+	\item El tiempo inicial empieza a partir del minuto cero
+\end{itemize}
+
+\textbf{Salida:}
+\begin{itemize}
+	  \item costo total incurrido de la solucion( osea minimizando los costos)
+	  \item una linea por cada intervalo de transmicion 
+\end{itemize}
 
 %\begin{figure}[htb]
 %  \begin{center}
