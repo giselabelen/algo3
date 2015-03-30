@@ -8,7 +8,7 @@ No se salva nadie <-> Mi algoritmo dice que no se salva nadie
 
 -> Supongamos que no se salva nadie, eso quiere decir que no existe ninguna ciudad tal que si yo gasto todo mi presupuesto en enviarle soldados a ella, esta obtenga 1 soldado por cada 10 zombies como mínimo
 
-Entonces supongo P un presupuesto tal que no llegue a cumplir los costos de envío de soldados mínimo para salvar ninguna ciudad.
+Entonces supongo P un presupuesto tal que no llegue a cumplir los costos de envío de soldados mínimo para salvar ninguna ciudad. ( O quedaria mejor suponer que no salva a la ciudad con el menor costo y de ahi concluir que no salva a ninguna ciudad).
 
 Particularmente, si p no alcanza para salvar a ninguna ciudad, no alcanza para salvar a la ciudad que menos presupuesto necesita para ser salvada(si hay más de una cuyo costo es el mínimo, en particular no se puede salvar ninguna de ellas)(A)
 
@@ -19,8 +19,13 @@ Por lo tanto, cuando mi algoritmo ordene las ciudades por costo de salvación, q
 Entonces, eso significa que por lo explicado anteriormente, el presupuesto es menor a la ciudad que menos costo requiere por ser salvada(si hay varios mínimos, esto no molesta ya que justamente tienen el mismo costo por salvación)
 
 Pero si el presupuesto es menor a la ciudad (o ciudades) que menos costo requiere por salvarse, entonces el presupuesto es menor al costo de salvar cualquier ciudad.
+(EL PRESUPUESTO ES MENOR QUE EL COSTO DE SALVAR A LA CIUDAD CON COSTO MINIMO)
 
 Si el presupuesto no alcanza para salvar ninguna ciudad, entonces nuevamente, NO SE SALVA NADIE.
+
+( YO CAMBIARIA EL "<-" por algo asi como, si el algoritmo dice que no se salva nadie es porque, segun como esta hecho este, recorrio todas las ciudades y comparo si su costo de salvacion es menor al presupuesto.
+Como el algoritmo retorno que no se salva ninguna ciudad quiere decir que para cada ciudad su costo de salvacion es menor al presupuesto. Por ende, ninguna ciudad se puede salvar.)
+
 
 
 2)Se salva al menos una ciudad:
