@@ -37,7 +37,42 @@ La manera de salvar una cuidad es la siguiente:
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+\textbf{
+Tomamos de entrada la el estado actual de pais, donde estado actual indica:
+}
+\begin{itemize}
+   \item  n que indica las la cantidad total de cuidades 
+   \item p el presupuesto del pais  
+   \item a el arreglo de tamaño n, donde el contenido del arreglo es:
+   \begin{itemize}
+		\item nombre: que indica el numero de ciudad
+		\item cant_zombies : que indica la cantidad de zombis
+		\item cant_soldados : que indica la cantidad de soldados
+		\item cant_soldados : que indica la cantidad de soldados
+		\item costo_por_soldado : costo de envio de un soldado
+   \end{itemize}  
+\end{itemize}
+\textbf{
+la idea es calculando el costo de salvacion de cada ciudad, donde el costo de salvacion calcula 
+cuanto me va salir salvar la ciudad:   
+}
+\begin{itemize}
+   \item  zombis_vivos = zombis_totales - 10 * soldados_actuales
+   \item  soldados_requieridos = zombis_vivos/ 10
+   \item costo_salvacion = soldados_requeridos * costo_por_soldado  
+\end{itemize}
+\textbf{
+Es costo de salvacion de cada ciudad va a tomar lineal n tiempo. Luego ordeno las ciudades de menor a mayor
+por el costo_salvacion(usando un mergesort). Ahora busco la solucion goloza, para cada ciudad:
+}
+\begin{itemize}
+	\item voy sumando la costo de salvacion de la ciudad i con la ciudad i+1, hasta que la suma 
+	supere el presupuesto o las ciudades se acaben, 
+	\item luego retorno la cantidad de ciudades que puedo salvar
+\end{itemize}
+\textbf{
+Por ultimo vuelvo a ordenar las ciudades por nombre de ciudad usando un merge sort 
+}
 
 \begin{codebox}
 \Procname{$\proc{ejemplo_de_pseudocodigo}(x,y)$}
