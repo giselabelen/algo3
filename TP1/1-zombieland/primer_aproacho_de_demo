@@ -65,3 +65,16 @@ Entonces no puede suceder que para todo subconjunto de n elementos, ese subconju
 Y no puede existir por D ningún subconjunto de n elementos cuyo costo por salvación sea menor al conjunto que dio mi algoritmo. 
 
 y por lo tanto como no puede existir una solución más optima de n+1 elementos, no puede ocurrir una solución más optima de n+nada elementos, y por lo tanto la solución con n elementos es la optima.
+
+
+
+Si hay solucion <=> devuelve solucion optima
+
+Sea N (nuestra solucion optima), la solucion armada con el goloso, y O la solucion optima que mas se parece a N. Asumimos N no optima.
+Sea Nk el primer elemento en el que difieren O y N osea  para todo 0<=i<k Ni=Oi
+Dado que Nk fue obtenido usando el algoritmo goloso sabemos que C(Nk) > C(N(k-1)) y que paratodo j>k C(Nk)<C(Nj)
+En otras palabras, de los Nk tiene el menor de los costos mayores que N(k-1). Por lo tanto C(Nk)<=C(Ok), luego puedo reemplazar Ok por Nk y obtengo una solucion optima que se parece mas que la O original a N. ABSURDO
+Este absurdo viene de suponer que N no es optima y que no es la solucion que mas se parece a N.
+
+
+
