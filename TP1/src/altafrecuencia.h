@@ -3,6 +3,8 @@
 
 #include <list>
 
+using namespace std;
+
 typedef struct frecuencia_t
 {
 	int nombre; // numero que identifica la frecuencia segun el orden en el que viene dada
@@ -18,7 +20,8 @@ typedef struct transmision_t
     int fin;	// fin de transmisión
 } transmision;
 
-//~ list<transmision> frequency_dc(frecuencia* freq, int low, int highs, int costo);
-//~ list<transmision> mezclar_freq(list<transmision>::iterator it_trans1, list<transmision>::iterator it_trans2);
+list<transmision> frequency_dc(frecuencia* freq, int low, int highs);
+list<transmision> mezclar_freq(list<transmision> trans1, list<transmision> trans2);
+int costo_transmision(list<transmision> trans);
 
 #endif // ALTAFRECUENCIA_H_INCLUDED

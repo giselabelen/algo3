@@ -141,9 +141,9 @@ void mergesort_ej2(frecuencia *a, int low, int high)
     if (low < high)
     {
         mid = (low+high)/2;
-        mergesort_ej2(a,low,mid,b);
-        mergesort_ej2(a,mid+1,high,b);
-		merge_ej2(a,low,high,mid,b);
+        mergesort_ej2(a,low,mid);
+        mergesort_ej2(a,mid+1,high);
+		merge_ej2(a,low,high,mid);
     }
     return;
 }
