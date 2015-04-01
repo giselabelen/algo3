@@ -1,0 +1,1 @@
+g++ altafrecuencia.cpp merge.cpp -g -o altafrecuencia
