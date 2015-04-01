@@ -18,13 +18,9 @@ Por lo tanto, cuando mi algoritmo ordene las ciudades por costo de salvación, q
 
 Entonces, eso significa que por lo explicado anteriormente, el presupuesto es menor a la ciudad que menos costo requiere por ser salvada(si hay varios mínimos, esto no molesta ya que justamente tienen el mismo costo por salvación)
 
-Pero si el presupuesto es menor a la ciudad (o ciudades) que menos costo requiere por salvarse, entonces el presupuesto es menor al costo de salvar cualquier ciudad.
-(EL PRESUPUESTO ES MENOR QUE EL COSTO DE SALVAR A LA CIUDAD CON COSTO MINIMO)
+Pero si el presupuesto es menor al costo de salvar a la ciudad (o ciudades) que menos costo requiere por salvarse, entonces el presupuesto es menor al costo de salvar cualquier ciudad.
 
 Si el presupuesto no alcanza para salvar ninguna ciudad, entonces nuevamente, NO SE SALVA NADIE.
-
-( YO CAMBIARIA EL "<-" por algo asi como, si el algoritmo dice que no se salva nadie es porque, segun como esta hecho este, recorrio todas las ciudades y comparo si su costo de salvacion es menor al presupuesto.
-Como el algoritmo retorno que no se salva ninguna ciudad quiere decir que para cada ciudad su costo de salvacion es menor al presupuesto. Por ende, ninguna ciudad se puede salvar.)
 
 
 
@@ -68,11 +64,11 @@ y por lo tanto como no puede existir una solución más optima de n+1 elementos,
 
 
 
-Si hay solucion <=> devuelve solucion optima
+hay solucion <=> devuelve solucion optima
 
-Sea N (nuestra solucion optima), la solucion armada con el goloso, y O la solucion optima que mas se parece a N. Asumimos N no optima.
-Sea Nk el primer elemento en el que difieren O y N osea  para todo 0<=i<k Ni=Oi
-Dado que Nk fue obtenido usando el algoritmo goloso sabemos que C(Nk) > C(N(k-1)) y que paratodo j>k C(Nk)<C(Nj)
+Sea N (nuestra solucion optima), la solucion armada con el goloso, y O la solucion optima que mas se parece a N. Asumimos N no optima y ordeno O por el costo de salvación, de menor a mayor.
+Sea Nk el primer elemento en el que difieren O y N osea para todo i<k Ni=Oi
+Dado que Nk fue obtenido usando el algoritmo goloso sabemos que C(Nk) >= C(N(k-1)) y que paratodo j>k C(Nk)<=C(Nj)
 En otras palabras, de los Nk tiene el menor de los costos mayores que N(k-1). Por lo tanto C(Nk)<=C(Ok), luego puedo reemplazar Ok por Nk y obtengo una solucion optima que se parece mas que la O original a N. ABSURDO
 Este absurdo viene de suponer que N no es optima y que no es la solucion que mas se parece a N.
 
