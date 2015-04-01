@@ -37,47 +37,6 @@ La manera de salvar una cuidad es la siguiente:
 
 \vspace*{0.3cm}
 
-
-(Para resolver el primer problema utilizamos un algoritmo goloso, que se basa en elegir la ciudad que menos recursos consume para ser salvada, ver si el presupuesto alcanza para salvarla, y si alcanza salvarla)
-\textbf{
-Tomamos de entrada el estado actual de pais, donde estado actual indica:
-}
-\begin{itemize}
-   \item  n que indica las la cantidad total de cuidades 
-   \item p el presupuesto del pais  
-   \item a el arreglo de tamaño n, donde el contenido del arreglo es:
-   \begin{itemize}
-		\item nombre: que indica el numero de ciudad
-		\item cant_zombies : que indica la cantidad de zombis
-		\item cant_soldados : que indica la cantidad de soldados
-		\item cant_soldados : que indica la cantidad de soldados
-		\item costo_por_soldado : costo de envio de un soldado
-   \end{itemize}  
-\end{itemize}
-\textbf{
-la idea es calculando el costo de salvacion de cada ciudad, donde el costo de salvacion calcula 
-cuanto me va salir salvar la ciudad:   
-}
-\begin{itemize}
-   \item  zombis_vivos = zombis_totales - 10 * soldados_actuales
-   \item  soldados_requieridos = zombis_vivos/ 10
-   \item costo_salvacion = soldados_requeridos * costo_por_soldado  
-\end{itemize}
-\textbf{
-Es costo de salvacion de cada ciudad va a tomar lineal n tiempo. Luego ordeno las ciudades de menor a mayor
-por el costo_salvacion(usando un mergesort). Ahora busco la solucion goloza, para cada ciudad:
-}
-\begin{itemize}
-	\item voy sumando la costo de salvacion de la ciudad i con la ciudad i+1, hasta que la suma 
-	supere el presupuesto o las ciudades se acaben, 
-	\item luego retorno la cantidad de ciudades que puedo salvar
-\end{itemize}
-\textbf{
-Por ultimo vuelvo a ordenar las ciudades por nombre de ciudad usando un merge sort 
-}
-
-(Creo que si bien no esta mal lo escrito aca arriba, me parece que es casi explicar lo que hace el algoritmo linea por linea... yo propondría poner algo como lo que escribo abajo: (después entre todos decidamos que va y que no))
-
 Notemos que para recuperar la mayor cantidad de ciudades de un país en mano de los zombies, nosotros lo único que podemos hacer es enviar soldados a sus ciudades teniendo en cuenta la cantidad de soldados que esta ciudad posee por si misma. Como esto es la guerra, no tiene ningún sentido envíar soldados a una ciudad sino aseguramos que esta se salvará, puesto que es un desperdicio de presupuesto y vidas humanas. Por otro lado, debido a que queremos salvar la mayor cantidad de ciudades, y sabemos que para salvar una ciudad necesitamos como MINIMO 1 soldado por cada diez zombies, si enviamos soldados a una ciudad, nos aseguraremos de enviar la menor cantidad de soldados posibles, asi ahorramos recursos que podrán ser utilizados en otra ciudad. Tomando en cuenta todo lo antes dicho, para resolver este problema, la idea será primero tener conocimiento de cuanto cuesta salvar cada ciudad. Para esto, basta hacer la siguiente cuenta por cada ciudad (las variables abajo expuestas no pertenecen al algoritmo, son simplemente a modo de ayuda para entender que se hace):
 \begin{itemize}
    \item  zombis_vivos = zombis_totales - 10 * soldados_atrincherados_de_la_ciudad
@@ -99,7 +58,45 @@ Luego de saber estos costos, se deberá ordenar las ciudades de menor a mayor re
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+Tenemos dos casos:
+\begin{itemize}
+	\item 1) No se salva nadie
+	\item 2) Se salva al menos una ciudad
+\end{itemize}
+
+\subsubsection{1) NO SE SALVA NADIE}
+
+No se salva nadie $\Longleftrightarrow$ Mi algoritmo dice que no se salva nadie
+
+$\Longrightarrow$ Supongamos que no se salva nadie, eso quiere decir que no existe ninguna ciudad tal que si yo gasto todo mi presupuesto en enviarle soldados a ella, esta obtenga 1 soldado por cada 10 zombies como mínimo.
+
+Entonces supongo $p$ un presupuesto tal que no llegue a cumplir los costos de envío de soldados mínimo para salvar ninguna ciudad.
+Particularmente, si $p$ no alcanza para salvar a ninguna ciudad, no alcanza para salvar a la ciudad que menos presupuesto necesita para ser salvada(si hay más de una cuyo costo es el mínimo, en particular no se puede salvar ninguna de ellas)$(A)$
+
+Por lo tanto, cuando mi algoritmo ordene las ciudades por costo de salvación, que es justamente el costo que tiene conseguir la mínima cantidad de soldados necesarios para salvar esa ciudad, y tome la primer ciudad, que es la que menos costo necesita para ser salvada(o por lo menos una de ellas), por lo dicho en $(A)$, mi algoritmo no tomará esta ciudad puesto que el presupuesto no alcanza, y devolverá que se pueden salvar 0 ciudades, y no enviará tropas, pues el país está perdido, fracasamos, NO SE SALVA NADIE.
+
+$\Longleftarrow$ Supongamos que mi algoritmo dice que no se salva nadie.
+
+Entonces, eso significa que por lo explicado anteriormente, el presupuesto es menor a la ciudad que menos costo requiere por ser salvada(si hay varios mínimos, esto no molesta ya que justamente tienen el mismo costo por salvación)
+
+Pero si el presupuesto es menor al costo de salvar a la ciudad (o ciudades) que menos costo requiere por salvarse, entonces el presupuesto es menor al costo de salvar cualquier ciudad.
+
+Si el presupuesto no alcanza para salvar ninguna ciudad, entonces nuevamente, NO SE SALVA NADIE.
+
+\subsubsection{2)Se salva al menos una ciudad:}
+
+Hay solución no vacía $\Longleftrightarrow$ Mi algoritmo devuelve solución óptima
+
+Sea $N$ nuestra solución óptima, la solución armada con el goloso, y $O$ la solución óptima que más se parece a $N$. Asumimos $N$ no óptima y ordeno $O$ por el costo de salvación, de menor a mayor.
+Sea $N_{k}$ el primer elemento en el que difieren $O$ y $N$ osea $\forall$ $i<k$, $N_{i}=O_{i}$.
+
+Dado que $N_{k}$ fue obtenido usando el algoritmo goloso sabemos que $C(N_{k}) \geq C(N{k-1})$ y que $\forall j>k$, $C(N_{k})\leq C(N_{j})$.
+
+En otras palabras, de los $N_{k}$ tiene el menor de los costos mayores que $N_{k-1}$. Por lo tanto $C(N_{k})\leq C(O_{k})$, luego puedo reemplazar $O_{k}$ por $N_{k}$ y obtengo una solución óptima que se parece mas que la $O$ original a $N$. ABSURDO puesto que partimos de que $O$ es la solución óptima que más se parece a $N$.
+
+Este absurdo viene de suponer que $N$ no es óptima.
+
+
 
 
 
