@@ -3,25 +3,18 @@
 \vspace*{0.3cm}
 
 \textbf{
-Tenemos un pais infectado de zombis. Nuestro ojetivo es salvar la mayor cantidad de ciudades de este pais.
-Cosas que tenemos que tener en cuenta:
+Tenemos un país infectado de zombies. El país esta dividido en ciudades. Nuestro ojetivo es salvar la mayor cantidad de ciudades de este país, enviando soldados a ellas. Una ciudad se considera salvada si los soldados exterminan todos los zombies de dicha ciudad.
+\\
+Aspectos a tener en cuenta:
 }
-\begin{itemize}
-   \item Los recursos del pais son acotados 
-   \item Cada ciudad tiene una cantidad de soldados atrincherados(Soldados iniciales de la ciudad)  
-   \item cada ciudad tiene una cantidad de zombis  
-   \item cada ciudad tiene un costo de envio por soldado
-   \item cada soldado puede acabar como maximo con 10 zombis 
-\end{itemize}
 
-\textbf{
-La manera de salvar una cuidad es la siguiente:
-}         
 \begin{itemize}
-	\item El pais puede mandar soldados de refuerzo a cada ciudad, de manera que ayuden a los soldados atrincherados
-	\item Una ciudad se cosidera salvada si los soldados acaban con todos los zombies de dicha ciudad
+   \item Los recursos del país son acotados 
+   \item Se conoce la cantidad de soldados atrincherados en cada ciudad(Soldados iniciales de la ciudad)  
+   \item Se conoce la cantidad de zombies en cada ciudad.
+   \item Para cada ciudad, se conoce el costo de envíar un soldado
+   \item Cada soldado se puede encargar como máximo de 10 zombies 
 \end{itemize}
-
 
 %\begin{figure}[htb]
 %  \begin{center}
@@ -37,14 +30,14 @@ La manera de salvar una cuidad es la siguiente:
 
 \vspace*{0.3cm}
 
-Notemos que para recuperar la mayor cantidad de ciudades de un país en mano de los zombies, nosotros lo único que podemos hacer es enviar soldados a sus ciudades teniendo en cuenta la cantidad de soldados que esta ciudad posee por si misma. Como esto es la guerra, no tiene ningún sentido envíar soldados a una ciudad sino aseguramos que esta se salvará, puesto que es un desperdicio de presupuesto y vidas humanas. Por otro lado, debido a que queremos salvar la mayor cantidad de ciudades, y sabemos que para salvar una ciudad necesitamos como MINIMO 1 soldado por cada diez zombies, si enviamos soldados a una ciudad, nos aseguraremos de enviar la menor cantidad de soldados posibles, asi ahorramos recursos que podrán ser utilizados en otra ciudad. Tomando en cuenta todo lo antes dicho, para resolver este problema, la idea será primero tener conocimiento de cuanto cuesta salvar cada ciudad. Para esto, basta hacer la siguiente cuenta por cada ciudad (las variables abajo expuestas no pertenecen al algoritmo, son simplemente a modo de ayuda para entender que se hace):
+Notemos que para recuperar la mayor cantidad de ciudades de un país en mano de los zombies, nosotros lo único que podemos hacer es enviar soldados a sus ciudades teniendo en cuenta la cantidad de soldados que esta ciudad posee por si misma. Como esto es la guerra, no tiene ningún sentido envíar soldados a una ciudad sino aseguramos que esta se salvará, puesto que es un desperdicio de presupuesto y vidas humanas. Por otro lado, debido a que queremos salvar la mayor cantidad de ciudades, y sabemos que para salvar una ciudad necesitamos como MÍNIMO 1 soldado por cada diez zombies, si enviamos soldados a una ciudad, nos aseguraremos de enviar la menor cantidad de soldados posibles, asi ahorramos recursos que podrán ser utilizados en otra ciudad. Tomando en cuenta todo lo antes dicho, para resolver este problema, la idea será primero tener conocimiento de cuanto cuesta salvar cada ciudad. Para esto, basta hacer la siguiente cuenta por cada ciudad (las variables abajo expuestas no pertenecen al algoritmo, son simplemente a modo de ayuda para entender que se hace):
 \begin{itemize}
    \item  zombis_vivos = zombis_totales - 10 * soldados_atrincherados_de_la_ciudad
    \item  soldados_requeridos = zombis_vivos/ 10 (redondeado hacia arriba, puesto que no puedo enviar medio soldado)
    \item costo_salvacion_de_la_ciudad = soldados_requeridos * costo_por_soldado_de_la_ciudad  
 \end{itemize}
 
-Luego de saber estos costos, se deberá ordenar las ciudades de menor a mayor respecto a su costo para ser salvadas y de manera golosa, irlas salvando en ese orden hasta cubrir el presupuesto.
+Luego de saber estos costos, se deberá ordenar las ciudades de menor a mayor respecto a su costo para ser salvadas y, de manera golosa, irlas salvando en ese orden hasta cubrir el presupuesto.
 
 \begin{codebox}
 \Procname{$\proc{ejemplo_de_pseudocodigo}(x,y)$}
