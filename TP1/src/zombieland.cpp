@@ -19,13 +19,16 @@ void calcular_costo_de_salvacion (ciudad* city, int n)
 	int z;
 	int s;
 	int c;
-	int aux;
+	float aux;
     for(int i = 0; i < n; i++)
     {
 		z = city[i].cant_zombies;
 		s = city[i].cant_soldados;
 		c = city[i].costfsoldier;
 		aux = z - 10*s;
+		if(aux < 0){
+			aux = 0;
+		}
 		aux = ceil(aux/10);
 		city[i].soldier_req = aux;
 		aux = aux*c;
@@ -43,10 +46,10 @@ int zombie_goloso(ciudad* city, int n, int p)
 	while ((i < n) && (sum < p))
 	{
 		sum = sum + city[i].costfsafety;
-		if (sum < p){
+		if (sum <= p){
 			city[i].salvar = 1;
+			i++;
 		}
-		i++;
 	}
 	return i;
 }
