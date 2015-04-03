@@ -2,7 +2,9 @@
 #include <cstdio>
 #include "caballos.h"
 
-void setear_amenaza(Tablero& tab, int fila, int columna, int n)
+Tablero tab_final;
+
+void setear_amenaza(Tablero& tab, int fila, int columna, int n, int& dec)
 {
 /* Función que dada una posición del tablero, determina si la misma es 
  * válida, y en ese caso, si estaba 'v' (vacía) coloca 'a' (amenazada)
@@ -12,12 +14,75 @@ void setear_amenaza(Tablero& tab, int fila, int columna, int n)
 		if(tab[fila][columna] == 'v')
 		{
 			tab[fila][columna] = 'a';
+			dec--;
 		}
-
 	}
 }
 
+void copiar_tablero(Tablero& tab, Tablero& copia, int n)
+{	
+	for(int i = 0; i < n; i++)
+	{
+		for(int j = 0; j < n; j++)
+		{
+			copia[i][j] = tab[i][j];
+		}
+	}
+}
 
+void backtranki(Tablero& tab, int fila, int columna, int n, int& cota, int lo_que_falta, int extras)
+{
+/* Función que realiza el backtraking */
+	
+	Tablero copia_tab;
+	int f;
+	int c;
+	
+	if(lo_que_falta == 0)	// Si ya llené el tablero, me guardo esa solución y me voy
+	{
+		copiar_tablero(tab,tab_final,n);
+		cota = extras;
+		return;
+	}
+	
+	if(extras > cota || fila == n)
+	{	// Si me pasé de la cota o se me terminó el tablero, me voy	
+		return;
+	}
+	
+	// Establezco la fila y columna para la siguiente llamada recursiva
+	if(columna == n){
+		f = fila++;
+		c = 0;
+	}else{
+		f = fila;
+		c = columna++;
+	}
+	
+	if(copia_tab[fila][columna] != 'p')	// Si no había un caballo preubicado
+	{
+		copiar_tablero(tab,copia_tab,n);	// Hago una copia del tablero
+		
+		copia_tab[fila][columna] = 'e';	// pongo un caballo extra
+		extras++;
+		lo_que_falta--;
+		
+		// actualizo el tablero y lo que falta
+		setear_amenaza(copia_tab,fila-2,columna-1,n,lo_que_falta);	
+		setear_amenaza(copia_tab,fila-2,columna+1,n,lo_que_falta);
+		setear_amenaza(copia_tab,fila-1,columna-2,n,lo_que_falta);	
+		setear_amenaza(copia_tab,fila-1,columna+2,n,lo_que_falta);
+		setear_amenaza(copia_tab,fila+1,columna-2,n,lo_que_falta);
+		setear_amenaza(copia_tab,fila+1,columna+2,n,lo_que_falta);
+		setear_amenaza(copia_tab,fila+2,columna-1,n,lo_que_falta);
+		setear_amenaza(copia_tab,fila+2,columna+1,n,lo_que_falta);
+		
+		// llamada recursiva con el tablero actualizado
+		backtranki(copia_tab,f,c,n,cota,lo_que_falta,extras);		
+	}
+	// Llamada recursiva con el mismo tablero
+	backtranki(tab,f,c,n,cota,lo_que_falta,extras);
+}
 
 /**********************************************************************/
 /**********************************************************************/
@@ -38,7 +103,9 @@ int main()
 	int i;
 	int j;
 	int cota;
+	int falta_cubrir = 0;
 	int extras = 0;
+	int aux;
 	
 	scanf("%i",&n);	// Levanto la cantidad de filas-columnas
 	scanf("%i",&knights);	// Levanto la cantidad de caballos preubicados
@@ -53,22 +120,34 @@ int main()
 		tab[fila][columna] = 'p';	// Seteo la posición en 'p' (preubicado)
 		
 		// Marco las casillas que quedan amenazadas por el caballo preubicado
-		setear_amenaza(tab,fila-2,columna-1,n);	
-		setear_amenaza(tab,fila-2,columna+1,n);
-		setear_amenaza(tab,fila-1,columna-2,n);	
-		setear_amenaza(tab,fila-1,columna+2,n);
-		setear_amenaza(tab,fila+1,columna-2,n);
-		setear_amenaza(tab,fila+1,columna+2,n);
-		setear_amenaza(tab,fila+2,columna-1,n);
-		setear_amenaza(tab,fila+2,columna+1,n);
+		setear_amenaza(tab,fila-2,columna-1,n,aux);	
+		setear_amenaza(tab,fila-2,columna+1,n,aux);
+		setear_amenaza(tab,fila-1,columna-2,n,aux);	
+		setear_amenaza(tab,fila-1,columna+2,n,aux);
+		setear_amenaza(tab,fila+1,columna-2,n,aux);
+		setear_amenaza(tab,fila+1,columna+2,n,aux);
+		setear_amenaza(tab,fila+2,columna-1,n,aux);
+		setear_amenaza(tab,fila+2,columna+1,n,aux);
+	}
+	
+	// Guardo cuántas casillas faltan cubrir, para ir sabiendo si ya terminé
+	for(i = 0; i < n; i++)
+	{
+		for(j = 0; j < n; j++)
+		{
+			if(tab[i][j] == 'v'){
+				falta_cubrir++;
+			}
+		}
 	}
 	
 	cota = n * ceil(n/5);
 	
-	/** LLAMAR AL BACKTRACKING **/
+	// Llamo al backtraking
+	backtranki(tab,0,0,n,cota,falta_cubrir,extras);
 	
 	// Armo la salida
-	printf("%i \n",extras);	// Cantidad de caballos extra
+	printf("%i \n",cota);	// Cantidad de caballos extra
 	
 	for(i = 0; i < n; i++)
 	{
