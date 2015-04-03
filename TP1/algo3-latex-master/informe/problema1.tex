@@ -98,7 +98,56 @@ Este absurdo viene de suponer que $N$ no es óptima.
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+\begin{codebox}
+\Procname{$\proc{Zombieland}(entrada$ $estándar)$}{
+ n $\longleftarrow$ Cantidad de ciudades //Lectura de dato por entrada estándar \\
+ \\
+  p $\longleftarrow$ Presupuesto //Lectura de dato por entrada estándar \\
+ \\
+  cities $\longleftarrow$ Crear arreglo de n ciudades y llenarlo //n lecturas de datos por entrada estándar \\ \\
+  //Esto se hace en $\mathcal{O}(n)$ dado que la entrada consiste de una línea con el presupuesto y la n cantidad \\
+  de ciudades y n líneas para estas.\\
+  //Entonces el procedimiento es recorrer las n líneas levantando los datos, esto lo consideramos $\mathcal{O}(1)$\\ para las n ciudades.
+ \\ \\
+ $calcular$_$costo$_$de$_$salvacion(cities,n)$ // $\mathcal{O}(n)$
+ \\ \\
+$ordenar$_$por$_$costo(cities)$ //de menor a mayor $\mathcal{O}(n.log n)$
+ \\ \\
+ $ciudades$_$salvadas = zombie$_$goloso(cities,n,p)$ // $\mathcal{O}(n)$
+ \\ \\
+ $ordenar$_$por$_$nombre}(cities)$ // $\mathcal{O}(n.log$ $n)$
+ \\ \\
+ //(Optamos por esta medida para facilitar la devolución en el formato indicado por el ejercicio)
+ \\ \\
+ Mostrar por pantalla: ciudades salvadas \\
+                       soldados enviados a cada ciudad
+ \\ \\
+ //Esto se hace en $\mathcal{O}(n)$ dado que es recorrer las n ciudades y, en base a su campo "salvar"\\ determinar si se debe \\
+ //imprimir lo pedido por el enunciado, y también la cantidad total de ciudades salvadas.
+}\\ \\         
+Complejidad $\mathcal{O}(n.log n)$
+\end{codebox}
+\\
+\\
+\\
+\\
+\begin{codebox}
+\Procname{$int$ $\proc{zombie$_$goloso}(int$ $n, int$ $p)$}
+\\
+i $\longleftarrow$ 0\\
+sum $\longleftarrow$ 0\\
+\\
+mientras ($i<n$ y $sum<p$) \\
+   
+   \quad sum $+$ costo_salvar_ciudad_i\\
+   
+   \quad si $sum<p$\\
+      \quad  \qquad salvar_ciudad_i\\
+  \quad $i++$\\
+   \\
+\Return $\id{i}$       
+ 
+\end{codebox} 
 
 
 
