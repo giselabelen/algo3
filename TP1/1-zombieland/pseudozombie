@@ -111,3 +111,14 @@ Complejidad O(n.log n)
 
 Optamos por usar la funcion mergesort provista por C++, cuya complejidad es O(n.log n) 
 ¡¡¡¡¡¡¡¡¡¡¡ESTO ES MENTIRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!!!!!
+
+zombie_goloso(int n, int p)
+
+	i<- 0
+	sum<- 0
+	mientras i<n y sum<p
+		suma + costo_salvar_ciudad_i
+		si sum<p
+			salvar_ciudad_i
+		i++
+	devolver i
