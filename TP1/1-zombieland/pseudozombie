@@ -1,0 +1,73 @@
+void Zombieland("entrada estandar"){
+
+int i;
+    int n;
+    int p;
+    int num_zombis;
+    int num_soldados;
+    int costo_por_soldado;
+    int salvacion_total;
+    ciudad city;
+
+    ciudad cities[n];		//Arreglo para las ciudades.                   O(1)
+
+    //Recorro la entrada levantando los datos y completando el arreglo de ciudades con los valores particulares de cada ciudad.
+    //Esto se hace en O(n) dado que la entrada consiste de una linea con el presupuesto y la n cantidad de ciudades y n lineas para estandar.
+    //Entonces el procedimiento es recorrer las n lineas levantando los datos, esto lo consideramos O(1) para las n ciudades.
+    
+   calcular_costo_de_salvacion(cities, n)                                      O(n)
+                                                                               
+   //Calculo costo de salvar cada ciudad.
+
+   mergesort(cities,0,n-1,1)                                                   O(n.log n)
+
+   //Ordeno las ciudades por costo, de menor a mayor. 
+
+   ciudades_salvadas = zombie_goloso(cities,n,p);                              O(n)
+ 
+   //Calculo la cantidad de ciudades que se salvan y las "marco" en sus respectivos campos "salvar".
+
+   mergesort(ciudades,0,n-1,1);                                                O(n.log n)
+
+   //Ordeno las ciudades por nombre (Optamos por esta medida para facilitar la devolución en el formato indicado por el ejercicio)
+
+   //Luego se procede a armar la salida. Esto se hace en O(n) dado que es recorrer las n ciudades y, en base a su campo "salvar" determinar si se debe
+   //imprimir lo pedido por el enunciado, y también la cantidad total de ciudades salvadas.
+
+}
+
+Complejidad O(n.log n)
+
+
+
+void calcular_costo_de_salvacion(ciudad* city, int n){
+
+int z,s,c,aux;                                                                 O(1)   
+
+for i=0 to n
+    z = city[i].cant_zombies;                                                  O(1)
+    s = city[i].cant_soldados;                                                 O(1)
+    c = city[i].costsoldier;                                                   O(1)
+    aux = z - 10*s;                                                            O(1)
+    aux = ceil(aux/10);                                                        O(1)
+    city[i].soldier_req = aux;                                                 O(1)
+    aux = aux*c;                                                               O(1)
+    city[i].costsafety = aux;                                                  O(1)
+
+}
+Complejidad O(n)
+
+//Este ultimo tal vez se podria hacer todo "hablado".
+
+
+int zombie_goloso(ciudad* city, int n, int p){
+
+//Recorre las n ciudades acumulando el costo de salvacion de cada ciudad y chequeando si se supera o no el presupuesto.
+//A las ciudades cuyo costo de salvacion, sumado a lo ya acumulado, no superan el presupuesto, se les asigna un 1 en el campo "salvar".
+//Se hace en O(n) ya que es recorrer un arreglo de n ciudades, realizando comparaciones y operaciones O(1)
+}
+Complejidad O(n)
+
+Optamos por usar la funcion mergesort provista por C++, cuya complejidad es O(n.log n)
+
+
