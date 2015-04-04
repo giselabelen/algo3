@@ -79,9 +79,9 @@ void backtranki(Tablero& tab, int fila, int columna, int n, int& cota, int lo_qu
 		// llamada recursiva con el tablero actualizado
 		backtranki(copia_tab,f,c,n,cota,lo_que_falta,extras);
 }
-	}
+
 	// Llamada recursiva con el mismo tablero
-		backtranki(tab,f,c,n,cota,lo_que_falta,extras);
+	backtranki(tab,f,c,n,cota,lo_que_falta,extras);
 }
 
 /**********************************************************************/
@@ -116,7 +116,8 @@ int main()
 	{
 		scanf("%i",&fila);	// Levanto la fila
 		scanf("%i",&columna);	// Levanto la columna
-		
+		fila--;					//por que mi entrada va de 1 a n, y los vec empiezan de 0
+		columna--;
 		tab[fila][columna] = 'p';	// Seteo la posición en 'p' (preubicado)
 		
 		// Marco las casillas que quedan amenazadas por el caballo preubicado
