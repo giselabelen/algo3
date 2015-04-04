@@ -51,12 +51,11 @@ void backtranki(Tablero& tab, int fila, int columna, int n, int& cota, int lo_qu
 	}
 	
 	// Establezco la fila y columna para la siguiente llamada recursiva
-	if(columna == n){
-		f = fila++;
+	f = fila;
+	c = columna + 1;
+	if(c == n){
+		f = fila +1;
 		c = 0;
-	}else{
-		f = fila;
-		c = columna++;
 	}
 	
 	if(copia_tab[fila][columna] != 'p')	// Si no había un caballo preubicado
@@ -78,27 +77,11 @@ void backtranki(Tablero& tab, int fila, int columna, int n, int& cota, int lo_qu
 		setear_amenaza(copia_tab,fila+2,columna+1,n,lo_que_falta);
 		
 		// llamada recursiva con el tablero actualizado
-		//f = fila;
-		//c = columna++;
-		//if(columna == n){
-		//	f = fila++;
-		//	c = 0;
-		//}
-		//
 		backtranki(copia_tab,f,c,n,cota,lo_que_falta,extras);
-		//backtranki(tab,f,c,n,cota,lo_que_falta,extras);
 }
-	}//else{
+	}
 	// Llamada recursiva con el mismo tablero
-		//if(columna == n){
-		//	f = fila++;
-		//	c = 0;
-		//}else{
-		//	f = fila;
-		//	c = columna++;
-		//}
 		backtranki(tab,f,c,n,cota,lo_que_falta,extras);
-	//}
 }
 
 /**********************************************************************/
