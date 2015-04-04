@@ -155,7 +155,7 @@ int main()
 		for(j = 0; j < n; j++)
 		{
 			if(tab[i][j] == 'e'){
-				printf("%i %i \n",i,j);	// Posición de cada caballo extra
+				printf("%i %i \n",i+1,j+1);	// Posición de cada caballo extra
 			}
 		}
 	}
