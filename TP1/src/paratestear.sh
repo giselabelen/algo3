@@ -42,7 +42,7 @@ done
 
 echo "Corriendo Tests Caballos"
 
-for file in $DIR2/*.in
+for file in $DIR3/*.in
 do
 	base=$(basename "$file" .in)
 	./caballos < $file > $RES2/$base.miout
