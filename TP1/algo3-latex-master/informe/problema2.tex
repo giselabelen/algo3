@@ -64,46 +64,29 @@ Hay que tener en cuenta lo siguiente:
 \textbf{completar!}
 
 \begin{codebox}
-\Procname{$\proc{Altafrecuencia}()$} \{\\
- Creo una lista de transmisiones resultado  //$\mathcal{O}(1)$ \\
- total_freq $\longleftarrow$ Creo un arreglo para almacenar las n frecuencias levantadas de la entrada\\  //$\mathcal{O}(n)$
- \\
- $ordeno$_$por$_$tiempo(total$_$freq,0,n-1)$ //ordeno por tiempo de inicio. $\mathcal{O}(n.logn)$
- \\
- \\
- resultado $\longleftarrow$ $frecuency$_$dc(total$_$freq,0,n-1)$
- \\//armo la transmisión resultado haciendo uso de la técnica de D\&C
- \\
- \\
- costo_total $\longleftarrow$ costo_transmision(resultado) //$\mathcal{O}(n)$
- \\
- \\
- Muestro por pantalla: costo de la transmisión (costo_total) y el intervalo de tiempo ocupado por \\ cada frecuencia usada
- \\
- //Se hace en $\mathcal{O}(n)$ porque es recorrer la lista mostrando las frecuencias $\mathcal{O}(1)$
-
+\Procname{$\proc{AltaFrecuencia}()$} 
+\li Creo una lista de transmisiones resultado  //$\mathcal{O}(1)$ 
+\li total_freq $\leftarrow$ Creo un arreglo para almacenar las n frecuencias levantadas de la entrada $\mathcal{O}(n)$
+\li ordeno_por_tiempo(total_freq,0,n-1) {\it //ordeno por tiempo de inicio. $\mathcal{O}(n.logn)$}
+\li resultado $\leftarrow$ frecuency_dc(total_freq,0,n-1)
+\li {\it //armo la transmisión resultado haciendo uso de la técnica de D\&C}
+\li costo_total $\leftarrow$ costo_transmision(resultado) //$\mathcal{O}(n)$
+\li Muestro por pantalla: costo de la transmisión (costo_total) y el intervalo de tiempo ocupado por cada\\ frecuencia usada {\it //Se hace en $\mathcal{O}(n)$ porque es recorrer la lista mostrando las frecuencias $\mathcal{O}(1)$}
 \end{codebox}
-\}
+
 \begin{codebox}
-\Procname{list$<$transmisión$>$ $\proc{frecuency_dc}(frecuencia$*$ freq, int$ $low, int$ $high)$} \{\\
- Inicializo 3 listas: trans1,trans2,trans_final\\
- si ($low<high$)\\
- \\
- \quad \quad mitad $\longleftarrow$ $$\frac{low + high}{2}$\\
- \quad \quad trans1 $\longleftarrow$ $frequency$_$dc(freq,low,mitad)$\\
- \quad \quad trans2 $\longleftarrow$ $frequency$_$dc(freq,mitad+1,high)$\\
- \\
- \\
- A continuación combino ambas listas de transmisiones de manera que queden ordenadas por costo\\
- de menor a mayor y que las frecuencias alternen de ser necesario.\\
- sino\\
- \\
- Armo una lista cuyo único elemento es la frecuencia de la posicion "low".\\
- Libero la memoria ocupada por trans1 y trans2\\
- \\
- \Return trans_final 
+\Procname{lista_de_transmisión $\proc{frecuency_dc}(frecuencia$*$ freq, int$ $low, int$ $high)$}
+\li Inicializo 3 listas: trans1,trans2,trans_final
+\li \If ($low<high$)
+\li	\quad	mitad $\longleftarrow$ $\frac{low + high}{2}$
+\li	\quad	trans1 $\longleftarrow$ $frequency$_$dc(freq,low,mitad)$
+\li	\quad	trans2 $\longleftarrow$ $frequency$_$dc(freq,mitad+1,high)$
+\li	\quad	A continuación combino ambas listas de transmisiones de manera que queden ordenadas por costo
+\\ \quad de menor a mayor y que las frecuencias alternen de ser necesario.
+\li \Else
+\li \quad	Armo una lista cuyo único elemento es la frecuencia de la posicion "low". Libero la memoria ocupada\\ \quad por trans1 y trans2
+\li \Return trans_final 
  \end{codebox}
- \}
 
 
 \newpage
