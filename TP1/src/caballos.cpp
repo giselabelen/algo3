@@ -34,7 +34,7 @@ void backtranki(Tablero& tab, int fila, int columna, int n, int& cota, int lo_qu
 {
 /* Función que realiza el backtraking */
 	
-	Tablero copia_tab(n, Vec(n, 'v'));;
+	Tablero copia_tab(n, Vec(n, 'v'));
 	int f;
 	int c;
 	
