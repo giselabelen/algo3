@@ -78,13 +78,13 @@ void backtranki(Tablero& tab, int fila, int columna, int n, int& cota, int lo_qu
 		setear_amenaza(copia_tab,fila+2,columna+1,n,lo_que_falta);
 		
 		// llamada recursiva con el tablero actualizado
+		//f = fila;
+		//c = columna++;
 		//if(columna == n){
 		//	f = fila++;
 		//	c = 0;
-		//}else{
-		//	f = fila;
-		//	c = columna++;
 		//}
+		//
 		backtranki(copia_tab,f,c,n,cota,lo_que_falta,extras);
 		//backtranki(tab,f,c,n,cota,lo_que_falta,extras);
 }
