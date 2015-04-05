@@ -20,7 +20,7 @@ mkdir $RES3
 
 echo "Compilando"
 
-g++ zombieland.cpp merge.cpp -g -o zombieland
+g++ zombieland.cpp -g -o zombieland
 g++ altafrecuencia.cpp merge.cpp -g -o altafrecuencia
 g++ caballos.cpp -g -o caballos
 
@@ -45,5 +45,5 @@ echo "Corriendo Tests Caballos"
 for file in $DIR3/*.in
 do
 	base=$(basename "$file" .in)
-	./caballos < $file > $RES2/$base.miout
+	./caballos < $file > $RES3/$base.miout
 done

@@ -1,6 +1,10 @@
 #ifndef ZOMBIELAND_H_INCLUDED
 #define ZOMBIELAND_H_INCLUDED
 
+#include <list>
+
+using namespace std;
+
 typedef struct ciudad_t
 {
 	int nombre; // numero que identifica la ciudad segun el orden en el que viene dada
@@ -13,7 +17,11 @@ typedef struct ciudad_t
 } ciudad;
 
 //~ void heroe_tactico_del_pais(FILE* a);
-void calcular_costo_de_salvacion(ciudad* city, int n);
-int zombie_goloso(ciudad* city, int n, int p);
+//~ void calcular_costo_de_salvacion(ciudad* city, int n);
+//~ int zombie_goloso(ciudad* city, int n, int p);
+void calcular_costo_de_salvacion(list<ciudad> city);
+int zombie_goloso(list<ciudad> city, int p);
+bool compare_cost(const ciudad& city1, const ciudad& city2);
+bool compare_name(const ciudad& city1, const ciudad& city2);
 
 #endif // ZOMBIELAND_H_INCLUDED
