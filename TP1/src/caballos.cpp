@@ -64,15 +64,15 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 		copiar_tablero(tab,copia_tab,n);	// Hago una copia del tablero
 
 		int r = lo_que_falta;				//lo pongo en variable aparte, para que no rompa a
-											//lo_que_falta que esta fuera del if
+		int e = extras;						//lo_que_falta y a extras que estan fuera del if
 		
 		if(copia_tab[fila][columna] == 'v'){
 
-			r = lo_que_falta -1;
+			r--;
 		}
 
 		copia_tab[fila][columna] = 'e';	// pongo un caballo extra
-		extras++;
+		e++;
 
 		
 		
@@ -87,7 +87,7 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 		setear_amenaza(copia_tab,fila+2,columna+1,n,r);
 		
 		// llamada recursiva con el tablero actualizado
-		backtranki(copia_tab,tab_final,f,c,n,cota,r,extras);
+		backtranki(copia_tab,tab_final,f,c,n,cota,r,e);
 	}
 
 	// Llamada recursiva con el mismo tablero
