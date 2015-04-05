@@ -21,7 +21,7 @@ mkdir $RES3
 echo "Compilando"
 
 g++ zombieland.cpp -g -o zombieland
-g++ altafrecuencia.cpp merge.cpp -g -o altafrecuencia
+g++ altafrecuencia.cpp -g -o altafrecuencia
 g++ caballos.cpp -g -o caballos
 
 echo "Corriendo Tests Zombieland"

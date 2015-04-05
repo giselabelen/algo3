@@ -146,5 +146,5 @@ int main()
 			printf("%i ",0);
 		}
 	}
-	
+	cities.clear();
 }

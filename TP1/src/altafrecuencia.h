@@ -23,5 +23,6 @@ typedef struct transmision_t
 list<transmision> frequency_dc(frecuencia* freq, int low, int highs);
 list<transmision> mezclar_freq(list<transmision> trans1, list<transmision> trans2);
 int costo_transmision(list<transmision> trans);
+bool compare_time(const frecuencia& freq1, const frecuencia& freq2);
 
 #endif // ALTAFRECUENCIA_H_INCLUDED

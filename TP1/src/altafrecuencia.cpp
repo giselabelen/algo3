@@ -1,7 +1,7 @@
 #include <cmath>
 #include <cstdio>
 #include <iostream>
-#include "merge.h"
+//~ #include "merge.h"
 #include "altafrecuencia.h"
 
 
@@ -173,6 +173,10 @@ int costo_transmision(list<transmision> trans)
 	return res;
 }
 
+bool compare_time(const frecuencia& freq1, const frecuencia& freq2)
+{
+	return (freq1.inicio < freq2.inicio);
+}
 
 /**********************************************************************/
 /**********************************************************************/
@@ -194,6 +198,8 @@ int main()
     int end;
 	int costo_total;
     frecuencia freq;
+    list<frecuencia> freq_l;
+    list<frecuencia>::iterator it;
     list<transmision> res;
     
     scanf("%i",&n);	// Levanto la cantidad de frecuencias
@@ -211,11 +217,21 @@ int main()
 			.inicio = start,
 			.fin = end,
 		};
-		total_freq[i] = freq;			// Guardo la frecuencia en el arreglo
+		freq_l.push_back(freq);			// Guardo la frecuencia en el arreglo
 	}
 	
     // Ordeno por tiempo de inicio
-    mergesort_ej2(total_freq,0,n-1);
+    //~ mergesort_ej2(total_freq,0,n-1);
+    freq_l.sort(compare_time);
+    
+    // Paso la lista a un arreglo
+    i = 0;
+    for (it = freq_l.begin(); it != freq_l.end(); it++)
+    {
+		total_freq[i] = *it;
+		i++;
+	}
+    freq_l.clear();
     
     // Hago el divide and conquer
     res = frequency_dc(total_freq,0,n-1);
@@ -230,6 +246,6 @@ int main()
 		printf("%i %i %i \n",it->inicio,it->fin,(it->freq).nombre);
 	}
 	printf("%i",-1);
-	
+
 	res.clear();
 }
