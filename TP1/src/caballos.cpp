@@ -47,7 +47,7 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 		cota = extras;
 		return;
 	}
-	if(fila == n){
+	if(fila == n){		//es importante que este este despues
 		return;
 	}
 	
@@ -66,7 +66,7 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 		int r = lo_que_falta;				//lo pongo en variable aparte, para que no rompa a
 											//lo_que_falta que esta fuera del if
 		
-		if(copia_tab[fila][columna] = 'v'){
+		if(copia_tab[fila][columna] == 'v'){
 
 			r = lo_que_falta -1;
 		}
@@ -88,7 +88,7 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 		
 		// llamada recursiva con el tablero actualizado
 		backtranki(copia_tab,tab_final,f,c,n,cota,r,extras);
-}
+	}
 
 	// Llamada recursiva con el mismo tablero
 	backtranki(tab,tab_final,f,c,n,cota,lo_que_falta,extras);
