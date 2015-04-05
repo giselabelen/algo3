@@ -104,12 +104,12 @@ int main()
 	int falta_cubrir = 0;
 	int extras = 0;
 	int aux;
-	Tablero tab_final(n, Vec(n, 'v'));	//aca va a estar mi solucion
 
 	scanf("%i",&n);	// Levanto la cantidad de filas-columnas
 	scanf("%i",&knights);	// Levanto la cantidad de caballos preubicados
 	
 	Tablero tab(n, Vec(n, 'v'));	// Creo un tablero de nxn y seteo todo con 'v' (vacío)
+	Tablero tab_final(n, Vec(n, 'v'));	//aca va a estar mi solucion
 	
 	for(i = 0; i < knights; i++)	// Para cada caballo preubicado
 	{
@@ -141,7 +141,8 @@ int main()
 		}
 	}
 	
-	cota = n * ceil(n/5);
+	float c = n;
+	cota = c * ceil(c/5);
 	
 	// Llamo al backtraking
 	backtranki(tab,tab_final,0,0,n,cota,falta_cubrir,extras);
