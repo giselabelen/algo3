@@ -56,7 +56,7 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 		c = 0;
 	}
 	
-	if(copia_tab[fila][columna] != 'p')	// Si no había un caballo preubicado
+	if(tab[fila][columna] != 'p')	// Si no había un caballo preubicado
 	{
 		copiar_tablero(tab,copia_tab,n);	// Hago una copia del tablero
 
