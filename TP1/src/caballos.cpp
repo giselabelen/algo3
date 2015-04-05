@@ -2,8 +2,6 @@
 #include <cstdio>
 #include "caballos.h"
 
-Tablero tab_final;
-
 void setear_amenaza(Tablero& tab, int fila, int columna, int n, int& dec)
 {
 /* Función que dada una posición del tablero, determina si la misma es 
@@ -30,7 +28,7 @@ void copiar_tablero(Tablero& tab, Tablero& copia, int n)
 	}
 }
 
-void backtranki(Tablero& tab, int fila, int columna, int n, int& cota, int lo_que_falta, int extras)
+void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, int& cota, int lo_que_falta, int extras)
 {
 /* Función que realiza el backtraking */
 	
@@ -77,11 +75,11 @@ void backtranki(Tablero& tab, int fila, int columna, int n, int& cota, int lo_qu
 		setear_amenaza(copia_tab,fila+2,columna+1,n,lo_que_falta);
 		
 		// llamada recursiva con el tablero actualizado
-		backtranki(copia_tab,f,c,n,cota,lo_que_falta,extras);
+		backtranki(copia_tab,tab_final,f,c,n,cota,lo_que_falta,extras);
 }
 
 	// Llamada recursiva con el mismo tablero
-	backtranki(tab,f,c,n,cota,lo_que_falta,extras);
+	backtranki(tab,tab_final,f,c,n,cota,lo_que_falta,extras);
 }
 
 /**********************************************************************/
@@ -106,7 +104,8 @@ int main()
 	int falta_cubrir = 0;
 	int extras = 0;
 	int aux;
-	
+	Tablero tab_final(n, Vec(n, 'v'));	//aca va a estar mi solucion
+
 	scanf("%i",&n);	// Levanto la cantidad de filas-columnas
 	scanf("%i",&knights);	// Levanto la cantidad de caballos preubicados
 	
@@ -145,7 +144,7 @@ int main()
 	cota = n * ceil(n/5);
 	
 	// Llamo al backtraking
-	backtranki(tab,0,0,n,cota,falta_cubrir,extras);
+	backtranki(tab,tab_final,0,0,n,cota,falta_cubrir,extras);
 	
 	// Armo la salida
 	printf("%i \n",cota);	// Cantidad de caballos extra
@@ -154,7 +153,7 @@ int main()
 	{
 		for(j = 0; j < n; j++)
 		{
-			if(tab[i][j] == 'e'){
+			if(tab_final[i][j] == 'e'){
 				printf("%i %i \n",i+1,j+1);	// Posición de cada caballo extra
 			}
 		}
