@@ -17,48 +17,97 @@ list<transmision> mezclar_freq(list<transmision> trans1, list<transmision> trans
 		{
 			if((it1->freq).costfminute <= (it2->freq).costfminute)	// costo1 <= costo2
 			{
-				res.push_back(*it1);
-				it1++;
-				
-				if(it1->fin >= it2->fin){	// fin1 >= fin2
-					it2++;		
-				}
-			}else{	// costo1 > costo2
-				if(it1->fin > it2->fin){	// fin1 > fin2
-					res.push_back(*it2);
-					it1->inicio = it2->fin + 1;
-					it2++;
-				}else{	// fin1 <= fin2
+				if(it1->fin < it2->fin){	// fin1 < fin2
+					res.push_back(*it1);
+					it2->inicio = it1->fin;
+					it1++;		
+				}else if(it1->fin == it2->fin){	// fin1 == fin2
+					res.push_back(*it1);
 					it1++;
+					it2++;
+				}else{	// fin1 > fin2
+					it2++;
+				}
+				
+			}else{	// costo1 > costo2
+				if(it1->fin < it2->fin){	// fin1 < fin2
+					it1++;
+				}else if(it1->fin == it2->fin){	// fin1 == fin2
+					res.push_back(*it2);
+					it1++;
+					it2++;
+				}else{	// fin1 > fin2
+					res.push_back(*it2);
+					it1->inicio = it2->fin;
+					it2++;
 				}
 			}
-		}else{	// inicio1 < inicio2
-			if(it1->fin < it2->inicio){	// fin1 < inicio2
+		}else if(it1->inicio < it2->inicio)	// inicio1 < inicio2
+		{
+			if(it1->fin <= it2->inicio)	// fin1 <= inicio2
+			{
 				res.push_back(*it1);
 				it1++;
-			}else{	// fin1 >= inicio2
+			}else{	// fin1 > inicio2
 				if((it1->freq).costfminute <= (it2->freq).costfminute)	// costo1 <= costo2
 				{
-					res.push_back(*it1);
-					it1++;
-					
-					if(it1->fin >= it2->fin){	// fin1 >= fin2
+					if(it1->fin < it2->fin){	// fin1 < fin2
+						res.push_back(*it1);
+						it2->inicio = it1->fin;
+						it1++;
+					}else if(it1->fin == it2->fin){	// fin1 == fin2
+						res.push_back(*it1);
+						it1++;
 						it2++;
-					}else{	// fin1 < fin2
-						it2->inicio = it1->fin + 1;
+					}else{	// fin1 > fin2
+						it2++;
 					}
 				}else{	// costo1 > costo2
-					it1->fin = it2->inicio - 1;
 					res.push_back(*it1);
+					(res.back()).fin = it2->inicio;
 					
-					if(it1->fin <= it2->fin){	// fin1 <= fin2
+					if(it1->fin < it2->fin){	// fin1 < fin2
 						it1++;
-					}else{	// fin1 > fin2
+					}else if(it1->fin == it2->fin){	// fin1 == fin2
 						res.push_back(*it2);
-						it1->inicio = it2->fin + 1;
+						it1++;
+						it2++;
+					}else{
+						res.push_back(*it2);
+						it1->inicio = it2->fin;
 						it2++;
 					}
 				}
+			}
+		}else{	// inicio1 > inicio2
+			if(it1->fin < it2->fin)	// fin1 < fin2
+			{
+				if((it1->freq).costfminute < (it2->freq).costfminute){	// costo1 < costo2
+					res.push_back(*it2);
+					(res.back()).fin = it1->inicio;
+					res.push_back(*it1);
+					it2->inicio = it1->fin;
+				}
+				it1++;
+			}else if(it1->fin == it2->fin)	// fin1 == fin2
+			{
+				if((it1->freq).costfminute < (it2->freq).costfminute){	// costo1 < costo2
+					res.push_back(*it2);
+					(res.back()).fin = it1->inicio;
+				}else{	// costo1 >= costo2
+					res.push_back(*it2);
+				}
+				it1++;
+				it2++;
+			}else{	// fin1 > fin2
+				if((it1->freq).costfminute < (it2->freq).costfminute){	// costo1 < costo2
+					res.push_back(*it2);
+					(res.back()).fin = it1->inicio;
+				}else{	// costo1 >= costo2
+					res.push_back(*it2);
+					it1->inicio = it2->fin;
+				}
+				it2++;
 			}
 		}
 	}
@@ -97,9 +146,9 @@ list<transmision> frequency_dc(frecuencia* freq, int low, int high)
 		trans_final = mezclar_freq(trans1,trans2);
     }else{	// Es un solo elemento, hago una lista con esa transmisión
 		tr = (transmision){
-			.freq = freq[0],
-			.inicio = freq[0].inicio,
-			.fin = freq[0].fin,
+			.freq = freq[low],
+			.inicio = freq[low].inicio,
+			.fin = freq[low].fin,
 		};
 		trans_final.push_back(tr);
 	}
@@ -111,10 +160,14 @@ list<transmision> frequency_dc(frecuencia* freq, int low, int high)
 int costo_transmision(list<transmision> trans)
 {
 	int res = 0;
+	int inicio;
+	int fin;
 	
 	for(list<transmision>::iterator it = trans.begin(); it != trans.end(); it++)
 	{
-		res = res + (it->freq).costfminute;
+		inicio = it->inicio;
+		fin = it->fin;
+		res = res + (fin-inicio)*(it->freq).costfminute;
 	}
 	
 	return res;
