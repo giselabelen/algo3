@@ -36,7 +36,7 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 	int f;
 	int c;
 	
-	if(extras > cota || fila == n)
+	if(extras > cota)
 	{	// Si me pasé de la cota o se me terminó el tablero, me voy, IMPORTANTE QUE VAYA PRIMEROA	
 		return;
 	}
@@ -45,6 +45,9 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 	{
 		copiar_tablero(tab,tab_final,n);
 		cota = extras;
+		return;
+	}
+	if(fila == n){
 		return;
 	}
 	
