@@ -36,15 +36,15 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 	int f;
 	int c;
 	
+	if(extras > cota || fila == n)
+	{	// Si me pasé de la cota o se me terminó el tablero, me voy, IMPORTANTE QUE VAYA PRIMEROA	
+		return;
+	}
+
 	if(lo_que_falta == 0)	// Si ya llené el tablero, me guardo esa solución y me voy
 	{
 		copiar_tablero(tab,tab_final,n);
 		cota = extras;
-		return;
-	}
-	
-	if(extras > cota || fila == n)
-	{	// Si me pasé de la cota o se me terminó el tablero, me voy	
 		return;
 	}
 	
@@ -59,23 +59,32 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 	if(copia_tab[fila][columna] != 'p')	// Si no había un caballo preubicado
 	{
 		copiar_tablero(tab,copia_tab,n);	// Hago una copia del tablero
+
+		int r = lo_que_falta;				//lo pongo en variable aparte, para que no rompa a
+											//lo_que_falta que esta fuera del if
 		
+		if(copia_tab[fila][columna] = 'v'){
+
+			r = lo_que_falta -1;
+		}
+
 		copia_tab[fila][columna] = 'e';	// pongo un caballo extra
 		extras++;
-		lo_que_falta--;
+
+		
 		
 		// actualizo el tablero y lo que falta
-		setear_amenaza(copia_tab,fila-2,columna-1,n,lo_que_falta);	
-		setear_amenaza(copia_tab,fila-2,columna+1,n,lo_que_falta);
-		setear_amenaza(copia_tab,fila-1,columna-2,n,lo_que_falta);	
-		setear_amenaza(copia_tab,fila-1,columna+2,n,lo_que_falta);
-		setear_amenaza(copia_tab,fila+1,columna-2,n,lo_que_falta);
-		setear_amenaza(copia_tab,fila+1,columna+2,n,lo_que_falta);
-		setear_amenaza(copia_tab,fila+2,columna-1,n,lo_que_falta);
-		setear_amenaza(copia_tab,fila+2,columna+1,n,lo_que_falta);
+		setear_amenaza(copia_tab,fila-2,columna-1,n,r);	
+		setear_amenaza(copia_tab,fila-2,columna+1,n,r);
+		setear_amenaza(copia_tab,fila-1,columna-2,n,r);	
+		setear_amenaza(copia_tab,fila-1,columna+2,n,r);
+		setear_amenaza(copia_tab,fila+1,columna-2,n,r);
+		setear_amenaza(copia_tab,fila+1,columna+2,n,r);
+		setear_amenaza(copia_tab,fila+2,columna-1,n,r);
+		setear_amenaza(copia_tab,fila+2,columna+1,n,r);
 		
 		// llamada recursiva con el tablero actualizado
-		backtranki(copia_tab,tab_final,f,c,n,cota,lo_que_falta,extras);
+		backtranki(copia_tab,tab_final,f,c,n,cota,r,extras);
 }
 
 	// Llamada recursiva con el mismo tablero
@@ -103,7 +112,7 @@ int main()
 	int cota;
 	int falta_cubrir = 0;
 	int extras = 0;
-	int aux;
+	int aux=0;
 
 	scanf("%i",&n);	// Levanto la cantidad de filas-columnas
 	scanf("%i",&knights);	// Levanto la cantidad de caballos preubicados
@@ -140,10 +149,12 @@ int main()
 			}
 		}
 	}
-	
-	float c = n;
-	cota = c * ceil(c/5);
-	
+	if(n<4){
+		cota = 4;
+	}else{
+		float c = n;
+		cota = c * ceil(c/5);
+	}
 	// Llamo al backtraking
 	backtranki(tab,tab_final,0,0,n,cota,falta_cubrir,extras);
 	
