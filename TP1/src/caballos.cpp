@@ -154,6 +154,9 @@ int main()
 	}
 	if(n<4){
 		cota = 4;
+	}else if(n == 6){
+
+		cota = 8
 	}else{
 		float c = n;
 		cota = c * ceil(c/5);
