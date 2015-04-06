@@ -4,7 +4,7 @@
 //~ #include "merge.h"
 #include "altafrecuencia.h"
 
-void aux_igual_i(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res)
+void aux_mezcla_a(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res)
 {
 	if(itA->fin < itB->fin){
 		res.push_back(*itA);
@@ -19,22 +19,7 @@ void aux_igual_i(list<transmision>::iterator& itA, list<transmision>::iterator& 
 	}
 }
 
-void aux_otro_i_a(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res)
-{
-	if(itA->fin < itB->fin){
-		res.push_back(*itA);
-		itB->inicio = itA->fin;
-		itA++;
-	}else if(itA->fin == itB->fin){
-		res.push_back(*itA);
-		itA++;
-		itB++;
-	}else{
-		itB++;
-	}
-}
-
-void aux_otro_i_b(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res)
+void aux_mezcla_b(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res)
 {
 	res.push_back(*itA);
 	(res.back()).fin = itB->inicio;
@@ -63,9 +48,9 @@ list<transmision> mezclar_freq(list<transmision> trans1, list<transmision> trans
 		if(it1->inicio == it2->inicio)	// inicio1 == inicio2
 		{
 			if((it1->freq).costfminute <= (it2->freq).costfminute){	// costo1 <= costo2
-				aux_igual_i(it1,it2,res);
+				aux_mezcla_a(it1,it2,res);
 			}else{	// costo1 > costo2
-				aux_igual_i(it2,it1,res);
+				aux_mezcla_a(it2,it1,res);
 			}
 		}else if(it1->inicio < it2->inicio)	// inicio1 < inicio2
 		{
@@ -74,16 +59,16 @@ list<transmision> mezclar_freq(list<transmision> trans1, list<transmision> trans
 				it1++;
 			}else{	// fin1 > inicio2
 				if((it1->freq).costfminute <= (it2->freq).costfminute){	// costo1 <= costo2
-					aux_otro_i_a(it1,it2,res);
+					aux_mezcla_a(it1,it2,res);
 				}else{	// costo1 > costo2
-					aux_otro_i_b(it1,it2,res);
+					aux_mezcla_b(it1,it2,res);
 				}
 			}
 		}else{	// inicio1 > inicio2
 			if((it1->freq).costfminute < (it2->freq).costfminute){	// costo1 < costo2
-				aux_otro_i_b(it2,it1,res);
+				aux_mezcla_b(it2,it1,res);
 			}else{	// costo1 >= costo2
-				aux_otro_i_a(it2,it1,res);
+				aux_mezcla_a(it2,it1,res);
 			}
 		}
 	}

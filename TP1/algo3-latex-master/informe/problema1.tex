@@ -116,11 +116,14 @@ Primeramente, veamos la complejidad de la parte golosa (Figura \ref{code:goloso}
 \Procname{int $\proc{zombie_goloso}(lista$_$ciudades, int$ $n, int$ $p)$}
 \li i $\leftarrow$ 0
 \li sum $\leftarrow$ 0
-\li \While ($i<n$ y $sum<p$)    
-\li 	\quad	$sum$ + costo_salvar_ciudad_i   
-\li	\quad	\If $sum<p$
-\li	\quad\quad	salvar_ciudad_i
-\li	\quad	$i++$
+\li \While ($i<n$ y $sum<p$) 
+\li 		\Do   
+		$sum$ + costo_salvar_ciudad_i   
+\li		\If $sum<p$
+\li 			\Then salvar_ciudad_i
+\li				$i++$
+			\End
+	\End
 \li \Return $\id{i}$       
 \end{codebox} 
 \caption{Pseudocódigo del algoritmo goloso}\label{code:goloso}
@@ -135,10 +138,10 @@ Analicemos ahora la complejidad del algoritmo completo (Figura \ref{code:zombiel
 \li n $\leftarrow$ Cantidad de ciudades
 \li p $\leftarrow$ Presupuesto
 \li cities $\leftarrow$ Lista con las n ciudades
-\li {\it calcular_costo_de_salvación}(cities)
-\li {\it ordenar_por_costo}(cities)
-\li ciudades_salvadas = {\it zombie_goloso}(cities,n,p)
-\li {\it ordenar_por_nombre}(cities)
+\li {\sc calcular_costo_de_salvación}(cities)
+\li {\sc ordenar_por_costo}(cities)
+\li ciudades_salvadas = {\sc zombie_goloso}(cities,n,p)
+\li {\sc ordenar_por_nombre}(cities)
 \li Mostrar por pantalla: ciudades salvadas y soldados enviados a cada ciudad
 \end{codebox}
 \caption{Pseudocódigo de Zombieland}\label{code:zombieland}
