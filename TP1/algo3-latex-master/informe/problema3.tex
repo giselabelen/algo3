@@ -2,15 +2,14 @@
 
 \vspace*{0.3cm}
 
-\textbf{Se tiene un juego de mesa cuyo tablero, dividido en casillas, posee igual cantidad de filas y columnas y hace uso de una conocida pieza del popular ajedrez: el caballo. El juego es solamente para un jugador y consiste en, teniendo caballos ubicados en distintos casilleros, insertar en casilleros vacíos la mínima cantidad de caballos extras, de manera tal que, siguendo las reglas del movimiento de los caballos en el ajedrez, todas las casillas se encuentren ocupadas o amenazadas por un caballo.
+Se tiene un juego de mesa cuyo tablero, dividido en casillas, posee igual cantidad de filas y columnas y hace uso de una conocida pieza del popular ajedrez: el caballo. El juego es solamente para un jugador y consiste en, teniendo caballos ubicados en distintos casilleros, insertar en casilleros vacíos la mínima cantidad de caballos extras, de manera tal que, siguendo las reglas del movimiento de los caballos en el ajedrez, todas las casillas se encuentren ocupadas o amenazadas por un caballo.
 Aspectos a tener en cuenta:
-}
 
 \begin{itemize}
-   \item Se conoce la cantidad de filas y columnas del tablero.
-   \item Se conoce la cantidad de caballos que ocupan el tablero inicialmente. 
-   \item Para cada uno de estos caballos, se sabe su ubicación en el tablero.
-   \item Una casilla se considera amenazada si existe un caballo tal que en una movida pueda ocupar dicha casilla.
+   \item Se conoce la cantidad de filas y columnas del tablero
+   \item Se conoce la cantidad de caballos que ocupan el tablero inicialmente.
+   \item Para cada uno de estos caballos, se sabe su ubicación en el tablero
+   \item Una casilla se considera amenazada si existe un caballo tal que en una movida pueda ocupar dicha casilla
 \end{itemize}
 
 %\begin{figure}[htb]
@@ -20,91 +19,94 @@ Aspectos a tener en cuenta:
 %  \caption{ejemplo}
 %\end{figure}
 
+\vspace*{0.6cm}
 
-
-\newpage
+%\newpage
 \subsection{Desarrollo de la idea y pseudocódigo.}
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+%\textbf{completar!}
 
-\begin{codebox}
-\Procname{$\proc{ejemplo_de_pseudocodigo}(x,y)$}
-\li \Return $\id{solucion}$
-\end{codebox}
+%\begin{codebox}
+%\Procname{$\proc{ejemplo_de_pseudocodigo}(x,y)$}
+%\li \Return $\id{solucion}$
+%\end{codebox}
 
+\vspace*{0.6cm}
 
-
-\newpage
+%\newpage
 \subsection{Justificación de la resolución y demostración de correctitud.}
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+%\textbf{completar!}
 
+\vspace*{0.6cm}
 
-
-\newpage
+%\newpage
 \subsection{Análisis de complejidad.}
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+
+\begin{figure}
 \begin{codebox}
-\Procname{$\proc{El_señor_de_los_caballos}()$} 
-\li n $\leftarrow$ tamaño del tablero tomado por la entrada estándar
-\li k $\leftarrow$ cantidad de caballos preubicados tomado por la entrada estándar
+\Procname{$\proc{Backtracking}(Tablero$ $tab, Tablero$ $tab$_$final, int$ $fila, int$ $columna, int$ $n)$}
+\li copia_tab $\leftarrow$ tablero vacío de n x n // $\mathcal{O}(1)$
+\li \If agregué más caballos de los que permitía la cota   // $\mathcal{O}(1)$
+\li \quad \Return   
+\li \If ya llené el tablero                                // $\mathcal{O}(1)$
+\li \quad tab_final $\leftarrow$ copia de tab              // $\mathcal{O}(n^2)$
+\li \quad cota $\leftarrow$ cantidad de caballos agregados        // $\mathcal{O}(1)$
+\li \quad \Return
+\li \If ya recorrí todo el tablero
+\li \quad \Return
+\li f $\leftarrow$ fila para la siguiente llamada recursiva  // $\mathcal{O}(1)$
+\li c $\leftarrow$ columna para la siguiente llamada recursiva  // $\mathcal{O}(1)$
+\li \If en tab[fila][columna] había un caballo preubicado      // $\mathcal{O}(1)$
+\li \quad copia_tab $\leftarrow$ copia de tab              // $\mathcal{O}(1)$
+\li \quad r $\leftarrow$ cantidad de casillas que falta llenar  //$\mathcal{O}(1)$
+\li \quad e $\leftarrow$ cantidad de caballos agregados hasta ahora $\mathcal{O}(1)$
+\li \quad \If copia_tab[fila][columna] no está cubierta
+\li \quad \quad r- -
+\li \quad copia_tab[fila][columna] $\leftarrow$ coloco un caballo extra y setea las casillas que amenaza ese nuevo caballo extra    \\   // $\mathcal{O}(1)$
+\li \quad e++          // $\mathcal{O}(1)$
+\li \quad {\it Backtraking}(copia_tab,tab_final,f,c,n) \\
+//Hago la llamada recursiva a backtracking con el nuevo tablero y los datos actualizados \\
+teniendo en cuenta el caballo extra
+\li {\it Backtraking}(tab,tab_final,f,c,n)\\
+//Llamo a backtracking con el tablero nuevo que no tiene asignado el caballo extra
+\end{codebox}
+\caption{Pseudocódigo del backtraking}\label{code:backtraking}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}
+\begin{codebox}
+\Procname{$\proc{El_señor_de_los_caballos}$} 
+\li n $\leftarrow$ tamaño del tablero //tomado por la entrada estándar
+\li k $\leftarrow$ cantidad de caballos preubicados //tomado por la entrada estándar
 \li extras $\leftarrow$ 0
-\li tab $\leftarrow$ tablero de $n*n$ vacío // $\mathcal{O}(1)$
-\li tab_final $\leftarrow$ tablero de $n*n$ vacío donde irá el resultado // $\mathcal{O}(1)$
-\li Levanto de la entrada la posición de los k caballos y seteo su ubicación como preubicados en tab \\ y las casillas que amenaza cada uno respectivamente
-\li falta_cubrir $\leftarrow$ cantidad de casillas que falta cubrir $\mathcal{O}(1)$
-\li si $n<4$
-\li \quad cota $\leftarrow$ cota específica para esos casos  // $\mathcal{O}(1)$
-\li \qquad else
-\li \quad if $n=6$
-\li \quad \quad cota $\leftarrow$ cota específica para caso $6x6$  // $\mathcal{O}(1)$
-\li \quad \qquad else
-\li \quad \quad cota $\leftarrow$ $n*(\frac{n}{5})$   // $\mathcal{O}(1)$
-\li backtracking(tab,tab_final,0,0,n,cota,falta_cubrir,extras)
-\li //Llamo a la función que, usando la técnica de backtracking arma el tablero de salida y calcula en\\ extras la cantidad de caballos agregados
+\li tab $\leftarrow$ tablero de n x n vacío // $\mathcal{O}(1)$
+\li tab_final $\leftarrow$ tablero de n x n vacío donde irá el resultado // $\mathcal{O}(1)$
+\li tab $\leftarrow$ setear ubicación de los caballos preubicadosy las casillas que amenaza cada uno.
+\li falta_cubrir $\leftarrow$ cantidad de casillas no ocupadas $\mathcal{O}(1)$
+\li \If ($n < 5$)
+\li \quad cota $\leftarrow$ 4  // $\mathcal{O}(1)$
+\li \Else
+\li \quad cota $\leftarrow$ $n*\left \lceil \dfrac{n}{5} \right \rceil$   // $\mathcal{O}(1)$
+\li {\it Backtracking}(tab,tab_final,0,0,n)
+\li //función que, usando la técnica de backtracking arma el tablero de salida y calcula en\\ extras la cantidad de caballos agregados
 \li Muestro por pantalla: cantidad de caballos agregados\\la posición de cada caballo extra
 \end{codebox}
+\caption{Pseudocódigo de El señor de los caballos}\label{code:caballos}
+\end{figure}
+\FloatBarrier
 
-\begin{codebox}
-\Procname{$\proc{Backtracking}(Tablero$ $tab, Tablero$ $tab$_$final, int$ $fila, int$ $columna, int$ $n \\
-int$ $cota, int$ $lo$_$que$_$falta, int$ $extras)$}
-\li copia_tab $\leftarrow$ tablero vacío de $n*n$ // $\mathcal{O}(1)$
-\li si agregué más caballos de los que permitía la cota   // $\mathcal{O}(1)$
-\li \quad \Return   
-\li si ya llené el tablero                                // $\mathcal{O}(1)$
-\li \quad copiar_tablero(tab, tab_final, n)               // $\mathcal{O}(n^2)$
-\li \quad //copio el tablero actual en tab_final
-\li \quad guardo la cantidad de caballos agregados        // $\mathcal{O}(1)$
-\li \quad \Return
-\li f $\leftarrow$ fila                                   // $\mathcal{O}(1)$
-\li c $\leftarrow$ columna + 1                            // $\mathcal{O}(1)$
-\li si $c=n$
-\li \quad f $\leftarrow$ fila + 1                         // $\mathcal{O}(1)$
-\li \quad c $\leftarrow$ 0                                // $\mathcal{O}(1)$
-\li si en tab[fila][columna] había un caballo preubicado      // $\mathcal{O}(1)$
-\li \quad copiar_tablero(tab, copia_tab, n)              // $\mathcal{O}(1)$
-\li \quad //recorro tab y lo copio
-\li \quad r $\leftarrow$ lo_que_falta  //me guardo la cantidad de casillas que falta llenar
-\li \quad //$\mathcal{O}(1)$
-\li \quad e $\leftarrow$ extras  // me guardo la cantidad de caballos agregados $\mathcal{O}(1)$
-\li \quad copia_tab[fila][columna] $\leftarrow$ caballos extra        // $\mathcal{O}(1)$
-\li \quad e++          // $\mathcal{O}(1)$
-\li \quad Seteo las casillas que amenaza ese nuevo caballo extra  // $\mathcal{O}(1)$
-\li \quad Hago la llamada recursiva a backtracking con el nuevo tablero y los datos actualizados \\
-teniendo en cuenta el caballo extra
-\li Llamo a backtracking con el tablero nuevo que no tiene asignado el caballo extra
-\end{codebox}
+\vspace*{0.6cm}
 
-
-
-\newpage
+%\newpage
 \subsection{Experimentación y gráficos.}
 
 \vspace*{0.3cm}
