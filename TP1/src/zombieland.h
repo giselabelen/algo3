@@ -19,8 +19,8 @@ typedef struct ciudad_t
 //~ void heroe_tactico_del_pais(FILE* a);
 //~ void calcular_costo_de_salvacion(ciudad* city, int n);
 //~ int zombie_goloso(ciudad* city, int n, int p);
-void calcular_costo_de_salvacion(list<ciudad> city);
-int zombie_goloso(list<ciudad> city, int p);
+void calcular_costo_de_salvacion(list<ciudad>& city);
+int zombie_goloso(list<ciudad>& city, int p);
 bool compare_cost(const ciudad& city1, const ciudad& city2);
 bool compare_name(const ciudad& city1, const ciudad& city2);
 

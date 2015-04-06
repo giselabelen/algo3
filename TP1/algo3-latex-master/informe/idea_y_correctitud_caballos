@@ -1,0 +1,38 @@
+v v v(1)	e e e(2)	a a a(3)
+v p v		a p a		a p a
+v v v		a a a		e e e
+
+Supongamos que yo tengo un ejemplo como el de (1), donde v es un casillero vacío y p un caballo inicial. Veamos que tanto (2) como (3) son soluciones(e significa caballo extra colocado y a casilla amenazada sin un caballo colocado). Esto significa que en principio, puede haber multiples soluciones óptimas. Más aún, observemos que si el tablero fuera de 2 x 2, la unica manera de obtener un tablero completo (o sea un tablero tal que todas sus casillas o tienen un caballo o estan amenazadas por uno) es que haya un caballo en cada casilla, o sea que puedo tener soluciones optimas como en 3 x 3 o puedo necesitar completar el tablero con caballos como en 2 x 2. Y si fuera de 4 x 4?
+
+a a a p(4)	a p a a(5)	a p e a(6)	a a p a(7)	a a a a(8)
+a a e p		a p a a		a p e a		a a p a		e e e e
+a a e p		a e a a		a a a a		a a p a		a a a a
+a a a p		a e a a		a a a a		a a p a		a a a a
+
+Veamos que (4) es un ejemplo donde pude insertar 2 caballos, (5) y (6) son un tablero de 4 x 4 pero ambos son solucion de un mismo tablero inicial (el tablero que tiene solo los caballos iniciales), y (7) no necesita poner ningún caballo extra. Esto significa que hay casos muy variados y muy amplios, lo cual vuelve difícil construir un algorítmo que me resuelva el problema. Ante esto, como somos malos perdedores, decidimos que vamos a sacrificar tiempo, pero vamos a encontrar una solución óptima. Por eso la idea de la solución será usando backtracking. Más precisamente, trataremos de observar todas las posibles formas de insertar caballos en un determinado tablero (desde rellenar un tablero con caballos hasta no poner ninguno) y nos quedaremos con una solución tal que el tablero quede completo, y la cantidad de caballos insertados sea menor o igual al de todo el resto de las soluciones. Pero, como haremos esto? La idea sera empezando por el casillero de la primera fila y primera columna, ir avanzando por los distintos casilleros de esa fila, en orden, primero suponiendo que se coloca un caballo, y después suponiendo que no. Esta suposición se realizará cada vez que se avance a un nuevo casillero. Cuando se llegue al final de una fila, se continuara por el primer casillero de la fila siguiente. Cada vez que se haga una suposición, se verá si el tablero queda o no completo, y si queda completo, se lo comparará con el resto de las soluciones completas, para ver si es menor o igual a todas o no. De ser menor o igual a todas, se la considerará la solución hasta qe una nueva solución llegue y se hará el mismo chequeo.Esto se realizará hasta completar el tablero, obteniendo así, la solución óptima.
+
+					
+				--------1-------- (los numeros representan casillero numero tal visto)
+			pongo c	|		|no pongo c
+				|		|
+		----------------2		2----------------
+	pongo c	|		|no pongo c	|pongo c	|no pongo c
+		|		|		|		|
+		3		3		3		3
+										(9)
+				    ETCETERA
+
+Sin embargo, ver todos los casos es algo muy tedioso y si bien tenemos tiempo para perder, los docentes de algo 3 se molestarían si perdemos demasiado, lo cual motiva tratar de encontrar una cota, y si un caso supera esa cota, desecharlo, puesto que ese camino seguro no llega a la solución:
+
+No puedo pararme a pensar un caso por cada tamaño de tablero, puesto que no terminaría nunca, pero si puedo pensar q si vemos el tablero(1) y reemplazamos esa p por una v, la solución (2) es óptima(cambiando su p por una e) lo cual significa que independientemente de los caballos p, con a lo sumo 4 e se debe completar un tablero; Por otro lado,como dijimos antes a un tablero de 2 x 2 hay que llenarlo de caballos; y si vemos el tablero (8), vemos que a un tablero de 4 x 4 vacío, con 4 caballos le basta para completarse, lo cual significa que sucede algo similar a con el tablero de 3 x 3. Por esto diremos que si nuestro tablero es menor o igual a 4 x 4, no debo ver aquellos casos que pongan más de 4 caballos, puesto que de seguro, eso no es una solución óptima. Pero que sucede con el resto de los casos? Observemos lo siguiente. Sea un tablero de n x m (no apto para este juego, pero si para lo que se quiere mostrar) con n = 5 y m >=5. Tomemos por ejemplo un tablero de 5 x 5 vacío, pero con una fila de caballos en el centro(llamados c).
+
+v v v v v(10)	v v v v v v(11)
+v v v v v	v v v v v v
+c c c c c	c c c c c v
+v v v v v	v v v v v v
+v v v v v	v v v v v v
+
+Observemos que en (10) todas las casillas estan amenazadas u ocupadas y sería un tablero completo.Es más, si sacaramos un solo caballo, el tablero dejaría de ser completo.Esto si bien no tiene por que ser un óptimo,es cuando menos una solución que no usa una cantidad abusiva de caballos. Ahora que sucedería si extendieramos una columna más, como en (11)? observemos que todas las casillas estarían ocupadas menos la de la fila del medio a la derecha. O sea que si la fila estuviera completa, sería un tablero completo.. observar que si vuelvo a extender una columna sucede lo mismo. Volviendo otra vez a tableros válidos, la idea recien mencionada nos hace pensar que independientemente del tamaño del tablero, con una linea de caballos cada 5 filas, debería bastar para completar el tablero, y ver más caballos que eso, sería un esfuerzo innecesario(si el tablero no fuera multiplo de 5, pongo simplemente 1 fila de caballos cada 5 filas normales, y de lo que me queda elijo una fila que sea centrica respecto de las sobrantes, que son menores que 5, y la convierto en filade caballos. Ver que si una fila centrica completa 5 filas, en particular completa 4,3,2 y 1). Entonces, por todo lo dicho anteriormente, si llamamos n a la cantidad de filas y columnas de un tablero, dado un tablero de n x n con n menor a 5, tomo como cota 4 caballos extras, y si n>=5 tomo como cota n* redondeado_hacia_arriba(1/5 * n) que es lo que significa meter una fila de caballos por cada 5 filas.
+
+ESTO NO VA EN EL INFORME( DE ACA PARA ABAJO), ES UNA ACLARACION PARA NOSOTROS:
+El caso n = 6 no esta puesto en esta explicación porque lo que ponemos en el código es para que las pruebas salgan más rápido. Si buscamos una cota optima para cada n, n puede ser infinito, y no sirve, esta cota de n*(1/5)*n tiene la ventaja de que por mas que no es optima, es facil de expresary sirve para todo n >5

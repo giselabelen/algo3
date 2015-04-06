@@ -152,7 +152,7 @@ int main()
 			}
 		}
 	}
-	if(n<4){
+	if(n<5){
 		cota = 4;
 	}else if(n == 6){
 
