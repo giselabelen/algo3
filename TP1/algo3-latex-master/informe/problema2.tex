@@ -20,7 +20,7 @@ Hay que tener en cuenta lo siguiente:
 	\item n que indica la cantidad frecuencias que puede utilizar el enlace
 	\item tenemos n lineas seguidas, cada linea indica una frecuencia
 	\begin{itemize}
-		\item cada linea tiene campos <c,i,f> que indican costo por minuto, inicio y fin del intervalo de disponibilidad
+		\item cada linea tiene campos $<$c,i,f$>$ que indican costo por minuto, inicio y fin del intervalo de disponibilidad
 	\end{itemize}
 	\item El tiempo inicial empieza a partir del minuto cero
 \end{itemize}
@@ -61,21 +61,43 @@ Hay que tener en cuenta lo siguiente:
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+En este apartado demostraremos que la complejidad total de nuestro algoritmo es $\mathcal{O}(n*log(n))$.
 
+Empezaremos analizando el pseudocódigo de AltaFrecuencia asumiendo que la complejidad de frecuency_dc es $\mathcal{O}(n*log(n))$
+En las dos primeras lineas se procede a crear una lista vacía $\mathcal{O}(1)$ y una lista que se completará con las frecuencias tomadas de la entrada. Esto último requiere recorrer la entrada $\mathcal{O}(n)$ y copiar los datos $\mathcal{O}(1)$.
+En la línea 3 de la figura se pasa a ordenar la lista en base a los tiempos de inicio de cada elemento $\mathcal{O}(n*log(n))$ para luego en la línea 4 ser trasladada a un arreglo previamente creado $\mathcal{O}(n)$. Con dicho arreglo y la función frecuency_dc se arma lo que será la lista solución del problema $\mathcal{O}(n*log(n))$. A continuación, se recorre la lista solución calculando el costo total de la transmisión $\mathcal{O}(n)$ para luego, en la línea 8 mostrar ese valor junto con las frecuencias utilizadas. Esto último se considera $\mathcal{O}(n)$ ya que los costos de mostrar datos son tomados como $\mathcal{O}(1)$ y el costo de recorrer la solución es $\mathcal{O}(n)$.
+
+\begin{figure}[!ht]
 \begin{codebox}
 \Procname{$\proc{AltaFrecuencia}()$} 
 \li Creo una lista de transmisiones resultado  //$\mathcal{O}(1)$ 
-\li total_freq $\leftarrow$ Creo un arreglo para almacenar las n frecuencias levantadas de la entrada $\mathcal{O}(n)$
-\li ordeno_por_tiempo(total_freq,0,n-1) {\it //ordeno por tiempo de inicio. $\mathcal{O}(n.logn)$}
+\li freq_l $\leftarrow$ Creo una lista para almacenar las n frecuencias levantadas de la entrada
+\li ordeno_por_tiempo(freq_l) {\it //ordeno por tiempo de inicio. $\mathcal{O}(n.logn)$}
+\li total_freq $\leftarrow$ paso freq_l ordenada a un arreglo $\mathcal{O}(n)$
 \li resultado $\leftarrow$ frecuency_dc(total_freq,0,n-1)
 \li {\it //armo la transmisión resultado haciendo uso de la técnica de D\&C}
 \li costo_total $\leftarrow$ costo_transmision(resultado) //$\mathcal{O}(n)$
 \li Muestro por pantalla: costo de la transmisión (costo_total) y el intervalo de tiempo ocupado por cada\\ frecuencia usada {\it //Se hace en $\mathcal{O}(n)$ porque es recorrer la lista mostrando las frecuencias $\mathcal{O}(1)$}
 \end{codebox}
+\caption{Pseudocódigo de AltaFrecuencia}\label{code:goloso}
+\end{figure}
+\FloatBarrier
+
+Luego con la siguiente ecuación:
+
+\begin{equation*}
+\begin{array}{l}
+T(n) = \mathcal{O}(1) + 2\mathcal{O}(n)*\mathcal{O}(1) + 2\mathcal{O}(n*log(n)) + 3\mathcal{O}(n)\\
+T(n) = \mathcal{O}(n*log(n))
+\end{array}
+\end{equation*}
+
+La complejidad total de este algoritmo es, entonces, $\mathcal{O}(n*log(n))$.
+
+Resta ver que frecuency_dc es en efecto $\mathcal{O}(n*log(n))$.
 
 \begin{codebox}
-\Procname{lista_de_transmisión $\proc{frecuency_dc}(frecuencia$*$ freq, int$ $low, int$ $high)$}
+\Procname{$\proc{frecuency_dc}(Arreglo$_$frecuencias$ $freq, int$ $low, int$ $high)$}
 \li Inicializo 3 listas: trans1,trans2,trans_final
 \li \If ($low<high$)
 \li	\quad	mitad $\longleftarrow$ $\frac{low + high}{2}$
