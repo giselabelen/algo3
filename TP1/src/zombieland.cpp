@@ -5,7 +5,7 @@
 #include "zombieland.h"
 
 //~ void calcular_costo_de_salvacion (ciudad* city, int n)
-void calcular_costo_de_salvacion (list<ciudad> city)
+void calcular_costo_de_salvacion (list<ciudad>& city)
 {
 /* Función que calcula la cantidad de soldados que hacen falta y 
  * el correspondiente costo, para salvar cada ciudad.
@@ -19,7 +19,7 @@ void calcular_costo_de_salvacion (list<ciudad> city)
 	int s;
 	int c;
 	float aux;
-	list<ciudad>::iterator it = city.begin();
+	list<ciudad>::iterator it;
 	
     //~ for(int i = 0; i < n; i++)
     for(it = city.begin(); it != city.end(); it++)
@@ -39,7 +39,7 @@ void calcular_costo_de_salvacion (list<ciudad> city)
 }
 
 //~ int zombie_goloso(ciudad* city, int n, int p)
-int zombie_goloso(list<ciudad> city, int p)
+int zombie_goloso(list<ciudad>& city, int p)
 {
 /* Devuelve la cantidad de ciudades que se salvan */
 
@@ -125,6 +125,7 @@ int main()
     // Ordeno por costo de salvación
     //~ mergesort_ej1(cities,0,n-1,1);
     cities.sort(compare_cost);
+    //~ cities.sort();
     
     // Busco la solución "greedy"
     //~ salvacion_total = zombie_goloso(cities,n,p);
