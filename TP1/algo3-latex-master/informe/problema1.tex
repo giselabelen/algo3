@@ -2,17 +2,15 @@
 
 \vspace*{0.3cm}
 
-\textbf{
 Tenemos un país infectado de zombies. El país esta dividido en ciudades. Nuestro ojetivo es salvar la mayor cantidad de ciudades de este país, enviando soldados a ellas. Una ciudad se considera salvada si los soldados exterminan todos los zombies de dicha ciudad.
-\\
+
 Aspectos a tener en cuenta:
-}
 
 \begin{itemize}
    \item Los recursos del país son acotados 
-   \item Se conoce la cantidad de soldados atrincherados en cada ciudad(Soldados iniciales de la ciudad)  
-   \item Se conoce la cantidad de zombies en cada ciudad.
-   \item Para cada ciudad, se conoce el costo de envíar un soldado
+   \item Se conoce la cantidad de soldados atrincherados en cada ciudad (soldados iniciales de la ciudad)  
+   \item Se conoce la cantidad de zombies en cada ciudad
+   \item Para cada ciudad, se conoce el costo de enviar un soldado
    \item Cada soldado se puede encargar como máximo de 10 zombies 
 \end{itemize}
 
@@ -22,102 +20,85 @@ Aspectos a tener en cuenta:
 %  \end{center}
 %  \caption{ejemplo}
 %\end{figure}
-
-
-
-\newpage
+\vspace*{0.6cm}
+%\newpage
 \subsection{Desarrollo de la idea y pseudocódigo.}
 
 \vspace*{0.3cm}
 
-Notemos que para recuperar la mayor cantidad de ciudades de un país en mano de los zombies, nosotros lo único que podemos hacer es enviar soldados a sus ciudades teniendo en cuenta la cantidad de soldados que esta ciudad posee por si misma. Como esto es la guerra, no tiene ningún sentido envíar soldados a una ciudad sino aseguramos que esta se salvará, puesto que es un desperdicio de presupuesto y vidas humanas. Por otro lado, debido a que queremos salvar la mayor cantidad de ciudades, y sabemos que para salvar una ciudad necesitamos como MÍNIMO 1 soldado por cada diez zombies, si enviamos soldados a una ciudad, nos aseguraremos de enviar la menor cantidad de soldados posibles, asi ahorramos recursos que podrán ser utilizados en otra ciudad. Tomando en cuenta todo lo antes dicho, para resolver este problema, la idea será primero tener conocimiento de cuanto cuesta salvar cada ciudad. Para esto, basta hacer la siguiente cuenta por cada ciudad (las variables abajo expuestas no pertenecen al algoritmo, son simplemente a modo de ayuda para entender que se hace):
+Notemos que para recuperar la mayor cantidad de ciudades de un país en mano de los zombies, nosotros lo único que podemos hacer es enviar soldados a sus ciudades teniendo en cuenta la cantidad de soldados que esta ciudad posee de por sí. Como esto es la guerra, no tiene ningún sentido enviar soldados a una ciudad sino estamos seguros de que ésta se salvará, puesto que es un desperdicio de presupuesto y vidas humanas. Por otro lado, debido a que queremos salvar la mayor cantidad de ciudades, y sabemos que para salvar una ciudad necesitamos como MÍNIMO 1 soldado por cada diez zombies, si enviamos soldados a una ciudad, nos aseguraremos de enviar la menor cantidad de soldados posibles, así ahorramos recursos que podrán ser utilizados en otra ciudad. Tomando en cuenta todo lo antes dicho, para resolver este problema, la idea será primero tener conocimiento de cuánto cuesta salvar cada ciudad. Para esto, basta hacer la siguiente cuenta por cada ciudad: %(las variables abajo expuestas no pertenecen al algoritmo, son simplemente a modo de ayuda para entender que se hace):
 \begin{itemize}
-   \item  zombis_vivos = zombis_totales - 10 * soldados_atrincherados_de_la_ciudad
-   \item  soldados_requeridos = zombis_vivos/ 10 (redondeado hacia arriba, puesto que no puedo enviar medio soldado)
-   \item costo_salvacion_de_la_ciudad = soldados_requeridos * costo_por_soldado_de_la_ciudad  
+   \item $zombis.vivos = zombis.totales - 10 * soldados.atrincherados.de.la.ciudad$
+   \item $soldados.requeridos = \left \lceil \dfrac{zombis.vivos}{10} \right \rceil$ (redondeado hacia arriba, puesto que no puedo enviar medio soldado)
+   \item $costo.salvacion.de.la.ciudad = soldados.requeridos * costo.por.soldado.de.la.ciudad$
 \end{itemize}
 
-Luego de saber estos costos, se deberá ordenar las ciudades de menor a mayor respecto a su costo para ser salvadas y, de manera golosa, irlas salvando en ese orden hasta cubrir el presupuesto.
+Luego de calcular estos valores, se ordenarán las ciudades de menor a mayor respecto a su costo para ser salvadas y, de manera golosa, irlas salvando en ese orden hasta cubrir el presupuesto.
 
-\begin{codebox}
-\Procname{$\proc{ejemplo_de_pseudocodigo}(x,y)$}
-\li \Return $\id{solucion}$
-\end{codebox}
+%\begin{codebox}
+%\Procname{$\proc{ejemplo_de_pseudocodigo}(x,y)$}
+%\li \Return $\id{solucion}$
+%\end{codebox}
 
+\vspace*{0.6cm}
 
-
-\newpage
+%\newpage
 \subsection{Justificación de la resolución y demostración de correctitud.}
 
 \vspace*{0.3cm}
 
 Tenemos dos casos:
 \begin{enumerate}
-	\item No se salva nadie
+	\item No se salva ninguna ciudad
 	\item Se salva al menos una ciudad
 \end{enumerate}
 
-\subsubsection{ NO SE SALVA NADIE}
+\subsubsection{No se salva ninguna ciudad:}
 
-No se salva nadie $\Longleftrightarrow$ Mi algoritmo dice que no se salva nadie
+No se salva nadie $\Longleftrightarrow$ nuestro algoritmo dice que no se salva nadie.
 
-$\Longrightarrow$ Supongamos que no se salva nadie, eso quiere decir que no existe ninguna ciudad tal que si yo gasto todo mi presupuesto en enviarle soldados a ella, esta obtenga 1 soldado por cada 10 zombies como mínimo.
+$\Longrightarrow )$ Supongamos que no se salva nadie, eso quiere decir que no existe ninguna ciudad tal que si yo gasto todo mi presupuesto en enviarle soldados, ésta obtenga 1 soldado por cada 10 zombies como mínimo.
 
-Entonces supongo $p$ un presupuesto tal que no llegue a cumplir los costos de envío de soldados mínimo para salvar ninguna ciudad.
-Particularmente, si $p$ no alcanza para salvar a ninguna ciudad, no alcanza para salvar a la ciudad que menos presupuesto necesita para ser salvada(si hay más de una cuyo costo es el mínimo, en particular no se puede salvar ninguna de ellas)$(A)$
+Sea $p$ un presupuesto tal que no llegue a cumplir los costos de envío de soldados mínimo para salvar ninguna ciudad.
+Particularmente, si $p$ no alcanza para salvar a ninguna ciudad, no alcanza para salvar a la ciudad que menos presupuesto necesita para ser salvada (si hay más de una cuyo costo es el mínimo, en particular no se puede salvar ninguna de ellas).$(A)$
 
-Por lo tanto, cuando mi algoritmo ordene las ciudades por costo de salvación, que es justamente el costo que tiene conseguir la mínima cantidad de soldados necesarios para salvar esa ciudad, y tome la primer ciudad, que es la que menos costo necesita para ser salvada(o por lo menos una de ellas), por lo dicho en $(A)$, mi algoritmo no tomará esta ciudad puesto que el presupuesto no alcanza, y devolverá que se pueden salvar 0 ciudades, y no enviará tropas, pues el país está perdido, fracasamos, NO SE SALVA NADIE.
+Por lo tanto, cuando mi algoritmo ordene las ciudades por costo de salvación, que es justamente el costo que tiene conseguir la mínima cantidad de soldados necesarios para salvar esa ciudad, y tome la primer ciudad, que es la que menos costo tiene para ser salvada (o por lo menos una de ellas), por lo dicho en $(A)$, el algoritmo no tomará esta ciudad ya que el presupuesto no alcanza, y devolverá que se pueden salvar 0 ciudades, y no enviará tropas, el país está perdido, fracasamos, NO SE SALVA NADIE.
 
-$\Longleftarrow$ Supongamos que mi algoritmo dice que no se salva nadie.
+$\Longleftarrow )$ Supongamos que nuestro algoritmo dice que no se salva nadie.
 
-Entonces, eso significa que por lo explicado anteriormente, el presupuesto es menor a la ciudad que menos costo requiere por ser salvada(si hay varios mínimos, esto no molesta ya que justamente tienen el mismo costo por salvación)
+Eso significa que por lo explicado anteriormente, el presupuesto es menor a la ciudad que menos costo tiene para ser salvada (si hay varios mínimos, esto no molesta ya que justamente tienen el mismo costo por salvación).
 
-Pero si el presupuesto es menor al costo de salvar a la ciudad (o ciudades) que menos costo requiere por salvarse, entonces el presupuesto es menor al costo de salvar cualquier ciudad.
+Pero si el presupuesto es menor al costo de salvar a la ciudad (o ciudades) que menos dinero requiere por salvarse, entonces el presupuesto es menor al costo de salvar cualquier ciudad.
 
 Si el presupuesto no alcanza para salvar ninguna ciudad, entonces nuevamente, NO SE SALVA NADIE.
 
 \subsubsection{Se salva al menos una ciudad:}
 
-Hay solución no vacía $\Longleftrightarrow$ Mi algoritmo devuelve solución óptima
+Hay solución no vacía $\Longleftrightarrow$ nuestro algoritmo devuelve solución óptima.
 
-Sea $N$ nuestra solución óptima, la solución armada con el goloso, y $O$ la solución óptima que más se parece a $N$. Asumimos $N$ no óptima y ordeno $O$ por el costo de salvación, de menor a mayor.
-Sea $N_{k}$ el primer elemento en el que difieren $O$ y $N$ osea $\forall$ $i<k$, $N_{i}=O_{i}$.
+Sea $N$ nuestra solución óptima, la solución armada con el algoritmo goloso, y $O$ la solución óptima que más se parece a $N$. Asumimos $N$ no óptima y ordenamos $O$ por el costo de salvación, de menor a mayor.
+Sea $N_{k}$ el primer elemento en el que $N$ difiere de $O$, o sea $\forall i<k , N_{i}=O_{i}$.
 
-Dado que $N_{k}$ fue obtenido usando el algoritmo goloso sabemos que $C(N_{k}) \geq C(N{k-1})$ y que $\forall j>k$, $C(N_{k})\leq C(N_{j})$.
+Dado que $N_{k}$ fue obtenido usando el algoritmo goloso sabemos que $Costo(N_{k}) \geq Costo(N{k-1})$ y que $\forall j>k, Costo(N_{k}) \leq Costo(N_{j})$.
 
-En otras palabras, de los $N_{k}$ tiene el menor de los costos mayores que $N_{k-1}$. Por lo tanto $C(N_{k})\leq C(O_{k})$, luego puedo reemplazar $O_{k}$ por $N_{k}$ y obtengo una solución óptima que se parece mas que la $O$ original a $N$. ABSURDO puesto que partimos de que $O$ es la solución óptima que más se parece a $N$.
+En otras palabras, $Costo(N_{k})$ es el menor de todas los costos por salvación mayores a $Costo(N_{k-1})$. Por lo tanto $Costo(N_{k}) \leq Costo(O_{k})$, luego puedo reemplazar $O_{k}$ por $N_{k}$ y obtengo una solución óptima que se parece más que la $O$ original a $N$. ABSURDO puesto que partimos de que $O$ es la solución óptima que más se parece a $N$.
 
-Este absurdo viene de suponer que $N$ no es óptima.
+Este absurdo viene de suponer que $N$ no es óptima.  Entonces podemos conluír que, si existe alguna solución, nuestro algoritmo goloso obtiene la solución óptima.
 
+\vspace*{0.6cm}
 
-
-
-
-\newpage
+%\newpage
 \subsection{Análisis de complejidad.}
 
 \vspace*{0.3cm}
 
-\begin{codebox}
-\Procname{$\proc{Zombieland}$}
-\li n $\leftarrow$ Cantidad de ciudades {\it //Lectura de dato por entrada estándar}
-\li p $\leftarrow$ Presupuesto {\it //Lectura de dato por entrada estándar}
-\li cities $\leftarrow$ Crear arreglo de n ciudades y llenarlo {\it //n lecturas de datos por entrada estándar}
-\li {\it //Esto se hace en $\mathcal{O}(n)$ dado que la entrada consiste de una línea con el presupuesto y la n cantidad de ciudades}\\ {\it y n líneas para estas. Entonces el procedimiento es recorrer las n líneas levantando los datos, esto lo consideramos}\\ {\it $\mathcal{O}(1)$ para las n ciudades, debido a que la creación del tipo ciudad y la asignación de sus valores los tomamos como $\mathcal{O}(1)$}
-\li calcular_costo_de_salvacion(cities,n) {\it // $\mathcal{O}(n)$}
-\li ordenar_por_costo(cities) {\it //de menor a mayor usando merge_sort $\mathcal{O}(n.log n)$}
-\li ciudades_salvadas = zombie_goloso(cities,n,p) {\it // $\mathcal{O}(n)$}
-\li ordenar_por_nombre(cities) {\it // usando merge_sort $\mathcal{O}(n.log$ $n)$}
-\li {\it //(Optamos por esta medida para facilitar la devolución en el formato indicado por el ejercicio)}
-\li Mostrar por pantalla: ciudades salvadas
-\li                       soldados enviados a cada ciudad
-\li {\it //Esto se hace en $\mathcal{O}(n)$ dado que es recorrer las n ciudades y, en base a su campo "salvar" determinar si se debe imprimir}\\{\it lo pedido por el enunciado, y también la cantidad total de ciudades salvadas.}
-\end{codebox}
+A continuación mostraremos que la complejidad total de nuestro algoritmo es $\mathcal{O}(n*log(n))$.
 
-Complejidad $\mathcal{O}(n log n)$
+Primeramente, veamos la complejidad de la parte golosa (Figura \ref{code:goloso}).  Las primeras dos líneas son asignaciones, así que cuentan como $\mathcal{O}(1)$. En la línea 3 comienza un ciclo que recorrerá las ciudades (previamente ordenadas por costo de salvación) hasta que se supere el presupuesto o se terminen de ver las ciudades. Dentro de ese ciclo, se va acumulando el costo de salvar la ciudad, y en caso de estar dentro del presupuesto, se la salva.  La línea 6 será sólo una asignación a una variable que determinará que dicha ciudad será salvada, así que como sólo tenemos una comparación, un incremento y a lo sumo dos asignaciones, cada iteración del ciclo tendrá una complejidad de $\mathcal{O}(1)$.  Como el ciclo itera a lo sumo n veces, podemos decir que esta parte tiene complejidad $\mathcal{O}(n)$.
 
+\begin{figure}[!ht]
 \begin{codebox}
-\Procname{int $\proc{zombie_goloso}(int$ $n, int$ $p)$}
+\Procname{int $\proc{zombie_goloso}(lista$_$ciudades, int$ $n, int$ $p)$}
 \li i $\leftarrow$ 0
 \li sum $\leftarrow$ 0
 \li \While ($i<n$ y $sum<p$)    
@@ -127,10 +108,38 @@ Complejidad $\mathcal{O}(n log n)$
 \li	\quad	$i++$
 \li \Return $\id{i}$       
 \end{codebox} 
+\caption{Pseudocódigo del algoritmo goloso}\label{code:goloso}
+\end{figure}
+\FloatBarrier
 
-Complejidad $\mathcal{O}(n)$
-\\
-Luego arrivamos a la complejidad temporal pedida, que era $\mathcal{O}(n)$ sobre la cantidad de ciudades total.
+Analicemos ahora la complejidad del algoritmo completo (Figura \ref{code:zombieland}). Las primeras dos líneas son lecturas de datos, las cuales pueden considerarse $\mathcal{O}(1)$.  En la línea 3 se crea una lista con las n ciudades indicadas; si consideramos $\mathcal{O}(1)$ la creación de una lista vacía y $\mathcal{O}(1)$ la lectura y escritura de cada una de las ciudades, podemos decir que este paso es $\mathcal{O}(n)$.  La línea 4 calcula el costo de salvar cada ciudad, para lo cual se recorre toda la lista de ciudades y se hacen los cálculos previamente descritos, así que nuevamente tenemos una complejidad de $\mathcal{O}(n)$.  Luego, en la línea 5, pasamos a ordenar las ciudades por ese costo de salvación, y sabemos que este ordenamiento puede ser implementado con una complejidad de $\mathcal{O}(n*log(n))$. Acto seguido, se hace el llamado a la función golosa analizada anteriormente ($\mathcal{O}(n)$) y se vuelve a ordenar la lista, esta vez por el nombre (un número) que identifica a cada ciudad según el orden en el que vino dada en la entrada (nuevamente, esto puede realizarse en $\mathcal{O}(n*log(n))$). Optamos por este último ordenamiento para facilitar la devolución en el formato indicado por el ejercicio.  Lo último que se hace es sacar por pantalla el número de ciudades salvadas y los soldados enviados a cada ciudad, para lo cual se recorre debe recorrer toda la lista de ciudades ($\mathcal{O}(n)$).
+
+\begin{figure}[!ht]
+\begin{codebox}
+\Procname{$\proc{Zombieland}$}
+\li n $\leftarrow$ Cantidad de ciudades
+\li p $\leftarrow$ Presupuesto
+\li cities $\leftarrow$ Lista con las n ciudades
+\li {\it calcular_costo_de_salvacion}(cities)
+\li {\it ordenar_por_costo}(cities)
+\li ciudades_salvadas = {\it zombie_goloso}(cities,n,p)
+\li {\it ordenar_por_nombre}(cities)
+\li Mostrar por pantalla: ciudades salvadas y soldados enviados a cada ciudad
+\end{codebox}
+\caption{Pseudocódigo de Zombieland}\label{code:zombieland}
+\end{figure}
+\FloatBarrier
+
+Tenemos entonces la siguiente ecuación:
+
+\begin{equation*}
+\begin{array}{l}
+T(n) = \mathcal{O}(1) + 4\mathcal{O}(n) + 2\mathcal{O}(n*log(n))\\
+T(n) = \mathcal{O}(n*log(n))
+\end{array}
+\end{equation*}
+
+La complejidad total de este algoritmo es, entonces, $\mathcal{O}(n*log(n))$.
 
 
 \newpage
