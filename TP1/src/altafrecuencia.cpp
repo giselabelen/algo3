@@ -4,6 +4,53 @@
 //~ #include "merge.h"
 #include "altafrecuencia.h"
 
+void aux_igual_i(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res)
+{
+	if(itA->fin < itB->fin){
+		res.push_back(*itA);
+		itB->inicio = itA->fin;
+		itA++;		
+	}else if(itA->fin == itB->fin){
+		res.push_back(*itA);
+		itA++;
+		itB++;
+	}else{
+		itB++;
+	}
+}
+
+void aux_otro_i_a(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res)
+{
+	if(itA->fin < itB->fin){
+		res.push_back(*itA);
+		itB->inicio = itA->fin;
+		itA++;
+	}else if(itA->fin == itB->fin){
+		res.push_back(*itA);
+		itA++;
+		itB++;
+	}else{
+		itB++;
+	}
+}
+
+void aux_otro_i_b(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res)
+{
+	res.push_back(*itA);
+	(res.back()).fin = itB->inicio;
+	
+	if(itA->fin < itB->fin){
+		itA++;
+	}else if(itA->fin == itB->fin){
+		res.push_back(*itB);
+		itA++;
+		itB++;
+	}else{
+		res.push_back(*itB);
+		itA->inicio = itB->fin;
+		itB++;
+	}
+}
 
 list<transmision> mezclar_freq(list<transmision> trans1, list<transmision> trans2)
 {	
@@ -15,99 +62,28 @@ list<transmision> mezclar_freq(list<transmision> trans1, list<transmision> trans
 	{
 		if(it1->inicio == it2->inicio)	// inicio1 == inicio2
 		{
-			if((it1->freq).costfminute <= (it2->freq).costfminute)	// costo1 <= costo2
-			{
-				if(it1->fin < it2->fin){	// fin1 < fin2
-					res.push_back(*it1);
-					it2->inicio = it1->fin;
-					it1++;		
-				}else if(it1->fin == it2->fin){	// fin1 == fin2
-					res.push_back(*it1);
-					it1++;
-					it2++;
-				}else{	// fin1 > fin2
-					it2++;
-				}
-				
+			if((it1->freq).costfminute <= (it2->freq).costfminute){	// costo1 <= costo2
+				aux_igual_i(it1,it2,res);
 			}else{	// costo1 > costo2
-				if(it1->fin < it2->fin){	// fin1 < fin2
-					it1++;
-				}else if(it1->fin == it2->fin){	// fin1 == fin2
-					res.push_back(*it2);
-					it1++;
-					it2++;
-				}else{	// fin1 > fin2
-					res.push_back(*it2);
-					it1->inicio = it2->fin;
-					it2++;
-				}
+				aux_igual_i(it2,it1,res);
 			}
 		}else if(it1->inicio < it2->inicio)	// inicio1 < inicio2
 		{
-			if(it1->fin <= it2->inicio)	// fin1 <= inicio2
-			{
+			if(it1->fin <= it2->inicio){	// fin1 <= inicio2
 				res.push_back(*it1);
 				it1++;
 			}else{	// fin1 > inicio2
-				if((it1->freq).costfminute <= (it2->freq).costfminute)	// costo1 <= costo2
-				{
-					if(it1->fin < it2->fin){	// fin1 < fin2
-						res.push_back(*it1);
-						it2->inicio = it1->fin;
-						it1++;
-					}else if(it1->fin == it2->fin){	// fin1 == fin2
-						res.push_back(*it1);
-						it1++;
-						it2++;
-					}else{	// fin1 > fin2
-						it2++;
-					}
+				if((it1->freq).costfminute <= (it2->freq).costfminute){	// costo1 <= costo2
+					aux_otro_i_a(it1,it2,res);
 				}else{	// costo1 > costo2
-					res.push_back(*it1);
-					(res.back()).fin = it2->inicio;
-					
-					if(it1->fin < it2->fin){	// fin1 < fin2
-						it1++;
-					}else if(it1->fin == it2->fin){	// fin1 == fin2
-						res.push_back(*it2);
-						it1++;
-						it2++;
-					}else{
-						res.push_back(*it2);
-						it1->inicio = it2->fin;
-						it2++;
-					}
+					aux_otro_i_b(it1,it2,res);
 				}
 			}
 		}else{	// inicio1 > inicio2
-			if(it1->fin < it2->fin)	// fin1 < fin2
-			{
-				if((it1->freq).costfminute < (it2->freq).costfminute){	// costo1 < costo2
-					res.push_back(*it2);
-					(res.back()).fin = it1->inicio;
-					res.push_back(*it1);
-					it2->inicio = it1->fin;
-				}
-				it1++;
-			}else if(it1->fin == it2->fin)	// fin1 == fin2
-			{
-				if((it1->freq).costfminute < (it2->freq).costfminute){	// costo1 < costo2
-					res.push_back(*it2);
-					(res.back()).fin = it1->inicio;
-				}else{	// costo1 >= costo2
-					res.push_back(*it2);
-				}
-				it1++;
-				it2++;
-			}else{	// fin1 > fin2
-				if((it1->freq).costfminute < (it2->freq).costfminute){	// costo1 < costo2
-					res.push_back(*it2);
-					(res.back()).fin = it1->inicio;
-				}else{	// costo1 >= costo2
-					res.push_back(*it2);
-					it1->inicio = it2->fin;
-				}
-				it2++;
+			if((it1->freq).costfminute < (it2->freq).costfminute){	// costo1 < costo2
+				aux_otro_i_b(it2,it1,res);
+			}else{	// costo1 >= costo2
+				aux_otro_i_a(it2,it1,res);
 			}
 		}
 	}
