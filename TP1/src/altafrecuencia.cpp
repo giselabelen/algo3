@@ -173,7 +173,7 @@ int main()
 		scanf("%i",&start);
 		scanf("%i",&end);
 		freq = (frecuencia){			// Lleno el struct
-			.nombre = i,
+			.nombre = i + 1,
 			.costfminute = costo_por_minuto,
 			.inicio = start,
 			.fin = end,
