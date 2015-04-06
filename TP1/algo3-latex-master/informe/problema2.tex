@@ -63,7 +63,7 @@ Hay que tener en cuenta lo siguiente:
 
 En este apartado demostraremos que la complejidad total de nuestro algoritmo es $\mathcal{O}(n*log(n))$.
 
-Empezaremos analizando el pseudocódigo de AltaFrecuencia asumiendo que la complejidad de frecuency_dc es $\mathcal{O}(n*log(n))$
+Empezaremos analizando el pseudocódigo de AltaFrecuencia (Figura \ref{code:altafrec}) asumiendo que la complejidad de frecuency_dc es $\mathcal{O}(n*log(n))$
 En las dos primeras lineas se procede a crear una lista vacía $\mathcal{O}(1)$ y una lista que se completará con las frecuencias tomadas de la entrada. Esto último requiere recorrer la entrada $\mathcal{O}(n)$ y copiar los datos $\mathcal{O}(1)$.
 En la línea 3 de la figura se pasa a ordenar la lista en base a los tiempos de inicio de cada elemento $\mathcal{O}(n*log(n))$ para luego en la línea 4 ser trasladada a un arreglo previamente creado $\mathcal{O}(n)$. Con dicho arreglo y la función frecuency_dc se arma lo que será la lista solución del problema $\mathcal{O}(n*log(n))$. A continuación, se recorre la lista solución calculando el costo total de la transmisión $\mathcal{O}(n)$ para luego, en la línea 8 mostrar ese valor junto con las frecuencias utilizadas. Esto último se considera $\mathcal{O}(n)$ ya que los costos de mostrar datos son tomados como $\mathcal{O}(1)$ y el costo de recorrer la solución es $\mathcal{O}(n)$.
 
@@ -79,7 +79,7 @@ En la línea 3 de la figura se pasa a ordenar la lista en base a los tiempos de 
 \li costo_total $\leftarrow$ costo_transmision(resultado) //$\mathcal{O}(n)$
 \li Muestro por pantalla: costo de la transmisión (costo_total) y el intervalo de tiempo ocupado por cada\\ frecuencia usada {\it //Se hace en $\mathcal{O}(n)$ porque es recorrer la lista mostrando las frecuencias $\mathcal{O}(1)$}
 \end{codebox}
-\caption{Pseudocódigo de AltaFrecuencia}\label{code:goloso}
+\caption{Pseudocódigo de AltaFrecuencia}\label{code:altafrec}
 \end{figure}
 \FloatBarrier
 
