@@ -1,0 +1,30 @@
+Si quisiéramos afrontar este problema con fuerza bruta, estaríamos planteando un algoritmo que chequeara todas las posibles formas de insertar caballos en un determinado tablero (desde rellenar un tablero con caballos hasta no poner ninguno) y se quedara con una solución tal que el tablero quede completo (o sea un tablero tal que todas sus casillas o tienen un caballo o estan amenazadas por uno), y la cantidad de caballos insertados sea menor o igual al de todo el resto de las soluciones.  
+Ante esto, como somos malos perdedores, decidimos que vamos a sacrificar tiempo, pero vamos a encontrar una solución óptima. Por eso la idea de la solución será usando backtracking, con ciertas estrategias y podas que acoten de la mejor manera los posibles tableros solución. 
+La idea de este algoritmo de backtranking es la siguiente:
+- Recorriendo el tablero: empezaremos por el casillero de la primera fila y primera columna, iremos avanzando por los distintos casilleros de esa fila, en orden, y cuando se llegue al final de una fila, continuaremos por el primer casillero de la fila siguiente. Así hasta recorrer el tablero completo.
+- Insertando caballos: para cada casillero, abordaremos dos posibilidades. Primero veremos el caso en el que se coloca un caballo en ese casillero, y después veremos el caso en el que no se agrega dicho caballo (ver 9). En cada caso, se verá si el tablero queda o no completo, y si queda completo, se lo comparará con el resto de las soluciones completas, para ver si la cantidad de caballos agregados es menor o igual a todas o no. De ser menor o igual a todas, se la considerará la solución hasta que se encuentre una solución mejor.
+- Cotas estratégicas: ver todos los casos es algo muy tedioso y si bien tenemos tiempo para perder, los docentes de algo 3 se molestarían si perdemos demasiado, lo cual motiva a tratar de encontrar una cota. Si se está viendo un caso que supera esa cota, se desechará, puesto que ese camino seguro no llega a una solución óptima, y si se encuentra una solución que mejora esa cota, entonces empezar a considerar esa nueva cota a partir de ese momento.
+Para analizar las cotas elegidas, veamos algunos casos:
+	- si el tablero fuera de 2 x 2, la única manera de obtener un tablero completo es que haya un caballo en cada casilla.  Es decir, en el peor caso en que nuestro algoritmo reciba un tablero vacío de 2x2, no podría agregar menos de 4 caballos.
+	- PLANTEAR ALGO SIMILAR PARA 3X3
+	- PLANTEAR ALGO SIMILAR PARA 4X4
+Por esto diremos que si nuestro tablero es menor o igual a 4 x 4, no debo ver aquellos casos que pongan más de 4 caballos, puesto que de seguro, eso no es una solución óptima. Pero, ¿qué sucede con el resto de los casos? Sea un tablero de n x m (no apto para este juego, pero sí para lo que se quiere mostrar) con n = 5 y m >=5. Tomemos por ejemplo un tablero de 5 x 5 vacío, pero con una fila de caballos en el centro (llamados c).
+Observemos que en (10) todas las casillas estan amenazadas u ocupadas y sería un tablero completo. Es más, si sacamos un solo caballo, el tablero dejaría de ser completo. Esto si bien no tiene por que ser una solución óptima, es cuanto menos una solución que no usa una cantidad abusiva de caballos. Ahora, ¿qué sucedería si extendiéramos una columna más, como en (11)? observemos que todas las casillas estarían ocupadas menos la de la fila del medio a la derecha (digamos, casillero 3,6). O sea que si la fila 3 estuviera completa, sería un tablero completo. Observar que si volvemos a extender una columna sucede lo mismo. Volviendo otra vez a tableros válidos (de nxn)), la idea recién mencionada nos hace pensar que independientemente del tamaño del tablero, con una línea de caballos cada 5 filas, debería bastar para completarlo.  Por lo tanto, ver más caballos que eso, sería un esfuerzo innecesario.  Notar que para un tablero de nxn con n no multiplo de 5, basta agregar 1 fila de caballos cada 5 filas, y una más entre las filas que quedan libres (si una fila céntrica completa 5 filas, en particular completa 4,3,2 y 1). 
+Entonces, por todo lo dicho anteriormente, dado un tablero de n x n con n < 5, tomo como cota 4 caballos extras, y si n>=5 tomo como cota n* redondeado_hacia_arriba(1/5 * n) que es lo que significa meter una fila de caballos por cada 5 filas (más una fila extra en caso de n no múltiplo de 5).
+
+				--------1-------- (los numeros representan casillero numero tal visto)
+			pongo c	|		|no pongo c
+				|		|
+		----------------2		2----------------
+	pongo c	|		|no pongo c	|pongo c	|no pongo c
+		|		|		|		|
+		3		3		3		3
+										(9)
+				    ETCETERA
+
+
+v v v v v(10)	v v v v v v(11)
+v v v v v	v v v v v v
+c c c c c	c c c c c v
+v v v v v	v v v v v v
+v v v v v	v v v v v v
