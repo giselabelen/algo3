@@ -2,33 +2,17 @@
 
 \vspace*{0.3cm}
 
-\textbf{
 Tenemos un enlace por el cual podemos transmitir información, utilizando distintas frecuencias.
-Nuestro objetivo es transmitir información durante todo el tiempo que sea posible, pero invirtiendo la menor cantidad de dinero posible.
-\\
+Nuestro objetivo es transmitir información durante todo el tiempo que sea posible, pero invirtiendo la menor cantidad de dinero.
+
 Hay que tener en cuenta lo siguiente:
-}
+
 \begin{itemize}
-	\item vamos a transmitir información secuencialmente, es decir solamente se utilizara una frecuencia por intervalo tiempo 
-	\item cada frecuencia tiene un intervalos $<$inicio, fin$>$ en el cual puede ser utilizado y un costo por minuto de uso.Tanto inicio como fin son numeros enteros que representan minutos. 
+	\item Vamos a transmitir información secuencialmente, es decir que solamente se utilizará UNA frecuencia por intervalo de tiempo.
+	\item Cada frecuencia tiene un intervalo $<inicio, fin>$ en el cual puede ser utilizado y un $costo$ por minuto de uso. Los valores $inicio$, $fin$ y $costo$ son números enteros no negativos conocidos de antemano.
 	\item El enlace puede eligir transmitir por cualquiera de las frecuencias disponibles, y cambiar de una frecuencia a otra.
 	\item Se puede cambiar la frecuencia usada a lo largo del tiempo, pero solo una vez por minuto y al comienzo del mismo.
-\end{itemize}
-
-\textbf{Nuestro algoritmo toma:}
-\begin{itemize}
-	\item n que indica la cantidad frecuencias que puede utilizar el enlace
-	\item tenemos n lineas seguidas, cada linea indica una frecuencia
-	\begin{itemize}
-		\item cada linea tiene campos $<$c,i,f$>$ que indican costo por minuto, inicio y fin del intervalo de disponibilidad
-	\end{itemize}
-	\item El tiempo inicial empieza a partir del minuto cero
-\end{itemize}
-
-\textbf{Salida:}
-\begin{itemize}
-	  \item costo total incurrido de la solucion( osea minimizando los costos)
-	  \item una linea por cada intervalo de transmicion 
+	\item Se considera tiempo inicial de la transmisión al minuto cero.
 \end{itemize}
 
 %\begin{figure}[htb]
@@ -38,25 +22,181 @@ Hay que tener en cuenta lo siguiente:
 %  \caption{ejemplo}
 %\end{figure}
 
+\vspace*{0.6cm}
 
-
-\newpage
+%\newpage
 \subsection{Desarrollo de la idea y pseudocódigo.}
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+Nuestro algoritmo debe tomar el intervalo de disponibilidad y el costo de cada frecuencia, para luego indicar qué frecuencia utilizar en cada momento, de manera que la transmisión dure todo el tiempo que sea posible minimizando el costo.
 
-\newpage
+Decidimos representar cada frecuencia con una estructura que contenga sus valores $costo$ (por minuto), $inicio$ y $fin$, además de un valor $nombre$ que identificará a la frecuencia según el orden en el que vino dada.  A su vez, decidimos contar con una estructura que representará una transmisión.
+
+Para recorrer todas las frecuencias disponibles de una manera cómoda, optamos por tenerlas ordenadas de acuerdo  a su tiempo de $inicio$.  De esta manera, podemos ir recorriéndolas y determinando, mediante comparaciones de sus respectivos costos, cuál ocupará cada intervalo dentro de la transmisión total.
+
+El corazón del algoritmo realiza esta tarea mediante la técnica de {\it Divide \& Conquer}.  La función {\sc frequency_dc} se ocupa de esta etapa (Figura \ref{code:freq_dc}).  Este procedimiento toma un arreglo de frecuencias y lo ``divide'' a la mitad (aproximada en caso de no tener tamaño potencia de 2).  Para cada mitad obtiene, mediante llamadas recursivas, una lista de transmisión formada por las frecuencias contenidas, ordenadas y seleccionadas de manera que se transmite la mayor cantidad de tiempo al menor costo.  Teniendo estas dos listas, cada una correspondiente a cada mitad del arreglo de frecuencias, se procede a ``mezclarlas'' de forma tal que seguimos transmitiendo la mayor cantidad de tiempo al menor costo.
+
+Para realizar esta ``mezcla'', que es el trabajo más pesado, utilizamos la función {\sc mezclar_freq} (Figura \ref{code:mezclar}). En ella se crea un iterador al primer elemento de cada sublista recibida para recorrerlas.  Para mayor comodidad en la explicación, llamaremos $trans1$ a la sublista izquierda, $trans2$ a la sublista derecha, y $A$ y $B$ al primer elemento de cada una, respectivamente.
+
+En primera instancia, abordamos 3 casos posibles: 
+
+\begin{enumerate}
+\item El tiempo $inicio$ de $A$ y $B$ es el mismo.
+\item El tiempo $inicio$ de $A$ es menor al tiempo $inicio$ de $B$.
+\item El tiempo $inicio$ de $A$ es mayor al tiempo $inicio$ de $B$ (veremos en breve que este caso puede darse, aunque inicialmente las frecuencias estaban ordenadas de menor a mayor respecto al $inicio$ de cada una).
+\end{enumerate}
+
+Estudiemos cada caso por separado:
+
+\paragraph{El tiempo $inicio$ de $A$ y $B$ es el mismo.}
+
+\begin{itemize}
+\item Si $Costo(A) \leq Costo(B)$:
+	\begin{itemize}
+	\item Si el tiempo $fin$ de $A$ es menor al tiempo $fin$ de $B$, es conveniente utilizar la frecuencia $A$ por completo y descartar ese intervalo para la frecuencia $B$. Entonces, se elije la frecuencia $A$, se reemplaza el tiempo $inicio$ de $B$ por el tiempo $fin$ de $A$, se mueve el iterador de $trans1$ al siguiente elemento y se prosigue. (Figura \ref{fig:caso1}, 1))
+	\item Si el tiempo $fin$ de $A$ es igual al tiempo $fin$ de $B$, es conveniente utilizar la frecuencia $A$, descartando totalmente la frecuencia $B$.  Entonces, se elije la frecuencia $A$, se avanzan ambos iteradores y se prosigue. (Figura \ref{fig:caso1}, 2))
+	\item Si el tiempo $fin$ de $A$ es mayor al tiempo $fin$ de $B$, no vale la pena seguir considerando $B$. Entonces, se mueve el iterador de $trans2$ al siguiente elemento y se prosigue. (Figura \ref{fig:caso1}, 3))
+	\end{itemize}
+\item Si $Costo(A) > Costo(B)$:
+	\begin{itemize}
+	\item Si el tiempo $fin$ de $A$ es menor al tiempo $fin$ de $B$, no vale la pena seguir considerando $A$. Entonces, se mueve el iterador de $tran1$ al siguiente elemento y se prosigue (Figura \ref{fig:caso1}, 4)). Notar que en este caso, suponiendo que ambas listas tienen más de un elemento, en la siguiente iteración se comparará el siguiente elemento de $trans1$ (llamémoslo $AA$) contra $B$.  Como $A$ y $B$ tienen el mismo inicio, si consideramos que los intervalos no son vacíos, $fin$ de $A$ debe ser mayor a $inicio$ de $A$, y como $inicio$ de $AA$ debe ser mayor o igual a $fin$ de $A$, deducimos que $inicio$ de $AA$ es mayor a $inicio$ de $B$.  Este es uno de los casos en los que será necesario considerar la opción 3 de los casos establecidos anteriormente.
+	\item Si el tiempo $fin$ de $A$ es igual al tiempo $fin$ de $B$, es conveniente utilizar la frecuencia $B$, descartando totalmente la frecuencia $A$.  Entonces, se elije la frecuencia $B$, se avanzan ambos iteradores y se prosigue. (Figura \ref{fig:caso1}, 5))
+	\item Si el tiempo $fin$ de $A$ es mayor al tiempo $fin$ de $B$, es conveniente utilizar la frecuencia $B$ por completo y descartar ese intervalo para la frecuencia $A$. Entonces, se elije la frecuencia $B$, se reemplaza el tiempo $inicio$ de $A$ por el tiempo $fin$ de $B$, se mueve el iterador de $trans2$ al siguiente elemento y se prosigue. (Figura \ref{fig:caso1}, 6))
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[htb]
+  \begin{center}
+      \includegraphics[scale=0.5]{imagenes/casosiiguales.jpeg}
+  \end{center}
+  \caption{Ilustración de las posibles elecciones en el caso 1}\label{fig:caso1}
+\end{figure}
+%\FloatBarrier
+
+\paragraph{El tiempo $inicio$ de $A$ es menor al tiempo $inicio$ de $B$.}
+
+\paragraph{El tiempo $inicio$ de $A$ es mayor al tiempo $inicio$ de $B$.}
+
+
+\begin{figure}[!ht]
+\begin{codebox}
+\Procname{$\proc{frecuency_dc}(Arreglo$_$frecuencias$ $freq, int$ $low, int$ $high)$}
+\li trans1,trans2,trans_final $\leftarrow$ listas vacías de transmisión
+\li \If ($low < high$)
+\li		\Then 
+			mitad $\leftarrow$ $\dfrac{low + high}{2}$
+\li			trans1 $\leftarrow$ $frequency$_$dc(freq,low,mitad)$
+\li			trans2 $\leftarrow$ $frequency$_$dc(freq,mitad+1,high)$
+\li			trans_final $\leftarrow$ {\sc mezclar_freq}(trans1,trans2)
+\li 		\Else
+			trans_final $\leftarrow$ agregar una transmisión con la única frecuencia dada.
+		\End
+\li \Return trans_final 
+ \end{codebox}
+\caption{Pseudocódigo de frequency_dc}\label{code:freq_dc}
+\end{figure}
+%\FloatBarrier
+
+\begin{figure}[!ht]
+\begin{codebox}
+\Procname{$\proc{mezclar_freq}(Lista$_$transmision$ $trans1, Lista$_$transmision$ $trans2)$}
+\li res $\leftarrow$ lista vacía de transmisión
+\li it1 $\leftarrow$ iterador a trans1
+\li it2 $\leftarrow$ iterador a trans2
+\li \While it1 e it2 sean válidos
+\li		\Do 
+ 		\If ((it1$\rightarrow$inicio) == (it2$\rightarrow$inicio))
+\li 			\Then
+				\If ((it1$\rightarrow$costo) $\leq$ (it2$\rightarrow$costo))
+\li					\Then {\sc aux_mezcla_a}(it1,it2,res)
+\li				\Else
+					{\sc aux_mezcla_a}(it2,it1,res)
+				\End
+\li 			\Else
+				\If ((it1$\rightarrow$inicio) $<$ (it2$\rightarrow$inicio))
+\li				\Then
+					\If ((it1$\rightarrow$fin) $\leq$ (it2$\rightarrow$inicio))
+\li					\Then
+						res $\leftarrow$ agregar al final el dato de it1
+\li						avanzar it1
+\li					\Else
+\li 						\If ((it1$\rightarrow$costo) $\leq$ (it2$\rightarrow$costo))
+\li							\Then {\sc aux_mezcla_a}(it1,it2,res)
+\li							\Else
+								{\sc aux_mezcla_b}(it1,it2,res)
+							\End
+					\End
+\li 				\Else 
+\li					\If ((it1$\rightarrow$costo) $<$ (it2$\rightarrow$costo))
+\li 						\Then {\sc aux_mezcla_b}(it2,it1,res)
+\li 						\Else
+ 							{\sc aux_mezcla_a}(it2,it1,res)
+ 						\End
+ 				\End
+ 			\End
+ 		\End
+\li \If alguna de las listas no fue recorrida totalmente
+\li 		\Then res $\leftarrow$ agregar remanente de esa lista
+		\End
+\li \Return res
+\end{codebox}
+\caption{Pseudocódigo de mezclar_freq} \label{code:mezclar}
+\end{figure}
+%\FloatBarrier
+
+\begin{figure}[!ht]
+\begin{codebox}
+\Procname{$\proc{aux_mezcla_a}(it$_$Lista$_$transmision$ $itA, it$_$Lista$_$transmision$ $itB, Lista$_$transmision$ $res)$}
+\li	\If((itA$\rightarrow$fin) $<$ (itB$\rightarrow$fin))
+\li 		\Then
+			res $\leftarrow$ agregar atrás el dato de itA
+\li 			(itB$\rightarrow$inicio) $\leftarrow$ (itA$\rightarrow$fin)
+\li			avanzar itA
+\li 		\Else
+			\If ((itA$\rightarrow$fin) == (itB$\rightarrow$fin)
+\li				res $\leftarrow$ agregar atrás el dato de itA
+\li 				avanzar itA
+\li 				avanzar itB
+\li 		\Else avanzar itB
+		\End
+\li		\Return
+\end{codebox}
+
+\begin{codebox}
+\Procname{$\proc{aux_mezcla_b}(it$_$Lista$_$transmision$ $itA, it$_$Lista$_$transmision$ $itB, Lista$_$transmision$ $res)$}
+\li res $\leftarrow$ agregar atrás el dato de itA
+\li (res.último_elemento)$\rightarrow$fin $\leftarrow$ (itB$\rightarrow$inicio)
+\li	\If((itA$\rightarrow$fin) $<$ (itB$\rightarrow$fin))
+\li 		\Then avanzar itA
+\li 		\Else
+			\If ((itA$\rightarrow$fin) == (itB$\rightarrow$fin)
+\li				res $\leftarrow$ agregar atrás el dato de itB
+\li 				avanzar itA
+\li 				avanzar itB
+\li 		\Else 
+			res $\leftarrow$ agregar atrás el dato de itA
+\li 			(itA$\rightarrow$inicio) $\leftarrow$ (itB$\rightarrow$fin)
+\li			avanzar itB
+		\End
+\li		\Return
+\end{codebox}
+\caption{Pseudocódigo de las funciones auxiliares a mezclar_freq} \label{code:aux}
+\end{figure}
+%\FloatBarrier
+
+\vspace*{0.6cm}
+
+%\newpage
 \subsection{Justificación de la resolución y demostración de correctitud.}
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
 
 
+\vspace*{0.6cm}
 
-\newpage
+%\newpage
 \subsection{Análisis de complejidad.}
 
 \vspace*{0.3cm}
@@ -96,22 +236,10 @@ La complejidad total de este algoritmo es, entonces, $\mathcal{O}(n*log(n))$.
 
 Resta ver que frecuency_dc es en efecto $\mathcal{O}(n*log(n))$.
 
-\begin{codebox}
-\Procname{$\proc{frecuency_dc}(Arreglo$_$frecuencias$ $freq, int$ $low, int$ $high)$}
-\li Inicializo 3 listas: trans1,trans2,trans_final
-\li \If ($low<high$)
-\li	\quad	mitad $\longleftarrow$ $\frac{low + high}{2}$
-\li	\quad	trans1 $\longleftarrow$ $frequency$_$dc(freq,low,mitad)$
-\li	\quad	trans2 $\longleftarrow$ $frequency$_$dc(freq,mitad+1,high)$
-\li	\quad	A continuación combino ambas listas de transmisiones de manera que queden ordenadas por costo
-\\ \quad de menor a mayor y que las frecuencias alternen de ser necesario.
-\li \Else
-\li \quad	Armo una lista cuyo único elemento es la frecuencia de la posicion "low". Libero la memoria ocupada\\ \quad por trans1 y trans2
-\li \Return trans_final 
- \end{codebox}
 
+\vspace*{0.6cm}
 
-\newpage
+%\newpage
 \subsection{Experimentación y gráficos.}
 
 \vspace*{0.3cm}
