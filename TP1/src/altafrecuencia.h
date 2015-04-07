@@ -20,11 +20,17 @@ typedef struct transmision_t
     int fin;	// fin de transmisión
 } transmision;
 
-list<transmision> frequency_dc(frecuencia* freq, int low, int highs);
-list<transmision> mezclar_freq(list<transmision> trans1, list<transmision> trans2);
-int costo_transmision(list<transmision> trans);
+//~ list<transmision> frequency_dc(frecuencia* freq, int low, int highs);
+//~ list<transmision> mezclar_freq(list<transmision> trans1, list<transmision> trans2);
+//~ int costo_transmision(list<transmision> trans);
+//~ bool compare_time(const frecuencia& freq1, const frecuencia& freq2);
+//~ void aux_mezcla_a(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res);
+//~ void aux_mezcla_b(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res);
+list<frecuencia> frequency_dc(frecuencia* freq, int low, int highs);
+list<frecuencia> mezclar_freq(list<frecuencia> trans1, list<frecuencia> trans2);
+int costo_transmision(list<frecuencia> trans);
 bool compare_time(const frecuencia& freq1, const frecuencia& freq2);
-void aux_mezcla_a(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res);
-void aux_mezcla_b(list<transmision>::iterator& itA, list<transmision>::iterator& itB, list<transmision>& res);
+void aux_mezcla_a(list<frecuencia>::iterator& itA, list<frecuencia>::iterator& itB, list<frecuencia>& res);
+void aux_mezcla_b(list<frecuencia>::iterator& itA, list<frecuencia>::iterator& itB, list<frecuencia>& res);
 
 #endif // ALTAFRECUENCIA_H_INCLUDED
