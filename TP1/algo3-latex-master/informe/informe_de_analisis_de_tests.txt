@@ -1,0 +1,54 @@
+Experimentacion y graficos:
+ejercicio 1,2 y 3 :
+Para este analisis de complejidad algoritimica vamos a tomar el criterio de velocidad(o sea complejidad temporal).
+La idea es calcular cuanto tiempo tarda en ejecutarse cada instruccion del algoritmo y sumar todo ese tiempo, a este modelo se lo conoce como modelo uniforme donde las operciones basicas cuestan O(1).
+
+¿Como lo vamos hacer? 
+Respuesta :  
+	* Lo que vamos a hacer es verificar empiricamente la complejida teorica, es decir vamos a contrasta la teoria con la practica midiendo tiempos de ejecucion de un ordenador.
+
+Para manejar las impresiciones de las medidas de tiempo ejecucion vamos a :
+	* medir n veces una misma instancia.
+	* vamos a tomar el promedio
+
+Luego cuando tengamos los datos, podamos armar los graficos correspondientes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%  Zombieland 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	 	
+
+Peor caso: ocurre cuando tengo en presupuesto suficiente para salvar a todas las ciudades.
+Mini ejemplo:
+	Input;  cantCiudades 5, costo 112, Listaciudades(<zombis,soldados,costo>) [<45,4,6>,<89,7,4>,<54,5,9>,<96,8.35>,<16,1,19>]
+	donde los costos de salvacion pesos serian [6,8,9,70,19]
+	Lo cual me indica que puedo salvar a todas las ciudades, pues la suma de los costos da 11 pesos.	
+Mejor caso: ocurre cuando el presupuesto no me alcanza para salva a ninguna ciudad ( osea que el costo de salvacion de cada ciudad mayor que mi presupuesto).
+Mini ejemplo1: 
+	Input : cantCiudades 5, costo 3, Listaciudades(<zombis,soldados,costo>) [<45,4,6>,<89,7,4>,<54,5,9>,<96,8.35>,<16,1,19>] 
+	donde los costos de salvacion pesos serian [6,8,9,70,19]
+	Como se ve no se puede salvar a niguna ciudad, dado que el costo de cada una es mayor a mi presupuesto de 3 pesos 
+
+
+Caso aleatorio : Las instancias aleatorias van a ser generadas utilizando funcion randon de c++
+
+EXPERIMENTO COMPUTACIONAL PARA MEDIR LA PERFORMACE DEL PROGRAMA IMPLEMENTADO
+
+GRAFICOS ......... bla bla BLA
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%  Alta Frecuencia 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	 	
+
+Peor caso:
+Mejor caso:
+Caso aleatorio:
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%  Alta Frecuencia 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Pero caso :
+Mejor caso :
+Caso aleo
