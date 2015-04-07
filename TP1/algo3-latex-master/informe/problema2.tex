@@ -13,7 +13,13 @@ Hay que tener en cuenta lo siguiente:
 	\item El enlace puede eligir transmitir por cualquiera de las frecuencias disponibles, y cambiar de una frecuencia a otra.
 	\item Se puede cambiar la frecuencia usada a lo largo del tiempo, pero solo una vez por minuto y al comienzo del mismo.
 	\item Se considera tiempo inicial de la transmisión al minuto cero.
+	\item la complejidad del algoritmo propuesto debe ser $\mathcal{O}(n*log(n))$.
 \end{itemize}
+
+Ejemplo:
+
+Supongamos que tengo una frecuencia 1, con costo por minuto de 10, tiempo de inicio 0 y tiempo final 20, y una frecuencia 2 con costo por minuto 5, tiempo de inicio 5 y tiempo final 10.Entonces nuestra respuesta sería, del minuto 0 al 5 utilizar frecuencia 1, del 5 al 10 utilizar frecuencia 2, y del 10 al 20 utilizar frecuencia 1 nuevamente, ya que de esta manera, se minimizan los costos.
+
 
 %\begin{figure}[htb]
 %  \begin{center}
