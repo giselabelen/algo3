@@ -2,7 +2,9 @@
 
 \vspace*{0.3cm}
 
-Tenemos un país infectado de zombies. El país esta dividido en ciudades. Nuestro objetivo es salvar la mayor cantidad de ciudades de este país, enviando soldados a ellas. Una ciudad se considera salvada si los soldados exterminan todos los zombies de dicha ciudad.
+Nuestro país infectado de zombies y nosotros debemos idear un plan estratégico para retomar el poder del mismo. Debido a que los zombies pudieron no haber invadido solo nuestro territorio, dejaremos un legado a la humanidad en forma de algoritmo, para que en un futuro, la humanidad recobre el poder.
+%%si no les gusta esta versión, la anterior y aburrida empezaba aca, salvo que la primer oración era: tenemos un pais infectado de zombies.(ALE)
+Entonces, nos enfocaremos en ver como salvar un país.Un país esta dividido en ciudades. Nuestro objetivo es salvar la mayor cantidad de ciudades de este país, enviando soldados a ellas. Una ciudad se considera salvada si los soldados exterminan todos los zombies de dicha ciudad.
 
 Aspectos a tener en cuenta:
 
@@ -13,6 +15,12 @@ Aspectos a tener en cuenta:
    \item Para cada ciudad, se conoce el costo de enviar un soldado.
    \item Cada soldado se puede encargar como máximo de 10 zombies.
    \item la complejidad del algoritmo propuesto debe ser $\mathcal{O}(n*log(n))$.
+	\item Siendo una situación tan crítica, el orden es importante, por lo que este algoritmo proveera la siguiente salida:
+
+$C$ $s_{1}$ $s_{2}$ ... $s_{n}$
+
+donde $C$ es la cantidad de ciudades que se podrían recuperar siguiendo la solución y, suponiendo que el país tiene $n$ ciudades, $s_{1}$, ..., $s_{n}$ son las cantidades de soldados de refuerzo que deberían enviarse a cada una de las ciudades de la instancia. Es decir, a la ciudad $i$ se enviaran $s_{i}$ soldados de refuerzo (las ciudades se numeran de 1 a n segun el orden dado por la entrada)
+%%no se como disfrazar al orden dado por la entrada, porque es importante, hablo de la entrada tambien, o no??(ALE)
 \end{itemize}
 
 Ejemplo:
