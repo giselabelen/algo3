@@ -32,7 +32,6 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 {
 /* Función que realiza el backtraking */
 	
-	Tablero copia_tab(n, Vec(n, 'v'));
 	int f;
 	int c;
 	
@@ -61,6 +60,7 @@ void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, i
 	
 	if(tab[fila][columna] != 'p')	// Si no había un caballo preubicado
 	{
+		Tablero copia_tab(n, Vec(n, 'v'));
 		copiar_tablero(tab,copia_tab,n);	// Hago una copia del tablero
 
 		int r = lo_que_falta;				//lo pongo en variable aparte, para que no rompa a
