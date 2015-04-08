@@ -74,32 +74,6 @@ bool compare_name(const ciudad& city1, const ciudad& city2)
 /**********************************************************************/
 /**********************************************************************/
 
-int zombie_test(int n, int p)
-{
-/* 
- */
-    int salvacion_total;
-    
-    list<ciudad> cities = generar_casos(n);
-	
-	// Calculo y completo soldier_req y costfsafety para cada ciudad
-    calcular_costo_de_salvacion(cities);
-    
-    // Ordeno por costo de salvación
-    cities.sort(compare_cost);
-    
-    // Busco la solución "greedy"
-    salvacion_total = zombie_goloso(cities,p);
-    
-    // Ordeno por nombre (orden en el que vinieron en la entrada)
-    cities.sort(compare_name);
-
-	cities.clear();
-
-
-/**********************************************************************/
-/**********************************************************************/
-
 int main()
 {
 /* Lee los datos, separa la información, y llama a las funciones

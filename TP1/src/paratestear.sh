@@ -20,17 +20,17 @@ mkdir $RES3
 
 echo "Compilando"
 
-g++ zombieland.cpp -g -o zombieland
+#~ g++ zombieland.cpp -g -o zombieland
 g++ altafrecuencia.cpp -g -o altafrecuencia
-g++ caballos.cpp -g -o caballos
+#~ g++ caballos.cpp -g -o caballos
 
-echo "Corriendo Tests Zombieland"
-
-for file in $DIR1/*.in
-do
-	base=$(basename "$file" .in)
-	./zombieland < $file > $RES1/$base.miout
-done
+#~ echo "Corriendo Tests Zombieland"
+#~ 
+#~ for file in $DIR1/*.in
+#~ do
+	#~ base=$(basename "$file" .in)
+	#~ ./zombieland < $file > $RES1/$base.miout
+#~ done
 
 echo "Corriendo Tests AltaFrecuencia"
 
@@ -40,10 +40,10 @@ do
 	./altafrecuencia < $file > $RES2/$base.miout
 done
 
-echo "Corriendo Tests Caballos"
-
-for file in $DIR3/*.in
-do
-	base=$(basename "$file" .in)
-	./caballos < $file > $RES3/$base.miout
-done
+#~ echo "Corriendo Tests Caballos"
+#~ 
+#~ for file in $DIR3/*.in
+#~ do
+	#~ base=$(basename "$file" .in)
+	#~ ./caballos < $file > $RES3/$base.miout
+#~ done
