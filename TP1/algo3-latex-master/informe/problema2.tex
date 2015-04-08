@@ -13,13 +13,14 @@ Hay que tener en cuenta lo siguiente:
 	\item El enlace puede eligir transmitir por cualquiera de las frecuencias disponibles, y cambiar de una frecuencia a otra.
 	\item Se puede cambiar la frecuencia usada a lo largo del tiempo, pero solo una vez por minuto y al comienzo del mismo.
 	\item Se considera tiempo inicial de la transmisión al minuto cero.
+	\item cada frecuencia tiene un nombre, que es un numero del 1 al n, siendo n la cantidad de frecuencias de las que se disponen. Dos frecuencias distintas, no pueden tener el mismo nombre.
 	\item la complejidad del algoritmo propuesto debe ser $\mathcal{O}(n*log(n))$.
 	\item Como somos ordenados, la primera línea de la salida del algoritmo debe contener un entero $C$ indicando el costo incurrido por la solución. A esta línea deben seguirle una línea por cada intervalo de transmisión sobre una misma frecuencia, con el siguiente formato:
 	
 $i$ $f$ $x$
 
-la cual indica una transmisión desde el minuto $i$ hasta el minuto $f$ utilizando la frecuencia x (numeradas del 1 al n según la lectura de la entrada). La salida deberá finalizar con una línea con el valor -1.
-%%mismo que con zombieland, como chamuyo de 1 a n??
+la cual indica una transmisión desde el minuto $i$ hasta el minuto $f$ utilizando la frecuencia x, siendo x el nombre de la frecuencia. La salida deberá finalizar con una línea con el valor -1.
+%%mismo que con zombieland, como chamuyo de 1 a n??(ALE)
 \end{itemize}
 
 Ejemplo:
