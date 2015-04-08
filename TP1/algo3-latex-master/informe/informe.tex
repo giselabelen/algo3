@@ -44,7 +44,7 @@
   basicstyle=\footnotesize,        % size of fonts used for the code
   breaklines=true,                 % automatic line breaking only at whitespace
   captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{mygreen},    % comment style
+  commentstyle=\color{red},    % comment style
   escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
   keywordstyle=\color{blue},       % keyword style
   stringstyle=\color{mymauve},     % string literal style
@@ -53,8 +53,8 @@
 \thispagestyle{empty}
 \materia{Algoritmos y Estructuras de Datos III}
 \submateria{Primer Cuatrimestre de 2015}
-\titulo{Título del trabajo práctico}
-\subtitulo{Subtítulo del trabajo práctico}
+\titulo{Diseño de Algoritmos}
+\subtitulo{Aplicación de técnicas}
 \integrante{Barañao, Facundo}{480/11}{facundo_732@hotmail.com}
 \integrante{Confalonieri, Gisela Belén}{511/11}{gise_5291@yahoo.com.ar} % por cada integrante (apellido, nombre) (n° libreta) (e-mail)
 \integrante{Mignanelli, Alejandro Rubén}{609/11}{minga_titere@hotmail.com} 
@@ -67,7 +67,8 @@
 \vfill
 \begin{abstract}
     \vspace{0.5cm}
-    Resumen sobre el contenido del trabajo práctico.
+	Este trabajo busca aplicar distintas técnicas para la creación de algoritmos. Para esto, se resolverán tres problemas que representan situaciones de la vida real y juegos de ingenio. Las técnicas que se utilizarán serán algoritmos golosos, divide and conquer y backtracking.
+
 \end{abstract}
 
 \thispagestyle{empty}
@@ -80,7 +81,7 @@
 \newpage
 \section{Objetivos generales}
 
-El objetivo principal del siguiente trabajo, será la práctica de distintas técnicas para la creación de algoritmos. Para esto, se resolverán tres problemas que representan situaciones factibles de la vida real, situaciones aún más factibles de la vida real, y juegos de ingenio. Las técnicas que se utilizarán serán algoritmos golosos, divide and conquer y backtracking, y a los primeros dos se los resolverá de manera tal que el algoritmo no supere cierta cota de complejidad en peor caso.
+El objetivo principal del siguiente trabajo será la práctica de distintas técnicas para la creación de algoritmos. Dados tres problemas, que representan situaciones factibles de la vida real y juegos de ingenio, se buscará resolverlos de forma óptima mediante la aplicación de algoritmos golosos, divide and conquer y backtracking.  En algunos de los casos, se buscará que el algoritmo no supere cierta cota de complejidad en peor caso.  Pretendemos mostrar cómo estas técnicas permiten mejorar los algoritmos frente a abordajes de ``fuerza bruta''.
 
 \newpage
 \section{Plataforma de pruebas}
@@ -110,22 +111,57 @@ Incluye comentarios acerca de los tests utilizados, cómo generarlos y reproduci
 
 \newpage
 \section{Apéndice 2: secciones relevantes del código}
-En esta sección, adjuntamos parte del código correspondiente a la resolución de cada problema
-que consideramos más \textbf{relevante}.
+En esta sección, adjuntamos parte del código correspondiente a la resolución de cada problema que consideramos más \textbf{relevante}.
 
 \subsection{Código del Problema 1}
 
 \begin{lstlisting}
-int main(){
-  return 0;
+typedef struct ciudad_t{
+	int nombre; 			// numero que identifica la ciudad segun el orden en el que viene dada
+    int cant_zombies;
+    int cant_soldados;
+    int soldier_req;  	// numero de soldados que faltan para salvar la ciudad
+    int costfsoldier;  	// costo de enviar un soldado
+    int costfsafety;  	// costo de salvar esa ciudad
+    bool salvar;			// 1 para salvarla, 0 para no salvarla
+} ciudad;
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+bool compare_cost(const ciudad& city1, const ciudad& city2){
+	return (city1.costfsafety < city2.costfsafety);
 }
 \end{lstlisting}
 
 \vspace*{0.5cm}
 
 \begin{lstlisting}
-int main(){
-  return 0;
+bool compare_name(const ciudad& city1, const ciudad& city2){
+	return (city1.nombre < city2.nombre);
+}
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+int zombie_goloso(list<ciudad>& city, int p){
+/* Devuelve la cantidad de ciudades que se salvan */
+
+	int i = 0;
+	int sum = 0;
+	list<ciudad>::iterator it = city.begin();
+    
+    while(it != city.end() && (sum < p)){
+		sum = sum + it->costfsafety;
+		if (sum <= p){
+			it->salvar = 1;
+			i++;
+		}
+		it++;
+	}
+	return i;
 }
 \end{lstlisting}
 
@@ -133,16 +169,19 @@ int main(){
 \subsection{Código del Problema 2}
 
 \begin{lstlisting}
-int main(){
-  return 0;
-}
+typedef struct frecuencia_t{
+	int nombre; 			// numero que identifica la frecuencia segun el orden en el que viene dada
+	int costfminute;  	// costo de uso por minuto
+    int inicio;			// minuto inicio de transmision
+    int fin;				// minuto fin de transmision
+} frecuencia;
 \end{lstlisting}
 
 \vspace*{0.5cm}
 
 \begin{lstlisting}
-int main(){
-  return 0;
+bool compare_time(const frecuencia& freq1, const frecuencia& freq2){
+	return (freq1.inicio < freq2.inicio);
 }
 \end{lstlisting}
 
@@ -151,18 +190,17 @@ int main(){
 \subsection{Código del Problema 3}
 
 \begin{lstlisting}
-int main(){
-  return 0;
-}
+typedef vector<char> Vec;
+typedef vector<Vec> Tablero;
 \end{lstlisting}
 
-\vspace*{0.5cm}
+%\vspace*{0.5cm}
 
-\begin{lstlisting}
-int main(){
-  return 0;
-}
-\end{lstlisting}
+%\begin{lstlisting}
+%int main(){
+%  return 0;
+%}
+%\end{lstlisting}
 
 
 

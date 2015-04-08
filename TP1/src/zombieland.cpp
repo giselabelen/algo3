@@ -3,6 +3,7 @@
 #include <iostream>
 //~ #include "merge.h"
 #include "zombieland.h"
+#include "testing.h"
 
 //~ void calcular_costo_de_salvacion (ciudad* city, int n)
 void calcular_costo_de_salvacion (list<ciudad>& city)
@@ -73,6 +74,32 @@ bool compare_name(const ciudad& city1, const ciudad& city2)
 /**********************************************************************/
 /**********************************************************************/
 
+int zombie_test(int n, int p)
+{
+/* 
+ */
+    int salvacion_total;
+    
+    list<ciudad> cities = generar_casos(n);
+	
+	// Calculo y completo soldier_req y costfsafety para cada ciudad
+    calcular_costo_de_salvacion(cities);
+    
+    // Ordeno por costo de salvación
+    cities.sort(compare_cost);
+    
+    // Busco la solución "greedy"
+    salvacion_total = zombie_goloso(cities,p);
+    
+    // Ordeno por nombre (orden en el que vinieron en la entrada)
+    cities.sort(compare_name);
+
+	cities.clear();
+
+
+/**********************************************************************/
+/**********************************************************************/
+
 int main()
 {
 /* Lee los datos, separa la información, y llama a las funciones
@@ -99,7 +126,7 @@ int main()
     //~ ciudad cities[n];		// Arreglo donde voy a ir metiendo las ciudades
     
     scanf("%i",&p); // Levanto el presupuesto
-       
+	
     for (i = 0; i < n; i++)			// Para cada ciudad
     {
 		scanf("%i",&num_zombis);	// Levanto los datos

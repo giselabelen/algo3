@@ -23,5 +23,6 @@ void calcular_costo_de_salvacion(list<ciudad>& city);
 int zombie_goloso(list<ciudad>& city, int p);
 bool compare_cost(const ciudad& city1, const ciudad& city2);
 bool compare_name(const ciudad& city1, const ciudad& city2);
+int zombie_test(int n, int p);
 
 #endif // ZOMBIELAND_H_INCLUDED
