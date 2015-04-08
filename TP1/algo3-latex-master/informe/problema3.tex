@@ -64,8 +64,8 @@ Aspectos a tener en cuenta:
 \li \quad \Return
 \li f $\leftarrow$ fila para la siguiente llamada recursiva  // $\mathcal{O}(1)$
 \li c $\leftarrow$ columna para la siguiente llamada recursiva  // $\mathcal{O}(1)$
-\li \If en tab[fila][columna] había un caballo preubicado      // $\mathcal{O}(1)$
-\li \quad copia_tab $\leftarrow$ copia de tab              // $\mathcal{O}(1)$
+\li \If en tab[fila][columna] no había un caballo preubicado      // $\mathcal{O}(1)$
+\li \quad copia_tab $\leftarrow$ copia de tab              // $\mathcal{O}(n^2)$
 \li \quad r $\leftarrow$ cantidad de casillas que falta llenar  //$\mathcal{O}(1)$
 \li \quad e $\leftarrow$ cantidad de caballos agregados hasta ahora $\mathcal{O}(1)$
 \li \quad \If copia_tab[fila][columna] no está cubierta
