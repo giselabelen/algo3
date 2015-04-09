@@ -16,8 +16,7 @@ g++ testing.cpp -g -o testing
 
 echo "Corriendo Tests Zombieland/Alta Frecuencia"
 
-./testing > $RES/testing1.txt
-./testing > $RES/testing2.txt
+./testing
 
 echo "Corriendo Tests Caballos"
 
