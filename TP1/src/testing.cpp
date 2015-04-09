@@ -32,6 +32,7 @@ list<ciudad> generar_pais(int n)
 
 void testear_1()
 {
+	FILE * pTest = fopen("/Resultados_tests_nuestros/testing1.txt","w");
 	time_t start;
 	double t;
 	
@@ -42,13 +43,14 @@ void testear_1()
 		start = time(NULL);
 		zombieland(cities,0);
 		t = difftime(time(NULL),start);
-		printf("%i %i %f \n",n,0,t);
+		fprintf(pTest,"%i %i %f \n",n,0,t);
 		
 		start = time(NULL);
 		zombieland(cities,n*1000000);
 		t = difftime(time(NULL),start);
-		printf("%i %i %f \n",n,n*1000000,t);
+		fprintf(pTest,"%i %i %f \n",n,n*1000000,t);
 	}
+	fclose(pTest);
 }
 
 /**********************************************************************/
@@ -108,6 +110,7 @@ list<frecuencia> generar_freq_cadena(int n)
 
 void testear_2()
 {
+	FILE * pTest = fopen("/Resultados_tests_nuestros/testing2.txt","w");
 	time_t start;
 	double t;
 	
@@ -122,18 +125,19 @@ void testear_2()
 		start = time(NULL);
 		altafrecuencia(freq_lp,res,n);
 		t = difftime(time(NULL),start);
-		printf("%i %c %f \n",n,'p',t);
+		fprintf(pTest,"%i %c %f \n",n,'p',t);
 		
 		start = time(NULL);
 		altafrecuencia(freq_lt,res,n);
 		t = difftime(time(NULL),start);
-		printf("%i %c %f \n",n,'t',t);
+		fprintf(pTest,"%i %c %f \n",n,'t',t);
 		
 		start = time(NULL);
 		altafrecuencia(freq_lc,res,n);
 		t = difftime(time(NULL),start);
-		printf("%i %c %f \n",n,'c',t);
+		fprintf(pTest,"%i %c %f \n",n,'c',t);
 	}
+	fclose(pTest);
 }
 
 /**********************************************************************/
