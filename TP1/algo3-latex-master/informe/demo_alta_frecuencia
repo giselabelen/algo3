@@ -53,5 +53,28 @@ Veamos ahora que sucede si extiendo en una aglomeración.
 	     |----frecuencia_n--------------------|
 
 Veo que cuando agrego la aglomeración dos, debido a que el pedazo entre 1 y 2 ya estaba entre los fragmentos de f del primer caso, solo se agrega f_aglomeración2 y el fragmento desde que termina la aglomeración dos hasta el final de la frecuencia_n. Veamos que la cantidad de frecuencias de aglomeracion 1 y aglomeracion 2 son mi n, y la frecuencia_n el +1. si llamo l y k a la cantidad de frecuencias que tiene aglomeracion1 y aglomeracion2 respectivamente(ver que l+k=n entonces).
-Entonces f_bichofeo2= f_bichofeo1 + f_aglomeración2 +1 < 2*(k+1) + 2*l +1 = 2*(k+1+l) + 1=FALTA, ACA HAY UN ERROR, VER COMO SOLUCIONAR Y CORREGIR.
+Entonces f_bichofeo2= f_bichofeo1 + f_aglomeración2 +1 < 2*(l+1) + f_aglomeración2 +1
+2*(l+1) + f_aglomeración2 +1 <=2*(l+1) + 2*k -1 +1 puesto que si es menor a 2*k es <= a 2*k-1
+2*(l+1) + 2*k -1 +1= 2*(l+1) + 2*k =2*(l+1+k)= 2*(n+1) y llegue a lo que queria
 
+3) 		|-------------|
+	     |	|frecuencia_n |  |
+	     |  |-------------|  |
+	     |----aglomeración---|
+
+Pero si susede esto, significa que si hacemos zoom, tenemos un caso 1 o un caso 2, o sea:
+
+
+		|------------|
+3.1) dibujo:  | |aglomeración|frecuencia.nueva| |
+	      | |------------|----------------| |
+	      |----------aglomeración-----------|
+
+ 
+		     |-------------|  |-------------|	      |---------------|
+3.2) dibujo:  |   |  |aglomeracion1|  |aglomeracion2| ........|aglomeración"n"|  |  |
+	      |   |  |-------------|  |-------------|	      |---------------|  |  |
+	      |   |-----------------------------frecuencia_nueva-----------------|  |
+	      |------------------------aglomeración_mayor---------------------------|
+
+y se resuelven de manera analoga a los anteriores casos.
