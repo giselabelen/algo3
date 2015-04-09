@@ -113,7 +113,7 @@ int main()
 	
 	FILE * pTest = fopen("../Resultados_tests_nuestros/testing3.txt","a");
 	double t;
-	time_t start = time(NULL);
+	clock_t start = clock();
 	
 	/******************************************************************/
 	/******************************************************************/
@@ -206,7 +206,8 @@ int main()
 	/******************************************************************/
 	/** DESCOMENTAR PARA TESTEAR **/	
 	
-	t = difftime(time(NULL),start);
+	clock_t end = clock();
+	t = difftime(end,start);
 	fprintf(pTest,"%f \n",t);
 	fclose(pTest);
  

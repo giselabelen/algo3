@@ -18,10 +18,10 @@ list<ciudad> generar_pais(int n)
 	{
 		city = (ciudad){
 			.nombre = i,
-			.cant_zombies = (rand() % 10000),
-			.cant_soldados = (rand() % 1000),
+			.cant_zombies = (rand() % 1000),
+			.cant_soldados = (rand() % 100),
 			.soldier_req = 0,
-			.costfsoldier = (10 + rand() % 90),
+			.costfsoldier = (1 + rand() % 10),
 			.costfsafety = 0,
 			.salvar = 0,
 		};
@@ -33,22 +33,25 @@ list<ciudad> generar_pais(int n)
 void testear_1()
 {
 	FILE * pTest = fopen("../Resultados_tests_nuestros/testing1.txt","w");
-	time_t start;
+	clock_t start;
+	clock_t end;
 	double t;
 	
 	for(int n = 10; n <= 10000; n=n+10)
 	{
 		list<ciudad> cities = generar_pais(n);
 		
-		start = time(NULL);
+		start = clock();
 		zombieland(cities,0);
-		t = difftime(time(NULL),start);
+		end = clock();
+		t = difftime(end,start);
 		fprintf(pTest,"%i %i %f \n",n,0,t);
 		
-		start = time(NULL);
-		zombieland(cities,n*1000000);
-		t = difftime(time(NULL),start);
-		fprintf(pTest,"%i %i %f \n",n,n*1000000,t);
+		start = clock();
+		zombieland(cities,n*1000);
+		end = clock();
+		t = difftime(end,start);
+		fprintf(pTest,"%i %i %f \n",n,n*1000,t);
 	}
 	fclose(pTest);
 }
@@ -72,6 +75,7 @@ list<frecuencia> generar_freq_piramide(int n)
 		};
 		instancia.push_back(freq);
 	}
+	return instancia;
 }
 
 list<frecuencia> generar_freq_tren(int n)
@@ -89,6 +93,7 @@ list<frecuencia> generar_freq_tren(int n)
 		};
 		instancia.push_back(freq);
 	}
+	return instancia;
 }
 
 list<frecuencia> generar_freq_cadena(int n)
@@ -106,12 +111,14 @@ list<frecuencia> generar_freq_cadena(int n)
 		};
 		instancia.push_back(freq);
 	}
+	return instancia;
 }
 
 void testear_2()
 {
 	FILE * pTest = fopen("../Resultados_tests_nuestros/testing2.txt","w");
-	time_t start;
+	clock_t start;
+	clock_t end;
 	double t;
 	
 	for(int n = 10; n <= 10000; n=n+10)
@@ -122,19 +129,22 @@ void testear_2()
 		list<frecuencia> freq_lt = generar_freq_tren(n);
 		list<frecuencia> freq_lc = generar_freq_cadena(n);
 		
-		start = time(NULL);
+		start = clock();
 		altafrecuencia(freq_lp,res,n);
-		t = difftime(time(NULL),start);
+		end = clock();
+		t = difftime(end,start);
 		fprintf(pTest,"%i %c %f \n",n,'p',t);
 		
-		start = time(NULL);
+		start = clock();
 		altafrecuencia(freq_lt,res,n);
-		t = difftime(time(NULL),start);
+		end = clock();
+		t = difftime(end,start);
 		fprintf(pTest,"%i %c %f \n",n,'t',t);
 		
-		start = time(NULL);
+		start = clock();
 		altafrecuencia(freq_lc,res,n);
-		t = difftime(time(NULL),start);
+		end = clock();
+		t = difftime(end,start);
 		fprintf(pTest,"%i %c %f \n",n,'c',t);
 	}
 	fclose(pTest);
