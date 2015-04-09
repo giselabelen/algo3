@@ -32,7 +32,7 @@ list<ciudad> generar_pais(int n)
 
 void testear_1()
 {
-	FILE * pTest = fopen("/Resultados_tests_nuestros/testing1.txt","w");
+	FILE * pTest = fopen("../Resultados_tests_nuestros/testing1.txt","w");
 	time_t start;
 	double t;
 	
@@ -110,7 +110,7 @@ list<frecuencia> generar_freq_cadena(int n)
 
 void testear_2()
 {
-	FILE * pTest = fopen("/Resultados_tests_nuestros/testing2.txt","w");
+	FILE * pTest = fopen("../Resultados_tests_nuestros/testing2.txt","w");
 	time_t start;
 	double t;
 	
