@@ -1,5 +1,6 @@
-#include "cstdlib"
-#include "ctime"
+#include <cstdlib>
+#include <cstdio>
+#include <ctime>
 #include "testing.h"
 
 using namespace std;
@@ -31,12 +32,22 @@ list<ciudad> generar_pais(int n)
 
 void testear_1()
 {
+	time_t start;
+	double t;
+	
 	for(int n = 10; n <= 10000; n=n+10)
 	{
 		list<ciudad> cities = generar_pais(n);
 		
+		start = time(NULL);
 		zombieland(cities,0);
+		t = difftime(time(NULL),start);
+		printf("%i %i %f \n",n,0,t);
+		
+		start = time(NULL);
 		zombieland(cities,n*1000000);
+		t = difftime(time(NULL),start);
+		printf("%i %i %f \n",n,n*1000000,t);
 	}
 }
 
@@ -97,6 +108,9 @@ list<frecuencia> generar_freq_cadena(int n)
 
 void testear_2()
 {
+	time_t start;
+	double t;
+	
 	for(int n = 10; n <= 10000; n=n+10)
 	{
 		list<frecuencia> res;
@@ -105,16 +119,22 @@ void testear_2()
 		list<frecuencia> freq_lt = generar_freq_tren(n);
 		list<frecuencia> freq_lc = generar_freq_cadena(n);
 		
-		altafrecuencia(freq_lp,res,n);		
-		altafrecuencia(freq_lt,res,n);		
-		altafrecuencia(freq_lc,res,n);		
+		start = time(NULL);
+		altafrecuencia(freq_lp,res,n);
+		t = difftime(time(NULL),start);
+		printf("%i %c %f \n",n,'p',t);
+		
+		start = time(NULL);
+		altafrecuencia(freq_lt,res,n);
+		t = difftime(time(NULL),start);
+		printf("%i %c %f \n",n,'t',t);
+		
+		start = time(NULL);
+		altafrecuencia(freq_lc,res,n);
+		t = difftime(time(NULL),start);
+		printf("%i %c %f \n",n,'c',t);
 	}
 }
-
-/**********************************************************************/
-/*******      TESTS CABALLOS       ************************************/
-/**********************************************************************/
-
 
 /**********************************************************************/
 /*****************      MAIN       ************************************/
