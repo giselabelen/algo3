@@ -1,0 +1,57 @@
+Supongo S solución de un problema de alta frecuencia con n frecuencias. LLamo fragmento de tiempo de S a un intervalo de tiempo de s en donde se emite una y solo una frecuencia, tal que si extendieramos ese intervalo, no habría forma de no tomar un intervalo de tiempo perteneciente a otra frecuencia, o de no tomar un intervalo de tiempo que no le pertenece a ninguna frecuencia. Por otro lado, llamo aglomeración de fragmentos de nivel n a un conjunto de fragmentos de tiempo que se encuentran dentro de un intervalo de tiempo dado, donde el nivel, representa la cantidad de frecuencias distintas que tiene dicho intervalo.
+
+Ejemplo: supongo S formado por:
+-De 0 a 5 frecuencia 1
+-De 5 a 10 frecuencia 2
+-De 10 a 15 frecuencia 1
+
+S tiene tres fragmentos de tiempo, de 0 a 5, de 5 a 10 y de 10 a 15.
+De 0 a 5, de 5 a 10 y de 10 a 15 son tres aglomeraciones de fragmentos de nivel 1, de 0 a 10 y de 5 a 15 hay dos aglomeraciones de fragmentos de nivel 2, y de 0 a 15 hay una aglomeracion de fragmentos de nivel 2. Observar que de no existir la frecuencia 2 y se generara un bache de 5 a 10 donde no se encuentra ninguna frecuencia, de 0 a 15 sería una aglomeración de fragmentos de nivel 1.
+
+Proposisión: dada cualquier S solución de un problema de alta frecuencia con n frecuencias y f fragmentos de tiempo: f<2n.
+Inducción en nivel de aglomeración de fragmentos:
+
+-Casos Base: Nivel 1, tengo una sola frecuencia, o sea n =1, por lo tanto, trivialmente f=n y en particular, f<2n
+
+-Paso inductivo: quiero ver que si funciona para una aglomeración de nivel n, funciona para una aglomeración de nivel n+1.
+
+Supongo una aglomeración de nivel n tal que f de esa aglomeración < 2n
+
+Para extender un nivel, tengo que agregar una frecuencia, que tenga al menos un intervalo de tiempo utilizable que no pise con la aglomeración de nivel n.Tengo 3 posibles formas de extender un nivel de esta forma:
+
+1)la nueva frecuencia se encuentra al lado de la aglomeración
+2)la nueva frecuencia contiene a la aglomeración
+3)la nueva frecuencia es contenida por la aglomeración
+
+		|------------|				|------------|	
+1) dibujo:    i)|aglomeración|frecuencia.nueva|	     ii)|aglomeración|	|frecuencia.nueva|
+		|------------|----------------|		|------------|	|----------------|
+
+Veamos que f de una aglomeración de nivel n+1 que tenga la aglomeración de nivel n y la nueva frecuencia en este caso, es simplemente: 
+f_aglomeracion + f_frecuencia.nueva= f_aglomeración +1 < 2n+1 <2(n+1)
+Por lo tanto el caso uno esta probado.
+
+
+		|-------------|  |-------------|	      |---------------|
+2) dibujo:   |	|aglomeracion1|  |aglomeracion2| ............ |aglomeración"n"|  |
+	     |  |-------------|  |-------------|	      |---------------|  |
+	     |-----------------------------frecuencia_nueva----------------------|
+
+Este caso representa una aglomeración formada por las aglomeraciones de 1 a n. Acordemonos de que la HI vale para esta induccion y llamemosla hi
+
+		|-------------|
+2.dibu)      |	|aglomeracion1|  |
+	     |  |-------------|  |
+	     |----frecuencia_n---|
+
+veamos que este caso (llamado bichofeo1) claramente cumple, puesto que la aglomeracion1 por hi es < 2n con n el nivel de la aglomeracion, y veamos que esta nueva frecuencia agrega dos fragmentos de tiempo y una frecuencia, y es cierto que f_aglomeración + f_agregadaDeFrecuenciAn=f_aglomeración+2<2n+2=2(n+1)
+Veamos ahora que sucede si extiendo en una aglomeración.
+
+		|-------------|  |-------------|
+2.dibu)      |	|aglomeracion1|  |aglomeracion2|  |
+	     |  |-------------|  |-------------|  |
+	     |----frecuencia_n--------------------|
+
+Veo que cuando agrego la aglomeración dos, debido a que el pedazo entre 1 y 2 ya estaba entre los fragmentos de f del primer caso, solo se agrega f_aglomeración2 y el fragmento desde que termina la aglomeración dos hasta el final de la frecuencia_n. Veamos que la cantidad de frecuencias de aglomeracion 1 y aglomeracion 2 son mi n, y la frecuencia_n el +1. si llamo l y k a la cantidad de frecuencias que tiene aglomeracion1 y aglomeracion2 respectivamente(ver que l+k=n entonces).
+Entonces f_bichofeo2= f_bichofeo1 + f_aglomeración2 +1 < 2*(k+1) + 2*l +1 = 2*(k+1+l) + 1=FALTA, ACA HAY UN ERROR, VER COMO SOLUCIONAR Y CORREGIR.
+
