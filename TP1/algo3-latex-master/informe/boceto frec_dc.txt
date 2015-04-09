@@ -1,10 +1,8 @@
-Demostraremos a continuación que frecuency_dc tiene complejidad O ( n log (n) ). La idea de esta funcion provino de merge_sort, por ende se espera un comportamiento similar a este.
-En efecto, se puede notar que siendo T(n) el tiempo que le toma a frecuency_dc manipular la lista de n elementos se debe cumplir lo siguiente:
+Demostraremos a continuación que frecuency_dc tiene complejidad O ( n log (n) ).
+En efecto, se puede notar que, de manera similar a merge_sort, siendo T(n) el tiempo que le toma a frecuency_dc manipular la lista de n elementos se debe cumplir lo siguiente:
 
                    T(n) = 2T(n/2) + c*n
 
 ya que primero se deberá ordenar cada una de las mitades del arreglo y luego unirlas con un costo de O(n) representado por c*n.
-En este caso el encargado de unir las listas será mezclar_freq que ciclara a lo sumo los n elementos de estas, haciendo las comparaciones de tiempos de inicio, fin y costos O(1) que indicarán la
-posición en la que se deben insertar los elementos O(1).
-El caso T(1) = O(1) por ser una lista de un elemento, tal vez se puede terminar de demostrar que es n*logn por induccion.
-Esto sirve como idea, me parece que hablar de las funciones auxiliares como casos separados no es muy eficiente porque no hacen la gran cosa y se parecen demasiado. Por eso hablo de comparaciones en general, lo que tal vez estaria bueno aclarar es por que el costo de insertar los elementos es O(1), tal vez con decir que es el push_back de listas ya esta, aunque nos meteriamos con la implementacion?.
+En este caso el encargado de unir las listas será mezclar_freq (haciendo uso de aux mezcla a y b segun corresponda) que ciclara sobre los elementos de estas, haciendo las comparaciones de tiempos de inicio, fin y costos O(1) que indicarán la posición en la que se deben insertar los elementos O(1). En un proceso que no resulta mas costoso que O(n)
+
