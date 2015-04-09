@@ -2,6 +2,8 @@
 #include "ctime"
 #include "testing.h"
 
+using namespace std;
+
 /**********************************************************************/
 /*******      TESTS ZOMBIELAND     ************************************/
 /**********************************************************************/
@@ -27,33 +29,14 @@ list<ciudad> generar_pais(int n)
 	return instancia;
 }
 
-int zombie_test(int n, int p)
-{
-    int salvacion_total;
-    
-    list<ciudad> cities = generar_pais(n);
-	
-	// Calculo y completo soldier_req y costfsafety para cada ciudad
-    calcular_costo_de_salvacion(cities);
-    
-    // Ordeno por costo de salvación
-    cities.sort(compare_cost);
-    
-    // Busco la solución "greedy"
-    salvacion_total = zombie_goloso(cities,p);
-    
-    // Ordeno por nombre (orden en el que vinieron en la entrada)
-    cities.sort(compare_name);
-
-	cities.clear();
-}
-
 void testear_1()
 {
 	for(int n = 10; n <= 10000; n=n+10)
 	{
-		zombie_test(n,0);
-		zombie_test(n,n*100000);
+		list<ciudad> cities = generar_pais(n);
+		
+		zombieland(cities,0);
+		zombieland(cities,n*1000000);
 	}
 }
 
@@ -112,44 +95,19 @@ list<frecuencia> generar_freq_cadena(int n)
 	}
 }
 
-int freq_test(int n)
-{
-	int i = 0;
-	int costo_total;
-    frecuencia freq;
-    list<frecuencia>::iterator it;
-    list<frecuencia> res;    
-    frecuencia total_freq[n];	// Arreglo donde voy a ir metiendo las frecuencias
-       
-    list<frecuencia> freq_l1 = generar_freq_piramide(n);
-    //~ list<frecuencia> freq_l1 = generar_freq_tren(n);
-    //~ list<frecuencia> freq_l1 = generar_freq_cadena(n);
-       
-    // Ordeno por tiempo de inicio
-    freq_l.sort(compare_time);
-    
-    // Paso la lista a un arreglo
-    for (it = freq_l.begin(); it != freq_l.end(); it++)
-    {
-		total_freq[i] = *it;
-		i++;
-	}
-    freq_l.clear();
-    
-    // Hago el divide and conquer
-    res = frequency_dc(total_freq,0,n-1);
-    
-    // Calculo el costo total
-    costo_total = costo_transmision(res);
-    
-	res.clear();
-}
-
 void testear_2()
 {
 	for(int n = 10; n <= 10000; n=n+10)
 	{
-		freq_test(n);
+		list<frecuencia> res;
+		
+		list<frecuencia> freq_lp = generar_freq_piramide(n);
+		list<frecuencia> freq_lt = generar_freq_tren(n);
+		list<frecuencia> freq_lc = generar_freq_cadena(n);
+		
+		altafrecuencia(freq_lp,res,n);		
+		altafrecuencia(freq_lt,res,n);		
+		altafrecuencia(freq_lc,res,n);		
 	}
 }
 
@@ -158,3 +116,12 @@ void testear_2()
 /**********************************************************************/
 
 
+/**********************************************************************/
+/*****************      MAIN       ************************************/
+/**********************************************************************/
+int main()
+{
+	srand(time(0));
+	testear_1();
+	testear_2();
+}
