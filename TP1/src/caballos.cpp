@@ -1,5 +1,6 @@
 #include <cmath>
 #include <cstdio>
+#include <ctime>
 #include "caballos.h"
 
 void setear_amenaza(Tablero& tab, int fila, int columna, int n, int& dec)
@@ -103,9 +104,21 @@ int main()
  * funciones correspondientes para:
  * 		- marcar las posiciones cubiertas por los caballos dados
  * 		- realizar el backtraking
- * 		- 
  * Finalmente, arma la salida.
  */
+
+ 	/******************************************************************/
+	/******************************************************************/
+	/** DESCOMENTAR PARA TESTEAR **/	
+	
+	FILE * pTest = fopen("/Resultados_tests_nuestros/testing3.txt","a");
+	double t;
+	time_t start = time(NULL);
+	
+	/******************************************************************/
+	/******************************************************************/
+
+	
 	int n;
 	int knights;
 	int fila;
@@ -119,6 +132,17 @@ int main()
 
 	scanf("%i",&n);	// Levanto la cantidad de filas-columnas
 	scanf("%i",&knights);	// Levanto la cantidad de caballos preubicados
+	
+	
+	/******************************************************************/
+	/******************************************************************/
+	/** DESCOMENTAR PARA TESTEAR **/	
+	
+	fprintf(pTest,"%i %i ",n,knights);
+	
+	/******************************************************************/
+	/******************************************************************/
+	
 	
 	Tablero tab(n, Vec(n, 'v'));	// Creo un tablero de nxn y seteo todo con 'v' (vacío)
 	Tablero tab_final(n, Vec(n, 'v'));	//aca va a estar mi solucion
@@ -176,4 +200,15 @@ int main()
 			}
 		}
 	}
+	
+	
+	/******************************************************************/
+	/******************************************************************/
+	/** DESCOMENTAR PARA TESTEAR **/	
+	
+	t = difftime(time(NULL),start);
+	printf("%f \n",t);
+ 
+ 	/******************************************************************/
+	/******************************************************************/
 }
