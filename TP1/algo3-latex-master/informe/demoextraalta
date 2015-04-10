@@ -1,0 +1,29 @@
+Sea S un conjunto solucion de frecuencias con n frecuencias notemos que S puede tener las siguientes apariencias:
+
+. cadena: para cada secuencia salvo la ultima, su transmision se ve interrumpida por la siguiente frecuencia.
+
+. tren: el fin de cada frecuencia indica el inicio de la siguiente.
+
+. piramide: donde en la punta de la pirámide se encuentra la frecuencia de menor costo y a medida que se va hacia la base de esta el costo de las frecuencias aumenta.
+
+o alguna combinacion de las 3.
+
+Notemos que si quisiera armar una lista donde cada elemento tuviera el intervalo de tiempo donde se transmite cada frecuencia, distinguiendo entre distintos usos de la misma frecuencia, una lista armada en base a una solución cadena posee n elementos, asi como tambien una lista tren. Una lista "piramide" posee 2n-1 elementos.
+
+Veamos que unir conjutos de soluciones hace que la lista resultado no supere los 2n elementos
+
+Si uno 2 conjuntos piramide de n y m elementos luego     n+m = 2n-1 + 2m-1
+                                                          n+m = 2(n+m-1)
+Si uno un conjunto cadena con otro cadena o un tren es trivial dado que la lista de esos conjuntos es igual a la cantidad de frecuencias del conjunto en cuestion.
+
+Si uno 1 piramide con un tren o un cadena:
+
+Si S tenia n elementos y la combino con la solucion K de k elementos
+
+          n = 2n -1                k = k elems
+
+                      n+k = 2n-1+k < 2n + 2k 
+
+Luego no importa como combinemos siempre tendremos menos de 2n elementos en la lista, por lo tanto recorrerla es O(n)    
+
+            
