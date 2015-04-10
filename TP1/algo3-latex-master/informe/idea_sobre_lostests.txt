@@ -26,13 +26,15 @@ explicacion del grafico
 
 Si bien el grafico 1 pareciera mostrar una recta, lo cual significaría que nuestro algoritmo sería O(n), y crecería linealmente, al observar la figura 3, veo que al dividir por log n queda algo parecido a una recta también, suceso que no debría ocurrir de ser O(n) nuestro algoritmo. Más aún, al ver la figura 3 vemos la curvita inicial propia de la funcion log n, y para despejar cualquier duda, al dividir por nlogn, el grafico 4 nos muestra que nuestra función tiende en tiempo a la constante "insertar constante". Es por eso, que estos gráfico parecerían respaldar la teoría que nuestro algoritmo tiene complejidad n log n
 
-Ahora veamos que tanta incidencia tiene en el tiempo de ejecución, que se salve una ciudad o que se salven todas.
+Ahora veamos que tanta incidencia tiene en el tiempo de ejecución, que no se salve ninguna ciudad o que se salven todas.
 
 Grafico no se salva nadie vs se salvan todos.
 
 Explicacion del grafico
 
+EL gráfico pareciera respaldar nuestra teoría, puesto que podemos observar que los tiempos de ejecución son muy similares( al principio casi indistinguibles) con una leve inclinación a que no salvar a ninguna ciudad es más rapido que salvar a todas.
 
+Por todo lo arriba experimentado, pareciera que nuestro material teórico tiene apoyo empírico.
 
 
 
