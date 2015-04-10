@@ -303,8 +303,43 @@ T(n) = 2T(\frac{n}{2}) + c*n
 \end{array}
 \end{equation*}
 
-ya que primero se deberá ordenar cada una de las mitades del arreglo y luego unirlas con un costo de $\mathcal{O}(n)$ representado por $c*n$.
+ya que primero se deberá ordenar cada una de las mitades del arreglo y luego unirlas con un costo de $\mathcal{O}(n)$ representado por $c*n$.\\
 En este caso, el encargado de unir las listas será mezclar_freq (haciendo uso de aux_mezcla_a y aux_mezcla_b segun corresponda) que ciclará sobre los elementos de estas, haciendo las comparaciones de tiempos de inicio, fin y costos $\mathcal{O}(1)$ que indicarán la posición en la que se deben insertar los elementos $\mathcal{O}(1)$. \\
+Sabemos que esto es $\mathcal{O}(n)$ por lo siguiente:\\
+Supongamos S un conjunto solución de frecuencias con n frecuencias notamos que S puede tener las siguientes apariencias:
+\begin{itemize}
+\item cadena: para cada secuencia salvo la última, su transmisión se ve interrumpida por la siguiente frecuencia, la cual posee un costo menor.\\ 
+Ej1: f1:[(1,4),8] f2:[(3,8),5] f3:[(6,10),3].
+\item tren: el fin de cada frecuencia indica el inicio de la siguiente.\\
+ Ej2: f1:[(1,3),4] f2:[(3,6),5] f3:[(6,8),6].
+\item pirámide: en la punta de la pirámide se encuentra la frecuencia de menor costo y a medida que se va hacia la base de esta el costo de las frecuencias aumenta.\\
+ Ej3: f1:[(1,8),10] f2:[(2,6),8] f3:[(3,4),5].
+\item tren con baches: similar a tren pero con intervalos de tiempo desocupados entre frecuencias.\\
+Ej4: f1:[(1,4),8] f2:[(6,8),5] f3:[(11,15),3].
+\item alguna combinación de las 4 anteriores.
+\end{itemize}
+Notemos que si quisieramos armar una lista donde cada elemento tuviera el intervalo de tiempo donde se transmite cada frecuencia (ignorando los baches), distinguiendo entre distintos usos de la misma frecuencia, una 'lista cadena' (armada en base a una 'solución cadena') posee n elementos, así como también una 'lista tren'. Una 'lista pirámide' tiene $2n-1$ elementos (la frecuencia 'punta' de la pirámide ocupa 1 elemento de la lista mientras que las distintas frecuencias 'piso' ocupan 2 elementos). En estos casos n representa la cantidad total de frecuencias.\\
+Lista Ej1: [(1,3,8,f1),(3,6,5,f2),(6,10,3,f3)]\\
+Lista Ej2: [(1,3,4,f1),(3,6,5,f2),(6,8,6,f3)]\\
+Lista Ej3: [(1,2,10,f1),(2,3,8,f2),(3,4,5,f3),(4,6,8,f2),(6,8,10,f1)]\\
+Lista Ej4: [(1,4,8,f1),(6,8,5,f2),(11,15,3,f3)]\\
+Nota:el ejemplo es solo para ilustrar.\\
+Veremos que uniendo distintos tipos de soluciones nuestra lista resultado no supera el tamaño de 2*cantidad_total_frecuencias.
+Uniendo 2 soluciones piramide de n y m elementos tenemos:\\
+\begin{equation*}
+\begin{array}{l}
+n+m = 2n-1+2m-1\\
+n+m = 2(n+m-1)<2(n+m)
+\end{array}
+\end{equation*}
+Ver que tanto las listas armadas en base a 'cadena-cadena', 'tren-cadena', tienen menos de 2*cantidad_total_frecuencias resulta trivial por lo dicho anteriormente ('tren' también puede hacer referencia a 'tren con baches' sin alterar el resultado).\\
+Si unimos 1 solución cadena/tren (m) y 1 solución pirámide (n), luego:
+\begin{equation*}
+\begin{array}{l}
+n+m=2n-1+m<2n+2m
+\end{array}
+\end{equation*}
+En conclusión, las listas que recorremos tienen como cota $\mathcal{O}(2n)$, osea $\mathcal{O}(n)$. 
 Luego la complejidad resulta ser $\mathcal{O}(n*log(n))$.
 \vspace*{0.6cm}
 
