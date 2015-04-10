@@ -200,7 +200,7 @@ Por todo lo dicho anteriormente, si llamamos n a la cantidad de filas y columnas
 \begin{figure}
 \begin{codebox}
 \Procname{$\proc{Backtracking}(Tablero$ $tab, Tablero$ $tab$_$final, int$ $fila, int$ $columna, int$ $n)$}
-\li copia_tab $\leftarrow$ tablero vacío de n x n // $\mathcal{O}(1)$
+\li copia_tab $\leftarrow$ tablero vacío de n x n // $\mathcal{O}(n^2)$
 \li \If agregué más caballos de los que permitía la cota   // $\mathcal{O}(1)$
 \li \quad \Return   
 \li \If ya llené el tablero                                // $\mathcal{O}(1)$
@@ -210,7 +210,10 @@ Por todo lo dicho anteriormente, si llamamos n a la cantidad de filas y columnas
 \li \If ya recorrí todo el tablero
 \li \quad \Return
 \li f $\leftarrow$ fila para la siguiente llamada recursiva  // $\mathcal{O}(1)$
-\li c $\leftarrow$ columna para la siguiente llamada recursiva  // $\mathcal{O}(1)$
+\li c $\leftarrow$ columna + 1 para la siguiente llamada recursiva  // $\mathcal{O}(1)$
+\li si (c = n)                          // $\mathcal{O}(1)$
+\li \quad f $\leftarrow$ fila + 1      // $\mathcal{O}(1)$
+\li \quad c $\leftarrow$ 0             // $\mathcal{O}(1)$
 \li \If en tab[fila][columna] no había un caballo preubicado      // $\mathcal{O}(1)$
 \li \quad copia_tab $\leftarrow$ copia de tab              // $\mathcal{O}(n^2)$
 \li \quad r $\leftarrow$ cantidad de casillas que falta llenar  //$\mathcal{O}(1)$
