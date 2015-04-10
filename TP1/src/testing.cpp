@@ -38,11 +38,10 @@ void testear_1()
 	clock_t end;
 	double t = 0;
 	
-	for(int n = 10; n <= 1000; n=n+10)	// cambiar 10000 por 1000 para test SORT
+	for(int n = 10; n <= 1000; n=n+10)
 	{
 		list<ciudad> cities = generar_pais(n);
-
-		//calcular_costo_de_salvacion(cities);	// descomentar esto para test sort
+		
 		t = 0;
 		for(int j = 0; j < 50; j++)
 		{
@@ -53,13 +52,11 @@ void testear_1()
 		}
 		fprintf(pTest,"%i %i %f \n",n,0,t/50);
 
-		// COMENTAR ESTO PARA TEST SORT
 		t = 0;
-		
-		 for(int j = 0; j < 50; j++)
-		 {
+		for(int j = 0; j < 50; j++)
+		{
 		 	start = clock();
-		 	zombieland(cities,n*1000);//n*1000
+		 	zombieland(cities,n*1000);
 		 	end = clock();
 		 	t = t + difftime(end,start);
 		 }

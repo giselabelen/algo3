@@ -126,7 +126,7 @@ Primeramente, veamos la complejidad de la parte golosa (Figura \ref{code:goloso}
 \Procname{int $\proc{zombie_goloso}(lista$_$ciudades, int$ $n, int$ $p)$}
 \li i $\leftarrow$ 0
 \li sum $\leftarrow$ 0
-\li \While ($i<n$ y $sum<p$) 
+\li \While ($i<n$ y $sum \leq p$) 
 \li 		\Do   
 		$sum$ + costo_salvar_ciudad_i   
 \li		\If $sum<p$
@@ -169,17 +169,19 @@ T(n) = \mathcal{O}(n*log(n))
 
 La complejidad total de este algoritmo es, entonces, $\mathcal{O}(n*log(n))$.
 
-
-\newpage
+\vspace*{0.6cm}
+%\newpage
 \subsection{Experimentación y gráficos.}
 
 \vspace*{0.3cm}
+
+Se llevarán acabo distintos experimentos para mostrar de manera empírica ciertos aspectos de nuestro algoritmo que hasta ahora, en el presente informe, se encuentran de manera teórica. Queremos mostrar que, efectivamente, nuestro algoritmo tiene una complejidad de $n*log(n)$, y que el foco de ésta se encuentra en el sort, por lo que, no deberían verse diferencias significativas en tiempo entre un país que salva todas sus ciudades, y el mismo país pero con un presupuesto que no permita salvar ninguna.
 
 \subsubsection{Test 1}
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+
 
 
 \newpage
