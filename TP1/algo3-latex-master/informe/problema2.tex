@@ -38,7 +38,7 @@ Supongamos que tengo una frecuencia 1, con costo por minuto de 10, tiempo de ini
 \vspace*{0.6cm}
 
 %\newpage
-\subsection{Desarrollo de la idea y pseudocódigo.}
+\subsection{Desarrollo de la idea y correctitud.}
 
 \vspace*{0.3cm}
 
@@ -186,11 +186,11 @@ Si el tiempo $fin$ de $A$ es mayor al tiempo $inicio$ de $B$, tenemos las siguie
 %\newpage
 %\subsection{Justificación de la resolución y demostración de correctitud.}
 
-\vspace*{0.3cm}
+%\vspace*{0.3cm}
 
 
 
-\vspace*{0.6cm}
+%\vspace*{0.6cm}
 
 %\newpage
 \subsection{Análisis de complejidad.}
@@ -334,6 +334,7 @@ Como en apariencia no podemos asegurar un comportamiento $n*log(n)$, decidimos d
 	\end{center}
 	\caption{Alta Frecuencia - Caso pirámide (div n)}\label{fig:2-piramide-n}
 \end{figure}
+\FloatBarrier
 
 \begin{figure}[htb]
 	\begin{center}
@@ -341,6 +342,7 @@ Como en apariencia no podemos asegurar un comportamiento $n*log(n)$, decidimos d
 	\end{center}
 	\caption{Alta Frecuencia - Caso pirámide (div log(n))}\label{fig:2-piramide-logn}
 \end{figure}
+\FloatBarrier
 
 Finalmente, dividimos los tiempos de ejecución por $n*log(n)$, siendo $n$ la cantidad de ciudades (Figura \ref{fig:2-piramide-nlogn}).
 
@@ -350,5 +352,8 @@ Finalmente, dividimos los tiempos de ejecución por $n*log(n)$, siendo $n$ la ca
 	\end{center}
 	\caption{Alta Frecuencia - Caso pirámide (div n*log(n))}\label{fig:2-piramide-nlogn}
 \end{figure}
+%\FloatBarrier
 
 Veamos que el gráfico de la Figura \ref{fig:2-piramide} parecería tener una pequeña curva, lo cual podría significar que nuestro algoritmo sería $\mathcal{O}(n*log(n))$; al observar la Figura \ref{fig:2-piramide-logn}, veo que al dividir por $log(n)$ queda algo parecido a una recta también, suceso que apoya la teoría sobre nuestro algoritmo. Más aún, al ver la figura \ref{fig:2-piramide-n} vemos la curvita inicial propia de la funcion $log(n)$, y para despejar cualquier duda, al dividir por $n*log(n)$, el gráfico de la Figura \ref{fig:2-piramide-nlogn} nos muestra que nuestra función tiende en tiempo a una constante. Es por eso que estos gráficos parecerían respaldar la teoría que nuestro algoritmo tiene complejidad $\mathcal{O}(n*log(n))$.
+
+\newpage

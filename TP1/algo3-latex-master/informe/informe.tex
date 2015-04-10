@@ -47,7 +47,7 @@
   commentstyle=\color{red},    % comment style
   escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
   keywordstyle=\color{blue},       % keyword style
-  stringstyle=\color{mymauve},     % string literal style
+  stringstyle=\color{blue},     % string literal style
 }
 
 \thispagestyle{empty}
@@ -65,11 +65,11 @@
 
 \thispagestyle{empty}
 \vfill
-\begin{abstract}
-    \vspace{0.5cm}
-	Este trabajo busca aplicar distintas técnicas para la creación de algoritmos. Para esto, se resolverán tres problemas que representan situaciones de la vida real y juegos de ingenio. Las técnicas que se utilizarán serán algoritmos golosos, divide and conquer y backtracking.
-
-\end{abstract}
+%\begin{abstract}
+%    \vspace{0.5cm}
+%	Este trabajo busca aplicar distintas técnicas para la creación de algoritmos. Para esto, se resolverán tres problemas que representan situaciones de la vida real y juegos de ingenio. Las técnicas que se utilizarán serán algoritmos golosos, divide and conquer y backtracking.
+%
+%\end{abstract}
 
 \thispagestyle{empty}
 \vspace{1.5cm}
@@ -81,14 +81,14 @@
 \newpage
 \section{Objetivos generales}
 
-El objetivo principal del siguiente trabajo será la práctica de distintas técnicas para la creación de algoritmos. Dados tres problemas, que representan situaciones factibles de la vida real y juegos de ingenio, se buscará resolverlos de forma óptima mediante la aplicación de algoritmos golosos, divide and conquer y backtracking.  En algunos de los casos, se buscará que el algoritmo no supere cierta cota de complejidad en peor caso.  Pretendemos mostrar cómo estas técnicas permiten mejorar los algoritmos frente a abordajes de ``fuerza bruta''.
+El objetivo principal del siguiente trabajo será la práctica de distintas técnicas para la creación de algoritmos. Dados tres problemas, que representan situaciones factibles de la vida real y juegos de ingenio, se buscará resolverlos de forma óptima mediante la aplicación de algoritmos golosos, divide and conquer y backtracking.  En algunos de los casos, se buscará que el algoritmo no supere cierta cota de complejidad en peor caso.  %Pretendemos mostrar cómo estas técnicas permiten mejorar los algoritmos frente a abordajes de ``fuerza bruta''.
 
-\newpage
+%\newpage
 \section{Plataforma de pruebas}
 
-Descripción de la plataforma de pruebas (hardware, software) utilizada
-para el desarrollo y testeo del trabajo práctico.
+Para toda la experimentación se utilizará un procesador Intel Atom, de 4 núcleos a 1.6 GHZ.
 
+El software utilizado será Ubuntu 14.04, y G++ 4.8.2.
 
 \newpage
 \section{Problema 1: Zombieland}
@@ -106,15 +106,26 @@ para el desarrollo y testeo del trabajo práctico.
 \newpage
 \section{Apéndice 1: acerca de los tests}
 
-Incluye comentarios acerca de los tests utilizados, cómo generarlos y reproducirlos.
+Para reproducir los tests mencionados en el presente informe, se adjunta con la entrega el script {\it tests_nuestros.sh} y una carpeta llamada {\it tests_caballos} con las instancias utilizadas para las pruebas del tercer problema.  Además, se provee el script {\it compilar.sh} para compilar los programas, y el archivo {\it testing.cpp} que se ocupa de correr los tests para los primeros dos problemas.  Estos dos últimos se llaman desde {\it tests_nuestros.sh}.
 
+El script mencionado se ocupa de realizar las compilaciones necesarias y correr cada una de las pruebas. Los resultados se guardarán en un directorio llamado {\it Resultados_tests_nuestros}.
+
+Para que los tests correspondientes al problema 3 corran apropiadamente, se deben descomentar las líneas 141 y 209 a 212 del archivo {\it caballos.cpp} .
+
+El formato de la salida de cada test será el siguiente:
+
+\begin{itemize}
+\item {\bf Problema 1:} Una línea por cada instancia evaluada, cada una de las cuales estará formada por un entero que representa la cantidad de ciudades, un entero que representa el presupuesto utilizado, y un float que representa el tiempo incurrido (en ciclos de clock).
+\item {\bf Problema 2:} Una línea por cada instancia evaluada, cada una de las cuales estará formada por un entero que representa la cantidad de frecuencias, un caracter 'p', 't' o 'c' para identificar los casos ``pirámide'', ``tren'' y ``cadena'', y un float que representa el tiempo incurrido (en ciclos de clock).
+\item {\bf Problema 3:} Cincuenta líneas por cada instancia evaluada (en este caso el promedio no se calcula de forma automática), cada una de las cuales estará formada por un entero que representa la cantidad de casilleros por lado, un entero que representa la cantidad de caballos preubicados, y un float que representa el tiempo incurrido (en ciclos de clock).
+\end{itemize}
 
 \newpage
 \section{Apéndice 2: secciones relevantes del código}
 En esta sección, adjuntamos parte del código correspondiente a la resolución de cada problema que consideramos más \textbf{relevante}.
 
 \subsection{Código del Problema 1}
-
+Estructura para ciudad:
 \begin{lstlisting}
 typedef struct ciudad_t{
 	int nombre; 			// numero que identifica la ciudad segun el orden en el que viene dada
@@ -129,15 +140,12 @@ typedef struct ciudad_t{
 
 \vspace*{0.5cm}
 
+Funciones de comparación utilizadas para el list.sort:
 \begin{lstlisting}
 bool compare_cost(const ciudad& city1, const ciudad& city2){
 	return (city1.costfsafety < city2.costfsafety);
 }
-\end{lstlisting}
 
-\vspace*{0.5cm}
-
-\begin{lstlisting}
 bool compare_name(const ciudad& city1, const ciudad& city2){
 	return (city1.nombre < city2.nombre);
 }
@@ -145,6 +153,7 @@ bool compare_name(const ciudad& city1, const ciudad& city2){
 
 \vspace*{0.5cm}
 
+Función golosa:
 \begin{lstlisting}
 int zombie_goloso(list<ciudad>& city, int p){
 /* Devuelve la cantidad de ciudades que se salvan */
@@ -165,9 +174,9 @@ int zombie_goloso(list<ciudad>& city, int p){
 }
 \end{lstlisting}
 
-\newpage
+%\newpage
 \subsection{Código del Problema 2}
-
+Estructura para frecuencia:
 \begin{lstlisting}
 typedef struct frecuencia_t{
 	int nombre; 			// numero que identifica la frecuencia segun el orden en el que viene dada
@@ -179,29 +188,109 @@ typedef struct frecuencia_t{
 
 \vspace*{0.5cm}
 
+Función de comparación utilizada para el list.sort:
 \begin{lstlisting}
 bool compare_time(const frecuencia& freq1, const frecuencia& freq2){
 	return (freq1.inicio < freq2.inicio);
 }
 \end{lstlisting}
 
+Función ocupada del divide and conquer:
+\begin{lstlisting}
+list<frecuencia> frequency_dc(frecuencia* freq, int low, int high)
+{
+	int mid;
+	list<frecuencia> trans1;
+	list<frecuencia> trans2;
+	list<frecuencia> trans_final;
+	
+    if (low < high)	// Divido en 2 y hago recursion
+    {
+        mid = (low+high)/2;
+        trans1 = frequency_dc(freq,low,mid);
+        trans2 = frequency_dc(freq,mid+1,high);
+		trans_final = mezclar_freq(trans1,trans2);
+    }else{	// Es un solo elemento, hago una lista con esa transmision
+		trans_final.push_back(freq[low]);
+	}
+	trans1.clear();
+	trans2.clear();
+    return trans_final;
+}
+\end{lstlisting}
 
-\newpage
+%\newpage
 \subsection{Código del Problema 3}
-
+Estrucura para Tablero:
 \begin{lstlisting}
 typedef vector<char> Vec;
 typedef vector<Vec> Tablero;
 \end{lstlisting}
 
-%\vspace*{0.5cm}
 
-%\begin{lstlisting}
-%int main(){
-%  return 0;
-%}
-%\end{lstlisting}
+Función ocupada de realizar el backtraking:
+\begin{lstlisting}
+void backtranki(Tablero& tab,Tablero& tab_final, int fila, int columna, int n, int& cota, int lo_que_falta, int extras)
+{
+	int f;
+	int c;
+	
+	if(extras > cota)
+	{	// Si me pase de la cota, me voy.
+		return;
+	}
 
+	if(lo_que_falta == 0)	// Si ya llene el tablero, me guardo esa solucion y me voy
+	{
+		copiar_tablero(tab,tab_final,n);
+		cota = extras;
+		return;
+	}
+	if(fila == n){		// Si ya recorri todo el tablero, me voy
+		return;
+	}
+	
+	// Establezco la fila y columna para la siguiente llamada recursiva
+	f = fila;
+	c = columna + 1;
+	if(c == n){
+		f = fila +1;
+		c = 0;
+	}
+	
+	if(tab[fila][columna] != 'p')	// Si no habia un caballo preubicado
+	{
+		Tablero copia_tab(n, Vec(n, 'v'));
+		copiar_tablero(tab,copia_tab,n);	// Hago una copia del tablero
 
+		int r = lo_que_falta;				//lo pongo en variable aparte, para que no rompa a
+		int e = extras;						//lo_que_falta y a extras que estan fuera del if
+		
+		if(copia_tab[fila][columna] == 'v'){
+
+			r--;
+		}
+
+		copia_tab[fila][columna] = 'e';	// pongo un caballo extra
+		e++;
+		
+		// actualizo el tablero y lo que falta
+		setear_amenaza(copia_tab,fila-2,columna-1,n,r);	
+		setear_amenaza(copia_tab,fila-2,columna+1,n,r);
+		setear_amenaza(copia_tab,fila-1,columna-2,n,r);	
+		setear_amenaza(copia_tab,fila-1,columna+2,n,r);
+		setear_amenaza(copia_tab,fila+1,columna-2,n,r);
+		setear_amenaza(copia_tab,fila+1,columna+2,n,r);
+		setear_amenaza(copia_tab,fila+2,columna-1,n,r);
+		setear_amenaza(copia_tab,fila+2,columna+1,n,r);
+		
+		// llamada recursiva con el tablero actualizado
+		backtranki(copia_tab,tab_final,f,c,n,cota,r,e);
+	}
+
+	// Llamada recursiva con el mismo tablero
+	backtranki(tab,tab_final,f,c,n,cota,lo_que_falta,extras);
+}
+\end{lstlisting}
 
 \end{document}
