@@ -22,7 +22,7 @@ echo "Corriendo Tests Caballos"
 
 for file in $DIR/*.in
 do
-	for i in {1..100}
+	for i in {1..50}
 	do
 		base=$(basename "$file" .in)
 		./caballos < $file > $RES/$base.out

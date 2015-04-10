@@ -75,7 +75,7 @@ int zombie_goloso(list<ciudad>& city, int p)
 	list<ciudad>::iterator it = city.begin();
     
     //~ while ((i < n) && (sum < p))
-    while(it != city.end() && (sum < p))
+    while(it != city.end() && (sum <= p))
 	{
 		sum = sum + it->costfsafety;
 		if (sum <= p){
@@ -112,6 +112,7 @@ int zombieland(list<ciudad>& cities, int p)
     cities.sort(compare_name);
     
     return salvacion_total;
+    //return 0;
 }
 
 #endif // ZOMBIELAND_H_INCLUDED

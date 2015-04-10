@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <ctime>
 #include "zombieland.h"
 
 int main()
@@ -43,7 +44,7 @@ int main()
 	}
     
     salvacion_total = zombieland(cities,p);
-    
+	    
     // Armo la salida
     printf("%i ",salvacion_total);
     
