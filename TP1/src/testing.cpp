@@ -135,8 +135,9 @@ void testear_2()
 		list<frecuencia> res;
 		
 		list<frecuencia> freq_lp = generar_freq_piramide(n);
-		//list<frecuencia> freq_lt = generar_freq_tren(n);
-		//list<frecuencia> freq_lc = generar_freq_cadena(n);
+		list<frecuencia> freq_lt = generar_freq_tren(n);
+		list<frecuencia> freq_lc = generar_freq_cadena(n);
+		
 		t = 0;
 		for(int i = 0; i < 30; i++)
 		{	
@@ -147,25 +148,25 @@ void testear_2()
 		}
 		fprintf(pTest,"%i %c %f \n",n,'p',t/30);
 		
-		// t = 0;
-		// for(int i = 0; i < 30; i++)
-		// {
-		// 	start = clock();
-		// 	altafrecuencia(freq_lt,res,n);
-		// 	end = clock();
-		// 	t = t + difftime(end,start);
-		// }
-		// fprintf(pTest,"%i %c %f \n",n,'t',t/30);
+		 t = 0;
+		 for(int i = 0; i < 30; i++)
+		 {
+		 	start = clock();
+		 	altafrecuencia(freq_lt,res,n);
+		 	end = clock();
+		 	t = t + difftime(end,start);
+		 }
+		 fprintf(pTest,"%i %c %f \n",n,'t',t/30);
 		
-		// t = 0;
-		// for(int i = 0; i < 30; i++)
-		// {
-		// 	start = clock();
-		// 	altafrecuencia(freq_lc,res,n);
-		// 	end = clock();
-		// 	t = difftime(end,start);
-		// }
-		// fprintf(pTest,"%i %c %f \n",n,'c',t/30);
+		 t = 0;
+		 for(int i = 0; i < 30; i++)
+		 {
+		 	start = clock();
+		 	altafrecuencia(freq_lc,res,n);
+		 	end = clock();
+		 	t = difftime(end,start);
+		 }
+		 fprintf(pTest,"%i %c %f \n",n,'c',t/30);
 	}
 	fclose(pTest);
 }
@@ -176,6 +177,6 @@ void testear_2()
 int main()
 {
 	srand(time(0));
-	//testear_1();
+	testear_1();
 	testear_2();
 }
