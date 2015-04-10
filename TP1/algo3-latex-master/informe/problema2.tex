@@ -3,7 +3,7 @@
 \vspace*{0.3cm}
 
 Tenemos un enlace por el cual podemos transmitir información, utilizando distintas frecuencias.
-Nuestro objetivo es transmitir información durante todo el tiempo que sea posible, pero invirtiendo la menor cantidad de dinero.
+Nuestro objetivo es transmitir durante todo el tiempo que sea posible, pero invirtiendo la menor cantidad de dinero.
 
 Hay que tener en cuenta lo siguiente:
 
@@ -163,33 +163,13 @@ Si el tiempo $fin$ de $A$ es mayor al tiempo $inicio$ de $B$, tenemos las siguie
 \li \While it1 e it2 sean válidos
 \li		\Do 
  		\If ((it1$\rightarrow$inicio) == (it2$\rightarrow$inicio))
-\li 			\Then
-				\If ((it1$\rightarrow$costo) $\leq$ (it2$\rightarrow$costo))
-\li					\Then {\sc aux_mezcla_a}(it1,it2,res)
-\li				\Else
-					{\sc aux_mezcla_a}(it2,it1,res)
-				\End
+\li 			\Then {\sc mezclar_segun_caso_1}(it1,it2,res)
 \li 			\Else
 				\If ((it1$\rightarrow$inicio) $<$ (it2$\rightarrow$inicio))
-\li				\Then
-					\If ((it1$\rightarrow$fin) $\leq$ (it2$\rightarrow$inicio))
-\li					\Then
-						res $\leftarrow$ agregar al final el dato de it1
-\li						avanzar it1
-\li					\Else
-\li 						\If ((it1$\rightarrow$costo) $\leq$ (it2$\rightarrow$costo))
-\li							\Then {\sc aux_mezcla_a}(it1,it2,res)
-\li							\Else
-								{\sc aux_mezcla_b}(it1,it2,res)
-							\End
-					\End
-\li 				\Else 
-\li					\If ((it1$\rightarrow$costo) $<$ (it2$\rightarrow$costo))
-\li 						\Then {\sc aux_mezcla_b}(it2,it1,res)
-\li 						\Else
- 							{\sc aux_mezcla_a}(it2,it1,res)
- 						\End
+\li				\Then {\sc mezclar_segun_caso_2}(it1,it2,res)
  				\End
+\li			\Else 
+\li				{\sc mezclar_segun_caso_3}(it1,it2,res)
  			\End
  		\End
 \li \If alguna de las listas no fue recorrida totalmente
@@ -198,46 +178,6 @@ Si el tiempo $fin$ de $A$ es mayor al tiempo $inicio$ de $B$, tenemos las siguie
 \li \Return res
 \end{codebox}
 \caption{Pseudocódigo de mezclar_freq} \label{code:mezclar}
-\end{figure}
-%\FloatBarrier
-
-\begin{figure}[!ht]
-\begin{codebox}
-\Procname{$\proc{aux_mezcla_a}(it$_$Lista$_$frecuencia$ $itA, it$_$Lista$_$frecuencia$ $itB, Lista$_$frecuencia$ $res)$}
-\li	\If((itA$\rightarrow$fin) $<$ (itB$\rightarrow$fin))
-\li 		\Then
-			res $\leftarrow$ agregar atrás el dato de itA
-\li 			(itB$\rightarrow$inicio) $\leftarrow$ (itA$\rightarrow$fin)
-\li			avanzar itA
-\li 		\Else
-			\If ((itA$\rightarrow$fin) == (itB$\rightarrow$fin)
-\li				res $\leftarrow$ agregar atrás el dato de itA
-\li 				avanzar itA
-\li 				avanzar itB
-\li 		\Else avanzar itB
-		\End
-\li		\Return
-\end{codebox}
-
-\begin{codebox}
-\Procname{$\proc{aux_mezcla_b}(it$_$Lista$_$frecuencia$ $itA, it$_$Lista$_$frecuencia$ $itB, Lista$_$frecuencia$ $res)$}
-\li res $\leftarrow$ agregar atrás el dato de itA
-\li (res.último_elemento)$\rightarrow$fin $\leftarrow$ (itB$\rightarrow$inicio)
-\li	\If((itA$\rightarrow$fin) $<$ (itB$\rightarrow$fin))
-\li 		\Then avanzar itA
-\li 		\Else
-			\If ((itA$\rightarrow$fin) == (itB$\rightarrow$fin)
-\li				res $\leftarrow$ agregar atrás el dato de itB
-\li 				avanzar itA
-\li 				avanzar itB
-\li 		\Else 
-			res $\leftarrow$ agregar atrás el dato de itA
-\li 			(itA$\rightarrow$inicio) $\leftarrow$ (itB$\rightarrow$fin)
-\li			avanzar itB
-		\End
-\li		\Return
-\end{codebox}
-\caption{Pseudocódigo de las funciones auxiliares a mezclar_freq} \label{code:aux}
 \end{figure}
 %\FloatBarrier
 

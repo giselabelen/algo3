@@ -2,7 +2,7 @@
 
 \vspace*{0.3cm}
 
-Nuestro país infectado de zombies y nosotros debemos idear un plan estratégico para retomar el poder del mismo. Debido a que los zombies pudieron no haber invadido solo nuestro territorio, dejaremos un legado a la humanidad en forma de algoritmo, para que en un futuro, la humanidad recobre el poder.
+Nuestro país está infectado de zombies y nosotros debemos idear un plan estratégico para retomar el poder del mismo. Debido a que los zombies pudieron no haber invadido solo nuestro territorio, dejaremos un legado a la humanidad en forma de algoritmo, para que en un futuro, la humanidad recobre el poder.
 %%si no les gusta esta versión, la anterior y aburrida empezaba aca, salvo que la primer oración era: tenemos un pais infectado de zombies.(ALE)
 Entonces, nos enfocaremos en ver como salvar un país.Un país esta dividido en ciudades. Nuestro objetivo es salvar la mayor cantidad de ciudades de este país, enviando soldados a ellas. Una ciudad se considera salvada si los soldados exterminan todos los zombies de dicha ciudad.
 
@@ -47,11 +47,11 @@ Veamos que, si el costo por enviar un soldado de la ciudad 2 fuera de 10, no se 
 %\end{figure}
 \vspace*{0.6cm}
 %\newpage
-\subsection{Desarrollo de la idea y pseudocódigo.}
+\subsection{Desarrollo de la idea.}
 
 \vspace*{0.3cm}
 
-Notemos que para recuperar la mayor cantidad de ciudades de un país en mano de los zombies, nosotros lo único que podemos hacer es enviar soldados a sus ciudades teniendo en cuenta la cantidad de soldados que esta ciudad posee de por sí. Como esto es la guerra, no tiene ningún sentido enviar soldados a una ciudad sino estamos seguros de que ésta se salvará, puesto que es un desperdicio de presupuesto y vidas humanas. Por otro lado, debido a que queremos salvar la mayor cantidad de ciudades, y sabemos que para salvar una ciudad necesitamos como MÍNIMO 1 soldado por cada diez zombies, si enviamos soldados a una ciudad, nos aseguraremos de enviar la menor cantidad de soldados posibles, así ahorramos recursos que podrán ser utilizados en otra ciudad. Tomando en cuenta todo lo antes dicho, para resolver este problema, la idea será primero tener conocimiento de cuánto cuesta salvar cada ciudad. Para esto, basta hacer la siguiente cuenta por cada ciudad: %(las variables abajo expuestas no pertenecen al algoritmo, son simplemente a modo de ayuda para entender que se hace):
+Notemos que para recuperar la mayor cantidad de ciudades de un país en manos de los zombies, nosotros lo único que podemos hacer es enviar soldados a sus ciudades teniendo en cuenta la cantidad de soldados que esta ciudad posee de por sí. Como esto es la guerra, no tiene ningún sentido enviar soldados a una ciudad sino estamos seguros de que ésta se salvará, puesto que es un desperdicio de presupuesto y vidas humanas. Por otro lado, debido a que queremos salvar la mayor cantidad de ciudades, y sabemos que para salvar una ciudad necesitamos como MÍNIMO 1 soldado por cada diez zombies, si enviamos soldados a una ciudad, nos aseguraremos de enviar la menor cantidad de soldados posibles, así ahorramos recursos que podrán ser utilizados en otra ciudad. Tomando en cuenta todo lo antes dicho, para resolver este problema, la idea será primero tener conocimiento de cuánto cuesta salvar cada ciudad. Para esto, basta hacer la siguiente cuenta por cada ciudad: %(las variables abajo expuestas no pertenecen al algoritmo, son simplemente a modo de ayuda para entender que se hace):
 \begin{itemize}
    \item $zombis.vivos = zombis.totales - 10 * soldados.atrincherados.de.la.ciudad$
    \item $soldados.requeridos = \left \lceil \dfrac{zombis.vivos}{10} \right \rceil$ (redondeado hacia arriba, puesto que no puedo enviar medio soldado)
@@ -68,7 +68,7 @@ Luego de calcular estos valores, se ordenarán las ciudades de menor a mayor res
 \vspace*{0.6cm}
 
 %\newpage
-\subsection{Justificación de la resolución y demostración de correctitud.}
+\subsection{Demostración de correctitud.}
 
 \vspace*{0.3cm}
 
@@ -175,26 +175,67 @@ La complejidad total de este algoritmo es, entonces, $\mathcal{O}(n*log(n))$.
 
 \vspace*{0.3cm}
 
-Se llevarán acabo distintos experimentos para mostrar de manera empírica ciertos aspectos de nuestro algoritmo que hasta ahora, en el presente informe, se encuentran de manera teórica. Queremos mostrar que, efectivamente, nuestro algoritmo tiene una complejidad de $n*log(n)$, y que el foco de ésta se encuentra en el sort, por lo que, no deberían verse diferencias significativas en tiempo entre un país que salva todas sus ciudades, y el mismo país pero con un presupuesto que no permita salvar ninguna.
+Se llevarán acabo distintos experimentos para mostrar de manera empírica ciertos aspectos de nuestro algoritmo que hasta ahora, en el presente informe, se encuentran de manera teórica. Queremos mostrar que, efectivamente, nuestro algoritmo tiene una complejidad de $n*log(n)$, y que el foco de ésta se encuentra en el sort, por lo que no deberían verse diferencias significativas en tiempo entre un país que salva todas sus ciudades, y el mismo país pero con un presupuesto que no permita salvar ninguna.
 
 \subsubsection{Test 1}
 
 \vspace*{0.3cm}
 
+Primeramente, se ejecutó {\it Zombieland} con 100 países generados aleatoreamente, pero de manera que ninguna ciudad estuviera salvada de antemano, es decir, siempre la cantidad de zombies es mayor a 10 veces la cantidad de soldados.  Además, se fijó el presupuesto en cero para que ninguna ciudad pudiera ser salvada. 
 
+Con cada país generado, se realizaron 50 ejecuciones, se midieron los tiempos de ejecución, y se sacó el promedio para cada uno. Los resultados se encuentran reflejados en la Figura \ref{fig:1-nadie}.
 
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/1-nosesalvanadie.jpg}
+	\end{center}
+	\caption{Zombieland - Ninguna ciudad salvada}\label{fig:1-nadie}
+\end{figure}
 
-\newpage
+Como en apariencia no podemos asegurar un comportamiento $n*log(n)$, decidimos dividir cada resultado de tiempo por la correspondiente cantidad de ciudades (Figura \ref{fig:1-nadie-n}) y por el logaritmo de esa cantidad (Figura \ref{fig:1-nadie-logn}).
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/1-nosesalvanadie-div-n.jpg}
+	\end{center}
+	\caption{Zombieland - Ninguna ciudad salvada (div n)}\label{fig:1-nadie-n}
+\end{figure}
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/1-nosesalvanadie-div-logn.jpg}
+	\end{center}
+	\caption{Zombieland - Ninguna ciudad salvada (div log(n))}\label{fig:1-nadie-logn}
+\end{figure}
+
+Finalmente, dividimos los tiempos de ejecución por $n*log(n)$, siendo $n$ la cantidad de ciudades (Figura \ref{fig:1-nadie-nlogn}).
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/1-nosesalvanadie-div-nlogn.jpg}
+	\end{center}
+	\caption{Zombieland - Ninguna ciudad salvada (div n*log(n))}\label{fig:1-nadie-nlogn}
+\end{figure}
+
+Si bien el gráfico de la Figura \ref{fig:1-nadie} pareciera mostrar una recta, lo cual significaría que nuestro algoritmo sería $\mathcal{O}(n)$, y crecería linealmente, al observar la Figura \ref{fig:1-nadie-logn}, veo que al dividir por $log(n)$ queda algo parecido a una recta también, suceso que no debría ocurrir de ser $\mathcal{O}(n)$ nuestro algoritmo. Más aún, al ver la Figura \ref{fig:1-nadie-n} vemos la curvita inicial propia de la funcion $log(n)$, y para despejar cualquier duda, al dividir por $n*log(n)$, el gráfico de la Figura \ref{fig:1-nadie-nlogn} nos muestra que nuestra función tiende en tiempo a una constante. Es por eso, que estos gráficos parecerían respaldar la teoría de que nuestro algoritmo tiene complejidad $\mathcal{O}(n*log(n))$.
+
+\vspace*{0.6cm}
+%\newpage
 \subsubsection{Test 2}
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+Ahora veamos qué tanta incidencia tiene en el tiempo de ejecución, la cantidad de ciudades que se salvan.  Para ello, ejecutamos {\it Zombieland} con las mismas instancias aleatorias generadas anteriormente, pero esta vez con un presupuesto lo suficientemente grande como para que se salven todas las ciudades de cada país.
 
+Nuevamente, se realizaron 50 ejecuciones para cada caso, se midieron los tiempos de ejecución, y se sacó el promedio para cada uno.  La Figura \ref{fig:1-comp} muestra en comparación los resultados salvar a todas las ciudades y no salvar ninguna.
 
-\newpage
-\subsubsection{Test 3}
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/1-comparacion.jpg}
+	\end{center}
+	\caption{Zombieland - comparación de casos}\label{fig:1-comp}
+\end{figure}
 
-\vspace*{0.3cm}
+EL gráfico pareciera respaldar nuestra teoría, puesto que podemos observar que los tiempos de ejecución son muy similares (al principio casi indistinguibles) con una leve inclinación a que no salvar a ninguna ciudad es más rapido que salvar a todas.
 
-\textbf{completar!}
+Por todo lo arriba experimentado, pareciera que nuestro material teórico tiene apoyo empírico.
