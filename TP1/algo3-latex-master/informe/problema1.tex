@@ -217,7 +217,7 @@ Finalmente, dividimos los tiempos de ejecución por $n*log(n)$, siendo $n$ la ca
 	\caption{Zombieland - Ninguna ciudad salvada (div n*log(n))}\label{fig:1-nadie-nlogn}
 \end{figure}
 
-Si bien el gráfico de la Figura \ref{fig:1-nadie} pareciera mostrar una recta, lo cual significaría que nuestro algoritmo sería $\mathcal{O}(n)$, y crecería linealmente, al observar la Figura \ref{fig:1-nadie-logn}, veo que al dividir por $log(n)$ queda algo parecido a una recta también, suceso que no debría ocurrir de ser $\mathcal{O}(n)$ nuestro algoritmo. Más aún, al ver la Figura \ref{fig:1-nadie-n} vemos la curvita inicial propia de la funcion $log(n)$, y para despejar cualquier duda, al dividir por $n*log(n)$, el gráfico de la Figura \ref{fig:1-nadie-nlogn} nos muestra que nuestra función tiende en tiempo a una constante. Es por eso, que estos gráficos parecerían respaldar la teoría de que nuestro algoritmo tiene complejidad $\mathcal{O}(n*log(n))$.
+Si bien el gráfico de la Figura \ref{fig:1-nadie} pareciera mostrar una recta, lo cual significaría que nuestro algoritmo sería $\mathcal{O}(n)$, y crecería linealmente, al observar la Figura \ref{fig:1-nadie-logn}, veo que al dividir por $log(n)$ queda algo parecido a una recta también, suceso que no debería ocurrir de ser $\mathcal{O}(n)$ nuestro algoritmo. Más aún, al ver la Figura \ref{fig:1-nadie-n} vemos la curvita inicial propia de la funcion $log(n)$, y para despejar cualquier duda, al dividir por $n*log(n)$, el gráfico de la Figura \ref{fig:1-nadie-nlogn} nos muestra que nuestra función tiende en tiempo a una constante. Es por eso, que estos gráficos parecerían respaldar la teoría de que nuestro algoritmo tiene complejidad $\mathcal{O}(n*log(n))$.
 
 \vspace*{0.6cm}
 %\newpage
@@ -227,7 +227,7 @@ Si bien el gráfico de la Figura \ref{fig:1-nadie} pareciera mostrar una recta, 
 
 Ahora veamos qué tanta incidencia tiene en el tiempo de ejecución, la cantidad de ciudades que se salvan.  Para ello, ejecutamos {\it Zombieland} con las mismas instancias aleatorias generadas anteriormente, pero esta vez con un presupuesto lo suficientemente grande como para que se salven todas las ciudades de cada país.
 
-Nuevamente, se realizaron 50 ejecuciones para cada caso, se midieron los tiempos de ejecución, y se sacó el promedio para cada uno.  La Figura \ref{fig:1-comp} muestra en comparación los resultados salvar a todas las ciudades y no salvar ninguna.
+Nuevamente, se realizaron 50 ejecuciones para cada caso, se midieron los tiempos de ejecución, y se sacó el promedio para cada uno.  La Figura \ref{fig:1-comp} muestra en comparación los resultados de salvar a todas las ciudades y de no salvar a ninguna.
 
 \begin{figure}[htb]
 	\begin{center}
@@ -236,6 +236,6 @@ Nuevamente, se realizaron 50 ejecuciones para cada caso, se midieron los tiempos
 	\caption{Zombieland - comparación de casos}\label{fig:1-comp}
 \end{figure}
 
-EL gráfico pareciera respaldar nuestra teoría, puesto que podemos observar que los tiempos de ejecución son muy similares (al principio casi indistinguibles) con una leve inclinación a que no salvar a ninguna ciudad es más rapido que salvar a todas.
+El gráfico pareciera respaldar nuestra teoría, puesto que podemos observar que los tiempos de ejecución son muy similares (al principio casi indistinguibles) con una leve inclinación a que no salvar a ninguna ciudad es más rapido que salvar a todas.
 
 Por todo lo arriba experimentado, pareciera que nuestro material teórico tiene apoyo empírico.

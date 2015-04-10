@@ -244,7 +244,7 @@ T(n) = 2T(\frac{n}{2}) + c*n
 \end{equation*}
 
 ya que primero se deberá ordenar cada una de las mitades del arreglo y luego unirlas con un costo de $\mathcal{O}(n)$ representado por $c*n$.\\
-En este caso, el encargado de unir las listas será mezclar_freq (haciendo uso de aux_mezcla_a y aux_mezcla_b segun corresponda) que ciclará sobre los elementos de estas, haciendo las comparaciones de tiempos de inicio, fin y costos $\mathcal{O}(1)$ que indicarán la posición en la que se deben insertar los elementos $\mathcal{O}(1)$. \\
+En este caso, el encargado de unir las listas será mezclar_freq (haciendo uso de las funciones mezclar_segun_caso) que ciclará sobre los elementos de estas, haciendo las comparaciones de tiempos de inicio, fin y costos $\mathcal{O}(1)$ que indicarán la posición en la que se deben insertar los elementos $\mathcal{O}(1)$. \\
 Sabemos que esto es $\mathcal{O}(n)$ por lo siguiente:\\
 Supongamos S un conjunto solución de frecuencias con n frecuencias notamos que S puede tener las siguientes apariencias:
 \begin{itemize}
