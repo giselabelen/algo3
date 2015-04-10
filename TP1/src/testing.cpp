@@ -18,8 +18,8 @@ list<ciudad> generar_pais(int n)
 	{
 		city = (ciudad){
 			.nombre = i,
-			.cant_zombies = (rand() % 1000),
-			.cant_soldados = (rand() % 100),
+			.cant_zombies = (100 + rand() % 1000),
+			.cant_soldados = (rand() % 10),
 			.soldier_req = 0,
 			.costfsoldier = (1 + rand() % 10),
 			.costfsafety = 0,
