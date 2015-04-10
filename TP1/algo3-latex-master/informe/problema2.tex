@@ -184,7 +184,7 @@ Si el tiempo $fin$ de $A$ es mayor al tiempo $inicio$ de $B$, tenemos las siguie
 \vspace*{0.6cm}
 
 %\newpage
-\subsection{Justificación de la resolución y demostración de correctitud.}
+%\subsection{Justificación de la resolución y demostración de correctitud.}
 
 \vspace*{0.3cm}
 
@@ -286,26 +286,69 @@ Luego la complejidad resulta ser $\mathcal{O}(n*log(n))$.
 %\newpage
 \subsection{Experimentación y gráficos.}
 
-\vspace*{0.3cm}
+En esta sección se tratará de contrastar el material teórico brindado anteriormente, con experimentación. Para esto correremos {\it Alta Frecuecia} con un conjunto de casos de test que nos permita verificar de manera empírica que la complejidad de nuestro algoritmo es $\mathcal{O}(n*log(n))$, y, por otro lado, que cierto tipo de entradas producen un mayor tiempo de ejecución que ciertas otras.
 
 \subsubsection{Test 1}
 
 \vspace*{0.3cm}
 
-\textbf{completar!}
+Primero, compararemos lo que anteriormente en el informe hemos llamado frecuencias en cadena, tren y pirámide, y sobre la que resulte más costosa en tiempo, haremos nuestro analisis de complejidad.
 
+Para ello, se ejecutó {\it Alta Frecuencia} con sets de 200 frecuencias generadas de la siguiente manera: 
+\begin{itemize}
+\item	Para generar los casos ``Pirámide'', se crearon sucesivas frecuencias de manera tal que cada una tenga mayor $inicio$ y menor $fin$ que la anterior, y que el $costo$ de cada una sea menor a la anterior.
+\item	Para generar los casos ``Tren'', se crearon sucesivas frecuencias de manera tal que cada una tenga $inicio$ igual al $fin$ de la anterior, y que el $costo$ sea fijo para todas.
+\item 	Para generar los casos ``Cadena'', se crearon sucesivas frecuencias de manera tal que el $inicio$ de cada una sea una unidad menor al $fin$ de la anterior, y que el $costo$ de cada una sea menor a la anterior
+\end{itemize}
 
-\newpage
+Con cada lista de frecuencias generada, se realizaron 30 ejecuciones, se midieron los tiempos de ejecución, y se sacó el promedio para cada una.  La Figura \ref{fig:2-comp} muestra en comparación los resultados para cada forma de entrada.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/2-comparacion.jpg}
+	\end{center}
+	\caption{Alta Frecuencia - comparación de casos}\label{fig:2-comp}
+\end{figure}
+
+Podemos notar que claramente las frecuencias en pirámide tardan más tiempo en este gráfico, por lo que haremos nuestro analisis empírico de la complejidad sobre estas instancias.
+
+\vspace*{0.6cm}
+
+%\newpage
 \subsubsection{Test 2}
 
-\vspace*{0.3cm}
+La Figura \ref{fig:2-piramide} muestra el tiempo incurrido en función de la cantidad de frecuencias de cada instancia.
 
-\textbf{completar!}
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/2-tren.jpg}
+	\end{center}
+	\caption{Alta Frecuencia - Caso pirámide}\label{fig:2-piramide}
+\end{figure}
 
+Como en apariencia no podemos asegurar un comportamiento $n*log(n)$, decidimos dividir cada resultado de tiempo por la correspondiente cantidad de frecuencias (Figura \ref{fig:2-piramide-n}) y por el logaritmo de esa cantidad (Figura \ref{fig:2-piramide-logn}).
 
-\newpage
-\subsubsection{Test 3}
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/2-tren-div-n.jpg}
+	\end{center}
+	\caption{Alta Frecuencia - Caso pirámide (div n)}\label{fig:2-piramide-n}
+\end{figure}
 
-\vspace*{0.3cm}
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/2-tren-div-logn.jpg}
+	\end{center}
+	\caption{Alta Frecuencia - Caso pirámide (div log(n))}\label{fig:2-piramide-logn}
+\end{figure}
 
-\textbf{completar!}
+Finalmente, dividimos los tiempos de ejecución por $n*log(n)$, siendo $n$ la cantidad de ciudades (Figura \ref{fig:2-piramide-nlogn}).
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/2-tren-div-nlogn.jpg}
+	\end{center}
+	\caption{Alta Frecuencia - Caso pirámide (div n*log(n))}\label{fig:2-piramide-nlogn}
+\end{figure}
+
+Veamos que el gráfico de la Figura \ref{fig:2-piramide} parecería tener una pequeña curva, lo cual podría significar que nuestro algoritmo sería $\mathcal{O}(n*log(n))$; al observar la Figura \ref{fig:2-piramide-logn}, veo que al dividir por $log(n)$ queda algo parecido a una recta también, suceso que apoya la teoría sobre nuestro algoritmo. Más aún, al ver la figura \ref{fig:2-piramide-n} vemos la curvita inicial propia de la funcion $log(n)$, y para despejar cualquier duda, al dividir por $n*log(n)$, el gráfico de la Figura \ref{fig:2-piramide-nlogn} nos muestra que nuestra función tiende en tiempo a una constante. Es por eso que estos gráficos parecerían respaldar la teoría que nuestro algoritmo tiene complejidad $\mathcal{O}(n*log(n))$.
