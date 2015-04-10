@@ -1,0 +1,59 @@
+﻿Se llevarán acabo distintos experimentos para mostrar de manera empírica ciertos aspectos de nuestro algoritmo que hasta ahora en el presente informe, se encuentran de manera teórica. Queremos mostrar que efectivamente nuestro algoritmo tiene una complejidad de nlog(n), y que el foco de ésta se encuentra en el sort, por lo que, no deberìa haber diferencias significativas en tiempo entre un pais que salva todas sus ciudades, y un paìs igual pero con un presupuesto que no permita salvar ninguna.
+
+Graficos y sus explicaciones:
+
+Cada gràfico debe explicar como fue generado, que representa y lo que ocurre en el exactamente, SIN SACAR CONCLUSIONES. Por ejemplo, se puede notar que Roberto tarda menos en cubrir cierta distancia que Pedro, eso se puede decir, pero no se puede decir, Se puede notar que roberto es màs ràpido que pedro.
+
+
+Graficos que deben aparecer ahora, con sus explicaciones abajo, y con un numero
+
+
+1) Grafico No se salva nadie.(1)
+
+Explicaciòn del gràfico
+
+Grafico Comparo dividiendo por n(2)
+
+Explicacion del grafico
+
+grafico dividiendo por log n(3)
+
+Explicacion del grafico
+
+grafico dividiendo por n log n(4)
+
+explicacion del grafico
+
+Si bien el grafico 1 pareciera mostrar una recta, lo cual significaría que nuestro algoritmo sería O(n), y crecería linealmente, al observar la figura 3, veo que al dividir por log n queda algo parecido a una recta también, suceso que no debría ocurrir de ser O(n) nuestro algoritmo. Más aún, al ver la figura 3 vemos la curvita inicial propia de la funcion log n, y para despejar cualquier duda, al dividir por nlogn, el grafico 4 nos muestra que nuestra función tiende en tiempo a la constante "insertar constante". Es por eso, que estos gráfico parecerían respaldar la teoría que nuestro algoritmo tiene complejidad n log n
+
+Ahora veamos que tanta incidencia tiene en el tiempo de ejecución, que se salve una ciudad o que se salven todas.
+
+Grafico no se salva nadie vs se salvan todos.
+
+Explicacion del grafico
+
+
+
+
+
+Alta frecuencia %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+En esta secciòn se tratara de contrastar el material teórico brindado anteriormente, con experimentaciòn. Para esto correremos con nuestro programa, un conjunto de casos de text que nos permita verificar de manera empirica que la complejidad de nuestro algoritmo es n log n, y, por otro lado, que cierto tipo de entradas producen un mayor tiempo de ejecución que ciertas otras.
+
+Grafico de una frecuencia
+
+Explicación del gráfico
+
+Gráfico de una frecuencia dividida logn
+
+Explicación del gráfico
+
+Gráfico de una frecuencia dividida n
+
+Explicación del gráfico
+
+Gráfico de una frecuencia dividida nlogn
+
+Explicación del gráfico
+
+Veamos que el grafico uno parecería tener una pequeña curva, lo cual significaría que nuestro algoritmo sería O(nlogn), al observar la figura 3, veo que al dividir por log n queda algo parecido a una recta también, suceso que no debría ocurrir de ser O(n) nuestro algoritmo. Más aún, al ver la figura 3 vemos la curvita inicial propia de la funcion log n, y para despejar cualquier duda, al dividir por nlogn, el grafico 4 nos muestra que nuestra función tiende en tiempo a la constante "insertar constante". Es por eso, que estos gráfico parecerían respaldar la teoría que nuestro algoritmo tiene complejidad n log n
