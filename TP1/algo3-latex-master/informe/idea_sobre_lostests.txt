@@ -70,5 +70,28 @@ Veamos que el grafico 1 parecería tener una pequeña curva, lo cual significar�
 
 CABALLOS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+En esta sección normalmente trataríamos de analizar empíricamente que la complejidad de nuestro algoritmo es exponencial. Sin embargo, si realmente fuera exponencial, entonces hacer un análisis de complejidad sería muy complicado por un tema de tiempos. Es por esto, que los experimentos realizados, mostrarán como al aumentar el n, los tiempos cambian drásticamente. Por otro lado, veremos como el agregar caballos preubicados disminuyen en gran proporción el tiempo utilizado por nuestro algoritmo, y que ocurre con el caso de un tablero lleno.
 
+Gráfico de vacíos
 
+Explicación del gráfico
+
+Observemos que en este gráfico el crecimiento no es lineal y que n=2 es mas de 1800 veces más rápido que n=5. De hecho, observemos que en el gráfico, el eje de las y está en escala logarítmica, y aún así, si uno los puntos con una linea, da algo mayor que lineal. Esto es un indicio de que nuestro algoritmo es exponencial, lo cual apoya nuestro analisis de complejidad.
+
+Por otro lado, veamos que sucede con tableros llenos:
+
+Gráfico de llenos.
+
+Explicación del gráfico.
+
+Veamos que la diferencia de tiempos es realmente mínima, y el tiempo de ejecución es realmente pequeño, con un pico en 5. Esto probalemente se deba a que, por como está hecho nuestro algoritmo, si el tablero está lleno,nos ahorramos el costo de recorrerlo y nos limitamos a devolver el tablero de entrada, ya que este es solución. Las diferencias de tiempo(sobre todo la vista en n=5), puede explicarse por el costo de copiar el tablero inicial como tablero solución, que es O(n^2).
+
+Ahora, veamos que sucede cuando a un tablero se le van agregando caballos preubicados.
+
+Gráfico 5x5 con insercion random
+
+Explicación del gráfico.
+
+Observamos que hay una abrupta disminución de tiempo por cada caballo agregado. Esto se podría deber, a que cuando hay un caballo preubicado, nuestro algoritmo no debe decidir entre poner un caballo o no ponerlo, y se ahorra toda la rama de decisión de no poner un caballo. Esto último ya fue abordado en el apartado de análisis de complejidad.
+
+En conclusión, si bien no podemos decir que nuestro algoritmo es exponencial de manera empírica, las dificultades generadas por los tiempos de experimentación y los experimentos, apoyan la teoría de que nuestro algoritmo pueda ser del orden exponencial.
