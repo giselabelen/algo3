@@ -58,11 +58,15 @@ Gráfico de una frecuencia dividida logn (2)
 
 Explicación del gráfico
 
-Gráfico de una frecuencia dividida nlogn (3)
+Grafico de una frecuencia dividida por n (3)
+
+Explicacion del grafico
+
+Gráfico de una frecuencia dividida nlogn (4)
 
 Explicación del gráfico
 
-Veamos que el grafico 1 parecería tener una pequeña curva, lo cual significaría que nuestro algoritmo sería O(nlogn), al observar la figura 2, veo que al dividir por log n queda algo parecido a una recta también, suceso que apoya la teoría sobre nuestro algoritmo. Más aún, para despejar cualquier duda, al dividir por nlogn, el grafico 3 nos muestra que nuestra función tiende en tiempo a la constante "insertar constante". Es por eso, que estos gráfico parecerían respaldar la teoría que nuestro algoritmo tiene complejidad n log n.
+Veamos que el grafico 1 parecería tener una pequeña curva, lo cual significaría que nuestro algoritmo sería O(nlogn), al observar la figura 2, veo que al dividir por log n queda algo parecido a una recta también, suceso que apoya la teoría sobre nuestro algoritmo. Más aún, al ver la figura 3 vemos la curvita inicial propia de la funcion log n, y para despejar cualquier duda, al dividir por nlogn, el grafico 4 nos muestra que nuestra función tiende en tiempo a la constante "insertar constante". Es por eso, que estos gráfico parecerían respaldar la teoría que nuestro algoritmo tiene complejidad n log n.
 
 CABALLOS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
