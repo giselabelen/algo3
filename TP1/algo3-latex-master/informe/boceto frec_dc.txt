@@ -1,5 +1,6 @@
 Demostraremos a continuación que frecuency_dc tiene complejidad O ( n log (n) ).
-En efecto, se puede notar que, de manera similar a merge_sort, siendo T(n) el tiempo que le toma a frecuency_dc manipular la lista de n elementos se debe cumplir lo siguiente:
+Inspeccionando un poco el pseudocodigo de frecuency_dc vemos que separa por la mitad la lista de entrada para luego trabajar con cada mitad por separado haciendo la llamada recursiva. Para finalizar, se integran ambas mitades ya procesadas, formando el resultado.
+Se puede notar que, de manera similar a merge_sort, siendo T(n) el tiempo que le toma a frecuency_dc manipular la lista de n elementos se debe cumplir lo siguiente:
 
                    T(n) = 2T(n/2) + c*n
 
