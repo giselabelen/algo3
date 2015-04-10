@@ -24,64 +24,107 @@ Aspectos a tener en cuenta:
 %\newpage
 \subsection{Desarrollo de la idea y pseudocódigo.}
 
-\begin{figure}[htb]
-  \begin{center}
-      \includegraphics[scale=1]{imagenes/tab1.png}
-  \end{center}
+
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[scale=1]{imagenes/tab1.png}
   \caption{Tablero 1}\label{fig:tab1}
-\end{figure}
-\vspace*{0.3cm}
-
-\begin{figure}[htb]
-  \begin{center}
-      \includegraphics[scale=1]{imagenes/tab2.png}
-  \end{center}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[scale=1]{imagenes/tab2.png}
   \caption{Tablero 2}\label{fig:tab2}
+\endminipage\hfill
+\minipage{0.32\textwidth}%
+  \includegraphics[scale=1]{imagenes/tab3.png}
+  \caption{Tablero 3}\label{fig:tab3}
+\endminipage
 \end{figure}
 
-\begin{figure}[htb]
-  \begin{center}
-      \includegraphics[scale=1]{imagenes/tab3.png}
-  \end{center}
-  \caption{Tablero 3}\label{fig:tab3}
-\end{figure}
+%\begin{figure}[htb]
+ % \begin{center}
+%     \includegraphics[scale=1]{imagenes/tab1.png}
+%  \end{center}
+ % \caption{Tablero 1}\label{fig:tab1}
+%\end{figure}
+%\vspace*{0.3cm}
+
+%\begin{figure}[htb]
+ % \begin{center}
+  %    \includegraphics[scale=1]{imagenes/tab2.png}
+  %\end{center}
+  %\caption{Tablero 2}\label{fig:tab2}
+%\end{figure}
+
+%\begin{figure}[htb]
+ % \begin{center}
+  %    \includegraphics[scale=1]{imagenes/tab3.png}
+  %\end{center}
+  %\caption{Tablero 3}\label{fig:tab3}
+%\end{figure}
 
 Supongamos un ejemplo como el del Figura \ref{fig:tab1}, donde 'v' indica casillero vacío y 'p' un caballo preubicado. Observemos que tanto Figura \ref{fig:tab2} y Figura \ref{fig:tab3} son soluciones (donde 'e' indica que se agrego un caballo extra y 'a' que dicha casilla esta amenazada sin un caballo colocado). Esto significa que en principio, puede haber múltiples soluciones óptimas. Más aún, veamos que si el tablero fuera de $2*2$, la única manera de obtener un tablero completo (diremos que un tablero está completo si todas sus casillas, o tienen un caballo, o están amenazadas por uno) es que haya un caballo en cada casilla, osea que puedo tener soluciones óptimas como en $3x3$ o puedo necesitar completar el tablero con caballos como en $2x2$. Y si fuera de $4*4$?.
 
-\begin{figure}[htb]
-  \begin{center}
-      \includegraphics[scale=1]{imagenes/tab4.png}
-  \end{center}
+
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[scale=1]{imagenes/tab4.png}
   \caption{Tablero 4}\label{fig:tab4}
-\end{figure}
-
-\begin{figure}[htb]
-  \begin{center}
-      \includegraphics[scale=1]{imagenes/tab5.png}
-  \end{center}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[scale=1]{imagenes/tab5.png}
   \caption{Tablero 5}\label{fig:tab5}
-\end{figure}
-
-\begin{figure}[htb]
-  \begin{center}
-      \includegraphics[scale=1]{imagenes/tab6.png}
-  \end{center}
+\endminipage\hfill
+\minipage{0.32\textwidth}%
+  \includegraphics[scale=1]{imagenes/tab6.png}
   \caption{Tablero 6}\label{fig:tab6}
+\endminipage
 \end{figure}
 
-\begin{figure}[htb]
-  \begin{center}
-      \includegraphics[scale=1]{imagenes/tab7.png}
-  \end{center}
+%\begin{figure}[htb]
+% \begin{center}
+%    \includegraphics[scale=1]{imagenes/tab4.png}
+%  \end{center}
+%  \caption{Tablero 4}\label{fig:tab4}
+%\end{figure}
+
+%\begin{figure}[htb]
+%  \begin{center}
+%      \includegraphics[scale=1]{imagenes/tab5.png}
+%  \end{center}
+%  \caption{Tablero 5}\label{fig:tab5}
+%\end{figure}
+
+%\begin{figure}[htb]
+%  \begin{center}
+%      \includegraphics[scale=1]{imagenes/tab6.png}
+%  \end{center}
+%  \caption{Tablero 6}\label{fig:tab6}
+%\end{figure}
+
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[scale=1]{imagenes/tab7.png}
   \caption{Tablero 7}\label{fig:tab7}
+\endminipage
+\minipage{0.32\textwidth}
+  \includegraphics[scale=1]{imagenes/tab8.png}
+  \caption{Tablero 8}\label{fig:tab8}
+\endminipage
 \end{figure}
 
-\begin{figure}[htb]
-  \begin{center}
-      \includegraphics[scale=1]{imagenes/tab8.png}
-  \end{center}
-  \caption{Tablero 8}\label{fig:tab8}
-\end{figure}
+%\begin{figure}[htb]
+%  \begin{center}
+%      \includegraphics[scale=1]{imagenes/tab7.png}
+%  \end{center}
+%  \caption{Tablero 7}\label{fig:tab7}
+%\end{figure}
+
+%\begin{figure}[htb]
+%  \begin{center}
+%      \includegraphics[scale=1]{imagenes/tab8.png}
+%  \end{center}
+%  \caption{Tablero 8}\label{fig:tab8}
+%\end{figure}
 
 Notamos que Figura \ref{fig:tab4} es un ejemplo en el que pude insertar 2 caballos, que tanto Figura \ref{fig:tab5} como Figura \ref{fig:tab6} son solución de un mismo caso inicial (el tablero que tiene solo los caballos preubicados), y que en el Figura \ref{fig:tab7} no es necesario agregar ningún caballo extra. Esto significa que hay casos muy variados y amplios, lo cual vuelve difícil construir un algorítmo que resuelva el problema. Ante esto, como somos malos perdedores, decidimos sacrificar tiempo, pero vamos a encontrar una solución óptima.\\
 Podemos afrontar este problema aplicando la técnica de backtracking, planteando un algoritmo que chequee todas las posibles formas de insertar caballos en un determinado tablero, desde rellenar un tablero con caballos hasta no poner ninguno, y se quede con una solución tal que el tablero esté completo y la cantidad de caballos insertados sea menor o igual al de todo el resto de las soluciones.\\
@@ -101,21 +144,33 @@ Teniendo en cuenta estos métodos, llegamos a la conclusión de que nuestro algo
 Analizemos que cotas tomar:\\
 No podemos pensar un caso por cada tamaño de tablero, puesto que no terminaría nunca, pero si podemos pensar que si vemos el Tablero \ref{fig:tab1} y reemplazamos la 'p' por una 'v', la solución Tablero \ref{fig:tab2} es óptima (cambiando su 'p' por una 'e' ) lo cual significa que independientemente de los caballos 'p', con a lo sumo 4 se debe completar un tablero. Por otro lado, como mencionamos previamente, a un tablero de $2*2$ hay que llenarlo de caballos, y si vemos el Tablero \ref{fig:tab8}, vemos que a un tablero de $4*4$ vacío, con 4 caballos le basta para completarse, lo cual indica que sucede algo similar con el tablero de $3*3$. Por esto diremos que si nuestro tablero es menor o igual a $4*4$, no debo ver aquellos casos que pongan más de 4 caballos, puesto que de seguro, eso no es una solución óptima.¿ Pero qué sucede con el resto de los casos?. Observemos lo siguiente, sea un tablero de $n*m$ (no apto para este juego, pero si para lo que se quiere mostrar) con  $n=5$ y $m\geq5$. Tomemos por ejemplo un tablero de $5*5$ vacío, pero con una fila de caballos en el centro (llamados c).
 
-\begin{figure}[htb]
-  \begin{center}
-      \includegraphics[scale=1]{imagenes/tab10.png}
-  \end{center}
+
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[scale=1]{imagenes/tab10.png}
   \caption{Tablero 10}\label{fig:tab10}
-\end{figure}
-
-\begin{figure}[htb]
-  \begin{center}
-      \includegraphics[scale=1]{imagenes/tab11.png}
-  \end{center}
+\endminipage
+\minipage{0.32\textwidth}
+  \includegraphics[scale=1]{imagenes/tab11.png}
   \caption{Tablero 11}\label{fig:tab11}
+\endminipage
 \end{figure}
 
-Notemos que en Tablero \ref{fig:tab10} todas las casillas están amenazadas u ocupadas y sería un tablero completo. Es más, si sacaramos un solo caballo, el tablero dejaría de ser completo. Esto, si bien no tiene por que ser un óptimo, es cuando menos una solución que no usa una cantidad abusiva de caballos.¿ Qué sucederia si extendieramos una columna más, como en Tablero \ref{fig:tab11}?. Todas las casillas estarían ocupadas menos la de la fila del medio a la derecha. Osea que si la fila estuviera completa, sería un tablero completo. Nótese que si vuelvo a extender una columna sucede lo mismo. Volviendo otra vez a tableros válidos, la idea recien mencionada nos hace pensar que independientemente del tamaño del tablero, con una línea de caballos cada 5 filas, debería bastar para completar el tablero, y ver más caballos que eso sería un esfuerzo innecesario. Esto se debe a que si el tablero no fuera múltiplo de 5, basta con poner 1 fila de caballos cada 5 filas normales, y de lo que me queda elijo una fila que sea céntrica respecto de las sobrantes, que son menores que 5, y la convierto en fila de caballos. Ver que si una fila céntrica completa 5 filas, en particular completa 4,3,2 y 1.
+%\begin{figure}[htb]
+%  \begin{center}
+%      \includegraphics[scale=1]{imagenes/tab10.png}
+%  \end{center}
+%  \caption{Tablero 9}\label{fig:tab9}
+%\end{figure}
+
+%\begin{figure}[htb]
+%  \begin{center}
+%      \includegraphics[scale=1]{imagenes/tab11.png}
+%  \end{center}
+%  \caption{Tablero 10}\label{fig:tab10}
+%\end{figure}
+
+Notemos que en Figura \ref{fig:tab9} todas las casillas están amenazadas u ocupadas y sería un tablero completo. Es más, si sacaramos un solo caballo, el tablero dejaría de ser completo. Esto, si bien no tiene por que ser un óptimo, es cuando menos una solución que no usa una cantidad abusiva de caballos.¿ Qué sucederia si extendieramos una columna más, como en Figura \ref{fig:tab10}?. Todas las casillas estarían ocupadas menos la de la fila del medio a la derecha. Osea que si la fila estuviera completa, sería un tablero completo. Nótese que si vuelvo a extender una columna sucede lo mismo. Volviendo otra vez a tableros válidos, la idea recien mencionada nos hace pensar que independientemente del tamaño del tablero, con una línea de caballos cada 5 filas, debería bastar para completar el tablero, y ver más caballos que eso sería un esfuerzo innecesario. Esto se debe a que si el tablero no fuera múltiplo de 5, basta con poner 1 fila de caballos cada 5 filas normales, y de lo que me queda elijo una fila que sea céntrica respecto de las sobrantes, que son menores que 5, y la convierto en fila de caballos. Ver que si una fila céntrica completa 5 filas, en particular completa 4,3,2 y 1.
 Por todo lo dicho anteriormente, si llamamos n a la cantidad de filas y columnas de un tablero, dado un tablero de $n*n$ con $n<5$, tomo como cota 4 caballos extras, y si $n\geq5$ tomo como cota n* redondeado_hacia_arriba($\frac{n}{5}$) que resultaría de meter una fila de caballos por cada 5 filas del tablero.\\
 ¿Sin embargo, agregar estas cotas, puede producir que obtenga un resultado no óptimo?. La pregunta casi que se contesta sola, pues las cotas justamente se basan en que conozco una solución segura que no se si es óptima, pero se que usa una determinada cantidad de caballos, y una solución que use más caballos que esta seguro no es óptima.
 %\textbf{completar!}
