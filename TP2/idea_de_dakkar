@@ -1,0 +1,25 @@
+PSEUDO EXPLICACIÓN!!!! (sino entendieron la demo de alta frecuencia, no van a tener ni idea de lo que estoy hablando aca...)
+
+Tengo n cantidad de circuitos, KM cantidad de veces que puedo usar la moto, y KB la cantidad de veces que puedo usar el buggy.
+
+mi entrada me tira n lineas con lo que tarda la bici, lo que tarda la moto, y lo que tarda el buggy
+organizo eso en una lista de tripletas de la siguiente forma
+
+sea bi el tiempo utilizado por la bici en la etapa i, kmi para la moto y kbi para el buggy.. entienden..
+
+
+[(b1, km1, kb1), (b2, km2, kb2), .... , (bn, kmn, kbn) ]
+
+Ahora armo una nuea lista, de la siguiente manera:
+
+[(b1 - b1, km1 - b1, kb1 - b1), (b2 - b2, km2 - b2, kb2 - b2), .... , (bn -bn, kmn - bn, kbn - bn)]
+
+Esto me da entonces tripletas que te dicen cuanto te ahorras con respecto a usar la bici, que es la que podes usar gratis.
+
+Entonces basicamente, si usar la bici es mejor, usemos la bici, y sino, tomemos las KM mayores diferencias de tiempo respecto de la bici y las KB mayores diferencias, y usar la moto y el buggy en esos casos debería ser lo mejor..
+
+CUIDADO: puede pasar que un maximo de los buggys sea el mismo maximo de las motos... en ese caso hay que ver cual elegir.
+
+una posible idea para elegir es la siguiente:
+
+ya que saco los KM maximos y los KB maximos, puedo sumar a ver cuanto da... cuando llego a un maximo en conflicto, puedo suponer que tomo uno, y ver cuando ahorra el restos de los maximos, y luego suponer que tomo el otro, y ver cuantos ahorro con el resto de los maximos, y elegir el que ahorre mas... luego, el que no haya sido elegido, tendra un maximo menos, asi que tendre que encontrar un maximo mas para ese caso.o sea, si el buggy y la moto tienen dos maximos en comun y me conviene más el del buggy, ese caso no cuenta para la moto y por eso tengo que elegirle un maximo mas... de hecho, habria que tener en cuenta a este maximo en la toma de decisión de cual quedarte... CREO que las complejidades cierran.
