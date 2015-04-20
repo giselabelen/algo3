@@ -1,0 +1,32 @@
+digamos que tenemos las 2 listas de maximos de tanto moto como Buggy
+
+B    x_0,x_1,x_2,x_3...
+
+m    y_0,y_1,y_2,y_3...
+
+ambas listas con tamaño KM+KB y ordenadas de mayor a menor en base a la diferencia de tiempo que tienen con la bicicleta (a mayor diferencia es menor el tiempo que tardan tanto moto como buggy)
+
+Armo un conjunto con elementos de ambas listas de la siguiente manera:
+
+Si el intervalo de tiempo donde transcurre x_i es dinstinto al intervalo donde transcurre y_i diré que no hay conflicto y agregaré ambos intervalos al conjunto.
+
+Este conjunto es maximal (digo que es maximal si maximiza la diferencia de tiempo, como son intervalos distintos por ahora esto vale)
+
+Si el intervalo de tiempo es el mismo diré que hay conflicto y procedo a hacer lo siguiente:
+
+Tomo las posiciones KB+1 y KM+1 de las listas de Buggy y Moto respectivamente (dado que cuando hay conflicto tengo que optar entre Buggy y Moto lo cual me libera un espacio para un buggy o moto nueva)
+
+Si no hubiera conflicto en este caso se agregarian otra vez, de 2 elementos posibles, 2 elementos nuevos al conjunto, y seria maximal.
+
+Ahora de 4 posibilidades x_i y_i x_kb+1 e y_km+1 agrego 2 elementos nuevos al conjunto asegurandome que el conjunto sigue siendo maximal.
+
+Para esto reviso que la suma de los elementos combinados sea mayor, esto es:
+
+Si x_i + y_km+1 > y_i + x_kb+1 luego conviene que "el ganador del conflicto" entre x_i e y_i sea x_i, la posibilidad de entrar al conjunto que tenia y_i pasa a y_km+1.
+
+Como elegimos los 2 elementos que hacian mayor la desigualdad nuestro conjunto sigue siendo maximal.
+
+Si se diera el caso de que todos los elementos dieran conflicto, entonces también estamos preparados pues ambas listas tienen tamaño KM + KB, osea que podemos seguir tomando elementos de manera de solucionar los conflictos que se nos presentan.
+
+
+En caso de que un conflicto genere otro conflicto, esto se soluciona repitiendo el procedimiento descripto.
