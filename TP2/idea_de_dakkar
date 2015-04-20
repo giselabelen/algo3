@@ -12,7 +12,7 @@ sea bi el tiempo utilizado por la bici en la etapa i, kmi para la moto y kbi par
 
 Ahora armo una nuea lista, de la siguiente manera:
 
-[(b1 - b1, km1 - b1, kb1 - b1), (b2 - b2, km2 - b2, kb2 - b2), .... , (bn -bn, kmn - bn, kbn - bn)]
+[(b1 - b1, b1 -km1, b1 - kb1), (b2 - b2, b2 - km2, b2 - kb2), .... , (bn -bn, bn - kmn, bn - kbn)]
 
 Esto me da entonces tripletas que te dicen cuanto te ahorras con respecto a usar la bici, que es la que podes usar gratis.
 
