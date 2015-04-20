@@ -30,3 +30,20 @@ Si se diera el caso de que todos los elementos dieran conflicto, entonces tambi√
 
 
 En caso de que un conflicto genere otro conflicto, esto se soluciona repitiendo el procedimiento descripto.
+
+--------------------------------------------
+
+A partir de aca soy ale... creo que tenes que tener cuidado que no necesariamente el conflicto debe estar en el elemento i... o sea, puede que x_i e y_i no generen conflicto, pero x_i con y_(i+k) si lo generen... y segun yo entiendo tu demo no contempla eso... creeeeeeeeeo... abajo pongo lo que se me fue ocurriendo
+
+
+digamos que tenemos las 2 listas de maximos de tanto moto como Buggy ambas de tama√±os B+M siendo B la cantidad de veces que puedo usar el buggy y M la cantidad de veces que puedo usar la moto
+
+Buggy    x_0,x_1,x_2,x_3...x_B+M
+
+Moto    y_0,y_1,y_2,y_3...y_B+M
+
+
+La idea medio que se choteo, lo dejo aca por ahora...
+
+
+
