@@ -1,0 +1,38 @@
+EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEHHHHH, OLOR A PETEEEEEE, QUE BUEN CHISTE!!
+Y EN PASADOOOO....sip, odio profundamente estar escribiendo esto, pero quien no quiere a las 12 de la noche escribir sobre su TP... que si fuera escrito al revés haría honor al titulo del documento...
+
+jojojo
+
+bueno, basta de pelotudeces....
+
+La cuestión es así... El señor burns descubrió que en springfield hay muchos pozos de peteolio, y refinarlos lo puede llenar de más guita, pero claro, el pelado tacaño no quiere poner la mosca... Asi pués, sabiendo lo incompetente que es su subordinado homero, y que pedirle un favor al señor smithers representa sexo homosexual muy fuerte que ya con su edad no puede soportar(tan solo le sirve para estimular su imaginación, que cruel=( ), nos ha pedido que le abaretemos los costos a cambio de un sanguche de milanesa(tranqui gi, son de calabaza... no porque vos seas vegetariana, sino porque le salía menos). Para esto tenemos que conseguir poder refinar peteolio en todos los pozos ya sea porque ponemos una refinería ahí, o porque la conectamos con tubos de cartón corrugado y conectamos los pozos con otro pozo que tiene refinería, o con un pozo que esta indirectamente conectado mediante tubos con una...
+Como bien sabemos, springfield tiene todos los tipos de flora, fauna y problemas tectónicos que existen en el mundo, lo que hace imposible el poder hacer algunos caminos con tubos de carton, puesto que el material no aguanta. Para eso, burns agarro un papelito y nos escribio la cantidad de pozos que hay(n pozos numerados del 1 al n), cuantos pares de pozos son factibles de una potencial tubería (m tuberias), y cuanto cuesta hacer una refinería(cuesta C)y obligo a Lenny y Carl a que nos escribieran m lineas, una por cada potencial tubería, indicandonos cuales son los pozos en cuestión y cuanto les cuesta comprar el cartón para armar la tubería(la mano de obra es gratis puesto que burns tiene muchos empleados a los cuales no les paga).
+
+Como nosotros conocemos el mundo, decidimos armar un algoritmo que realice esto, puesto que confiamos que hay muchos viejos tacaños en situaciones similares.
+
+Entonces la idea es así:
+
+Primero, levantamos las m líneas, y las acomodamos en un sistema de grafos. Sin embargo, por cada enlace que vayamos a armar, nos fijaremos primero que el costo no sea mayor al de hacer una refinería, en cuyo caso no lo tendremos en cuenta(abajo trato de demostrar el por que). Luego de armar el sistema de grafos, les daremos una recorrida a todos los nodos, para sacar aquellos que no esten conectados a nada. A estos, no nos quedara más opción que insertarles una refinería, puesto que no hay otra forma de que les llegue peteolio. Luego de alguna manera empezaremos a dividir nuestro sistema de grafos en grupos conexos tal que todos esten conectados con por lo menos alguno del grupo y usando las enseñanzas de papi Burns, le robaremos a prim o a kruskal(eso lo decidiremos nosotros) su algoritmo de arboles generadores mínimos y lo usaremos en cada grupo anteriormente formado para conseguir el sistema de tuberías más barato e insertaremos una refinería en literalmente cualquier pozo... pero solo una=). Esto en si resolvería el problema.
+
+Como papi Burns (y gise) rompen mucho las pelotas y quieren saber a ciencia cierta que esto les da el menor costo, he aqui una posible demostración:
+
+Primero veamos que todo pozo que no pueda conectarse por medio de tuberías a ningun lado, DEBE tener una refinería para poder refinar el peteolio, luego, este gasto es mínimo e inobjetable.
+Luego de esto nosotros separamos los pozos en grupos conexos... como estos grupos no tienen manera de tener conecciones entre tuberías entre si, estos grupos podemos tomarlos como sistemas disjuntos, y que cumplen el criterio de optimalidad, si puedo hacer optimos a cada uno, puedo conseguir el optimo del grupo. Entonces veamos un grupo en particular. El algoritmo de prim me armo un arbol mínimo en costo, por lo cual se que no puedo obtener un mejor camino en cuanto a tuberías... peroooo y si yo metiera una refinería más a parte de la ya instalada, no cambiaría algo?? Observemos que no, puesto que si yo metiera una refinería eso causaría que el tubo de carton que esta conectado indirectamente con la refinería fuera innecesario, y lo podríamos sacar, pero el resto de los tubos no, puesto que si los saco, no les llega peteolio, con lo cual me ahorre una tubería pero instale una refinería más cara, y papi burns nos mata. Mirar con atención el siguiente dibujito hasta convencerse:
+
+(con doble numero marco donde hay una refineria:
+
+11----2------3-----4-------5 (papi Burns dice: "Excelente")
+
+11----2      33----4-------5 (papi Burns furioso)
+
+11----2      33    4-------5 (papi Burns nos mata)
+
+Ahora veamos porque es al pedo tomar en cuenta un tubo de carton más caro que una refinería tomo ___ como tubería más cara y --- como tubería más barata:
+
+---1_____2 > ----1     22
+	    |
+	    |
+	    -->soy un signo de mayor, por si no se entiende
+
+si 1 ya tenía peteolio, conectarlo con 2 es más caro que ponerle una refinería a dos... entonces prefiero ponerle una refinería.. ver que en el caso de que sean iguales me da lo mismo, pero si son iguales me quedaría con los tubos de carton, asi tengo menos grupos conexos(cortar más enlaces posibilita a que haya más grupos)
+VOTO POR HACER HACER CORRECCIONES PERO EN GRAL, PONER ESTO COMO EXPLICACIÓN E IDEA DEL EJERCICIO (Y CORRECTITUD)
