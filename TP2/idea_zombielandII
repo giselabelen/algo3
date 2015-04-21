@@ -7,6 +7,18 @@ Y al parecer esto nos va construyendo algún camino óptimo, así que sería cor
 Le falta mucha formalidad, pero la idea hasta ahora cierra.
 Cualquier cosa avisen.
 
+Lo que le falta a esto es como conseguir el camino original.. para eso, cada vez que avanzo por una calle hacia una esquina, me anoto de que esquina vine... esto causa que cada nodo del grafo sepa de donde vino, y se pueda hacer el camino hacia atras... había que tener mucho cuidado que no se formara un ciclo infinito, como por ejemplo el del dibujo
+
+
+1 __2 --3   Hago lo que puedo gente.... __ es un camino tomado al igual que !
+|   !   !   -- y | son caminos no tomados.. si para llegar hice 1,2,5,8,9,6,5,4,7,10,11,12, ver que 
+4 __5 __6   cuando voy retrocediendoy llego al 5, el anterior del 5 es 2 o 6...si yo me voy por el
+!   !   !   camino del 6 vuelvo a llegar al 5 y si me voy por el 6... y si lo vuelvo a hacer...
+7 --8 __9   cuidado con eso, no me acuerdo si lo habiamos solucionado
+!   |   |
+10__11__12
+
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
