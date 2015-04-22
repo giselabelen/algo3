@@ -1,0 +1,122 @@
+\documentclass[a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{charter}   % tipografía
+\usepackage{graphicx}
+\usepackage{makeidx}
+
+\usepackage{float}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{wrapfig}
+\usepackage{listings} % necesario para el resaltado de sintaxis
+\usepackage{caption}
+\usepackage{placeins}
+
+\usepackage{hyperref} % agrega hipervínculos en cada entrada del índice
+\hypersetup{          % (en el pdf)
+    colorlinks=true,
+    linktoc=all,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\input{codesnippet}
+\input{page.layout}
+\usepackage{underscore}
+\usepackage{caratula}
+\usepackage{url}
+\usepackage{color}
+\usepackage{clrscode3e} % necesario para el pseudocodigo (estilo Cormen)
+
+
+
+
+\begin{document}
+
+\lstset{
+  language=C++,                    % (cambiar al lenguaje correspondiente)
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{red},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{blue},     % string literal style
+}
+
+\thispagestyle{empty}
+\materia{Algoritmos y Estructuras de Datos III}
+\submateria{Primer Cuatrimestre de 2015}
+\titulo{Diseño de Algoritmos}
+\subtitulo{Aplicación de técnicas}
+\integrante{Barañao, Facundo}{480/11}{facundo_732@hotmail.com}
+\integrante{Confalonieri, Gisela Belén}{511/11}{gise_5291@yahoo.com.ar} % por cada integrante (apellido, nombre) (n° libreta) (e-mail)
+\integrante{Mignanelli, Alejandro Rubén}{609/11}{minga_titere@hotmail.com} 
+\integrante{Soliz, Carlos}{406/12}{rcarlos.cs@gmail.com} 
+
+\maketitle
+\newpage
+
+\thispagestyle{empty}
+\vfill
+%\begin{abstract}
+%    \vspace{0.5cm}
+%	Este trabajo busca aplicar distintas técnicas para la creación de algoritmos. Para esto, se resolverán tres problemas que representan situaciones de la vida real y juegos de ingenio. Las técnicas que se utilizarán serán algoritmos golosos, divide and conquer y backtracking.
+%
+%\end{abstract}
+
+\thispagestyle{empty}
+\vspace{1.5cm}
+\tableofcontents
+\newpage
+
+%\normalsize
+
+\newpage
+\section{Objetivos generales}
+
+
+%\newpage
+\section{Plataforma de pruebas}
+
+Para toda la experimentación se utilizará un procesador Intel Atom, de 4 núcleos a 1.6 GHZ.
+
+El software utilizado será Ubuntu 14.04, y G++ 4.8.2.
+
+\newpage
+\section{Problema 1: Dakkar}
+\input{problema1}
+
+\newpage
+\section{Problema 2: Zombieland II}
+\input{problema2}
+
+\newpage
+\section{Problema 3: Refinando petróleo}
+\input{problema3}
+
+
+\newpage
+\section{Apéndice 1: acerca de los tests}
+
+
+\newpage
+\section{Apéndice 2: secciones relevantes del código}
+En esta sección, adjuntamos parte del código correspondiente a la resolución de cada problema que consideramos más \textbf{relevante}.
+
+\subsection{Código del Problema 1}
+
+
+%\newpage
+\subsection{Código del Problema 2}
+
+%\newpage
+\subsection{Código del Problema 3}
+
+\end{document}
