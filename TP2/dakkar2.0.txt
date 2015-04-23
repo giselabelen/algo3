@@ -1,0 +1,54 @@
+Nueva idea:
+
+Armo una matriz de km * kb de la siguiente  forma
+
+
+      0     1      2          3      ...               B
+
+0     0     m1b   m1b;m2b    
+
+
+1   m1M
+
+
+2  m1M,m2M
+
+
+3
+
+
+...
+
+
+M
+
+los 0, 1 , 2 ,3... de la primer fila son la cantidad de buggys que tomo en cada caso
+los 0, 1 , 2 ,3... de la primer columna son la cantidad de motos que tomo en cada caso
+
+Entonces, (0,1) representa el caso donde puedo elegir 0 motos y 1 buggy, por ende elijo la instancia en la que hay mayor diferencia entre buggy y bici.
+(1,0) representa el caso donde puedo elegir 0 buggys y 1 moto, y elijo como en el caso anterior pero con la moto
+
+Entonces en la casilla (x,y) tengo el caso donde puedo elegir X motos e Y buggys. Notemos que para conseguir el valor de esta casilla voy a necesitar el valor de (X,Y-1) y (X-1,Y).
+
+Entonces en la primera fila tengo en 1 una dupla (maximo de los Buggy - Bici, instancia), en 2 la tupla del maximo, y la tupla del segundo maximo y asi sucesivamente, lo mismo con las columnas.
+
+Para asegurarme de tener los datos para posibles conflictos entonces, ARMEMOS LA MATRIZ DE (km+kb) * (kb+km) y para buggy y moto voy a tener que calcular km+kb maximos de diferencia con la bici.
+ESTO ME TOMA 2O(km+kb*n) < O(n*km*kb)
+
+Haciendo un breve seguimiento el funcionamiento de la matriz seria asi:
+
+en (0,1) tengo M1B (primer maximo de Buggy) y en (1,0) tengo M1M(primer maximo de Moto)
+Para armar (1,1) lo que hago es ver los casos:
+
+si M1B y M1M estan en el mismo intervalo me fijo M1B>M1M? Si vale entonces en (1,1) pongo M1B y M2M (segundo maximo moto). Si por el contrario M1B<M1M en (1,1) pongo M1M y M2B (segundo maximo buggy)
+
+Si M1B y M1M no estan en el mismo intervalo, pongo ambos en (1,1)
+
+Supongamos que quiero calcular (1,2) esto es que puedo elegir 1 Moto y 2 Buggys.
+
+Tenemos los siguientes casos:
+
+(1,1) = M1M;M1B entonces agrego M2B, si M2B no tiene conflicto con M1M joya, sino me fijo M1M>M2B? Si vale eso pongo M3B en lugar de M2B y no hay conflicto. Caso contrario saco M1M y pongo M2M que de nuevo
+puede tener conflicto con M1B, en ese caso me fijo si M1B>M2M, si vale saco M2M y pongo M3M, y ya no puede haber mas conflictos, sino saco M1M y pongo M3B y ya no puede haber mas conflictos.
+
+Y asi con los otros casos. 
