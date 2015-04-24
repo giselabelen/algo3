@@ -144,7 +144,19 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 	}
 	
 	if(ciudad[i][j].arriba > soldados || ciudad[i][j].abajo > soldados ||
-		ciudad[i][j].izquierda > soldados || ciudad[i][j].derecha > soldados)
+		ciudad[i][j].izquierda > soldados || ciudad[i][j].derecha > soldados) 
+		/*no está al pedo, pero creo que está mal... o sea, la idea de este if, debería ser mete
+		un break point si es necesario, o sea, si yo pude moverme a todas las calles, entonces
+		no hay drama...pero si hay alguna por la que no pude pasar, mete un break point para
+		meterme por esa en la próxima... lo que creo que está mal, es que vos venís de una 
+		calle, y esa calle no tenes que contarla, y el if de arriba si la cuenta. De hecho
+		creo que si estás rodeado de -1, meterse por esos caminos es al pedo y deberías matar
+		este camino... creo que el if debería ser asi(de hecho, querer meterte por cualquier -1
+		es al pedo):
+		if(((ciudad[i][j].arriba > soldados)&& (ciudad[i][j].arriba > soldados != -1))||
+		((ciudad[i][j].abajo > soldados) && (ciudad[i][j].abajo > soldados != -1)) || 
+		((ciudad[i][j].izquierda > soldados) && (ciudad[i][j].izquierda > soldados != -1))||
+		((ciudad[i][j].derecha > soldados)&& (ciudad[i][j].derecha > soldados != -1)))*/
 	{
 		bp = make_pair(posicion,soldados);
 		cola.push_back(bp);
