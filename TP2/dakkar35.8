@@ -1,0 +1,49 @@
+Bueno, acá va la idea que creo que esta bien:
+
+Idea intuitiva..
+
+Supongamos que yo quiero llegar a la etapa n, con M motos y B buggys como mucho.
+
+Entonces yo quiero decidir que vehiculo usar en la etapa n..
+
+1)Digamos entonces que si yo quisiera tomar la bici, debería optimizar mi tiempo en las anteriores n-1  etapas, y usar la bici... como quiero usar la bici en la etapa n, entonces M y B los puedo usar a mi antojo en las anteriores n-1 etapas... entonces para optimizar el tiempo, bastaría con optimizar el tiempo de las n-1 etapas anteriores usando B buggys y M motos como mucho, y en la etapa n, usar la bici...
+2)Y si quisiera tomar la moto?? En ese caso, como yo estoy decidido a tomar la moto en la etapa n, yo debería optimizar el tiempo de las anteriores etapas, pero no usando M motos(como mucho), sino M-1 motos(como mucho), para poder en la etapa n usar la moto tranqui... o sea, que basicamente debería optimizar usar M-1 motos, y B buggys como mucho en las n-1 etapas anteriores, y para la ultima etapa usar una moto... 
+3)Y si quisiera tomar el Buggy?? En ese caso, como yo estoy decidido a tomar el buggy en la etapa n, yo debería optimizar el tiempo de las anteriores etapas, pero no usando B buggys(como mucho), sino B-1 buggys(como mucho), para poder en la etapa n usar el buggy tranqui... o sea, que basicamente debería optimizar usar B-1 buggys, y M motos como mucho en las n-1 etapas anteriores, y para la ultima etapa usar El buggy... 
+Y si yo quisiera optimizar mi tiempo en la etapa n?? entonces solo tengo que ver cual me da menos tiempo, si 1), 2) o 3)
+
+Idea más exacta...
+
+Deseo formar un Cubo, cuyos tres ejes sean motos(m), buggys(b) y etapas(n)... si lo quieren ver de otra forma, supongamos que tengo una lista de matrices( la lista tiene n elementos, y las matrices son de b x m)... tomo de las n etapas la primera, y la inserto en la primer posición de la lista... las matrices van a contener los tiempos optimos siguiendo la siguiente regla enunciada de forma general... Sea i,j tal que 0<=i<=b, 0<=j<=m, la posición [i][j] de la matriz tendrá el tiempo óptimo de haber superado la primer etapa utilizando a lo sumo i buggys y j motos. Si quiero generalizarlo a cualquier cantidad de etapas: Sea i,j,k tal que 0<=i<=b, 0<=j<=m, 1<=k<=n (MIRA QUE SON TODOS IGUALES) la posición [i][j] de la matriz k tendrá el tiempo óptimo de haber superado las primeras k etapas utilizando a lo sumo i buggys y j motos.
+
+Y entonces como se llena el cubo(o mejor dicho la lista de matrices, porque les gusta más^^)??
+
+k = 1{
+
+-La posición [0][0] hay que ponerle el tiempo de la bicicleta
+-La posición [0][1] hay que ponerle el tiempo de la bicicleta o la moto, el que sea menor
+-De la posición [0][2] hasta [0][m] hay que poner exactamente lo que hay en [0][1]
+-La posición [1][0] hay que ponerle el tiempo de la bicicleta o el buggy, el que sea menor
+-De la posición [2][0] hasta [b][0] hay que poner exactamente lo que hay en [1][0]
+-La posición [1][1]hay que ponerle el tiempo de la bicicleta, el buggy o la moto, el que sea menor
+-El resto de las posiciones de esa matriz, deben tener lo que hay en [1][1]
+}
+
+Para todo 1<k<=n{
+
+-La posición [0][0] debe tener lo que hay en la posición [0][0] de la matriz k-1, + la bici de la nueva etapa
+-De la posición [0][1] hasta [0][m] tomando 1<=j<=m:
+k[0][j] <--- MINIMO((k[0][j] + bici_k),((k-1)[0][j-1] + moto_k))   (bici_k denota bici de la etapa k, y análogamente para moto y para buggy después)
+-De la posición [1][0] hasta [b][0] tomando 1<=i<=b:
+k[i][0] <--- MINIMO((k[i][0] + bici_k),((k-1)[i-1][0] + buggy_k))
+-El resto de las posiciones de la matriz k se llenan de la siguiente manera,1<=j<=m,1<=i<=b:
+k[i][j] <--- MINIMO( (k[i][j] + bici_k)   , ((k-1)[0][j-1] + moto_k)   ,  ((k-1)[i-1][0] + buggy_k)  )
+}
+
+Al completar el cubo deberías llegar a la solución.
+
+Espero se entiendaXD
+hay cosas que asumí que van a entender con verlas un tiempito, ejemplo,
+-El resto de las posiciones de esa matriz, deben tener lo que hay en [1][1]... si solo tengo 1 etapa, poder usar 535 buggys y 1586 motos debería ser lo mismo que poder usar una buggy y una moto.
+
+Sino entienden el porque de algunas decisiones, preguntenme
+Por otro lado, partes de esta explicación casi que compilan, y con pequeños agregados de explicaciones pueden ser igualmente muy declarativas, puede servir para armar el pseudo y el analisis de complejidad... y también puede ser ameno para la persona que haga el código para no tener que pensar mucho los casos bordes. (GUIÑO GUIÑO estas últimas dos frases ;) ;) )
