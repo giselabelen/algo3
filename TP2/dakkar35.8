@@ -36,7 +36,7 @@ k[0][j] <--- MINIMO((k[0][j] + bici_k),((k-1)[0][j-1] + moto_k))   (bici_k denot
 -De la posición [1][0] hasta [b][0] tomando 1<=i<=b:
 k[i][0] <--- MINIMO((k[i][0] + bici_k),((k-1)[i-1][0] + buggy_k))
 -El resto de las posiciones de la matriz k se llenan de la siguiente manera,1<=j<=m,1<=i<=b:
-k[i][j] <--- MINIMO( (k[i][j] + bici_k)   , ((k-1)[0][j-1] + moto_k)   ,  ((k-1)[i-1][0] + buggy_k)  )
+k[i][j] <--- MINIMO( (k[i][j] + bici_k)   , ((k-1)[i][j-1] + moto_k)   ,  ((k-1)[i-1][j] + buggy_k)  )
 }
 
 Al completar el cubo deberías llegar a la solución.
