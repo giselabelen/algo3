@@ -3,11 +3,17 @@
 
 #include <list>
 #include <utility>
+#include <vector>
 
 using namespace std;
 
-typedef vector<esquina> Vec;
-typedef vector<Vec> Mapa;
+typedef struct pos_t
+{
+	int horizontal;
+	int vertical;
+	bool operator==(const pos_t p)const{
+		return ((horizontal==p.horizontal)&&(vertical==p.vertical));}
+} pos;
 
 typedef struct esquina_t
 {
@@ -20,21 +26,29 @@ typedef struct esquina_t
     // Posiciones de las que vengo
     list<pos> origen;
     
-} esquina = {-1, -1, -1, -1};	// Por los casos borde
+}esquina; //= {-1, -1, -1, -1};	// Por los casos borde
 
-typedef struct pos_t
-{
-	int horizontal;
-	int vertical;
-} pos;
+typedef vector<esquina> Vec;
+typedef vector<Vec> Mapa;
 
 bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos posicion, pos bunker, int& cont, int tope);
+bool zombieland(Mapa& ciudad, list<pair <pos,int> >& cola, int& soldados, pos bunker);
+void armo_resultado(Mapa& ciudad, list<pos> salida);
+
 
 bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos posicion, pos bunker, int& cont, int tope)
 {	
 	bool res;
 	pos pos_aux;
 	pair <pos,int> bp;
+	int topeAr;
+	int topeAb;
+	int topeI;
+	int topeD;
+	int soldAr;
+	int soldAb;
+	int soldI;
+	int soldD;
 	
 	int i = posicion.horizontal;
 	int j = posicion.vertical;
@@ -46,12 +60,13 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 	
 	if(ciudad[i][j].arriba != -1)	// si es calle válida
 	{
+		// si puedo pasar por esa calle
 		if((ciudad[i][j].arriba <= soldados) || (2*soldados - ciudad[i][j].arriba >= tope))
 		{
-			if(2*soldados - ciudad[i][j].arriba >= tope)
+			if(2*soldados - ciudad[i][j].arriba >= tope)	// si se me mueren soldados
 			{
-				soldados = 2*soldados - ciudad[i][j].arriba;
-				tope = tope - soldados;
+				soldAr = 2*soldados - ciudad[i][j].arriba;
+				topeAr = tope - soldAr;
 			}
 			
 			// aviso que ya pasé por esta cuadra
@@ -66,97 +81,97 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			(ciudad[i-1][j].origen).push_back(posicion);
 			
 			// recursion
-			res = recorridos(ciudad, cola, soldados, pos_aux, bunker,cont,tope);
+			res = recorridos(ciudad, cola, soldAr, pos_aux, bunker,cont,topeAr);
 			if(res){ return res; }
 		}
 	}
 	
-	if((ciudad[i][j].abajo != -1) && (ciudad[i][j].abajo <= soldados))
+	if(ciudad[i][j].abajo != -1)	// si es calle válida
 	{
-		if(ciudad[i][j].abajo == soldados && tol == 1)
+		// si puedo pasar por esa calle
+		if((ciudad[i][j].abajo <= soldados) || (2*soldados - ciudad[i][j].abajo >= tope))
 		{
-			tol = 0;
-			soldados--;
+			if(2*soldados - ciudad[i][j].abajo >= tope)	// si se me mueren soldados
+			{
+				soldAb = 2*soldados - ciudad[i][j].abajo;
+				topeAb = tope - soldAb;
+			}
+				
+			// aviso que ya pasé por esta cuadra
+			ciudad[i][j].abajo = -1;
+			ciudad[i+1][j].arriba = -1;
+			
+			// esquina a la que llego
+			pos_aux.horizontal = i+1;
+			pos_aux.vertical = j;
+			
+			// guardo de dónde vine
+			(ciudad[i+1][j].origen).push_back(posicion);
+			
+			// recursion
+			res = recorridos(ciudad, cola, soldAb, pos_aux, bunker,cont,topeAb);
+			if(res){ return res; }
 		}
-		
-		// aviso que ya pasé por esta cuadra
-		ciudad[i][j].abajo = -1;
-		ciudad[i+1][j].arriba = -1;
-		
-		// esquina a la que llego
-		pos_aux.horizontal = i+1;
-		pos_aux.vertical = j;
-		
-		// guardo de dónde vine
-		(ciudad[i+1][j].origen).push_back(posicion);
-		
-		// recursion
-		res = recorridos(ciudad, cola, soldados, pos_aux, bunker,cont,tol);
-		if(res){ return res; }
 	}
 	
-	if((ciudad[i][j].izquierda != -1) && (ciudad[i][j].izquierda <= soldados))
+	if(ciudad[i][j].izquierda != -1)	// si es calle válida
 	{
-		if(ciudad[i][j].iquierda == soldados && tol == 1)
+		// si puedo pasar por esa calle
+		if((ciudad[i][j].izquierda <= soldados) || (2*soldados - ciudad[i][j].izquierda >= tope))
 		{
-			tol = 0;
-			soldados--;
+			if(2*soldados - ciudad[i][j].izquierda >= tope)	// si se me mueren soldados
+			{
+				soldI = 2*soldados - ciudad[i][j].izquierda;
+				topeI = tope - soldI;
+			}
+		
+			// aviso que ya pasé por esta cuadra
+			ciudad[i][j].izquierda = -1;
+			ciudad[i][j-1].derecha = -1;
+			
+			// esquina a la que llego
+			pos_aux.horizontal = i;
+			pos_aux.vertical = j-1;
+			
+			// guardo de dónde vine
+			(ciudad[i][j-1].origen).push_back(posicion);
+			
+			// recursion
+			res = recorridos(ciudad, cola, soldI, pos_aux, bunker,cont,topeI);
+			if(res){ return res; }
 		}
-		
-		// aviso que ya pasé por esta cuadra
-		ciudad[i][j].izquierda = -1;
-		ciudad[i][j-1].derecha = -1;
-		
-		// esquina a la que llego
-		pos_aux.horizontal = i;
-		pos_aux.vertical = j-1;
-		
-		// guardo de dónde vine
-		(ciudad[i][j-1].origen).push_back(posicion);
-		
-		// recursion
-		res = recorridos(ciudad, cola, soldados, pos_aux, bunker,cont,tol);
-		if(res){ return res; }
 	}
 	
-	if((ciudad[i][j].derecha != -1) && (ciudad[i][j].derecha <= soldados))
+	if(ciudad[i][j].derecha != -1)	// si es calle válida
 	{
-		if(ciudad[i][j].arriba == soldados && tol == 1)
+		// si puedo pasar por esa calle
+		if((ciudad[i][j].derecha <= soldados) || (2*soldados - ciudad[i][j].derecha >= tope))
 		{
-			tol = 0;
-			soldados--;
+			if(2*soldados - ciudad[i][j].derecha >= tope)	// si se me mueren soldados
+			{
+				soldD = 2*soldados - ciudad[i][j].derecha;
+				topeD = tope - soldD;
+			}
+				
+			// aviso que ya pasé por esta cuadra
+			ciudad[i][j].derecha = -1;
+			ciudad[i][j+1].izquierda = -1;
+			
+			// esquina a la que llego
+			pos_aux.horizontal = i;
+			pos_aux.vertical = j+1;
+			
+			// guardo de dónde vine
+			(ciudad[i][j+1].origen).push_back(posicion);
+			
+			// recursion
+			res = recorridos(ciudad, cola, soldD, pos_aux, bunker,cont,topeD);
+			if(res){ return res; }
 		}
-		
-		// aviso que ya pasé por esta cuadra
-		ciudad[i][j].derecha = -1;
-		ciudad[i][j+1].izquierda = -1;
-		
-		// esquina a la que llego
-		pos_aux.horizontal = i;
-		pos_aux.vertical = j+1;
-		
-		// guardo de dónde vine
-		(ciudad[i][j+1].origen).push_back(posicion);
-		
-		// recursion
-		res = recorridos(ciudad, cola, soldados, pos_aux, bunker,cont,tol);
-		if(res){ return res; }
 	}
 	
 	if(ciudad[i][j].arriba > soldados || ciudad[i][j].abajo > soldados ||
 		ciudad[i][j].izquierda > soldados || ciudad[i][j].derecha > soldados) 
-		/*no está al pedo, pero creo que está mal... o sea, la idea de este if, debería ser mete
-		un break point si es necesario, o sea, si yo pude moverme a todas las calles, entonces
-		no hay drama...pero si hay alguna por la que no pude pasar, mete un break point para
-		meterme por esa en la próxima... lo que creo que está mal, es que vos venís de una 
-		calle, y esa calle no tenes que contarla, y el if de arriba si la cuenta. De hecho
-		creo que si estás rodeado de -1, meterse por esos caminos es al pedo y deberías matar
-		este camino... creo que el if debería ser asi(de hecho, querer meterte por cualquier -1
-		es al pedo):
-		if(((ciudad[i][j].arriba > soldados)&& (ciudad[i][j].arriba > soldados != -1))||
-		((ciudad[i][j].abajo > soldados) && (ciudad[i][j].abajo > soldados != -1)) || 
-		((ciudad[i][j].izquierda > soldados) && (ciudad[i][j].izquierda > soldados != -1))||
-		((ciudad[i][j].derecha > soldados)&& (ciudad[i][j].derecha > soldados != -1)))*/
 	{
 		bp = make_pair(posicion,soldados);
 		cola.push_back(bp);
@@ -182,8 +197,9 @@ bool zombieland(Mapa& ciudad, list<pair <pos,int> >& cola, int& soldados, pos bu
 		
 		while(contador > 0 && !res)
 		{
-			posicion = (cola.pop_front()).first;
-			sold_aux = (cola.pop_front()).second;
+			posicion = (cola.front()).first;
+			sold_aux = (cola.front()).second;
+			cola.pop_front();
 			res = res || recorridos(ciudad, cola, sold_aux, posicion, bunker, cont_aux, tope);
 		}
 		
@@ -198,6 +214,12 @@ bool zombieland(Mapa& ciudad, list<pair <pos,int> >& cola, int& soldados, pos bu
 	}
 
 	return res;
+}
+
+
+void armo_resultado(Mapa& ciudad, list<pos> salida)
+{
+	
 }
 
 #endif // ZOMBIELAND_H_INCLUDED

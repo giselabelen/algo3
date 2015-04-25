@@ -13,6 +13,7 @@ int main()
 	int zombies;
 	pos inicio;
 	pos bunker;
+	pair <pos,int> primero;
 	list<pair <pos,int> > cola;
 	list<pos> salida;
 	
@@ -21,6 +22,18 @@ int main()
 	scanf("%i",&soldados);	// Cant soldados iniciales
 	
 	Mapa ciudad(n, Vec(m));
+	
+	for(i = 0; i < n; i++)
+	{
+		ciudad[i][0].izquierda = -1;
+		ciudad[i][m-1].derecha = -1;
+	}
+	
+	for(j = 0; j < m; j++)
+	{
+		ciudad[0][j].arriba = -1;
+		ciudad[n-1][j].abajo = -1;
+	}
 	
 	scanf("%i",&h);
 	scanf("%i",&v);
@@ -57,8 +70,12 @@ int main()
 	}
 	
 	// HAGO MAGIA
+	primero = make_pair(inicio,soldados);
+	cola.push_back(primero);
+	zombieland(ciudad,cola,soldados,bunker);
 	
-	
+	// Armo la lista con la solución
+	armo_resultado(ciudad,salida);
 	
 	// Salida
 	printf("%i \n",soldados);	// Cant soldados vivos
