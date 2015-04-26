@@ -32,11 +32,11 @@ Para todo 1<k<=n{
 
 -La posición [0][0] debe tener lo que hay en la posición [0][0] de la matriz k-1, + la bici de la nueva etapa
 -De la posición [0][1] hasta [0][m] tomando 1<=j<=m:
-k[0][j] <--- MINIMO((k[0][j] + bici_k),((k-1)[0][j-1] + moto_k))   (bici_k denota bici de la etapa k, y análogamente para moto y para buggy después)
+k[0][j] <--- MINIMO(((k-1)[0][j] + bici_k),((k-1)[0][j-1] + moto_k))   (bici_k denota bici de la etapa k, y análogamente para moto y para buggy después)
 -De la posición [1][0] hasta [b][0] tomando 1<=i<=b:
-k[i][0] <--- MINIMO((k[i][0] + bici_k),((k-1)[i-1][0] + buggy_k))
+k[i][0] <--- MINIMO(((k-1)[i][0] + bici_k),((k-1)[i-1][0] + buggy_k))
 -El resto de las posiciones de la matriz k se llenan de la siguiente manera,1<=j<=m,1<=i<=b:
-k[i][j] <--- MINIMO( (k[i][j] + bici_k)   , ((k-1)[i][j-1] + moto_k)   ,  ((k-1)[i-1][j] + buggy_k)  )
+k[i][j] <--- MINIMO( ((k-1)[i][j] + bici_k)   , ((k-1)[i][j-1] + moto_k)   ,  ((k-1)[i-1][j] + buggy_k)  )
 }
 
 Al completar el cubo deberías llegar a la solución.
