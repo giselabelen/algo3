@@ -18,7 +18,14 @@ Tenemos la intención de competir en una versión particular del Rally Dakkar, y
 \subsection{Desarrollo de la idea.}
 
 \vspace*{0.3cm}
-
+Primero, definamos n la cantidad de etapas, km y kb la máxima cantidad de motos y buggys respectivamente, que puedo utilizar en la competencia. Supongamos que quiero ver que vehiculo utilizar en la etapa n de manera tal de optimizar mi tiempo. En principio, podríamos usar cualquiera de los tres vehículos: 
+\begin{itemize}
+	\item Observemos que si tuvieramos que usar la bicicleta, si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores n-1 etapas, usando como mucho km motos y kb buggys, entonces mi tiempo sería óptimo.
+	\item Si la mejor elección fuera la moto, entonces si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores n-1 etapas, usando como mucho km-1 motos y kb buggys, entonces mi tiempo sería el óptimo
+	\item Y si la mejor elección fuera el buggy, entonces si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores n-1 etapas, usando como mucho km motos y kb-1 buggys, entonces mi tiempo sería el óptimo.
+	
+	 
+\end{itemize}
 
 \vspace*{0.6cm}
 
