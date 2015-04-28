@@ -27,7 +27,7 @@ echo "Corriendo Tests Dakkar"
 for file in $DIR1/*.in
 do
 	base=$(basename "$file" .in)
-	./zombieland < $file > $RES1/$base.out
+	./dakkar < $file > $RES1/$base.out
 done
 
 #~ echo "Corriendo Tests Zombieland II"
@@ -35,7 +35,7 @@ done
 #~ for file in $DIR2/*.in
 #~ do
 	#~ base=$(basename "$file" .in)
-	#~ ./altafrecuencia < $file > $RES2/$base.out
+	#~ ./zombieland < $file > $RES2/$base.out
 #~ done
 
 #~ echo "Corriendo Tests Petróleo"	FALTA IMPLEMENTAR
@@ -43,5 +43,5 @@ done
 #~ for file in $DIR3/*.in
 #~ do
 	#~ base=$(basename "$file" .in)
-	#~ ./caballos < $file > $RES3/$base.out
+	#~ ./petroleo < $file > $RES3/$base.out
 #~ done
