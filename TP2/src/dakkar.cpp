@@ -1,7 +1,6 @@
 #include <cstdio>
 #include "dakkar.h"
 
-
 int main()
 {
 	int n;
@@ -34,13 +33,16 @@ int main()
 		buggy[i] = bu;
 	}
 	
-	// MAGIA
+	// Armo las matrices con las decisiones de cada etapa
 	Etapa* etapas = dakkar(n,km,kb,bici,moto,buggy);
+	
+	// Obtengo el tiempo total y los vehículos utilizados
 	total = armo_salida(etapas,km,kb,n,salida);
 	
-	// SALIDA
-	printf("%i ",total);
+	// Salida
+	printf("%i ",total);	// tiempo total incurrido
 	
+	// vehículos utilizados
 	for (list<int>::iterator it = salida.begin(); it != salida.end(); it++){
 		printf("%i ",*it);
 	}
