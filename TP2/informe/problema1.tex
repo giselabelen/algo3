@@ -18,14 +18,42 @@ Tenemos la intención de competir en una versión particular del Rally Dakkar, y
 \subsection{Desarrollo de la idea.}
 
 \vspace*{0.3cm}
-Primero, definamos n la cantidad de etapas, km y kb la máxima cantidad de motos y buggys respectivamente, que puedo utilizar en la competencia. Supongamos que quiero ver que vehiculo utilizar en la etapa n de manera tal de optimizar mi tiempo. En principio, podríamos usar cualquiera de los tres vehículos: 
-\begin{itemize}
-	\item Observemos que si tuvieramos que usar la bicicleta, si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores n-1 etapas, usando como mucho km motos y kb buggys, entonces mi tiempo sería óptimo.
-	\item Si la mejor elección fuera la moto, entonces si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores n-1 etapas, usando como mucho km-1 motos y kb buggys, entonces mi tiempo sería el óptimo
-	\item Y si la mejor elección fuera el buggy, entonces si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores n-1 etapas, usando como mucho km motos y kb-1 buggys, entonces mi tiempo sería el óptimo.
-	
+Primero, definamos $n$ la cantidad de etapas, $k_{m}$ y $k_{b}$ la máxima cantidad de motos y buggys respectivamente, que puedo utilizar en la competencia (llamo a este estado, ``Estado A"). Supongamos que quiero ver que vehiculo utilizar en la etapa $n$ de manera tal de optimizar mi tiempo. En principio, podríamos usar cualquiera de los tres vehículos: 
+
+
+\begin{enumerate}
+	\item Observemos que en caso de tener que usar la bicicleta, si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}$ motos y $k_{b}$ buggys, y el tiempo total implementado en este último caso, y a ese tiempo se lo sumaramos al tiempo de usar la bici en la etapa $n$, entonces mi tiempo sería óptimo.
+	\item Si la mejor elección fuera la moto, entonces si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}-1$ motos y $k_{b}$ buggys, y el tiempo total implementado en este último caso, y a ese tiempo se lo sumaramos al tiempo de usar la moto en la etapa $n$, entonces mi tiempo sería el óptimo.(Esto solo es posible, si $k_{m}>0$, puesto que si no, no es posible tomar una moto)
+	\item Y si la mejor elección fuera el buggy, entonces si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}$ motos y $k_{b}-1$ buggys, y el tiempo total implementado en este último caso, y a ese tiempo se lo sumaramos al tiempo de usar el buggy en la etapa $n$, entonces mi tiempo sería el óptimo.(Esto solo es posible, si $k_{b}>0$, puesto que si no, no es posible tomar un buggy)
 	 
-\end{itemize}
+\end{enumerate}
+
+Entonces, ver cual vehiculo usar en la etapa $n$, es simplemente ver cual es el menor de los tres casos anteriormente expuestos, y elegirlo.Esta decisión será el paso recursivo. 
+
+Pero teníamos tres elementos que dijimos ``si pudieramos saber". Observemoslos más de cerca.
+
+\begin{enumerate}
+	\item ``si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}$ motos y $k_{b}$ buggys, y el tiempo total implementado en este último caso".Pero si tomamos a $n-1$ como si fuera $n$, y dejamos a $k_{m}$ y a $k_{b}$ como están, por recursión podríamos hayar ese vehículo y su tiempo óptimo.
+	\item ``si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}-1$ motos y $k_{b}$ buggys, y el tiempo total implementado en este último caso".Pero si tomamos a $n-1$ como si fuera $n$, y a $k_{m-1}$ como si fuera $k_{m}$ y dejamos a $k_{b}$ como está, por recursión podríamos hallar ese vehículo y su tiempo óptimo.
+	\item ``si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}$ motos y $k_{b}-1$ buggys, y el tiempo total implementado en este último caso".Pero si tomamos a $n-1$ como si fuera $n$, y a $k_{b-1}$ como si fuera $k_{b}$ y dejamos a $k_{m}$ como está, por recursión podríamos hallar ese vehículo y su tiempo óptimo.
+\end{enumerate}
+
+Así, yo podría saber que vehículo usar en cada etapa, y cuanto es el tiempo óptimo, con excepción de la primera, puesto que no puede visitar las $n-1$ etapa anteriores. Entonces podemos tomar esto como mi ``caso base".Entonces supongamos que yo tengo una sola etapa:
+  \begin{enumerate}
+  \item si $k_{m}$ y $k_{b}$ fueran $0$, entonces sencillamente tomo la bicicleta de esa etapa, puesto que no tengo otra opción.
+  \item si $k_{b}$ fuera $0$ y $k_{m}$ fuera algún numero entre $1$ y el $k_{m}$ del ``Estado A" inclusive, entonces elijo entre la moto y la bici, la que tarde menos tiempo, y ese es el tiempo de completar la primera etapa.(Debido a que, para una etapa, poder usar una moto, o 500 no es diferencia)
+  \item si $k_{m}$ fuera $0$ y $k_{b}$ fuera algún numero entre $1$ y el $k_{b}$ del ``Estado A" inclusive, entonces elijo entre el buggy y la bici, la que tarde menos tiempo, y ese es el tiempo de completar la primera etapa.(Debido a que, para una etapa, poder usar un buggy, o 500 no es diferencia)
+  \item si $k_{m}$ fuera algún numero entre $1$ y el $k_{m}$ del ``Estado A" inclusive y $k_{b}$ fuera algún numero entre $1$ y el $k_{b}$ del ``Estado A" inclusive, entonces elijo entre el buggy, la moto y la bici, aquel vehiculo que tenga un tiempo menor, y ese es el tiempo de completar la primera etapa.(Debido a que, para una etapa, poder usar una moto, y un buggy o más de cualquiera de ellos o de ambos, no es diferencia)
+  \end{enumerate}
+  
+   
+  
+  
+  =)
+  
+   fgjfjtfkrdhrsjrf
+   
+   hola ale
 
 \vspace*{0.6cm}
 
