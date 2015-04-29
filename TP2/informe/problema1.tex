@@ -10,6 +10,7 @@ Tenemos la intención de competir en una versión particular del Rally Dakkar, y
 	\item Para cada etapa, se sabe cuanto tardaría en recorrerla con cada vehículo
 	\item Tanto la motocross como el buggy arenero tiene un número limitado de veces que se pueden usar, a diferencia de la BMX, y estos números son conocidos
 	\item La complejidad del algoritmo pedido es de $\mathcal{O}(n \cdot k_{m} \cdot k_{n})$ donde $n$ es la cantidad de etapas, $k_{m}$ es la cantidad máxima de veces que puedo usar la moto, y $k_{b}$ la cantidad máxima de veces que puedo usar la moto.
+\end{itemize}
 
 Ejemplo:
 Supongamos un Rally de 3 etapas, en donde puedo usar una vez la moto, y una vez el buggy, con los siguientes datos:
@@ -22,62 +23,69 @@ Supongamos un Rally de 3 etapas, en donde puedo usar una vez la moto, y una vez 
 
 Con estos datos, el menor tiempo en que puedo realizar este Rally es en 15, y viene de tomar la bici en la primer etapa, la moto en la segunda, y el buggy en la tercera.
 
+\vspace*{0.6cm}
+%\newpage
+\subsection{Desarrollo de la idea y correctitud.}
+
+\vspace*{0.3cm}
+
+LLamemos $n$ a la cantidad de etapas del Rally, $k_{m}$ y $k_{b}$ a la cantidad máxima de motos y buggys respectivamente que es posible utilizar en el Rally. La idea es en vez de tratar de resolver todas las etapas de un tirón, primero tratemos de resolver la primer etapa, luego resolvamos las dos primeras etapas ayudandonos con la resolución de la primera etapa sola, luego resolvamos las primeras tres etapas ayudandonos con la resolución de las primeras dos etapas, y así hasta llegar a $n$. Para esto, la resolución de la primera etapa tendrá una tabla, la resolución de las primeras dos etapas tendrá otra tabla que usará información de la tabla de la primer etapa, y de igual manera para el resto. Cada una de estas tablas tiene $k_{m}+1$ columnas (numeradas del $0$ al $k_{m}$) y $k_{b}+1$ filas(numeradas del $0$ al $k_{b}$). Para hacer referencia a la tabla que representa a las primeras $t$ etapas(con $t$ algún número natural distinto de 0), la llamaremos la tabla $t$.Entonces si tomamos $i$,$j$,$h$ tal que $0\leq i \leq k_{b}$ , $0\leq i \leq k_{m}$ y $1\leq h \leq n$ la idea sería que la posición $i$ $j$ de la tabla de las primeras $h$ etapas, tenga el tiempo óptimo de las primeras $h$ etapas usando a lo sumo $i$ buggys y $j$ motos, y el vehículo que se usaría en la etapa $h$ bajo esas circunstancias(pondremos 1 si es la bici, 2 si es la moto y 3 para buggy). Pero entonces, como se completarían las tablas? Las tablas se completarían de la siguiente manera(para hacer referencia a una posición de una tabla $h$, diremos la posición $h_{a,c}$ donde $a$ es el número de fila, y $c$ el número de columna):
+
+\begin{itemize}
+	\item Si $h=1$
+	\begin{itemize}
+		\item La posición $h_{0,0}$ hay que ponerle el tiempo de la bicicleta en la etapa $h$, puesto que solo puede usarse ese vehículo, y un 1 para indicar que se usó la bici.
+		\item La posición $h_{0,1}$ hay que ponerle el tiempo de la bicicleta o la moto(ambos en la etapa $h$), el que sea menor, y depende cual haya elegido, el número que corresponde.
+		\item De la posición $h_{0,2}$ hasta $h_{0,k_{m}}$ hay que poner exactamente lo que hay en $h_{0,1}$ dado que si tengo una sola etapa, poder usar una moto o más de una, no es diferencia.
+		\item La posición $h_{1,0}$ hay que ponerle el tiempo de la bicicleta o el buggy(ambos de la etapa $h$), el que sea menor y depende cual haya elegido, el número que corresponde.
+		\item De la posición $h_{2,0}$ hasta $h_{k_{b},0}$ hay que poner exactamente lo que hay en $h_{1,0}$ dado que si tengo una sola etapa, poder usar un buggy o más de uno, no es diferencia.
+		\item La posición $h_{1,1}$ hay que ponerle el tiempo de la bicicleta, el buggy o la moto(de la etapa $h$), el que sea menor y depende cual haya elegido, el número que corresponde.
+		\item El resto de las posiciones de esa matriz, deben tener lo que hay en $h_{1,1}$ dado que si tengo una sola etapa, poder usar una moto y un buggy, o más de alguno de ellos o de ambos, no es diferencia.
+
+	\end{itemize}
+
+	\item Para todo $h$ tal que $1 < h \leq n$
+
+	\begin{itemize}
+
+		\item La posición $h_{0,0}$ debe tener el tiempo que hay en la posición $(h-1)_{0,0}$ sumada al de la bici de la etapa $h$, y un 1 para indicar que se usó la bici. El tiempo óptimo de este caso es correcto, puesto que al no poder usar otros vehículos, el tiempo óptimo de haber recorrido $h$ etapas usando solo la bicicleta, es el tiempo óptimo de haber recorrido $h-1$ etapas sin usar buggys ni motos, sumado a usar una bicicleta en la etapa $h$. El vehículo elegido es trivialmente correcto, puesto que no hay otra elección posible. 
+		\item Tomando $1\leq j \leq k_{m}$ la posición $h_{0,j}$ debe contener el tiempo mínimo entre:
+		\begin{enumerate}
+			\item El tiempo de $(h-1)_{0,j}$ sumado al tiempo de la bici en la etapa $h$
+			\item El tiempo de $(h-1)_{0,(j-1)}$ sumado al tiempo de la moto en la etapa $h$
+		\end{enumerate} 
+		Y según cual se haya tomado, el número correspondiente a ese vehículo. El tiempo óptimo es correcto puesto que 1) significa que si el vehículo que deberíamos tomar fuera la bicicleta, entonces en las anteriores $h-1$ etapas puedo usar las $j$ motos, dado que no voy a usar ninguna moto en esta etapa y tomo el tiempo óptimo de eso. Por otro lado, 2) significa que si el vehículo que deberíamos tomar es la moto, entonces en las anteriores $h-1$ etapas, debo usar $j-1$ motos para poder usar una moto ahora, y tomo el tiempo óptimo de eso. Como tomamos el mínimo entre 1) y 2) entonces, y ambos, de ser la respuesta correcta, serían óptimos, entonces mi elección resulta óptima en tiempo. Por esto mismo, el vehículo elegido es el correcto. Ver que no se crean conflictos con el buggy, ni tengo que pensar en si puedo elegirlo o no, puesto que no puedo usar buggys en estos casos.
+		\item Tomando $1\leq i \leq k_{b}$ la posición $h_{i,0}$ debe contener el tiempo mínimo entre:
+		\begin{enumerate}
+			\item El tiempo de $(h-1)_{i,0}$ sumado al tiempo de la bici en la etapa $h$
+			\item El tiempo de $(h-1)_{(i-1),0}$ sumado al tiempo del buggy en la etapa $h$
+		\end{enumerate} 
+		Y según cual se haya tomado, el número correspondiente a ese vehículo.El tiempo óptimo es correcto puesto que 1) significa que si el vehículo que deberíamos tomar fuera la bicicleta, entonces en las anteriores $h-1$ etapas puedo usar las $i$ buggys, dado que no voy a usar ningunn buggy en esta etapa y tomo el tiempo óptimo de eso. Por otro lado, 2) significa que si el vehículo que deberíamos tomar es el buggy, entonces en las anteriores $h-1$ etapas, debo usar $i-1$ buggys para poder usar uno en esta etapa, y tomo el tiempo óptimo de eso. Como tomamos el mínimo entre 1) y 2) entonces, y ambos, de ser la respuesta correcta, serían óptimos, entonces mi elección resulta óptima en tiempo. Por esto mismo, el vehículo elegido es el correcto. Ver que no se crean conflictos con la moto, ni tengo que pensar en si puedo elegirla o no, puesto que no puedo usar motos en estos casos.
+		\item Tomando $1\leq i \leq k_{b}$ y $1\leq j \leq k_{m}$ la posición $h_{i,j}$ debe contener el tiempo mínimo entre:
+		\begin{enumerate}
+			\item El tiempo de $(h-1)_{i,j}$ sumado al tiempo de la bici en la etapa $h$
+			\item El tiempo de $(h-1)_{i,(j-1)}$ sumado al tiempo de la moto en la etapa $h$
+			\item El tiempo de $(h-1)_{(i-1),j}$ sumado al tiempo del buggy en la etapa $h$
+		\end{enumerate} 
+		Y según cual se haya tomado, el número correspondiente a ese vehículo. El tiempo óptimo es correcto puesto que 1) significa que si el vehículo que deberíamos tomar fuera la bicicleta, entonces en las anteriores $h-1$ etapas puedo usar las $j$ motos e $i$ buggys, dado que no voy a usar ninguna moto ni ningún buggy en esta etapa y tomo el tiempo óptimo de eso. Por otro lado, 2) significa que si el vehículo que deberíamos tomar es la moto, entonces en las anteriores $h-1$ etapas, debo usar $j-1$ motos para poder usar una moto ahora, y como no utilizo el buggy, puedo usar los $i$ que tengo, y tomo el tiempo óptimo de eso.Por otra parte, 3) significa que si el vehículo que deberíamos tomar es el buggy, entonces en las anteriores $h-1$ etapas, debo usar $i-1$ buggys para poder usar uno en esta etapa,y como no utilizo el buggy, puedo usar los $i$ que tengo,y tomo el tiempo óptimo de eso. Como tomamos el mínimo entre 1) , 2) y 3), y todos, de ser la respuesta correcta, serían óptimos, entonces mi elección resulta óptima en tiempo. Por esto mismo, el vehículo elegido es el correcto.
+
+	\end{itemize}
+
 \end{itemize}
+	Entonces, una vez llenas las tablas si quiero saber cual es el menor tiempo en el que puedo completar el Rally, tan solo debo ver el tiempo que hay en $n_{k_{b},k_{m}}$, y si quiero saber que vehículos utilicé en cada etapa, debo ver que vehículo se usó en $n_{k_{b},k_{m}}$ y ese vehículo será el que se usó en la etapa $n$. Luego, de manera general, suponiendo $2 \leq h \leq n$, para extraer el vehículo utilizado en la etapa $h-1$ habiendo extraído el vehículo de la posición h de la posición $h_{i,j}$ con $0\leq i \leq k_{b}$ y $0\leq j \leq k_{m}$, por como está hecha la tabla, debo ir a:
+	
+\begin{itemize}
+	\item la posición $(h-1)_{i,j}$ si en la etapa $h$ elegí la bici.
+	\item la posición $(h-1)_{i,j-1}$ si en la etapa $h$ elegí la moto.
+	\item la posición $(h-1)_{i-1,j}$ si en la etapa $h$ elegí el buggy.
+\end{itemize}			
 
-\vspace*{0.6cm}
-%\newpage
-\subsection{Desarrollo de la idea.}
-
-\vspace*{0.3cm}
-Primero, definamos $n$ la cantidad de etapas, $k_{m}$ y $k_{b}$ la máxima cantidad de motos y buggys respectivamente, que puedo utilizar en la competencia (llamo a este estado, ``Estado A"). Supongamos que quiero ver que vehiculo utilizar en la etapa $n$ de manera tal de optimizar mi tiempo. En principio, podríamos usar cualquiera de los tres vehículos: 
-
-
-\begin{enumerate}
-	\item Observemos que en caso de tener que usar la bicicleta, si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}$ motos y $k_{b}$ buggys, y el tiempo total implementado en este último caso, y a ese tiempo se lo sumaramos al tiempo de usar la bici en la etapa $n$, entonces mi tiempo sería óptimo.
-	\item Si la mejor elección fuera la moto, entonces si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}-1$ motos y $k_{b}$ buggys, y el tiempo total implementado en este último caso, y a ese tiempo se lo sumaramos al tiempo de usar la moto en la etapa $n$, entonces mi tiempo sería el óptimo.(Esto solo es posible, si $k_{m}>0$, puesto que si no, no es posible tomar una moto)
-	\item Y si la mejor elección fuera el buggy, entonces si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}$ motos y $k_{b}-1$ buggys, y el tiempo total implementado en este último caso, y a ese tiempo se lo sumaramos al tiempo de usar el buggy en la etapa $n$, entonces mi tiempo sería el óptimo.(Esto solo es posible, si $k_{b}>0$, puesto que si no, no es posible tomar un buggy)
-	 
-\end{enumerate}
-
-Entonces, ver cual vehiculo usar en la etapa $n$, es simplemente ver cual es el menor de los tres casos anteriormente expuestos, y elegirlo.Esta decisión será el paso recursivo. 
-
-Pero teníamos tres elementos que dijimos ``si pudieramos saber". Observemoslos más de cerca.
-
-\begin{enumerate}
-	\item ``si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}$ motos y $k_{b}$ buggys, y el tiempo total implementado en este último caso".Pero si tomamos a $n-1$ como si fuera $n$, y dejamos a $k_{m}$ y a $k_{b}$ como están, por recursión podríamos hayar ese vehículo y su tiempo óptimo.
-	\item ``si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}-1$ motos y $k_{b}$ buggys, y el tiempo total implementado en este último caso".Pero si tomamos a $n-1$ como si fuera $n$, y a $k_{m-1}$ como si fuera $k_{m}$ y dejamos a $k_{b}$ como está, por recursión podríamos hallar ese vehículo y su tiempo óptimo.
-	\item ``si de alguna manera pudieramos saber que vehiculos utilizar en las anteriores $n-1$ etapas, usando como mucho $k_{m}$ motos y $k_{b}-1$ buggys, y el tiempo total implementado en este último caso".Pero si tomamos a $n-1$ como si fuera $n$, y a $k_{b-1}$ como si fuera $k_{b}$ y dejamos a $k_{m}$ como está, por recursión podríamos hallar ese vehículo y su tiempo óptimo.
-\end{enumerate}
-
-Así, yo podría saber que vehículo usar en cada etapa, y cuanto es el tiempo óptimo, con excepción de la primera, puesto que no puede visitar las $n-1$ etapa anteriores. Entonces podemos tomar esto como mi ``caso base".Entonces supongamos que yo tengo una sola etapa:
-  \begin{enumerate}
-  \item si $k_{m}$ y $k_{b}$ fueran $0$, entonces sencillamente tomo la bicicleta de esa etapa, puesto que no tengo otra opción.
-  \item si $k_{b}$ fuera $0$ y $k_{m}$ fuera algún numero entre $1$ y el $k_{m}$ del ``Estado A" inclusive, entonces elijo entre la moto y la bici, la que tarde menos tiempo, y ese es el tiempo de completar la primera etapa.(Debido a que, para una etapa, poder usar una moto, o 500 no es diferencia)
-  \item si $k_{m}$ fuera $0$ y $k_{b}$ fuera algún numero entre $1$ y el $k_{b}$ del ``Estado A" inclusive, entonces elijo entre el buggy y la bici, la que tarde menos tiempo, y ese es el tiempo de completar la primera etapa.(Debido a que, para una etapa, poder usar un buggy, o 500 no es diferencia)
-  \item si $k_{m}$ fuera algún numero entre $1$ y el $k_{m}$ del ``Estado A" inclusive y $k_{b}$ fuera algún numero entre $1$ y el $k_{b}$ del ``Estado A" inclusive, entonces elijo entre el buggy, la moto y la bici, aquel vehiculo que tenga un tiempo menor, y ese es el tiempo de completar la primera etapa.(Debido a que, para una etapa, poder usar una moto, y un buggy o más de cualquiera de ellos o de ambos, no es diferencia)
-  \end{enumerate}
-  
-   
-  
-  
-  =)
-  
-   fgjfjtfkrdhrsjrf
-   
-   hola ale
-
+	 Y de la posición que haya ido, extraer el vehículo. Este será el vehículo utilizado en la etapa $h-1$. Haciendo esto en orden, se debería obtener que vehículo fue utilizado en cada etapa, y con todo esto se resolvería el problema de manera correcta.
+ 
 \vspace*{0.6cm}
 
 %\newpage
-\subsection{Demostración de correctitud.}
 
-\vspace*{0.3cm}
-
-
-
-\vspace*{0.6cm}
-
-%\newpage
 \subsection{Análisis de complejidad.}
 
 \vspace*{0.3cm}
