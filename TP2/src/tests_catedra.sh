@@ -27,7 +27,7 @@ echo "Corriendo Tests Dakkar"
 for file in $DIR1/*.in
 do
 	base=$(basename "$file" .in)
-	./dakkar < $file > $RES1/$base.out
+	./dakkar < $file > $RES1/$base.out1
 done
 
 #~ echo "Corriendo Tests Zombieland II"
