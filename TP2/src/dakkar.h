@@ -13,13 +13,13 @@ using namespace std;
 typedef pair< int,int > Optimo;	/* (tiempo,vehículo) */
 typedef vector<Optimo> Vec;
 typedef vector<Vec> Etapa;	/* Una matriz por etapa */
-
+typedef vector<Etapa> Carrera;
 
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
 Optimo eleccion(int bici, int moto, int buggy);
-Etapa* dakkar(int n, int km, int kb, int* bici, int* moto, int* buggy);
-int armo_salida(Etapa* etapas, int km, int kb, int n, list<int>& salida);
+Carrera dakkar(int n, int km, int kb, int* bici, int* moto, int* buggy);
+int armo_salida(Carrera etapas, int km, int kb, int n, list<int>& salida);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -60,19 +60,18 @@ Optimo eleccion(int bici, int moto, int buggy)
 	return res;
 }
 
-Etapa* dakkar(int n, int km, int kb, int* bici, int* moto, int* buggy)
+Carrera dakkar(int n, int km, int kb, int* bici, int* moto, int* buggy)
 {
 	int h;
 	int i;
 	int j;
 	Optimo aux;
-	Etapa etapas[n];
-	
+	Carrera etapas(n, Etapa(kb+1, Vec(km+1)));
 	
 	// Lleno los datos de la primera etapa (etapas[0])
 	
 	// posición (0,0)
-	etapas[0][0][0] = make_pair(bici[0],1);	
+	etapas[0][0][0] = make_pair(bici[0],1);
 	
 	// posiciones (0,1) a (0,km)
 	aux = eleccion(bici[0],moto[0],-1);
@@ -128,7 +127,7 @@ Etapa* dakkar(int n, int km, int kb, int* bici, int* moto, int* buggy)
 	return etapas;
 }
 
-int armo_salida(Etapa* etapas, int km, int kb, int n, list<int>& salida)
+int armo_salida(Carrera etapas, int km, int kb, int n, list<int>& salida)
 {
 /* Función que recorre las matrices de etapas y determina el tiempo
  * total incurrido y el vehículo utilizado en cada etapa.  Empieza

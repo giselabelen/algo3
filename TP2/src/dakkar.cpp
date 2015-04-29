@@ -34,7 +34,7 @@ int main()
 	}
 	
 	// Armo las matrices con las decisiones de cada etapa
-	Etapa* etapas = dakkar(n,km,kb,bici,moto,buggy);
+	Carrera etapas = dakkar(n,km,kb,bici,moto,buggy);
 	
 	// Obtengo el tiempo total y los vehículos utilizados
 	total = armo_salida(etapas,km,kb,n,salida);
