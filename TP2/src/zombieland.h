@@ -75,40 +75,40 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 		return true;
 	}
 	
-	if(ciudad[i][j].arriba != -1)	// si es calle válida
+	if(ciudad[i][j].derecha != -1)	// si es calle válida
 	{
 		// si puedo pasar por esa calle
-		if((ciudad[i][j].arriba <= soldados) || (2*soldados - ciudad[i][j].arriba >= tope))
+		if((ciudad[i][j].derecha <= soldados) || (2*soldados - ciudad[i][j].derecha >= tope))
 		{
-			if(2*soldados - ciudad[i][j].arriba >= tope){
+			if(2*soldados - ciudad[i][j].derecha >= tope){
 				// si se me mueren soldados
-				soldAr = 2*soldados - ciudad[i][j].arriba;
-				topeAr = tope - soldAr;
+				soldD = 2*soldados - ciudad[i][j].derecha;
+				topeD = tope - soldD;
 			}else{
 				// si no
-				soldAr = soldados;
-				topeAr = tope;
+				soldD = soldados;
+				topeD = tope;
 			}
-			
+				
 			// aviso que ya pasé por esta cuadra
-			ciudad[i][j].arriba = -1;
-			ciudad[i-1][j].abajo = -1;
+			ciudad[i][j].derecha = -1;
+			ciudad[i][j+1].izquierda = -1;
 			
 			// esquina a la que llego
-			pos_aux.horizontal = i-1;
-			pos_aux.vertical = j;
+			pos_aux.horizontal = i;
+			pos_aux.vertical = j+1;
 			
-			if(soldAr > ciudad[i-1][j].parcial)	// si vale la pena
+			if(soldD > ciudad[i][j+1].parcial)	// si vale la pena
 			{
 				// guardo de dónde vine
-				ciudad[i-1][j].origen = posicion;
+				ciudad[i][j+1].origen = posicion;
 				
 				// cantidad de soldados vivos hasta acá
-				ciudad[i-1][j].parcial = soldAr;
+				ciudad[i][j+1].parcial = soldD;
 			}
 			
 			// recursion
-			res = recorridos(ciudad, cola, soldAr, pos_aux, bunker,/*cont,*/topeAr);
+			res = recorridos(ciudad, cola, soldD, pos_aux, bunker,/*cont,*/topeD);
 			if(res){ return res; }
 		}
 	}
@@ -151,6 +151,44 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 		}
 	}
 	
+	if(ciudad[i][j].arriba != -1)	// si es calle válida
+	{
+		// si puedo pasar por esa calle
+		if((ciudad[i][j].arriba <= soldados) || (2*soldados - ciudad[i][j].arriba >= tope))
+		{
+			if(2*soldados - ciudad[i][j].arriba >= tope){
+				// si se me mueren soldados
+				soldAr = 2*soldados - ciudad[i][j].arriba;
+				topeAr = tope - soldAr;
+			}else{
+				// si no
+				soldAr = soldados;
+				topeAr = tope;
+			}
+			
+			// aviso que ya pasé por esta cuadra
+			ciudad[i][j].arriba = -1;
+			ciudad[i-1][j].abajo = -1;
+			
+			// esquina a la que llego
+			pos_aux.horizontal = i-1;
+			pos_aux.vertical = j;
+			
+			if(soldAr > ciudad[i-1][j].parcial)	// si vale la pena
+			{
+				// guardo de dónde vine
+				ciudad[i-1][j].origen = posicion;
+				
+				// cantidad de soldados vivos hasta acá
+				ciudad[i-1][j].parcial = soldAr;
+			}
+			
+			// recursion
+			res = recorridos(ciudad, cola, soldAr, pos_aux, bunker,/*cont,*/topeAr);
+			if(res){ return res; }
+		}
+	}
+	
 	if(ciudad[i][j].izquierda != -1)	// si es calle válida
 	{
 		// si puedo pasar por esa calle
@@ -185,44 +223,6 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 						
 			// recursion
 			res = recorridos(ciudad, cola, soldI, pos_aux, bunker,/*cont,*/topeI);
-			if(res){ return res; }
-		}
-	}
-	
-	if(ciudad[i][j].derecha != -1)	// si es calle válida
-	{
-		// si puedo pasar por esa calle
-		if((ciudad[i][j].derecha <= soldados) || (2*soldados - ciudad[i][j].derecha >= tope))
-		{
-			if(2*soldados - ciudad[i][j].derecha >= tope){
-				// si se me mueren soldados
-				soldD = 2*soldados - ciudad[i][j].derecha;
-				topeD = tope - soldD;
-			}else{
-				// si no
-				soldD = soldados;
-				topeD = tope;
-			}
-				
-			// aviso que ya pasé por esta cuadra
-			ciudad[i][j].derecha = -1;
-			ciudad[i][j+1].izquierda = -1;
-			
-			// esquina a la que llego
-			pos_aux.horizontal = i;
-			pos_aux.vertical = j+1;
-			
-			if(soldD > ciudad[i][j+1].parcial)	// si vale la pena
-			{
-				// guardo de dónde vine
-				ciudad[i][j+1].origen = posicion;
-				
-				// cantidad de soldados vivos hasta acá
-				ciudad[i][j+1].parcial = soldD;
-			}
-						
-			// recursion
-			res = recorridos(ciudad, cola, soldD, pos_aux, bunker,/*cont,*/topeD);
 			if(res){ return res; }
 		}
 	}
