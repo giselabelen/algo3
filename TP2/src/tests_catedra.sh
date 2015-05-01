@@ -30,13 +30,13 @@ echo "Compilando"
 	#~ ./dakkar < $file > $RES1/$base.out1
 #~ done
 
-#~ echo "Corriendo Tests Zombieland II"
+#echo "Corriendo Tests Zombieland II"
 
-#~ for file in $DIR2/*.in
-#~ do
-	#~ base=$(basename "$file" .in)
-	#~ ./zombieland < $file > $RES2/$base.out1
-#~ done
+#for file in $DIR2/*.in
+#do
+#	 base=$(basename "$file" .in)
+#	 ./zombieland < $file > $RES2/$base.out1
+#done
 
 echo "Corriendo Tests Petróleo"
 
