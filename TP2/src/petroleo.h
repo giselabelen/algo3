@@ -21,51 +21,51 @@ typedef list< pair<Arista,int> > Incidencia;	// lista con pares de arista-peso
 //~ int petroleo(Grafo g, int n, list< pair<int,int> >& tuberias);
 
 
-int comp_conexas(Adyacencia ady, int n, list<int>& refinerias);
-void marcar_vecinos(Adyacencia ady, vector<bool>& vistos, int i);
-int plan(Incidencia& inc, int n, list<Arista>& tuberias, int& costo_total);
+//~ int comp_conexas(Adyacencia ady, int n, list<int>& refinerias);
+//~ void marcar_vecinos(Adyacencia ady, vector<bool>& vistos, int i);
+int plan(Incidencia& inc, int n, list<Arista>& tuberias, int& costo_total,vector<int>& padres);
 bool comparar_peso(const pair<Arista,int>& par1, const pair<Arista,int>& par2);
+int petroleo(Incidencia inc,list<int>& refinerias,list<Arista>& tuberias,int n,int& cant_ref,int& cant_tub);
 
+//~ int comp_conexas(Adyacencia ady, int n, list<int>& refinerias)
+//~ {
+	//~ int res = 0;
+	//~ vector<bool> vistos(n,false);
+	//~ 
+	//~ for(int i = 0; i < n; i++)
+	//~ {
+		//~ if(!vistos[i])
+		//~ {
+			//~ refinerias.push_back(i);
+			//~ res++;
+			//~ marcar_vecinos(ady,vistos,i);
+		//~ }
+	//~ }
+	//~ 
+	//~ return res;
+//~ }
 
-int comp_conexas(Adyacencia ady, int n, list<int>& refinerias)
-{
-	int res = 0;
-	vector<bool> vistos(n,false);
-	
-	for(int i = 0; i < n; i++)
-	{
-		if(!vistos[i])
-		{
-			refinerias.push_back(i);
-			res++;
-			marcar_vecinos(ady,vistos,i);
-		}
-	}
-	
-	return res;
-}
+//~ void marcar_vecinos(Adyacencia ady, vector<bool>& vistos, int i)
+//~ {
+	//~ int j;
+	//~ 
+	//~ for(list<int>::iterator it = ady[i].begin(); it != ady[i].end(); it++){
+		//~ j = *it;
+		//~ if(!vistos[j]){
+			//~ marcar_vecinos(ady,vistos,j);
+		//~ }
+	//~ }
+	//~ vistos[i] = true;
+//~ }
 
-void marcar_vecinos(Adyacencia ady, vector<bool>& vistos, int i)
-{
-	int j;
-	
-	for(list<int>::iterator it = ady[i].begin(); it != ady[i].end(); it++){
-		j = *it;
-		if(!vistos[j]){
-			marcar_vecinos(ady,vistos,j);
-		}
-	}
-	vistos[i] = true;
-}
-
-int plan(Incidencia& inc, int n, list<Arista>& tuberias, int& costo_total)
+int plan(Incidencia& inc, int n, list<Arista>& tuberias, int& costo_total,vector<int>& padres)
 {
 	int costo;
 	int p1;
 	int p2;
 	int res = 0;
 	Arista edge;
-	vector<int> padres(n,-1);
+	//~ vector<int> padres(n,-1);
 	vector< pair<int,list<int> > > hijos(n);
 	
 	for(int i = 0; i < n; i++)
@@ -127,6 +127,37 @@ int plan(Incidencia& inc, int n, list<Arista>& tuberias, int& costo_total)
 bool comparar_peso(const pair<Arista,int>& par1, const pair<Arista,int>& par2)
 {
 	return (par1.second <= par2.second);
+}
+
+
+int petroleo(Incidencia inc,list<int>& refinerias,list<Arista>& tuberias,int n,int& cant_ref,int& cant_tub, int costo_ref)
+{
+	int p;
+	vector<int> padres(n,-1);
+	//~ cant_ref = comp_conexas(ady,n,refinerias);
+	//~ costo_total = costo_ref*cant_ref;
+	//~ cant_ref = 0;
+	int res = 0;
+	cant_tub = plan(inc,n,tuberias,res,padres);
+	vector<bool> aux(n,false);
+	for(int i = 0; i < n; i++)
+	{
+		if(padres[i] == -1)	// nodo solitario
+		{
+			refinerias.push_back(i);
+			cant_ref++;
+		}else{
+			p = padres[i];
+			if(!aux[p])
+			{
+				aux[p] = true;
+				refinerias.push_back(i);
+				cant_ref++;
+			}
+		}
+	}
+	res = res + costo_ref*cant_ref;
+	return res;
 }
 
 
