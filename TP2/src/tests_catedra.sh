@@ -35,7 +35,7 @@ echo "Compilando"
 #~ for file in $DIR2/*.in
 #~ do
 	#~ base=$(basename "$file" .in)
-	#~ ./zombieland < $file > $RES2/$base.out
+	#~ ./zombieland < $file > $RES2/$base.out1
 #~ done
 
 echo "Corriendo Tests Petróleo"
@@ -43,5 +43,5 @@ echo "Corriendo Tests Petróleo"
 for file in $DIR3/*.in
 do
 	base=$(basename "$file" .in)
-	./petroleo < $file > $RES3/$base.out
+	./petroleo < $file > $RES3/$base.out1
 done
