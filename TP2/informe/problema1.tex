@@ -126,6 +126,42 @@ Determinemos ahora cómo se completarían las tablas (para hacer referencia a un
 
 \vspace*{0.3cm}
 
+\begin{figure}[!ht]
+\begin{codebox}
+\Procname{$\proc{Dakkar}(n,km,kb,bicis,motos,buggies)$}
+\li $etapa_1(0,0) \leftarrow$ [bicis_1,bici]
+\li \For $j = 1$ to $km$
+\li 		\Do $etapa_1(0,j) \leftarrow$ {\sc Elección}(bicis_1,motos_1)
+		\End
+\li \For $i = 1$ to $kb$
+\li 		\Do $etapa_1(i,0) \leftarrow$ {\sc Elección}(bicis_1,buggies_1)
+		\End		
+\li \For $i = 1$ to $kb$
+\li 		\Do 
+		\For $j = 1$ to $km$
+\li			\Do $etapa_1(i,j) \leftarrow$ {\sc Elección}(bicis_1,motos_1,buggies_1)
+			\End
+		\End
+\li \For $h = 1$ to $n$
+\li 		\Do 
+			$etapa_h(0,0) \leftarrow$ [$etapa_{h-1}(0,0)$+bicis_h, bici]
+\li 			\For $j = 1$ to $km$
+\li 				\Do $etapa_h(0,j) \leftarrow$ {\sc Elección}($etapa_{h-1}(0,j)$ + bicis_h,$etapa_{h-1}(0,j-1)$ + motos_h)
+				\End
+\li 			\For $i = 1$ to $kb$
+\li 				\Do $etapa_h(i,0) \leftarrow$ {\sc Elección}($etapa_{h-1}(i,0)$ + bicis_h,$etapa_{h-1}(i-1,0)$ + buggies_h)
+				\End
+\li 			\For $i = 1$ to $kb$
+\li 				\Do
+				\For $j = 1$ to $km$
+\li	 				\Do $etapa_h(i,j) \leftarrow$ {\sc Elección}($etapa_{h-1}(i,j)$ + bicis_h,$etapa_{h-1}(i,j-1)$ + motos_h,\\ \hspace*{10cm} $etapa_{h-1}(i-1,j)$ + buggies_h)
+					\End
+				\End
+		\End
+\end{codebox} 
+\caption{Pseudocódigo del algoritmo para Dakkar}\label{code:dakkar}
+\end{figure}
+%\FloatBarrier
 
 \vspace*{0.6cm}
 %\newpage
