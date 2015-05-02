@@ -163,6 +163,27 @@ Determinemos ahora cómo se completarían las tablas (para hacer referencia a un
 \end{figure}
 %\FloatBarrier
 
+\begin{figure}[!ht]
+\begin{codebox}
+\Procname{$\proc{Dakkar_salida}(etapas,km,kb)$}
+\li i $\leftarrow$ kb
+\li j $\leftarrow$ km
+\li mostrar tiempo_total $\leftarrow etapa_n(i,j).tiempo$
+\li \For $h = n$ to 1
+\li 		\Do 
+			mostrar vehículo $\leftarrow etapa_h(i,j).vehiculo$
+\li			\If vehículo == moto
+\li				\Do decrementar j
+\li 			\Else \If vehículo == buggy
+\li					\Do decrementar i
+					\End
+			\End
+		\End
+\end{codebox} 
+\caption{Pseudocódigo del armado de la salida de Dakkar}\label{code:dakkar.salida}
+\end{figure}
+%\FloatBarrier
+
 \vspace*{0.6cm}
 %\newpage
 \subsection{Experimentación y gráficos.}

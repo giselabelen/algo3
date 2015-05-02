@@ -131,7 +131,6 @@ int armo_salida(Carrera etapas, int km, int kb, int n, list<int>& salida)
  * total incurrido y el vehículo utilizado en cada etapa.  Empieza
  * en la última etapa y termina con la primera.
  */
-	int aux;
 	int i = kb;
 	int j = km;
 	int res = etapas[n-1][i][j].first;	// tiempo total incurrido
