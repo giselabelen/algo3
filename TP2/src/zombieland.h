@@ -80,16 +80,16 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 		// si puedo pasar por esa calle
 		if((ciudad[i][j].derecha <= soldados) || (2*soldados - ciudad[i][j].derecha >= tope))
 		{
-			if(2*soldados - ciudad[i][j].derecha >= tope){
+			if(ciudad[i][j].derecha <= soldados){
+				// si no se muere nadie
+				soldD = soldados;
+				topeD = tope;
+			}else{
 				// si se me mueren soldados
 				soldD = 2*soldados - ciudad[i][j].derecha;
 				topeD = tope - soldD;
-			}else{
-				// si no
-				soldD = soldados;
-				topeD = tope;
 			}
-				
+			
 			// aviso que ya pasé por esta cuadra
 			ciudad[i][j].derecha = -1;
 			ciudad[i][j+1].izquierda = -1;
@@ -118,14 +118,14 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 		// si puedo pasar por esa calle
 		if((ciudad[i][j].abajo <= soldados) || (2*soldados - ciudad[i][j].abajo >= tope))
 		{
-			if(2*soldados - ciudad[i][j].abajo >= tope){
+			if(ciudad[i][j].abajo <= soldados){
+				// si no se muere nadie
+				soldAb = soldados;
+				topeAb = tope;
+			}else{
 				// si se me mueren soldados
 				soldAb = 2*soldados - ciudad[i][j].abajo;
 				topeAb = tope - soldAb;
-			}else{
-				// si no
-				soldAb = soldados;
-				topeAb = tope;
 			}
 				
 			// aviso que ya pasé por esta cuadra
@@ -156,16 +156,16 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 		// si puedo pasar por esa calle
 		if((ciudad[i][j].arriba <= soldados) || (2*soldados - ciudad[i][j].arriba >= tope))
 		{
-			if(2*soldados - ciudad[i][j].arriba >= tope){
+			if(ciudad[i][j].arriba <= soldados){
+				// si no se muere nadie
+				soldAr = soldados;
+				topeAr = tope;
+			}else{
 				// si se me mueren soldados
 				soldAr = 2*soldados - ciudad[i][j].arriba;
 				topeAr = tope - soldAr;
-			}else{
-				// si no
-				soldAr = soldados;
-				topeAr = tope;
 			}
-			
+						
 			// aviso que ya pasé por esta cuadra
 			ciudad[i][j].arriba = -1;
 			ciudad[i-1][j].abajo = -1;
@@ -194,14 +194,14 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 		// si puedo pasar por esa calle
 		if((ciudad[i][j].izquierda <= soldados) || (2*soldados - ciudad[i][j].izquierda >= tope))
 		{
-			if(2*soldados - ciudad[i][j].izquierda >= tope){
+			if(ciudad[i][j].izquierda <= soldados){
+				// si no se muere nadie
+				soldI = soldados;
+				topeI = tope;
+			}else{
 				// si se me mueren soldados
 				soldI = 2*soldados - ciudad[i][j].izquierda;
 				topeI = tope - soldI;
-			}else{
-				// si no
-				soldI = soldados;
-				topeI = tope;
 			}
 		
 			// aviso que ya pasé por esta cuadra

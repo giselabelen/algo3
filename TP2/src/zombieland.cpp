@@ -61,7 +61,7 @@ int main()
 	// Cant de zombies x calle
 	for(i = 0; i < n; i++)
 	{
-		for(j = 0; j < m; j++)	// calles horizontales
+		for(j = 0; j < m-1; j++)	// calles horizontales
 		{
 			scanf("%i",&zombies);
 			
