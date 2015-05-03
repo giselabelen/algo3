@@ -106,7 +106,7 @@ int main()
 	
 	// Recorrido
 	for (list<pos>::iterator it = salida.begin(); it != salida.end(); it++){
-		printf("%i %i \n",it->horizontal,it->vertical);
+		printf("%i %i \n",it->horizontal+1,it->vertical+1);
 	}
 	
 	cola.clear();

@@ -83,11 +83,9 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			if(ciudad[i][j].derecha <= soldados){
 				// si no se muere nadie
 				soldD = soldados;
-				topeD = tope;
 			}else{
 				// si se me mueren soldados
 				soldD = 2*soldados - ciudad[i][j].derecha;
-				topeD = tope - soldD;
 			}
 			
 			// aviso que ya pasé por esta cuadra
@@ -108,7 +106,7 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			}
 			
 			// recursion
-			res = recorridos(ciudad, cola, soldD, pos_aux, bunker,/*cont,*/topeD);
+			res = recorridos(ciudad, cola, soldD, pos_aux, bunker,/*cont,*/tope);
 			if(res){ return res; }
 		}
 	}
@@ -121,11 +119,9 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			if(ciudad[i][j].abajo <= soldados){
 				// si no se muere nadie
 				soldAb = soldados;
-				topeAb = tope;
 			}else{
 				// si se me mueren soldados
 				soldAb = 2*soldados - ciudad[i][j].abajo;
-				topeAb = tope - soldAb;
 			}
 				
 			// aviso que ya pasé por esta cuadra
@@ -146,7 +142,7 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			}
 			
 			// recursion
-			res = recorridos(ciudad, cola, soldAb, pos_aux, bunker,/*cont,*/topeAb);
+			res = recorridos(ciudad, cola, soldAb, pos_aux, bunker,/*cont,*/tope);
 			if(res){ return res; }
 		}
 	}
@@ -159,11 +155,9 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			if(ciudad[i][j].arriba <= soldados){
 				// si no se muere nadie
 				soldAr = soldados;
-				topeAr = tope;
 			}else{
 				// si se me mueren soldados
 				soldAr = 2*soldados - ciudad[i][j].arriba;
-				topeAr = tope - soldAr;
 			}
 						
 			// aviso que ya pasé por esta cuadra
@@ -184,7 +178,7 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			}
 			
 			// recursion
-			res = recorridos(ciudad, cola, soldAr, pos_aux, bunker,/*cont,*/topeAr);
+			res = recorridos(ciudad, cola, soldAr, pos_aux, bunker,/*cont,*/tope);
 			if(res){ return res; }
 		}
 	}
@@ -197,11 +191,9 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			if(ciudad[i][j].izquierda <= soldados){
 				// si no se muere nadie
 				soldI = soldados;
-				topeI = tope;
 			}else{
 				// si se me mueren soldados
 				soldI = 2*soldados - ciudad[i][j].izquierda;
-				topeI = tope - soldI;
 			}
 		
 			// aviso que ya pasé por esta cuadra
@@ -222,7 +214,7 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			}
 						
 			// recursion
-			res = recorridos(ciudad, cola, soldI, pos_aux, bunker,/*cont,*/topeI);
+			res = recorridos(ciudad, cola, soldI, pos_aux, bunker,/*cont,*/tope);
 			if(res){ return res; }
 		}
 	}
