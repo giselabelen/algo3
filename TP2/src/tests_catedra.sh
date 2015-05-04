@@ -22,26 +22,26 @@ echo "Compilando"
 
 ./compilar.sh
 
-#~ echo "Corriendo Tests Dakkar"
-#~ 
+# echo "Corriendo Tests Dakkar"
+# 
 #~ for file in $DIR1/*.in
 #~ do
 	#~ base=$(basename "$file" .in)
 	#~ ./dakkar < $file > $RES1/$base.out1
 #~ done
 
-#echo "Corriendo Tests Zombieland II"
+echo "Corriendo Tests Zombieland II"
 
-#for file in $DIR2/*.in
-#do
-#	 base=$(basename "$file" .in)
-#	 ./zombieland < $file > $RES2/$base.out1
-#done
-
-echo "Corriendo Tests Petróleo"
-
-for file in $DIR3/*.in
+for file in $DIR2/*.in
 do
-	base=$(basename "$file" .in)
-	./petroleo < $file > $RES3/$base.out1
+	 base=$(basename "$file" .in)
+	 ./zombieland < $file > $RES2/$base.out1
 done
+
+#echo "Corriendo Tests Petróleo"
+#
+#for file in $DIR3/*.in
+#do
+#	base=$(basename "$file" .in)
+#	./petroleo < $file > $RES3/$base.out1
+#done
