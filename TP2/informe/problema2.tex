@@ -71,7 +71,7 @@ En caso de llegar al punto de tener un sólo soldado vivo y no encontrar un cami
 
 Una vez que se llega al búnker, se debe ``rearmar'' el camino correcto.  Por lo explicado anteriormente, cada esquina será atravesada por a lo sumo 1 camino, y por lo tanto tendrá a lo sumo 1 esquina antecesora. Entonces basta con consultar consecutivamente ese dato desde la posición del búnker hasta llegar al punto de partida.
 
-Las Figuras \ref{fig:ejzombie0}, \ref{fig:ejzombie1}, \ref{fig:ejzombie2}, \ref{fig:ejzombie3} y \ref{fig:ejzombie4} muestran la forma de operar del algoritmo descrito.
+Las Figuras \ref{fig:ejzombie0}, \ref{fig:ejzombie1}, \ref{fig:ejzombie2}, \ref{fig:ejzombie3} y \ref{fig:ejzombie4} muestran la forma de operar del algoritmo descrito. Notar que luego de encontrar los posibles caminos perdiendo hasta 1 soldado (\ref{fig:ejzombie2}), no existe ningún camino posible que nos permita avanzar con a lo sumo 2 pérdidas, y por eso se prosigue por un camino que soporte hasta 3 pérdidas (\ref{fig:ejzombie3}).
 
 \begin{figure}[!htb]
 \minipage{0.5\textwidth}
