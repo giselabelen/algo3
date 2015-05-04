@@ -104,9 +104,12 @@ int main()
 	// Salida
 	printf("%i \n",soldados);	// Cant soldados vivos
 	
-	// Recorrido
-	for (list<pos>::iterator it = salida.begin(); it != salida.end(); it++){
-		printf("%i %i \n",it->horizontal+1,it->vertical+1);
+	if(soldados != 0)
+	{
+		// Recorrido
+		for (list<pos>::iterator it = salida.begin(); it != salida.end(); it++){
+			printf("%i %i \n",it->horizontal+1,it->vertical+1);
+		}
 	}
 	
 	cola.clear();

@@ -243,6 +243,7 @@ void zombieland(Mapa& ciudad, list<pair <pos,int> >& cola, int& soldados, pos bu
 	while(tope > 0 && !res)	// todavía tengo soldados y no encontré solución
 	{
 		contador = cont_aux;	// cant de elementos a mirar en la cola
+		cont_aux = 0;
 		
 		while(contador > 0 && !res)	// todavía tengo elementos para ver y no encontré solución
 		{
