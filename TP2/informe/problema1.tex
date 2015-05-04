@@ -126,6 +126,24 @@ Determinemos ahora cómo se completarían las tablas (para hacer referencia a un
 
 \vspace*{0.3cm}
 
+Para empezar a analizar la complejidad de nuestro algoritmo veamos brevemente cómo funciona la función {\sc Elección}. Ésta, por medio de una serie de simples comparaciones entre los tiempos de la bicicleta, la moto y el buggy en $\mathcal{O}(1)$, devuelve el valor y el vehículo que, para la etapa en cuestión, resultan óptimos.
+
+Partiendo de esta base, observemos que nuestro algoritmo se encarga de rellenar $n$ tablas de tamaño $km*kb$, haciendo uso de {\sc Elección}, cuya complejidad ya dijimos, es $\mathcal{O}(1)$. En consecuencia, este proceso posee una complejidad de $\mathcal{O}(n*km*kb)$.
+
+Hasta aquí hemos cubierto la función {\sc Dakkar}, la cual como veremos en breve, es la que termina asginando la complejidad total del algoritmo planteado. Esto se debe a que, una vez completadas las $n$ tablas, el tiempo total incurrido se obtiene accediendo a la posición $(kb,km)$ de la última tabla generada, y luego se recorre, dependiendo de la elección del vehículo, una casilla determinada de cada tabla ``etapa'', agregando el vehículo utilizado en la lista solución. Como tenemos $n$ tablas y tanto acceder a una posición de una tabla como agregar elementos al principio de una lista es $\mathcal{O}(1)$, este proceso toma $\mathcal{O}(n)$.
+
+Por útlimo, mostrar el resultado consiste en recorrer una lista de $n$ elementos y mostrar cada uno de estos en $\mathcal{O}(1)$.
+
+Para concluir, sea $T(n)$ la complejidad de nuestro algoritmo, tenemos:
+
+\begin{equation*}
+\begin{array}{l}
+T(n) = \mathcal{O}(n*km*kb) + 2\mathcal{O}(n)\\
+T(n) = \mathcal{O}(n*km*kb)
+\end{array}
+\end{equation*}
+
+
 \begin{figure}[!ht]
 \begin{codebox}
 \Procname{$\proc{Dakkar}(n,km,kb,bicis,motos,buggies)$}
@@ -161,17 +179,19 @@ Determinemos ahora cómo se completarían las tablas (para hacer referencia a un
 \end{codebox} 
 \caption{Pseudocódigo del algoritmo para Dakkar}\label{code:dakkar}
 \end{figure}
-%\FloatBarrier
+\FloatBarrier
 
 \begin{figure}[!ht]
 \begin{codebox}
 \Procname{$\proc{Dakkar_salida}(etapas,km,kb)$}
 \li i $\leftarrow$ kb
 \li j $\leftarrow$ km
+\li res $\leftarrow$ lista vacía de vehículos
 \li mostrar tiempo_total $\leftarrow etapa_n(i,j).tiempo$
 \li \For $h = n$ to 1
 \li 		\Do 
-			mostrar vehículo $\leftarrow etapa_h(i,j).vehiculo$
+			vehículo $\leftarrow etapa_h(i,j).vehiculo$
+\li			res $\leftarrow$ agregar vehículo al principio
 \li			\If vehículo == moto
 \li				\Do decrementar j
 \li 			\Else \If vehículo == buggy
@@ -179,25 +199,11 @@ Determinemos ahora cómo se completarían las tablas (para hacer referencia a un
 					\End
 			\End
 		\End
+\li Recorrer la lista res y mostrar los elementos
 \end{codebox} 
 \caption{Pseudocódigo del armado de la salida de Dakkar}\label{code:dakkar.salida}
 \end{figure}
 %\FloatBarrier
-
-Para empezar a analizar la complejidad de nuestro algoritmo veamos brevemente como funciona la función {\sc Elección}. Esta, por medio de una serie de simples comparaciones entre los tiempos de la bicicleta, la moto y el buggy $\mathcal{O}(1)$, devuelve el valor y el vehículo que, para la etapa en cuestión, resultan óptimos.\\
-Partiendo de esta base, observemos que nuestro algoritmo se encarga de rellenar $n$ matrices de tamaño $km*kb$, haciendo uso de {\sc Elección}, cuya complejidad ya dijimos, es $\mathcal{O}(1)$. En consecuencia este proceso posee una complejidad de $\mathcal{O}(n*km*kb)$.\\
-Hasta aquí hemos cubierto la función DAKKAR, la cual como veremos en breve, es la que en definitiva termina asginando la complejidad total del algoritmo planteado. Esto se debe a que, una vez completadas las $n$ matrices, lasolución se arma recorriendo, dependiendo de la elección del vehículo, una casilla determinada de cada matriz ''etapa'', agregando el tiempo incurrido en la etapa en la lista solución y acumulando los tiempos para obtener el tiempo total utilizado. Como tenemos $n$ matrices y tanto acceder a una posición de una matriz como acumular los tiempos y armar la lista solución es $\mathcal{O}(1)$, este proceso toma $\mathcal{O}(n)$.\\
-Por útlimo, mostrar el resultado consiste en recorrer una lista de $n$ elementos y mostrar cada uno de estos en $\mathcal{O}(1)$\\
-Para concluir, sea $T(n)$ la complejidad de nuestro algoritmo, tenemos:\\
-\\
-\begin{equation*}
-\begin{array}{l}
-T(n) = \mathcal{O}(n*km*kb) + 2\mathcal{O}(n)\\
-T(n) = \mathcal{O}(n*km*kb)
-\end{array}
-\end{equation*}
-
-
 
 \vspace*{0.6cm}
 %\newpage
