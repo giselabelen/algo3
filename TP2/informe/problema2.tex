@@ -57,36 +57,38 @@ La solución para este ejemplo permite llegar al búnker sin perder ningún sold
 
 \vspace*{0.3cm}
 
-Llamemos $n$ la cantidad de calles horizontales y $m$ la cantidad de calles verticales.  Tomando $1 \leq i \leq n$ y $1 \leq j \leq m$, la esquina $(i,j)$ será la esquina formada por la intersección de las calles $i$ y $j$.  Para cada esquina definimos:
+%Llamemos $n$ la cantidad de calles horizontales y $m$ la cantidad de calles verticales.  Tomando $1 \leq i \leq n$ y $1 \leq j \leq m$, la esquina $(i,j)$ será la esquina formada por la intersección de las calles $i$ y $j$.  Para cada esquina definimos:
+%
+%\begin{itemize}
+%	\item Dirigirse hacia {\bf arriba}: moverse a la esquina $(i-1,j)$. Esto no será válido cuando $i = 1$.
+%	\item Dirigirse hacia {\bf abajo}: moverse a la esquina $(i+1,j)$. Esto no será válido cuando $i = n$.
+%	\item Dirigirse hacia la {\bf izquierda}: moverse a la esquina $(i,j-1)$. Esto no será válido cuando $j = 1$.
+%	\item Dirigirse hacia la {\bf derecha}: moverse a la esquina $(i,j+1)$. Esto no será válido cuando $j = m$.
+%\end{itemize}
 
-\begin{itemize}
-	\item Dirigirse hacia {\bf arriba}: moverse a la esquina $(i-1,j)$. Esto no será válido cuando $i = 1$.
-	\item Dirigirse hacia {\bf abajo}: moverse a la esquina $(i+1,j)$. Esto no será válido cuando $i = n$.
-	\item Dirigirse hacia la {\bf izquierda}: moverse a la esquina $(i,j-1)$. Esto no será válido cuando $j = 1$.
-	\item Dirigirse hacia la {\bf derecha}: moverse a la esquina $(i,j+1)$. Esto no será válido cuando $j = m$.
-\end{itemize}
+Debemos recorrer la ciudad en busca de un camino que permita llegar al búnker con la mayor cantidad de soldados vivos.  Sin embargo, probar todos los posibles caminos tomaría más tiempo del que disponemos en un ataque zombie.  Por lo tanto, hemos decidido buscar dicho camino de la siguiente manera:
 
-Debemos recorrer la ciudad en busca de un camino que permita llegar al búnker con la mayor cantidad de soldados vivos.  Sin embargo, probar todos los posibles caminos tomaría más tiempo del que disponemos.  Para optimizar esta búsqueda, hemos decidido buscar dicho camino de la siguiente manera:
+Utilizando {\it backtraking}, trataremos de encontrar las rutas que salen desde la posición de origen, de manera que ningún soldado muera.  Cada cuadra visitada será marcada para que ningún otro camino intente pasar por ahí, y así no tendremos caminos redundantes (es decir, no consideraremos distintos caminos que permitan llegar a una misma esquina con la misma cantidad de soldados vivos), y para cada esquina alcanzada se guardará la esquina anterior de ese camino y la cantidad de soldados vivos hasta ese momento.  Si en algún momento se llega a una esquina con alguna cuadra incidente por la cual no se puede avanzar sin pérdidas, vamos a señalizarla (en breve explicaremos para qué). 
 
-Utilizando {\it backtraking}, encontrar las rutas que salen desde la posición de origen, de manera que ningún soldado muera.  Cada cuadra visitada será marcada para que ningún otro camino intente pasar por ahí, y así no tendremos caminos redundantes (es decir, no considerar distintos caminos que permitan llegar a una misma esquina con la misma cantidad de soldados vivos), y para cada esquina alcanzada se guardará la esquina anterior de ese camino y la cantidad de soldados vivos hasta ese momento.  Si en algún momento se llega a una esquina con alguna cuadra incidente por la cual no se puede avanzar sin pérdidas, vamos a señalizarla (en breve explicaremos para qué). 
-
-Si por alguno de estos caminos se llega al búnker, entonces habremos encontrado una solución óptima.  Si ninguna de las rutas encontradas es solución, entonces deberemos animarnos a perder soldados.  Para ello, primero vamos a arriesgar sólo un soldado, es decir, si teníamos $s$ soldados iniciales, intentaremos llegar al búnker con $s-1$ soldados vivos. Entonces, retomaremos los caminos marcados anteriormente, a partir de las esquinas desde las que no podíamos avanzar sin pérdidas (reanudando cada una en el orden en el que fueron marcadas).  Desde ahí, avanzaremos armando los caminos que no nos produzcan más de una baja, y lo haremos de la misma manera que explicamos arriba: sin caminos redundantes y guardando la esquina antecesora y la cantidad de soldados vivos en cada esquina atravesada. 
+Si por alguno de estos caminos se llega al búnker, entonces habremos encontrado una solución óptima.  Si ninguna de las rutas encontradas es solución, entonces deberemos animarnos a perder soldados.  Para ello, primero vamos a arriesgar sólo un soldado, es decir, si teníamos $s$ soldados iniciales, intentaremos llegar al búnker con $s-1$ soldados vivos. Entonces, retomaremos los caminos marcados anteriormente, a partir de las esquinas desde las que no podíamos avanzar sin pérdidas (reanudando cada una en el orden en el que fueron marcadas).  Desde ahí, avanzaremos armando los caminos que no nos produzcan más de una baja, y lo haremos de la misma manera que explicamos arriba: guardando la esquina antecesora y la cantidad de soldados vivos en cada esquina atravesada, y sin considerar distintos caminos que permitan llegar a una misma esquina con la misma cantidad de soldados vivos, descartando además los caminos que, habiendo perdido un soldado, llegan a una cuadra atravesada anteriormente por otro camino con más soldados vivos. Si al intentar retomar el camino desde una esquina marcada anteriormente, una de las cuadras incidentes produce más de una baja en los soldados, entonces la esquina seguirá estando marcada para alguna etapa posterior.
 
 Nuevamente, si alguno de estos caminos llega al búnker, será la solución.  Caso contrario repetiremos el procedimiento intentando llegar con $s-2$ soldados vivos. De forma sucesiva, nos animaremos a perder cada vez un soldado más, y el primer camino encontrado que llegue al búnker será retornado.  De esta manera, estamos asegurando que la solución tiene la mayor cantidad de soldados vivos al final.
 
-Podría suceder que, durante el recorrido, se llegue a una esquina a la cual incida alguna cuadra que elimine la totalidad de soldados que se encuentran vivos hasta ese momento.  Esto quiere decir que, por esa cuadra, no existe ningún camino posible hasta el búnker. Pero por como hemos diseñado el algoritmo, esa esquina quedaría marcada y cada vez que arriesguemos un soldado intentaremos avanzar inútilmente.  Para evitar estas vanas consultas, decidimos que en estos casos la cuadra deje de ser considerada.
+Podría suceder que, durante el recorrido, se llegue a una esquina a la cual incida alguna cuadra que elimine la totalidad de soldados que se encuentran vivos hasta ese momento.  Esto quiere decir que, por esa cuadra, no existe ningún camino posible hasta el búnker. Pero por como hemos diseñado el algoritmo, esa esquina quedaría marcada y cada vez que arriesguemos un soldado intentaremos avanzar inútilmente.  Para evitar estas vanas consultas, decidimos que en estos casos la cuadra deje de ser considerada. En consecuencia, si a partir de cierto momento todas las cuadras que puedo tomar tienen una cantidad de zombies suficiente como para vencer a todos los soldados vivos, entonces no existe una solución.
 
-Veamos ahora que una misma esquina no puede ser visitada más de una cantidad $k$ fija de veces. En principio, cada esquina es incidida por hasta 4 cuadras.  Analicemos los siguientes casos:
-
-\begin{itemize}
-	\item Un camino llega a una esquina, y de ahí puede avanzar sin problemas por las otras 3 cuadras incidentes. En este caso, la esquina es visitada sólo una vez, ya que las 4 cuadras incidentes no vuelven a ser recorridas.
-	\item Un camino llega a una esquina y de ahí puede avanzar por 2 de las 3 cuadras incidentes.  Si la cuadra restante elimina la totalidad de soldados, por lo dicho anteriormente, la esquina no vuelve a visitarse.  En caso contrario, la esquina queda marcada para reanudar el camino posteriormente pudiendo perder soldados. Puede suceder lo siguiente:
-	\begin{itemize}
-		\item Que al arriesgar soldados se pueda avanzar por esa cuadra, continuando el camino anterior. Entonces hay un sólo camino que visita esta esquina.
-		\item Que un segundo camino pueda llegar a esta esquina a través de la cuadra restante.  En este caso, hay 2 visitas a la esquina, pero la segunda no podrá seguir avanzando, puesto que las otras 3 cuadras ya fueron recorridas.  Se tienen entonces 2 visitas a la esquina pero sólo nos interesa el primer camino, por lo cual no guardaremos los datos del segundo.
-	\end{itemize}
-	\item %Un camino llega a una esquina y de ahí puede avanzar por 1 de las 3 cuadras incidentes.  Si alguna de las cuadras restantes elimina
-\end{itemize}
+% ESTO VA A IR DESP EN EL ANALISIS DE COMPLEJIDAD
+%Veamos ahora que una misma esquina no puede ser visitada más de una cantidad $k$ fija de veces. En principio, cada esquina es incidida por hasta 4 cuadras.  Analicemos los siguientes casos:
+%
+%\begin{itemize}
+%	\item Un camino llega a una esquina, y de ahí puede avanzar sin problemas por las otras 3 cuadras incidentes. En este caso, la esquina es visitada sólo una vez, ya que las 4 cuadras incidentes no vuelven a ser recorridas.
+%	\item Un camino llega a una esquina y de ahí puede avanzar por 2 de las 3 cuadras incidentes.  Si la cuadra restante elimina la totalidad de soldados, por lo dicho anteriormente, la esquina no vuelve a visitarse.  En caso contrario, la esquina queda marcada para reanudar el camino posteriormente pudiendo perder soldados. Puede suceder lo siguiente:
+%	\begin{itemize}
+%		\item Que al arriesgar soldados se pueda avanzar por esa cuadra, continuando el camino anterior. Entonces hay un sólo camino que visita esta esquina.
+%		\item Que un segundo camino pueda llegar a esta esquina a través de la cuadra restante.  En este caso, hay 2 visitas a la esquina, pero la segunda no podrá seguir avanzando, puesto que las otras 3 cuadras ya fueron recorridas.  Se tienen entonces 2 visitas a la esquina pero sólo nos interesa el primer camino, por lo cual no guardaremos los datos del segundo.
+%	\end{itemize}
+%	\item %Un camino llega a una esquina y de ahí puede avanzar por 1 de las 3 cuadras incidentes.  Si alguna de las cuadras restantes elimina...
+%	FALTA
+%\end{itemize}
 
 \vspace*{0.6cm}
 
