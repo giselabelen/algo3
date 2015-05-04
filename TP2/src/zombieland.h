@@ -44,14 +44,14 @@ typedef vector<Vec> Mapa;	/* el mapa es una matriz de "esquinas" */
 
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
-bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos posicion, pos bunker, /*int& cont,*/ int tope);
+bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos posicion, pos bunker, int& cont, int tope);
 void zombieland(Mapa& ciudad, list<pair <pos,int> >& cola, int& soldados, pos bunker);
 void armo_resultado(Mapa& ciudad, list<pos>& salida, pos inicio, pos bunker);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
 
-bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos posicion, pos bunker, /*int& cont,*/ int tope)
+bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos posicion, pos bunker, int& cont, int tope)
 {
 /* Función que recorre el mapa buscando llegar al bunker */
 	
@@ -106,7 +106,7 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			}
 			
 			// recursion
-			res = recorridos(ciudad, cola, soldD, pos_aux, bunker,/*cont,*/tope);
+			res = recorridos(ciudad, cola, soldD, pos_aux, bunker,cont,tope);
 			if(res){ return res; }
 		}
 	}
@@ -142,7 +142,7 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			}
 			
 			// recursion
-			res = recorridos(ciudad, cola, soldAb, pos_aux, bunker,/*cont,*/tope);
+			res = recorridos(ciudad, cola, soldAb, pos_aux, bunker,cont,tope);
 			if(res){ return res; }
 		}
 	}
@@ -178,7 +178,7 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			}
 			
 			// recursion
-			res = recorridos(ciudad, cola, soldAr, pos_aux, bunker,/*cont,*/tope);
+			res = recorridos(ciudad, cola, soldAr, pos_aux, bunker,cont,tope);
 			if(res){ return res; }
 		}
 	}
@@ -214,7 +214,7 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 			}
 						
 			// recursion
-			res = recorridos(ciudad, cola, soldI, pos_aux, bunker,/*cont,*/tope);
+			res = recorridos(ciudad, cola, soldI, pos_aux, bunker,cont,tope);
 			if(res){ return res; }
 		}
 	}
@@ -224,7 +224,7 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 	{
 		bp = make_pair(posicion,soldados);
 		cola.push_back(bp);
-		//~ cont++;
+		cont++;
 	}
 	
 	return false;
@@ -233,8 +233,8 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 
 void zombieland(Mapa& ciudad, list<pair <pos,int> >& cola, int& soldados, pos bunker)
 {
-	//~ int contador;
-	//~ int cont_aux = 1;
+	int contador;
+	int cont_aux = 1;
 	int sold_aux;
 	int tope = soldados;
 	bool res = false;
@@ -242,15 +242,16 @@ void zombieland(Mapa& ciudad, list<pair <pos,int> >& cola, int& soldados, pos bu
 	
 	while(tope > 0 && !res)	// todavía tengo soldados y no encontré solución
 	{
-		//~ contador = cont_aux;	// cant de elementos a mirar en la cola
+		contador = cont_aux;	// cant de elementos a mirar en la cola
 		
-		//~ while(contador > 0 && !res)	// todavía tengo elementos para ver y no encontré solución
-		//~ {
+		while(contador > 0 && !res)	// todavía tengo elementos para ver y no encontré solución
+		{
 			posicion = (cola.front()).first;
 			sold_aux = (cola.front()).second;
 			cola.pop_front();
-			res = res || recorridos(ciudad, cola, sold_aux, posicion, bunker, /*cont_aux,*/ tope);
-		//~ }
+			contador--;
+	 		res = res || recorridos(ciudad, cola, sold_aux, posicion, bunker, cont_aux, tope);
+		}
 		
 		tope--;
 	}
