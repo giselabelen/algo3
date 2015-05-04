@@ -2,7 +2,7 @@
 
 DIR=../tests_catedra
 DIR1=$DIR/tests.tp2.ej1.v1.1
-#DIR2=$DIR/	FALTAN LOS TESTS PARA EL EJ2
+DIR2=$DIR/tests.tp2.ej2.nuestros	#FALTAN LOS TESTS PARA EL EJ2 DE LA CATEDRA
 DIR3=$DIR/tests.tp2.ej3
 
 RES=../Resultados_tests_catedra
