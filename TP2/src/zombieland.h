@@ -58,10 +58,6 @@ bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos pos
 	bool res;
 	pos pos_aux;
 	pair <pos,int> bp;
-	int topeAr;
-	int topeAb;
-	int topeI;
-	int topeD;
 	int soldAr;
 	int soldAb;
 	int soldI;

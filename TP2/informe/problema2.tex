@@ -57,15 +57,6 @@ La solución para este ejemplo permite llegar al búnker sin perder ningún sold
 
 \vspace*{0.3cm}
 
-%Llamemos $n$ la cantidad de calles horizontales y $m$ la cantidad de calles verticales.  Tomando $1 \leq i \leq n$ y $1 \leq j \leq m$, la esquina $(i,j)$ será la esquina formada por la intersección de las calles $i$ y $j$.  Para cada esquina definimos:
-%
-%\begin{itemize}
-%	\item Dirigirse hacia {\bf arriba}: moverse a la esquina $(i-1,j)$. Esto no será válido cuando $i = 1$.
-%	\item Dirigirse hacia {\bf abajo}: moverse a la esquina $(i+1,j)$. Esto no será válido cuando $i = n$.
-%	\item Dirigirse hacia la {\bf izquierda}: moverse a la esquina $(i,j-1)$. Esto no será válido cuando $j = 1$.
-%	\item Dirigirse hacia la {\bf derecha}: moverse a la esquina $(i,j+1)$. Esto no será válido cuando $j = m$.
-%\end{itemize}
-
 Debemos recorrer la ciudad en busca de un camino que permita llegar al búnker con la mayor cantidad de soldados vivos.  Sin embargo, probar todos los posibles caminos tomaría más tiempo del que disponemos en un ataque zombie.  Por lo tanto, hemos decidido buscar dicho camino de la siguiente manera:
 
 Utilizando {\it backtraking}, trataremos de encontrar las rutas que salen desde la posición de origen, de manera que ningún soldado muera.  Cada cuadra visitada será marcada para que ningún otro camino intente pasar por ahí, y así no tendremos caminos redundantes (es decir, no consideraremos distintos caminos que permitan llegar a una misma esquina con la misma cantidad de soldados vivos), y para cada esquina alcanzada se guardará la esquina anterior de ese camino y la cantidad de soldados vivos hasta ese momento.  Si en algún momento se llega a una esquina con alguna cuadra incidente por la cual no se puede avanzar sin pérdidas, vamos a señalizarla (en breve explicaremos para qué).
@@ -122,6 +113,127 @@ Las Figuras \ref{fig:ejzombie0}, \ref{fig:ejzombie1}, \ref{fig:ejzombie2}, \ref{
 
 \vspace*{0.3cm}
 
+Llamemos $n$ la cantidad de calles horizontales y $m$ la cantidad de calles verticales.  Tomando $1 \leq i \leq n$ y $1 \leq j \leq m$, la esquina $(i,j)$ será la esquina formada por la intersección de las calles $i$ y $j$.  Para cada esquina definimos los siguientes atributos:
+
+\begin{itemize}
+	\item {\bf Arriba}: cuadra a atravesar para moverse a la esquina $(i-1,j)$. Se considerará inválido cuando $i = 1$.
+	\item {\bf Abajo}: cuadra a atravesar para moverse a la esquina $(i+1,j)$. Se considerará inválido cuando $i = n$.
+	\item {\bf Izquierda}: cuadra a atravesar para moverse a la esquina $(i,j-1)$. Se considerará inválido cuando $j = 1$.
+	\item {\bf Derecha}: cuadra a atravesar para moverse a la esquina $(i,j+1)$. Se considerará inválido cuando $j = m$.
+	\item {\bf Origen}: nombre de la esquina antecesora, en caso de existir.  Si la esquina aún no ha sido visitada, permanecerá vacío.
+	\item {\bf Parcial}: cantidad de soldados vivos al llegar a la esquina desde {\bf Origen}. Si la esquina aún no ha sido visitada, permanecerá vacío.
+\end{itemize}
+
+\begin{figure}[!ht]
+\begin{codebox}
+\Procname{$\proc{Zombieland}(soldados,inicio,bunker)$}
+\li $tope \leftarrow soldados$
+\li $marcados \leftarrow$ lista vacía de esquinas
+\li $marcados \leftarrow$ agregar atrás $inicio$
+\li $res \leftarrow$ false
+\li \While $tope > 0$ y $\neg res$
+\li		\Do \While $marcados$ siga teniendo elementos de la etapa anterior
+\li				\Do
+					$esquina \leftarrow$ desencolar primer elemento de $marcados$
+\li					$res \leftarrow res$ + {\sc Recorridos}($marcados,soldados,esquina,bunker,tope$)
+				\End
+\li			decrementar $tope$
+		\End
+\li	\If $\neg res$
+\li		\Do $soldados \leftarrow 0$ \End
+\li		\Else 
+\li			\Do $soldados \leftarrow tope + 1$
+			\End
+		\End
+\end{codebox} 
+\caption{Pseudocódigo de Zombieland II}\label{code:zombieland}
+\end{figure}
+%\FloatBarrier
+
+
+\begin{figure}[!ht]
+\begin{codebox}
+\Procname{Bool $\proc{Recorridos}(marcados,soldados,esquina,bunker,tope)$}
+\li $res \leftarrow$ false
+\li \If $esquina == bunker$
+\li 		\Do \Return true
+		\End
+\li 	\If se puede ir hacia $esquina.derecha$
+\li 		\Do \If se mueren soldados cumpliendo $tope$
+\li				\Do 
+					$soldados \leftarrow$ actualizar
+				\End
+\li			$siguiente \leftarrow$ esquina a la que se llega
+\li			inhabilitar $esquina.derecha$ y $siguiente.izquierda$
+\li			\If $siguiente.origen$ y $siguiente.parcial$ están vacíos
+\li				\Do
+					$siguiente.origen \leftarrow esquina$
+\li					$siguiente.parcial \leftarrow soldados$
+				\End
+\li			$res \leftarrow res$ + {\sc Recorridos}($marcados,soldados,siguiente,bunker,tope$)
+\li			\If $res$ 
+\li				\Do \Return $res$
+				\End
+		\End
+\li 	\If se puede ir hacia $esquina.abajo$
+\li 		\Do \If se mueren soldados cumpliendo $tope$
+\li				\Do 
+					$soldados \leftarrow$ actualizar
+				\End
+\li			$siguiente \leftarrow$ esquina a la que se llega
+\li			inhabilitar $esquina.abajo$ y $siguiente.arriba$
+\li			\If $siguiente.origen$ y $siguiente.parcial$ están vacíos
+\li				\Do
+					$siguiente.origen \leftarrow esquina$
+\li					$siguiente.parcial \leftarrow soldados$
+				\End
+\li			$res \leftarrow res$ + {\sc Recorridos}($marcados,soldados,siguiente,bunker,tope$)
+\li			\If $res$ 
+\li				\Do \Return $res$
+				\End
+		\End
+\li 	\If se puede ir hacia $esquina.arriba$
+\li 		\Do \If se mueren soldados cumpliendo $tope$
+\li				\Do 
+					$soldados \leftarrow$ actualizar
+				\End
+\li			$siguiente \leftarrow$ esquina a la que se llega
+\li			inhabilitar $esquina.arriba$ y $siguiente.abajo$
+\li			\If $siguiente.origen$ y $siguiente.parcial$ están vacíos
+\li				\Do
+					$siguiente.origen \leftarrow esquina$
+\li					$siguiente.parcial \leftarrow soldados$
+				\End
+\li			$res \leftarrow res$ + {\sc Recorridos}($marcados,soldados,siguiente,bunker,tope$)
+\li			\If $res$ 
+\li				\Do \Return $res$
+				\End
+		\End		
+\li 	\If se puede ir hacia $esquina.izquierda$
+\li 		\Do \If se mueren soldados cumpliendo $tope$
+\li				\Do 
+					$soldados \leftarrow$ actualizar
+				\End
+\li			$siguiente \leftarrow$ esquina a la que se llega
+\li			inhabilitar $esquina.izquierda$ y $siguiente.derecha$
+\li			\If $siguiente.origen$ y $siguiente.parcial$ están vacíos
+\li				\Do
+					$siguiente.origen \leftarrow esquina$
+\li					$siguiente.parcial \leftarrow soldados$
+				\End
+\li			$res \leftarrow res$ + {\sc Recorridos}($marcados,soldados,siguiente,bunker,tope$)
+\li			\If $res$ 
+\li				\Do \Return $res$
+				\End
+		\End
+\li \If no se pudo avanzar en alguno de los sentidos por exceso de zombies
+\li 		\Do 	$marcados \leftarrow$ agregar al final $esquina$
+		\End
+\li \Return false
+\end{codebox} 
+\caption{Pseudocódigo para la búsqueda de recorridos en la ciudad}\label{code:zombieland.rec}
+\end{figure}
+\FloatBarrier
 
 \vspace*{0.6cm}
 
