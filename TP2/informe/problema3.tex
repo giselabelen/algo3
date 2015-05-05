@@ -39,10 +39,45 @@ La solución para este ejemplo requiere construir 3 refinerías y 7 tuberías, c
 %\newpage
 \subsection{Desarrollo de la idea y correctitud.}
 
+\vspace*{0.3cm}
 
+En primer lugar, notemos que el problema a resolver puede ser interpretado con grafos, considerando los pozos petroleros como nodos, y las posibles tuberías y sus costos como aristas con peso.  Tomando el problema de esta manera, podemos replantear el ejercicio como la búsqueda de un subgrafo que contenga a todos los nodos y escoja las aristas que minimicen el gasto.
 
+Asumamos por un momento que todas las potenciales tuberías tienen un costo menor que construir una refinería, y que el grafo formado por los pozos y las tuberías posibles fuera conexo.  En este caso, el problema se puede traducir como la búsqueda de un árbol generador mínimo (AGM), ya que se trata de un subgrafo que recorre todos los nodos minimizando la suma de los pesos de las aristas.  Teniendo esta conexión entre los pozos, bastaría con tomar uno de ellos y colocar allí una refinería. Notemos que esto es correcto, ya que si tenemos todos los nodos conectados, con una sóla refinería es suficiente para que todos ellos refinen su petróleo, colocar más de una sólo incrementaría el costo y no mejoraría la situación.
 
-%\vspace*{0.6cm}
+Sin embargo, sabemos que no todo par de pozos puede conectarse mediante una tubería, y esto puede dar lugar a un grafo inicial no conexo.  De todos modos, si seguimos considerando que las tuberías son menos costosas que una refinería, bastaría con encontrar un AGM para cada componente conexa del grafo inicial, y colocar una refinería en cada uno de ellos. Esto minimizaría el gasto en cada componente y, por lo tanto, en toda la zona petrolera. 
+
+Ahora bien, nada garantiza que toda potencial tubería tenga menor costo que una refinería.  Supongamos una componente conexa de sólo dos pozos que pueden conectarse por una tubería.  Claramente, basta con poner una refinería en uno de ellos y conectar al segundo mediante la tubería, pero si dicha tubería es más costosa que construir una refinería, es decir, si $r$ es el costo de una refinería y $t$ es el costo de la tubería, y $t > r$, entonces $2r < r + t$ y por lo tanto es más conveniente construir una refinería en cada uno de los nodos. Si tenemos una componente conexa con $n > 2$ pozos, y una de las tuberías posibles tiene mayor costo que una refinería, pueden suceder dos situaciones:
+
+\begin{enumerate}
+	\item No existe otro camino que una a los dos nodos en los que incide la tubería cara. Si $t$ es el costo de esta tubería, el costo dado por el AGM resultante será $t + u$, con $u$ la suma de las demás aristas del AGM.  Pero como $t > r$, con $r$ el costo de la refinería, entonces $t + u > r + u$.  Es decir, es más conveniente colocar una nueva refinería que utilizar esta tubería costosa. Notemos que si descartamos esta arista, se forman dos componentes conexas, y si el costo del AGM hallado para la componente completa era $t + u$, al quitar la arista de peso $t$ quedan formados dos AGM (uno para cada componente) cuyos costos suman $u$. Para poder refinar el petróleo de todos los pozos, deberemos colocar una refinería en cada componente, teniendo un costo final de $2r + u$, el cual sigue siendo menor a tener el primer AGM con la tubería costosa más una refinería (costo $r + t + u$). 
+	\item Existe otro camino que une a los dos nodos en los que incide la tubería cara. Si el AGM hallado utiliza esa tubería, el costo será $r + t + u$, siendo $r$ el costo de la refinería, $t$ el costo de la tubería cara y $u$ la suma de las demás aristas del AGM. Por lo explicado anteriormente, resulta más conveniente eliminar esa tubería cara y colocar una refinería más, pues $r + t + u > 2r + u$.  Si el AGM hallado no utiliza esa tubería, significa que el otro camino que une ambos nodos suma un valor $v < t$, y ...
+	
+
+\end{enumerate}
+
+Luego, las tuberías que tengan un costo mayor a la construcción de una refinería, no serán tomadas en cuenta.
+
+Para buscar el AGM, nos hemos basado en el algoritmo de {\it Kruskal}.  Dado que este algoritmo opera sobre grafos conexos, lo hemos adaptado para poder procesar grafos que no necesariamente son conexos. Buscaremos que la solución hallada sea un bosque en el cual cada árbol sea un AGM de cada componente conexa inicial.
+
+Para esto, primero acomodaremos todas las posibles tuberías ordenándolas crecientemente por costo. Así, de manera golosa, iremos tomándolas y colocándolas en la solución, garantizándonos un costo mínimo. A su vez, para asegurarnos de que el resultado sea un bosque, utilizaremos una tubería sólo si no forma circuitos con las colocadas anteriormente. Dado que al ir colocando aristas se van conectando distintos grupos de nodos, vamos a pensarlos como conjuntos disjuntos, de manera de poder consultar si dos nodos forman parte de un mismo conjunto o no.  Entonces, al tomar una arista podemos encontrarnos con los siguientes casos:
+
+\begin{enumerate}
+	\item La arista conecta dos nodos que no forman parte de ningún conjunto.  En este caso, asociaremos a ambos como parte de un nuevo conjunto.
+	\item La arista conecta un nodo perteneciente a un conjunto con un nodo que no petenece a ninguno.  En este caso, agregaremos al segundo nodo al conjunto al que pertenece el primero.
+	\item La arista conecta dos nodos pertenecientes a algún conjunto.
+	
+	\begin{enumerate}
+		\item Si cada uno pertenece a un conjunto diferente, realizaremos la unión de ambos, ya que la nueva arista los relaciona.
+		\item Si ambos pertenecen al mismo conjunto, entonces la arista estaría formando un circuito.  En este caso, no agregaremos dicha tubería.
+	\end{enumerate}
+\end{enumerate}
+
+Al terminar de recorrer todas las posibles tuberías, habremos conectado todos los nodos posibles al menor precio.  Si todos los nodos pertenecen al mismo conjunto, significa que el grafo inicial era conexo, y deberemos agregar sólo una refinería para poder procesar todo el petróleo.  Si los nodos quedan agrupados en distintos conjuntos, éstos estarán representando las distintas componentes conexas del grafo inicial, la forma en que los pozos quedaron conectados será el bosque de AGM que buscábamos y bastará con construir una refinería por conjunto para poder procesar todo el petróleo.  Por último, puede ocurrir que existan nodos que no fueron incorporados a ningún conjunto; esto significa que esos pozos desde un principio no tenían comunicación con los demás, por lo cual van a requerir la construcción de una refinería en cada uno.
+
+Para poder mostrar el plan obtenido al finalizar el algoritmo, cada tubería agregada será contada y guardada, al igual que cada refinería que fuese necesaria.  También se irá acumulando el costo de cada tubería a construir, a lo cual se sumará el costo de construir cada refinería.
+
+\vspace*{0.6cm}
 
 %\newpage
 \subsection{Análisis de complejidad.}
