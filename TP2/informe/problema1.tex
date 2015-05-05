@@ -132,7 +132,6 @@ Partiendo de esta base, observemos que nuestro algoritmo se encarga de rellenar 
 
 Hasta aquí hemos cubierto la función {\sc Dakkar}, la cual como veremos en breve, es la que termina asginando la complejidad total del algoritmo planteado. Esto se debe a que, una vez completadas las $n$ tablas, el tiempo total incurrido se obtiene accediendo a la posición $(kb,km)$ de la última tabla generada, y luego se recorre, dependiendo de la elección del vehículo, una casilla determinada de cada tabla ``etapa'', agregando el vehículo utilizado en la lista solución. Como tenemos $n$ tablas y tanto acceder a una posición de una tabla como agregar elementos al principio de una lista es $\mathcal{O}(1)$, este proceso toma $\mathcal{O}(n)$.
 A continuación, mostramos el resultado, que consiste en recorrer una lista de $n$ elementos y mostrar cada uno de estos en $\mathcal{O}(1)$.\\
-Antes de terminar, es necesario aclarar que, por como se planteo nuestra solución, no podríamos un caso que resultara mas ventajoso que otro. Esto sucede ya que en cualquier caso que se plantee los pasos a realizar son los mismos. Por ende la complejidad que estamos planteando aplica para tanto para ``mejor caso'' como para ``peor caso''.\\
 Para concluir, sea $T(n)$ la complejidad de nuestro algoritmo, tenemos:
 
 \begin{equation*}
@@ -142,6 +141,10 @@ T(n) = \mathcal{O}(n*km*kb)
 \end{array}
 \end{equation*}
 
+Observemos que, por como se planteo nuestra solución,la complejidad en ``mejor caso'' y en ``peor caso'' de nuestro algoritmo son iguales. Esto sucede ya que en cualquier caso que se plantee, la función dakkar,que por lo dicho anteriormente es la que termina asignando la complejidad de la función, debe rellenar $n$ veces tablas de $km*kb$.
+
+CHEEEEE, NO HABIA UNA FUNCION ELLECCION EN PSEUDO, O YO FLASHIE XD?? (ALE) 
+%Antes de terminar, es necesario aclarar que, por como se planteo nuestra solución, no podríamos un caso que resultara mas ventajoso que otro. Esto sucede ya que en cualquier caso que se plantee los pasos a realizar son los mismos. Por ende la complejidad que estamos planteando aplica para tanto para ``mejor caso'' como para ``peor caso''.\\
 
 \begin{figure}[!ht]
 \begin{codebox}
