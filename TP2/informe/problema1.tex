@@ -111,9 +111,9 @@ Determinemos ahora cómo se completarían las tablas (para hacer referencia a un
 	Entonces, una vez completas las tablas, si queremos saber cuál es el menor tiempo en el que podemos completar el Rally, tan sólo debemos ver el tiempo de $n_{k_{b},k_{m}}$, y si queremos saber qué vehículos utilizamos en cada etapa, debemos ver qué vehículo se usó en $n_{k_{b},k_{m}}$ y ese vehículo será el que se usó en la etapa $n$. Luego, de manera general, suponiendo $2 \leq h \leq n$, para extraer el vehículo utilizado en la etapa $h-1$, habiendo extraído el vehículo de la etapa $h$ de la posición $h_{i,j}$ con $0\leq i \leq k_{b}$ y $0\leq j \leq k_{m}$, por cómo está hecha la tabla, debemos ir a:
 	
 \begin{itemize}
-	\item la posición $(h-1)_{i,j}$ si en la etapa $h$ elegí la bici.
-	\item la posición $(h-1)_{i,j-1}$ si en la etapa $h$ elegí la moto.
-	\item la posición $(h-1)_{i-1,j}$ si en la etapa $h$ elegí el buggy.
+	\item la posición $(h-1)_{i,j}$ si en la etapa $h$ elegimos la bici.
+	\item la posición $(h-1)_{i,j-1}$ si en la etapa $h$ elegimos la moto.
+	\item la posición $(h-1)_{i-1,j}$ si en la etapa $h$ elegimos el buggy.
 \end{itemize}			
 
 	 Y en la posición a la que haya ido, extraer el vehículo utilizado, que será el correspondiente a la etapa $h-1$. Haciendo esto en orden, se obtendría qué vehículo fue utilizado en cada etapa. De esta manera, se resolvería el problema de manera correcta.
@@ -130,8 +130,10 @@ Para empezar a analizar la complejidad de nuestro algoritmo veamos brevemente c�
 
 Partiendo de esta base, observemos que nuestro algoritmo se encarga de rellenar $n$ tablas de tamaño $km*kb$, haciendo uso de {\sc Elección}, cuya complejidad ya dijimos, es $\mathcal{O}(1)$. En consecuencia, este proceso posee una complejidad de $\mathcal{O}(n*km*kb)$.
 
-Hasta aquí hemos cubierto la función {\sc Dakkar}, la cual como veremos en breve, es la que termina asginando la complejidad total del algoritmo planteado. Esto se debe a que, una vez completadas las $n$ tablas, el tiempo total incurrido se obtiene accediendo a la posición $(kb,km)$ de la última tabla generada, y luego se recorre, dependiendo de la elección del vehículo, una casilla determinada de cada tabla ``etapa'', agregando el vehículo utilizado en la lista solución. Como tenemos $n$ tablas y tanto acceder a una posición de una tabla como agregar elementos al principio de una lista es $\mathcal{O}(1)$, este proceso toma $\mathcal{O}(n)$.
-A continuación, mostramos el resultado, que consiste en recorrer una lista de $n$ elementos y mostrar cada uno de estos en $\mathcal{O}(1)$.\\
+Hasta aquí hemos cubierto la función {\sc Dakkar} (Figura \ref{code:dakkar}), la cual como veremos en breve, es la que termina asginando la complejidad total del algoritmo planteado. Esto se debe a que, una vez completadas las $n$ tablas, el tiempo total incurrido se obtiene accediendo a la posición $(kb,km)$ de la última tabla generada, y luego se recorre, dependiendo de la elección del vehículo, una casilla determinada de cada tabla ``etapa'', agregando el vehículo utilizado en la lista solución. Como tenemos $n$ tablas y tanto acceder a una posición de una tabla como agregar elementos al principio de una lista es $\mathcal{O}(1)$, este proceso toma $\mathcal{O}(n)$.
+
+A continuación, mostramos el resultado, que consiste en recorrer una lista de $n$ elementos y mostrar cada uno de estos en $\mathcal{O}(1)$ (Figura \ref{code:dakkar.salida}).
+
 Para concluir, sea $T(n)$ la complejidad de nuestro algoritmo, tenemos:
 
 \begin{equation*}
@@ -141,9 +143,9 @@ T(n) = \mathcal{O}(n*km*kb)
 \end{array}
 \end{equation*}
 
-Observemos que, por como se planteo nuestra solución,la complejidad en ``mejor caso'' y en ``peor caso'' de nuestro algoritmo son iguales. Esto sucede ya que en cualquier caso que se plantee, la función dakkar,que por lo dicho anteriormente es la que termina asignando la complejidad de la función, debe rellenar $n$ veces tablas de $km*kb$.
+Observemos que, por como se planteó nuestra solución, la complejidad en ``mejor caso'' y en ``peor caso'' de nuestro algoritmo son iguales. Esto sucede ya que en cualquier caso que se plantee, la función {\sc Dakkar}, que por lo dicho anteriormente es la que termina asignando la complejidad de la función, debe rellenar $n$ veces tablas de $km*kb$.
 
-CHEEEEE, NO HABIA UNA FUNCION ELLECCION EN PSEUDO, O YO FLASHIE XD?? (ALE) 
+%CHEEEEE, NO HABIA UNA FUNCION ELLECCION EN PSEUDO, O YO FLASHIE XD?? (ALE) 
 %Antes de terminar, es necesario aclarar que, por como se planteo nuestra solución, no podríamos un caso que resultara mas ventajoso que otro. Esto sucede ya que en cualquier caso que se plantee los pasos a realizar son los mismos. Por ende la complejidad que estamos planteando aplica para tanto para ``mejor caso'' como para ``peor caso''.\\
 
 \begin{figure}[!ht]
