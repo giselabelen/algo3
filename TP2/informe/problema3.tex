@@ -103,6 +103,96 @@ Para poder mostrar el plan obtenido al finalizar el algoritmo, cada tubería agr
 
 \vspace*{0.3cm}
 
+Para implementar nuestro algoritmo de manera eficiente, cada conjunto de pozos tendrá un representante y cada nodo conocerá al representante de su conjunto. De esta manera, si dos nodos tienen al mismo representante significa que ambos pertenecen al mismo conjunto.  En caso de que el nodo no haya sido aún incluído en un conjunto, este valor estará indefinido.
+
+\begin{figure}[!ht]
+\begin{codebox}
+\Procname{$\proc{Plan}(aristas,n,tuberias,costo\_total)$}
+\li $cant\_tub \leftarrow$ 0
+\li $tam\_conjuntos \leftarrow$ arreglo de $n$ elementos
+\li $tam\_conjuntos \leftarrow$ inicializar en 0
+\li \For cada arista
+\li 	\Do 
+		$A,B \leftarrow$ nodos incididos por la arista
+\li 		\If $A$ y $B$ pertenecen al mismo conjunto
+\li 		\Then descartar arista
+\li 		\Else
+\li			\If $A$ y $B$ no pertenecen a ningún conjunto
+\li 			\Then 
+				$A \leftarrow$ colocar $A$ como representante de conjunto
+\li 				$B \leftarrow$ colocar $A$ como representante de conjunto
+\li 				$tam\_conjuntos[A] \leftarrow$ 2
+\li			\Else \If $A$ pertenece a un conjunto y $B$ no
+\li 				\Then 
+					$p \leftarrow$ representante de conjunto de $A$
+\li 					$B \leftarrow$ colocar $p$ como representante de conjunto
+\li	 				incrementar $tam\_conjuntos[p]$
+				\End
+\li 			\Else \If $B$ pertenece a un conjunto y $A$ no
+\li 				\Then 
+					$p \leftarrow$ representante de conjunto de $B$
+\li 					$A \leftarrow$ colocar $p$ como representante de conjunto
+\li 					incrementar $tam\_conjuntos[p]$
+				\End
+\li 			\Else \If $A$ y $B$ pertenecen a distintos conjuntos
+\li 				\Then
+					$p \leftarrow$ representante de conjunto de $A$
+\li 					$q \leftarrow$ representante de conjunto de $B$
+\li 					\If $tam\_conjuntos[p] < tam\_conjuntos[q]$
+\li 					\Then
+						\For cada nodo del conjunto representado por $p$
+\li 						\Do colocar $q$ como representante de conjunto
+						\End
+\li 						$tam\_conjuntos[q] \leftarrow tam\_conjuntos[q] + tam\_conjuntos[p]$
+\li					\Else 
+\li 						\For cada nodo del conjunto representado por $q$
+\li						\Do colocar $p$ como representante de conjunto
+						\End
+\li 						$tam\_conjuntos[p] \leftarrow tam\_conjuntos[p] + tam\_conjuntos[q]$
+					\End
+				\End
+			\End
+\li 			$tuberias \leftarrow$ agregar arista
+\li 			actualizar $costo\_total$
+\li 			incrementar $cant\_tub$
+		\End
+	\End
+\li \Return $cant\_tub$
+\end{codebox} 
+\caption{Pseudocódigo del armado del plan}\label{code:petroleo.plan}
+\end{figure}
+%\FloatBarrier
+
+\begin{figure}[!ht]
+\begin{codebox}
+\Procname{$\proc{Petroleo}(aristas,n,costo\_refineria)$}
+\li $costo\_total \leftarrow$ 0
+\li $tuberias \leftarrow$ lista vacía de aristas
+\li $cant\_tub \leftarrow$ {\sc Plan}$(aristas,n,tuberias,costo\_total)$
+\li $cant\_ref \leftarrow$ 0
+\li $refinerias \leftarrow$ lista vacía de nodos
+\li $vistos \leftarrow$ arreglo de $n$ posiciones
+\li \For cada nodo
+\li 	\Do
+		\If no pertenece a ningún conjunto
+\li		\Then
+			$refinerias \leftarrow$ agregar nodo
+\li			incrementar $cant\_ref$
+\li		\Else 
+\li 			$p \leftarrow$ representante del conjunto al que pertenece el nodo
+\li			\If $p$ todavía no fue visto
+\li			\Then
+				$vistos \leftarrow$ marcar posición $p$
+\li				$refinerias \leftarrow$ agregar nodo
+\li				incrementar $cant\_ref$
+			\End
+		\End
+	\End
+\li	$costo\_total \leftarrow costo\_total + costo\_refineria \times cant\_ref$
+\end{codebox} 
+\caption{Pseudocódigo de Petróleo}\label{code:petroleo}
+\end{figure}
+%\FloatBarrier
 
 \vspace*{0.6cm}
 
