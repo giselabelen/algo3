@@ -103,6 +103,27 @@ Para poder mostrar el plan obtenido al finalizar el algoritmo, cada tubería agr
 
 Para implementar nuestro algoritmo de manera eficiente, cada conjunto de pozos tendrá un representante y cada nodo conocerá al representante de su conjunto. De esta manera, si dos nodos tienen al mismo representante significa que ambos pertenecen al mismo conjunto.  En caso de que el nodo no haya sido aún incluído en un conjunto, este valor estará indefinido.
 
+
+Uno de los primeros pasos a realizar de nuestro algoritmo es la organización de los datos que poseemos (posibles tuberías con sus respectivos costos). Como ya hemos mencionado en el apartado "Desarrollo de la la idea y correctitud", nos gustaría tener estos datos ordenados. Para eso los almacenaremos en una lista de incidencias la cual ordenaremos de manera creciente segun su precio, con un costo total de $\mathcal{O}(n \cdot log(n))$.
+
+Una vez finalizado esto, pasamos a una de las funciones claves de nuestro algoritmo, $\proc{Petroleo}$. Esta utiliza la función $\proc{Plan}$ para, como su nombre lo indica, armar el plan que nos permita, para cada componente conexa del grafo original, conectar sus pozos con el menor costo posible, acumulando el gasto total. Con el plan ya terminado, lo que le resta hacer a $\proc{Petroleo}$ es colocar una refinería en cada uno de los pozos aislados y en el pozo representante de cada componente conexa, agregando el costo de cada nueva refinería al gasto total. Dejando de lado la función $\proc{Plan}$, es fácil ver que la complejidad de la función consta de revisar cada nodo y hacer ciertas operaciones menores $\mathcal{O}(1)$, además de inicializar algunas variables $\mathcal{O}(1)$, llegando a un costo de $\mathcal{O}$.
+
+Ahora veamos que complejidad nos presenta la función $\proc{Plan}$. Es necesario, para empezar, contar con un arreglo para guardar el tamaño de las componentes conexas, siendo inicializado cada elemento como 0 $\mathcal{O}(n)$ (podrían haber n componentes conexas). Luego para cada elemento de $aristas$ se realiza el proceso de completar las distintas componentes conexas eligiendo sus representantes $\mathcal{O}(1)$, modificando el tamaño de las componentes conforme se modifican $\mathcal{O}(1)$. Un caso interesante que puede darse durante este procedimiento es cuando dos componentes conexas se ven relacionadas por una nueva arista, de ser así, el conjunto más pequeño se ve absorbido por el más grande copiándose sus elementos. Sería correcto notar que, de ser un grafo conexo, la suma de los elementos copiados, cualquiera sea el caso (dos componentes conexas que se ven unidas al final, muchas componentes conexas pequeñas que se terminan uniendo, etc) la suma de los elementos copiados termina siendo, a lo sumo, $n-1$.
+
+Hablemos ahora del peor caso posible para nuestro algoritmo. En este, para cada pozo disponible tenemos una cantidad de tuberías posibles $n-1$ (cada pozo se puede conectar con todos los demás). En este contexto nuestra lista de incidencias tendría un tamaño de $n \cdot (n-1)$ (y tanto su creación tendría un costo de $\mathcal{O}(n \cdot n)$) la cual $\proc{Plan}$ tendría que recorrer con los costos antes mencionados, llegando así a una complejidad de $\mathcal{O}(n \cdot (n-1)) + \mathcal{O}(n-1)$. Esto puede verse como $\mathcal{O}(n \cdot n) + \mathcal{O}(n-1)$.
+
+Por ende, siendo T(n) la complejidad de nuestro algoritmo, en el peor caso queda definida por la suma de los costos de las funciones $\proc{Petroleo}$ $\proc{Plan}$ y los costos de organizar los datos y mostrarlos(tomado como $\mathcal{O}(n)$:
+
+\begin{equation*}
+\begin{array}{l}
+T(n) = 2\mathcal{O}(n \cdot n) + 2\mathcal{O}(n) + \mathcal{O}(n-1) + \mathcal{O}(n \cdot log(n))\\
+T(n) = 2\mathcal{O}(n^2)\\
+T(n) = \mathcal{O}(n^2)
+\end{array}
+\end{equation*}
+
+Entonces nuestra solución tiene una complejidad estrictamente menor que $\mathcal{O}(n^3)$
+
 \begin{figure}[!ht]
 \begin{codebox}
 \Procname{$\proc{Plan}(aristas,n,tuberias,costo\_total)$}
