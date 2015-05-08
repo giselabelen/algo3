@@ -15,7 +15,7 @@ int main()
 	//~ 
 	testear_3_A();
 	testear_3_B();
-	testear_3_C();
+	//~ testear_3_C();
 	
 	return 0;
 }
