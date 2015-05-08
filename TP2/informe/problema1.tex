@@ -215,7 +215,29 @@ Observemos que, por como se planteó nuestra solución, la complejidad en ``mejo
 
 \vspace*{0.3cm}
 
+Se llevarán a cabo distintos experimentos para mostrar de manera empírica ciertos aspectos de nuestro algoritmo que, hasta ahora, se encuentran de manera teórica.  Queremos mostrar que, efectivamente, nuestro algoritmo tiene una complejidad de $\mathcal{O}(n*km*kb)$.
+
 \subsubsection{Test 1}
+\vspace*{0.3cm}
+Primeramente, se ejecutó {\it Dakkar} con 15 instancias generadas de la siguiente manera:
+
+\begin{itemize}
+	\item Se estableció la cantidad de etapas en 50, y se generaron los tiempos por etapa para cada vehículo de manera aleattoria.
+	\item Se generaron las demás instancias, agregando de a 10 etapas con tiempos aleatorios para cada vehículo.
+	\item Se fijó la cantidad de buggies y de motos en 100.
+\end{itemize}
+
+Cada instacia fue ejecutada 20 veces y se consideró el promedio del tiempo incurrido en cada ejecución.  Los resultados pueden verse en la Figura \ref{fig:1A}.
+
+Luego, se tomó una instancia particular de 100 etapas, con los tiempos de cada vehículo generados de manera aleatoria, y se hizo variar la cantidad de buggies y motos de la siguiente manera:
+
+\begin{itemize}
+	\item Se fijó la cantidad de motos en 80 y se hizo variar la cantidad de buggies entre 20 y 140.
+	\item Se fijó la cantidad de buggies en 80 y se hizo variar la cantidad de motos entre 20 y 140.
+\end{itemize}
+
+Nuevamente, cada caso fue ejecutado 20 veces y se consideró el promedio del tiempo incurrido en cada ejecución.  Los resultados se ven en las Figuras \ref{fig:1Bkb} y \ref{fig:1Bkm} respectivamente.
+
 
 \begin{figure}[htb]
 	\begin{center}
@@ -226,28 +248,27 @@ Observemos que, por como se planteó nuestra solución, la complejidad en ``mejo
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.5]{imagenes/1B km.png}
+    		\includegraphics[scale=0.5]{imagenes/1Bkm.png}
 	\end{center}
-	\caption{Dakkar - Complejidad con motos variables}\label{fig:1B}
+	\caption{Dakkar - Complejidad con motos variables}\label{fig:1Bkm}
 \end{figure}
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.5]{imagenes/1B kb.png}
+    		\includegraphics[scale=0.5]{imagenes/1Bkb.png}
 	\end{center}
-	\caption{Dakkar - Complejidad con buggies variables}\label{fig:1C}
+	\caption{Dakkar - Complejidad con buggies variables}\label{fig:1Bkb}
 \end{figure}
 
-Podemos observar en la figura \ref{fig:1A} ,y en figura (la que muestra como crecen buggys y motos) teniendo en cuenta las tres variables, cantidad de etapas, cantidad de buggies y cantidad de motos, al dejar constante dos de ellas, el tiempo que incurre la tercera parecería ser lineal dado que estaríamos observando una recta. Para poder fundamentar que lo que vemos es en efecto, una recta, los gráficos () toman la variable libre(llamemosla n), y dividen el tiempo incurrido por n. Dado que el resultado en ellos es una constante, podemos afirmar en base a estos, que si dejamos dos variables constantes, la tercera crece de forma lineal. Como consecuencia de esto, se ve reafirmado el analisis teórico, y que nuestro algoritmo tiene complejidad temporal $\mathcal{O}(n*km*kb)$
 
-
-
-\vspace*{0.3cm}
+Podemos observar en la Figura \ref{fig:1A} ,y en las Figuras \ref{fig:1Bkb} y \ref{fig:1Bkm}, teniendo en cuenta las tres variables, cantidad de etapas, cantidad de buggies y cantidad de motos, al dejar constante dos de ellas, el tiempo que incurre la tercera parecería ser lineal dado que estaríamos observando una recta. Para poder fundamentar que lo que vemos es en efecto, una recta, los gráficos toman la variable cantidad de etapas, y dividen el tiempo incurrido por este valor. Dado que el resultado en ellos es una constante, podemos afirmar en base a estos, que si dejamos dos variables constantes, la tercera crece de forma lineal. Como consecuencia de esto, se ve reafirmado el analisis teórico, y que nuestro algoritmo tiene complejidad temporal $\mathcal{O}(n*km*kb)$.
 
 \vspace*{0.6cm}
 %\newpage
 
 \subsubsection{Test 2}
+
+En este caso, se fijó la cantidad de etapas en 100, la cantidad de motos en 30 y la cantidad de buggies en 40, y con estos valores se generaron 100 instancias distintas, con los tiempos de cada etapa elegidos de manera aleatoria.  Para cada una de estas instancias, se corrió {\it Dakkar} 20 veces y se consideró el promedio del tiempo incurrido en cada una.  Los resultados pueden verse en la Figura \ref{fig:1D}.
 
 \begin{figure}[htb]
 	\begin{center}
