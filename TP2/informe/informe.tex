@@ -109,12 +109,448 @@ El software utilizado será Ubuntu 14.04, y G++ 4.8.2.
 En esta sección, adjuntamos parte del código correspondiente a la resolución de cada problema que consideramos más \textbf{relevante}.
 
 \subsection{Código del Problema 1}
+\begin{lstlisting}
+Carrera dakkar(int n, int km, int kb, int* bici, int* moto, int* buggy)
+{
+	int h;
+	int i;
+	int j;
+	Optimo aux;
+	Carrera etapas(n, Etapa(kb+1, Vec(km+1)));
+	
+	// Lleno los datos de la primera etapa (etapas[0])
+	
+	// posicion (0,0)
+	etapas[0][0][0] = make_pair(bici[0],1);
+	
+	// posiciones (0,1) a (0,km)
+	aux = eleccion(bici[0],moto[0],-1);
+	for(j = 1; j <= km; j++){
+		etapas[0][0][j] = aux;
+	}
+	
+	// posiciones (1,0) a (kb,0)
+	aux = eleccion(bici[0],-1,buggy[0]);
+	for(i = 1; i <= kb; i++){
+		etapas[0][i][0] = aux;
+	}
+	
+	// demas posiciones
+	aux = eleccion(bici[0],moto[0],buggy[0]);
+	for(i = 1; i <= kb; i++){
+		for(j = 1; j <= km; j++){
+			etapas[0][i][j] = aux;
+		}
+	}
+	
+	// Armo las demas etapas (etapas[1] a etapas[n-1])
+	for(h = 1; h < n; h++)
+	{
+		// posicion (0,0)
+		etapas[h][0][0] = make_pair(etapas[h-1][0][0].first + bici[h],1);
+		
+		// posiciones (0,1) a (0,km)
+		for(j = 1; j <= km; j++){
+			aux = eleccion(etapas[h-1][0][j].first + bici[h],etapas[h-1][0][j-1].first + moto[h],-1);
+			etapas[h][0][j] = aux;
+		}
+		
+		// posiciones (1,0) a (kb,0)
+		for(i = 1; i <= kb; i++){
+			aux = eleccion(etapas[h-1][i][0].first + bici[h],-1,etapas[h-1][i-1][0].first + buggy[h]);
+			etapas[h][i][0] = aux;
+		}
+		
+		// demas posiciones
+		for(i = 1; i <= kb; i++)
+		{
+			for(j = 1; j <= km; j++)
+			{
+				aux = eleccion(etapas[h-1][i][j].first + bici[h],etapas[h-1][i][j-1].first + moto[h],etapas[h-1][i-1][j].first + buggy[h]);
+				etapas[h][i][j] = aux;
+			}
+		}
+	}
+	
+	return etapas;
+}
+
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+int armo_salida(Carrera etapas, int km, int kb, int n, list<int>& salida)
+{
+/* Funcion que recorre las matrices de etapas y determina el tiempo
+ * total incurrido y el vehiculo utilizado en cada etapa.  Empieza
+ * en la ultima etapa y termina con la primera.
+ */
+	int i = kb;
+	int j = km;
+	int res = etapas[n-1][i][j].first;	// tiempo total incurrido
+	
+	for(int h = n-1; h >= 0; h--)
+	{
+		// apilo vehiculo
+		salida.push_front(etapas[h][i][j].second);
+		
+		// acomodo indices
+		if(etapas[h][i][j].second == 2){
+			j--;
+		}else if(etapas[h][i][j].second == 3){
+			i--;
+		}
+	}
+	
+	return res;
+}
+
+\end{lstlisting}
 
 
 %\newpage
 \subsection{Código del Problema 2}
 
+\begin{lstlisting}
+bool recorridos(Mapa& ciudad, list<pair <pos,int> >& cola, int soldados, pos posicion, pos bunker, int& cont, int tope)
+{
+/* Funcion que recorre el mapa buscando llegar al bunker */
+	
+	bool res;
+	pos pos_aux;
+	pair <pos,int> bp;
+	int soldAr;
+	int soldAb;
+	int soldI;
+	int soldD;
+	
+	int i = posicion.horizontal;
+	int j = posicion.vertical;
+	
+	if(posicion == bunker)	// si ya estoy en el bunker, me voy
+	{
+		return true;
+	}
+	
+	if(ciudad[i][j].derecha != -1)	// si es calle valida
+	{
+		// si puedo pasar por esa calle
+		if((ciudad[i][j].derecha <= soldados) || (2*soldados - ciudad[i][j].derecha >= tope))
+		{
+			if(ciudad[i][j].derecha <= soldados){
+				// si no se muere nadie
+				soldD = soldados;
+			}else{
+				// si se me mueren soldados
+				soldD = 2*soldados - ciudad[i][j].derecha;
+			}
+			
+			// aviso que ya pase por esta cuadra
+			ciudad[i][j].derecha = -1;
+			ciudad[i][j+1].izquierda = -1;
+			
+			// esquina a la que llego
+			pos_aux.horizontal = i;
+			pos_aux.vertical = j+1;
+			
+			if(soldD > ciudad[i][j+1].parcial)	// si vale la pena
+			{
+				// guardo de donde vine
+				ciudad[i][j+1].origen = posicion;
+				
+				// cantidad de soldados vivos hasta aca
+				ciudad[i][j+1].parcial = soldD;
+			}
+			
+			// recursion
+			res = recorridos(ciudad, cola, soldD, pos_aux, bunker,cont,tope);
+			if(res){ return res; }
+		}
+	}
+	
+	if(ciudad[i][j].abajo != -1)	// si es calle valida
+	{
+		// si puedo pasar por esa calle
+		if((ciudad[i][j].abajo <= soldados) || (2*soldados - ciudad[i][j].abajo >= tope))
+		{
+			if(ciudad[i][j].abajo <= soldados){
+				// si no se muere nadie
+				soldAb = soldados;
+			}else{
+				// si se me mueren soldados
+				soldAb = 2*soldados - ciudad[i][j].abajo;
+			}
+				
+			// aviso que ya pase por esta cuadra
+			ciudad[i][j].abajo = -1;
+			ciudad[i+1][j].arriba = -1;
+			
+			// esquina a la que llego
+			pos_aux.horizontal = i+1;
+			pos_aux.vertical = j;
+			
+			if(soldAb > ciudad[i+1][j].parcial)	// si vale la pena
+			{
+				// guardo de donde vine
+				ciudad[i+1][j].origen = posicion;
+				
+				// cantidad de soldados vivos hasta aca
+				ciudad[i+1][j].parcial = soldAb;
+			}
+			
+			// recursion
+			res = recorridos(ciudad, cola, soldAb, pos_aux, bunker,cont,tope);
+			if(res){ return res; }
+		}
+	}
+	
+	if(ciudad[i][j].arriba != -1)	// si es calle valida
+	{
+		// si puedo pasar por esa calle
+		if((ciudad[i][j].arriba <= soldados) || (2*soldados - ciudad[i][j].arriba >= tope))
+		{
+			if(ciudad[i][j].arriba <= soldados){
+				// si no se muere nadie
+				soldAr = soldados;
+			}else{
+				// si se me mueren soldados
+				soldAr = 2*soldados - ciudad[i][j].arriba;
+			}
+						
+			// aviso que ya pase por esta cuadra
+			ciudad[i][j].arriba = -1;
+			ciudad[i-1][j].abajo = -1;
+			
+			// esquina a la que llego
+			pos_aux.horizontal = i-1;
+			pos_aux.vertical = j;
+			
+			if(soldAr > ciudad[i-1][j].parcial)	// si vale la pena
+			{
+				// guardo de donde vine
+				ciudad[i-1][j].origen = posicion;
+				
+				// cantidad de soldados vivos hasta aca
+				ciudad[i-1][j].parcial = soldAr;
+			}
+			
+			// recursion
+			res = recorridos(ciudad, cola, soldAr, pos_aux, bunker,cont,tope);
+			if(res){ return res; }
+		}
+	}
+	
+	if(ciudad[i][j].izquierda != -1)	// si es calle valida
+	{
+		// si puedo pasar por esa calle
+		if((ciudad[i][j].izquierda <= soldados) || (2*soldados - ciudad[i][j].izquierda >= tope))
+		{
+			if(ciudad[i][j].izquierda <= soldados){
+				// si no se muere nadie
+				soldI = soldados;
+			}else{
+				// si se me mueren soldados
+				soldI = 2*soldados - ciudad[i][j].izquierda;
+			}
+		
+			// aviso que ya pase por esta cuadra
+			ciudad[i][j].izquierda = -1;
+			ciudad[i][j-1].derecha = -1;
+			
+			// esquina a la que llego
+			pos_aux.horizontal = i;
+			pos_aux.vertical = j-1;
+			
+			if(soldI > ciudad[i][j-1].parcial)	// si vale la pena
+			{
+				// guardo de donde vine
+				ciudad[i][j-1].origen = posicion;
+				
+				// cantidad de soldados vivos hasta aca
+				ciudad[i][j-1].parcial = soldI;
+			}
+						
+			// recursion
+			res = recorridos(ciudad, cola, soldI, pos_aux, bunker,cont,tope);
+			if(res){ return res; }
+		}
+	}
+	
+	if(ciudad[i][j].arriba > soldados || ciudad[i][j].abajo > soldados ||
+		ciudad[i][j].izquierda > soldados || ciudad[i][j].derecha > soldados) 
+	{
+		bp = make_pair(posicion,soldados);
+		cola.push_back(bp);
+		cont++;
+	}
+	
+	return false;
+}
+
+\end{lstlisting}
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+void zombieland(Mapa& ciudad, list<pair <pos,int> >& cola, int& soldados, pos bunker)
+{
+	int contador;
+	int cont_aux = 1;
+	int sold_aux;
+	int tope = soldados;
+	bool res = false;
+	pos posicion;
+	
+	while(tope > 0 && !res)	// todavia tengo soldados y no encontre solucion
+	{
+		contador = cont_aux;	// cant de elementos a mirar en la cola
+		cont_aux = 0;
+		
+		while(contador > 0 && !res)	// todavia tengo elementos para ver y no encontre solucion
+		{
+			posicion = (cola.front()).first;
+			sold_aux = (cola.front()).second;
+			cola.pop_front();
+			contador--;
+	 		res = res || recorridos(ciudad, cola, sold_aux, posicion, bunker, cont_aux, tope);
+		}
+		
+		tope--;
+	}
+	
+	if(!res){ 
+		soldados = 0; // se mueren todos
+	}
+	else{
+		soldados = tope + 1; // soldados que llegan vivos
+	}
+
+	return;
+}
+
+\end{lstlisting}
+
 %\newpage
 \subsection{Código del Problema 3}
+
+\begin{lstlisting}
+
+int plan(Incidencia& inc, int n, list<Arista>& tuberias, int& costo_total,vector<int>& padres)
+{
+/* Funcion que arma el arbol generador minimo con las tuberias y
+ * determina las componentes conexas a la vez.  Devuelve la cantidad de
+ * tuberias colocadas.
+ */
+	int costo;
+	int p1;
+	int p2;
+	int res = 0;
+	Arista edge;
+	vector< pair<int,list<int> > > hijos(n);
+	
+	for(int i = 0; i < n; i++){	// todos los nodos empiezan con 0 hijos
+		hijos[i].first = 0;
+	}
+	
+	for(Incidencia::iterator it1 = inc.begin(); it1 != inc.end(); it1++)
+	{
+		edge = it1->first;
+		costo = it1->second;
+		p1 = padres[edge.first];
+		p2 = padres[edge.second];
+		if((p1 != p2) || (p1 == -1))
+		{
+			if(p1 != p2)	// padres distintos
+			{
+				if((p1 != -1) && (p2 != -1))	// si ninguno es -1
+				{
+					if(hijos[p1].first < hijos[p2].first){
+						swap(p1,p2);	// p1 se queda con el que tiene mas hijos
+					}
+					
+					for(list<int>::iterator it2 = (hijos[p2].second).begin(); it2 != (hijos[p2].second).end(); it2++)
+					{	// paso los hijos de p2 como hijos de p1
+						padres[*it2] = p1;
+						(hijos[p1].second).push_back(*it2);
+						hijos[p1].first++;
+					}
+					// pongo a p2 como hijo de p1
+					padres[p2] = p1;
+					(hijos[p1].second).push_back(p2);
+					hijos[p1].first++;
+					
+				}else if(p1 == -1){	// si p1 es -1
+					// pongo a p1 como hijo de p2
+					padres[edge.first] = p2;
+					(hijos[p2].second).push_back(edge.first);
+					hijos[p2].first++;
+				}else{	// si p2 es -1
+					// pongo a p2 como hijo de p1
+					padres[edge.second] = p1;
+					(hijos[p1].second).push_back(edge.second);
+					hijos[p1].first++;
+				}
+			}else if (p1 == -1){	// si ambos son -1
+				// pongo como padre de ambos a p1
+				padres[edge.first] = edge.first;
+				padres[edge.second] = edge.first;
+				(hijos[edge.first].second).push_back(edge.second);
+				hijos[edge.first].first++;
+			}
+			
+			// actualizo variables
+			costo_total = costo_total + costo;
+			tuberias.push_back(edge);
+			res++;
+		}
+	}
+	
+	return res;
+}
+\end{lstlisting}
+
+
+\vspace*{0.5cm}
+
+\begin{lstlisting}
+
+int petroleo(Incidencia inc,list<int>& refinerias,list<Arista>& tuberias,int n,int& cant_ref,int& cant_tub, int costo_ref)
+{
+/* Funcion que elabora el plan, determina las refinerias a colocar y 
+ * calcula el costo total.  Devuelve el costo total.
+ */
+	int p;
+	int res = 0;
+	vector<int> padres(n,-1);
+	vector<bool> aux(n,false);
+	
+	// elaboro el plan de tuberias
+	cant_tub = plan(inc,n,tuberias,res,padres);
+	
+	// determino refinerias
+	for(int i = 0; i < n; i++)
+	{
+		if(padres[i] == -1)	// nodo solitario
+		{	// coloco refineria
+			refinerias.push_back(i);
+			cant_ref++;
+		}else{
+			p = padres[i];
+			if(!aux[p])	// nueva componente conexa
+			{	// coloco refineria
+				aux[p] = true;
+				refinerias.push_back(i);
+				cant_ref++;
+			}
+		}
+	}
+	
+	// actualizo costo total
+	res = res + costo_ref*cant_ref;
+	return res;
+}
+\end{lstlisting}
+
 
 \end{document}
