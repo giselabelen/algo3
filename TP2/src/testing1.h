@@ -101,11 +101,11 @@ void testear_1_B()
 	int* bici = generar_etapas(n);
 	int* moto = generar_etapas(n);
 	int* buggy = generar_etapas(n);
-
+	
 	for(int km = 20; km <= 140; km = km + 10)
 	{
-		for(int kb = 20; kb <= 140; km = km + 10)
-		{
+		for(int kb = 20; kb <= 140; kb = kb + 10)
+		{//	cout << "km " << km << " kb " << kb << endl;
 			t = 0;
 			for(int i = 0; i < 20; i++)
 			{
