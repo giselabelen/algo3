@@ -1,6 +1,6 @@
 #ifndef TESTING3_H_INCLUDED
 #define TESTING3_H_INCLUDED
-
+#include <iostream>
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
@@ -55,16 +55,18 @@ Incidencia generar_grafo(int n, int a)
 	
 	// Creo las aristas
 	for(int h = 0; h < a; h++)
-	{
+	{	//cout << "a " << a << " h " << h << " tamlg " << tamlg << endl;
 		itlg = lg.begin();		// iterador a lg
 		p = (20 + rand() % 50);	// peso
+		//~ cout << tamlg << endl;
 		aux1 = rand() % tamlg;
-		advance(itlg,aux1);		// pos random en lg
+		//~ cout << h << aux1 << endl;
+		/*if (aux1 =! 0){*/ advance(itlg,aux1);	//}	// pos random en lg
 		n1 = itlg->first;		// nodo 1
 		itsl = ((itlg->second).second).begin();	// iterador a la sl
 		aux2 = (itlg->second).first;			// cant de elementos de sl
 		aux1 = rand() % aux2;
-		advance(itsl,aux1);		// pos random en la sl
+		/*if (aux1 =! 0){*/ advance(itsl,aux1);// }		// pos random en la sl
 		n2 = *itsl;				// nodo 2
 		((itlg->second).second).erase(itsl);	// elimino esa relacion
 		(itlg->second).first--;
@@ -93,16 +95,20 @@ void unir_grafos(Incidencia& inc1, Incidencia& inc2, int& n1, int n2)
 {
 	int c;
 	Arista edge;
+	pair<Arista,int> par;
 	
 	for(Incidencia::iterator it = inc2.begin(); it != inc2.end(); it++)
 	{
+		//~ par = *it;
+		//~ (par.first).first = (par.first).first + n1;
+		//~ (par.first).second = (par.first).second + n1;
 		(it->first).first = (it->first).first + n1;
 		(it->first).second = (it->first).second + n1;
 		inc1.push_back(*it);
 	}
 	
 	n1 = n1 + n2;
-	inc2.clear();
+	//~ inc2.clear();
 	return;
 }
 
@@ -203,10 +209,10 @@ void testear_3_A()
 	double t = 0;	
 
 	int n1 = 10;
-	int n2 = 0;
-	int a = (rand() % (n1^2 - n1 + 1)) + n1 - 1;
-	int cant_ref;
-	int cant_tub;
+	int n2 = n1;
+	int a = ((rand() % (n1*n1 - 2*n1 + 1)) + n1 - 1)/2;
+	int cant_ref = 0;
+	int cant_tub = 0;
 	int costo_ref = 50;
 	
 	list<int> refinerias;
@@ -214,10 +220,25 @@ void testear_3_A()
 	
 	Incidencia inc1 = generar_grafo(n1,a);
 	
-	for(int i = 0; i < 50; i++)
+	t = 0;
+	for(int j = 0; j < 20; j++)
+	{		
+		start = clock();
+		petroleo(inc1,refinerias,tuberias,n1,cant_ref,cant_tub,costo_ref);
+		end = clock();
+		t = t + difftime(end,start);
+		
+		cant_ref = 0;
+		cant_tub = 0;
+		refinerias.clear();
+		tuberias.clear();
+	}
+	fprintf(pTest,"%i, %f \n",n1,t/20);
+	
+	for(int i = 1; i < 50; i++)
 	{	
 		t = 0;
-		int a = (rand() % (n2^2 - n2 + 1)) + n2 - 1;
+		int a = ((rand() % (n2*n2 - 2*n2 + 1)) + n2 - 1)/2;
 		Incidencia inc2 = generar_grafo(n2,a);
 		unir_grafos(inc1,inc2,n1,n2);
 	
@@ -228,13 +249,13 @@ void testear_3_A()
 			end = clock();
 			t = t + difftime(end,start);
 			
+			cant_ref = 0;
+			cant_tub = 0;
 			refinerias.clear();
 			tuberias.clear();
 		}
-		
+		inc2.clear();
 		fprintf(pTest,"%i, %f \n",n1,t/20);
-		
-		n2 = 10;
 	}
 
 	fclose(pTest);
@@ -249,8 +270,8 @@ void testear_3_B()
 	double t2 = 0;
 	double t3 = 0;
 	
-	int cant_ref;
-	int cant_tub;
+	int cant_ref = 0;
+	int cant_tub = 0;
 	
 	list<int> refinerias;
 	list<Arista> tuberias;
@@ -260,22 +281,37 @@ void testear_3_B()
 		t1 = 0;
 		t2 = 0;
 		t3 = 0;
-		int n1 = (1 + rand() % 50);
-		int n2 = (1 + rand() % 50);
-		int n3 = n1;
+		int n1 = (2 + rand() % 50);
+		int n2 = (2 + rand() % 50);
+		int n3;
 		int costo_ref = (40 + rand() % 60);
-		int a1 = (rand() % (n1^2 - n1 + 1)) + n1 - 1;
-		int a2 = (rand() % (n2^2 - n2 + 1)) + n2 - 1;
+		int a1 = ((rand() % (n1*n1 - 2*n1 + 1)) + n1 - 1)/2;
+		int a2 = ((rand() % (n2*n2 - 2*n2 + 1)) + n2 - 1)/2;
 		Incidencia inc1 = generar_grafo(n1,a1);
 		Incidencia inc2 = generar_grafo(n2,a2);
+		Incidencia inc3;
+		Incidencia inc4;
+		
+		for(Incidencia::iterator it = inc1.begin(); it != inc1.end(); it++){}
+		for(Incidencia::iterator it = inc2.begin(); it != inc2.end(); it++){}
 		
 		for(int j = 0; j < 20; j++)
-		{		
+		{	
+			for(Incidencia::iterator it = inc1.begin(); it != inc1.end(); it++){
+				inc3.push_back(*it);
+			}
+			for(Incidencia::iterator it = inc2.begin(); it != inc2.end(); it++){
+				inc4.push_back(*it);
+			}
+			n3 = n1;
+			
 			start = clock();
 			petroleo(inc1,refinerias,tuberias,n1,cant_ref,cant_tub,costo_ref);
 			end = clock();
 			t1 = t1 + difftime(end,start);
 			
+			cant_ref = 0;
+			cant_tub = 0;
 			refinerias.clear();
 			tuberias.clear();
 			
@@ -284,21 +320,29 @@ void testear_3_B()
 			end = clock();
 			t2 = t2 + difftime(end,start);
 			
+			cant_ref = 0;
+			cant_tub = 0;
 			refinerias.clear();
 			tuberias.clear();
 						
-			unir_grafos(inc1,inc2,n3,n2);
+			unir_grafos(inc3,inc4,n3,n2);
 			
 			start = clock();
-			petroleo(inc1,refinerias,tuberias,n3,cant_ref,cant_tub,costo_ref);
+			petroleo(inc3,refinerias,tuberias,n3,cant_ref,cant_tub,costo_ref);
 			end = clock();
 			t3 = t3 + difftime(end,start);
 			
+			cant_ref = 0;
+			cant_tub = 0;
 			refinerias.clear();
 			tuberias.clear();
+			inc3.clear();
+			inc4.clear();
 		}
 		
 		fprintf(pTest,"%i, %f, %i, %f, %i, %f \n",n1,t1/20,n2,t2/20,n3,t3/20);
+		inc1.clear();
+		inc2.clear();
 	}
 
 	fclose(pTest);
@@ -314,10 +358,10 @@ void testear_3_C()
 	double t3 = 0;	
 	
 	int n = 10;
-	int a = (rand() % (n^2 - n + 1)) + n - 1;
-	int m = n^2 - 1 - a;
-	int cant_ref;
-	int cant_tub;
+	int a = ((rand() % (n*n - 2*n + 1)) + n - 1)/2;
+	int m = n*n - n - a;
+	int cant_ref = 0;
+	int cant_tub = 0;
 	int costo_ref = 50;
 	
 	Incidencia inc = generar_grafo(n,a);
@@ -337,7 +381,9 @@ void testear_3_C()
 		petroleo(inc,refinerias,tuberias,n,cant_ref,cant_tub,costo_ref);
 		end = clock();
 		t1 = t1 + difftime(end,start);
-
+		
+		cant_ref = 0;
+		cant_tub = 0;
 		refinerias.clear();
 		tuberias.clear();
 	}
@@ -358,6 +404,8 @@ void testear_3_C()
 			end = clock();
 			t2 = t2 + difftime(end,start);
 			
+			cant_ref = 0;
+			cant_tub = 0;
 			refinerias.clear();
 			tuberias.clear();
 			
@@ -366,6 +414,8 @@ void testear_3_C()
 			end = clock();
 			t3 = t3 + difftime(end,start);
 			
+			cant_ref = 0;
+			cant_tub = 0;
 			refinerias.clear();
 			tuberias.clear();
 		}
