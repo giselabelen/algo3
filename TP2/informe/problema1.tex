@@ -217,11 +217,43 @@ Observemos que, por como se planteó nuestra solución, la complejidad en ``mejo
 
 \subsubsection{Test 1}
 
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/1A.png}
+	\end{center}
+	\caption{Dakkar - Complejidad con etapas variables}\label{fig:1A}
+\end{figure}
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/1B km.png}
+	\end{center}
+	\caption{Dakkar - Complejidad con motos variables}\label{fig:1B}
+\end{figure}
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/1B kb.png}
+	\end{center}
+	\caption{Dakkar - Complejidad con buggies variables}\label{fig:1C}
+\end{figure}
+
+Podemos observar en la figura \ref{fig:1A} ,y en figura (la que muestra como crecen buggys y motos) teniendo en cuenta las tres variables, cantidad de etapas, cantidad de buggies y cantidad de motos, al dejar constante dos de ellas, el tiempo que incurre la tercera parecería ser lineal dado que estaríamos observando una recta. Para poder fundamentar que lo que vemos es en efecto, una recta, los gráficos () toman la variable libre(llamemosla n), y dividen el tiempo incurrido por n. Dado que el resultado en ellos es una constante, podemos afirmar en base a estos, que si dejamos dos variables constantes, la tercera crece de forma lineal. Como consecuencia de esto, se ve reafirmado el analisis teórico, y que nuestro algoritmo tiene complejidad temporal $\mathcal{O}(n*km*kb)$
+
+
+
 \vspace*{0.3cm}
 
 \vspace*{0.6cm}
 %\newpage
+
 \subsubsection{Test 2}
 
-\vspace*{0.3cm}
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/1C.png}
+	\end{center}
+	\caption{Dakkar - Variables constantes, instancias variables}\label{fig:1D}
+\end{figure}
 
+Podemos observar que manteniendo constantes todas las variables, pero alterando los tiempos de todas las etapas, no se pueden apreciar diferencias notables respecto al tiempo. Esto respalda nuestra teoría acerca de que nuestro algoritmo no depende de los valores, sino de las variables, (o sea que no parecería haber un mejor o peor caso temporal).
