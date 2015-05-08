@@ -22,7 +22,7 @@ int main()
 	scanf("%i",&soldados);	// Cant soldados iniciales
 	
 	// Creo el mapa
-	Mapa ciudad(n, Vec(m));
+	Mapa ciudad(n, Vect(m));
 	
 	// señalo las calles inválidas (bordes)
 	for(i = 0; i < n; i++)

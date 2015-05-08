@@ -38,8 +38,8 @@ typedef struct esquina_t
     
 } esquina; 
 
-typedef vector<esquina> Vec;
-typedef vector<Vec> Mapa;	/* el mapa es una matriz de "esquinas" */
+typedef vector<esquina> Vect;
+typedef vector<Vect> Mapa;	/* el mapa es una matriz de "esquinas" */
 
 
 /********************** DECLARACIÓN DE FUNCIONES **********************/

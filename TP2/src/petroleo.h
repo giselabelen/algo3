@@ -40,7 +40,7 @@ int plan(Incidencia& inc, int n, list<Arista>& tuberias, int& costo_total,vector
 		hijos[i].first = 0;
 	}
 	
-	for(list< pair<Arista,int> >::iterator it1 = inc.begin(); it1 != inc.end(); it1++)
+	for(Incidencia::iterator it1 = inc.begin(); it1 != inc.end(); it1++)
 	{
 		edge = it1->first;
 		costo = it1->second;
