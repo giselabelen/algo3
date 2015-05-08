@@ -12,4 +12,11 @@ int main()
 	
 	testear_2_A();
 	testear_2_B();
+	
+	testear_3_A();
+	testear_3_B();
+	testear_3_C();
+	
+	return 0;
 }
+
