@@ -222,11 +222,36 @@ Entonces nuestra solución tiene una complejidad estrictamente menor que $\mathc
 
 \vspace*{0.3cm}
 
+A continuación, buscaremos contrastar el análisis teórico previo con experimentación.  De esta manera, intentaremos verificar de manera empírica que la complejidad de nuestro algoritmo es $\mathcal{O}(n^2 \cdot log(n))$.
 
 \subsubsection{Test 1}
 
 \vspace*{0.3cm}
 
+Para esta experimentación, fijamos el valor de una refinería en 50 y creamos instancias de posibles tuberías, asignando pesos aleatorios, partiendo de 10 nodos e incrementando este valor consecutivamente.  Para cada instancia generada, se corrió {\it Petróleo} 20 veces y se tomó el promedio de los tiempos incurridos.  Los resultados se ven en la Figura \ref{fig:3Asolo}.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/3Asolo.png}
+	\end{center}
+	\caption{Petróleo - Cantidad de pozos variable}\label{fig:3Asolo}
+\end{figure}
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/3Adivncuad.png}
+	\end{center}
+	\caption{Petróleo - Cantidad de pozos variable (div n*n)}\label{fig:3Adivnn}
+\end{figure}
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/3Adivncuadlogn.png}
+	\end{center}
+	\caption{Petróleo - Cantidad de pozos variable (div n*n*log(n))}\label{fig:3Adivnnlogn}
+\end{figure}
+
+A simple vista la Figura \ref{fig:3Asolo} no parece muy clara en cuanto a si es una recta, una curva, o una curva muy pronunciada. Por esto, recurrimos a observar la Figura \ref{fig:3Adivnn} y observamos que los valores parece estabilizarse en una constante muy cercana al cero. Si bien en principio se ve una abrupta caida de tiempo, hay que tener en cuenta que los valores de la Figura \ref{fig:3Asolo} se mueven de 0 a 1600 mientras que los valores de la figura \ref{fig:3Adivnn} se mueven de 0 a 0.15, por lo que consideramos estos valores ``despreciables'' y consideramos que el numero se aproxima a una constante. Para apoyar esta decisión, la figura \ref{fig:3Adivnnlogn} muestra el mismo compartamiento que la figura \ref{fig:3Adivnn}, solo que con numeros aún más chicos, lo que tiene coherencia, puesto que estan divididos por log n. Esto parecería indicar que la complejidad de nuestro algoritmo es de $\mathcal{O}(n^2)$, y no de $\mathcal{O}(n^2 \cdot log(n))$ como indica nuestro analisis teórico.
 
 \vspace*{0.6cm}
 
@@ -235,11 +260,22 @@ Entonces nuestra solución tiene una complejidad estrictamente menor que $\mathc
 
 \vspace*{0.3cm}
 
+Para esta etapa, se crearon diversas instancias y se evaluaron de la siguiente manera:
 
-\vspace*{0.6cm}
+\begin{itemize}
+	\item Se generaron 2 instancias separadas y se corrieron por separado.
+	\item Luego se fusionaron ambos grafos y se corrió como una sola instancia.
+\end{itemize}
 
-%\newpage
-\subsubsection{Test 3}
+Finalmente se tomaron los promedios de cada caso.  Los resultados se ven en la Figura \ref{fig:3B}, donde las primeras dos columnas representan las instancias separadas y la tercera representa la fusión.
 
-\vspace*{0.3cm}
 
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/3B.png}
+	\end{center}
+	\caption{Petróleo - Fusión de grafos}\label{fig:3B}
+\end{figure}
+
+
+En la figura \ref{fig:3B} observamos que al fusionar sistemas de tuberías, el tiempo obtenido es aproximadamente la suma de las dos tuberías fusionadas en cuestión. Esto apoya nuestra teoría de que nuestro algoritmo trabaja en paralelo las distintas componentes conexas con el metodo de kruscal, puesto que no hay diferencia notable entre correr dos sistemas de tuberías distintos uno a la vez, o los dos juntos. 
