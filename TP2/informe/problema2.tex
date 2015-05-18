@@ -254,27 +254,65 @@ Por lo tanto, la complejidad total del algoritmo es $\mathcal{O}(s \cdot n \cdot
 %\newpage
 \subsection{Experimentación y gráficos.}
 
+En esta sección se tratará de contrastar el materiar teórico brindado anteriormente, con experimentación. 
 
 \subsubsection{Test 1}
 
 \vspace*{0.3cm}
 
-En la figura A (poner la figura con ref) se puede notar como, manteniendo el tamaño de la ciudad constante y modificando los valores de las distintas calles, se generan resultados extremadamente similares. Estas ciudades fueron generadas de manera aleatoria y comparadas a su vez con los casos que consideramos como "mejor" y "peor". Se puede apreciar una diferencia abismal entre el peor caso, en el cual el recorrido de la ciudad seria en forma de zig zag, y el resto de los casos, siendo el que más tiempo tarda. En cambio el mejor caso, donde hay un claro recorrido donde se pierden 0 soldados, la diferencia no termina siendo realmente apreciable en comparación con as otras instancias generadas de manera aleatoria.
+Primero, se fijó la cantidad de calles horizontales y verticales en 29, y la cantidad de soldados en 841.  Para estos valores, se generaron 30 instancias donde la cantidad de zombies de cada cuadra fue tomado aleatoriamente. En particular, se generó una instancia donde la solución requiriera recorrer todas las esquinas, y una instancia en la que existiera un camino directo sin zombies, considerándolos peor y mejor caso.  El incio se estableció en la esquina superior izquierda, y el bunker en la esquina inferior derecha.
 
-Para resumir, en general, instancias generadas de manera aleatoria no deberían perjudicar demasiado la performance de nuestro algoritmo. Pero sin embargo, parecieran existir instancias particulares que perjudican gravemente a nuestro algoritmo en terminos de tiempo.
+Se corrió nuestro algoritmo con cada una de estas instancias 20 veces, y se tomó el promedio del tiempo incurrido en ellas.  Los resultados pueden verse en la Figura \ref{fig:2A}.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/2A.png}
+	\end{center}
+	\caption{Zombieland II - Instancias aleatorias}\label{fig:2A}
+\end{figure}
+
+
+
+En la Figura \ref{fig:2A} se puede notar como, manteniendo el tamaño de la ciudad constante y modificando los valores de las distintas calles, se generan resultados extremadamente similares. Se puede apreciar una diferencia abismal entre lo que consideramos el peor caso, y el resto de los casos, siendo el que más tiempo tarda. En cambio el considerado mejor caso, donde hay un claro recorrido donde se pierden 0 soldados, la diferencia no termina siendo realmente apreciable en comparación con las otras instancias generadas de manera aleatoria.
+
+Para resumir, en general, instancias generadas de manera aleatoria no deberían perjudicar demasiado la performance de nuestro algoritmo. Pero sin embargo, parecieran existir instancias particulares que perjudican gravemente a nuestro algoritmo en términos de tiempo.
 
 \vspace*{0.6cm}
 
 %\newpagenosesalvanadie-div-nlogn
 \subsubsection{Test 2}
 
-Lo que nos permite notar esta figura (figura modificando cantidad de soldados) es que a partir de cierta cantidad de soldados, aumentar esta cantidad no resulta en cambios distinguibles para nuestro algoritmo. Esto parecería ser verdad dado que a partir de cierto número de soldados $x$, si nuestro algoritmo encuentra un camino que le permita perder 0 soldados, ese mismo camino podría ser aplicable a una cantidad soldados $y$ con $y>x$.
+En este caso, se tomó una de las instancias generadas en el Test 1, sabiendo que con la cantidad de soldados iniciales asignados arbitrariamente, existe una solución.  Entonces, tomando esa cantidad de soldados, fuimos incrementándola y repitiendo la ejecución para contrastar los tiempos incurridos.  Por cada incremento, se ejecutó el algoritmo 20 veces y se tomó el promedio de ellas en cuanto a tiempo.  Los resultados se muestran en la Figura \ref{fig:2B}.
 
-Resulta trivial el hecho de que disminuyendo la cantidad de soldados la diferencia sería mucho mas apreciable.
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/2C.png}
+	\end{center}
+	\caption{Zombieland II - Variando cantidad de soldados}\label{fig:2B}
+\end{figure}
 
-FIGURA 2D aca!!
-En este experimento tratamos de bloquear (con cantidades de zombies que no nos permitieran avanzar) distintos puntos de la ciudad. Resulta evidente que, de bloquear los posibles movimientos desde el punto de partida, nuestro algoritmo presentaría un tiempo de ejecución extremadamente pequeño, al no poder analizar ningun camino. Como contraposición a esto, probamos bloquear las calles que nos llevarían al búnker, para analizar como el comportamiento resultante. Como resulta necesario en este caso llegar al final para notar que no hay un camino posible, esto desemboca en tener que analizar más caminos que de costumbre, dado que los posibles caminos que eran posibles sin los bloqueos, ya no están disponibles.
+Lo que nos permite notar la Figura \ref{fig:2B} es que a partir de cierta cantidad de soldados, aumentar esta cantidad no resulta en cambios distinguibles para nuestro algoritmo. Esto parecería ser verdad dado que a partir de cierto número de soldados $x$, si nuestro algoritmo encuentra un camino que le permita perder 0 soldados, ese mismo camino podría ser aplicable a una cantidad soldados $y$ con $y>x$.
 
+Quedaría pendiente contrastar el hecho de que disminuyendo la cantidad de soldados la diferencia sería mucho más apreciable.
 
+\subsubsection{Test 3}
+Para este experimento, se tomaron las instancias generadas en el Test 1, cuando tuvieran solución, y se realizaron ``bloqueos'' de manera de impedir la llegada de los soldados al búnker.  Estos ``bloqueos'' consistieron en modificar la cantidad de zombies en 3 puntos particulares:
+
+\begin{itemize}
+	\item En las calles aledañas al bunker.
+	\item En las calles aledañas al inicio.
+	\item En las calles que permitiran pasar de la mitad superior hacia la mitad inferior de la ciudad.
+\end{itemize}
+
+Cada caso fue ejecutado 20 veces, y se consideró el promedio en tiempo.  Los resultados pueden verse en la Figura \ref{fig:2C}.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.5]{imagenes/2D.png}
+	\end{center}
+	\caption{Zombieland II - Instancias con bloqueos}\label{fig:2C}
+\end{figure}
+
+Resulta evidente que, de bloquear los posibles movimientos desde el punto de partida, nuestro algoritmo presentaría un tiempo de ejecución extremadamente pequeño, al no poder analizar ningun camino. En el caso de bloquear el bunker, como resulta necesario en este caso llegar al final para notar que no hay un camino posible, esto desemboca en tener que analizar más caminos que de costumbre, dado que los posibles caminos que eran posibles sin los bloqueos, ya no están disponibles.  Finalmente, notamos que al realizar un bloqueo a la mitad de la ciudad, los tiempos resultantes son intermedios a los casos anteriores.
 
 \newpage
