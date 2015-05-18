@@ -1,0 +1,70 @@
+Definitivamente, vamos a tener que crear las grillas con el dame uno que hablabamos gi...
+es una mucho muy mejor distribucion...
+los topes y eso habría que pensarlo entre todos, pero la idea sería.
+voy a permitir que en toda mi ciudad, haya una cantidad limitada de calles inaccesibles o de dificil acceso, para eso si el numero aleatorio da alto esa cantidad de veces, reduzco mis numeros aleatorios... y para insertar las calles llamo numeros aleatorios que tomen filas y columnas al azar..
+para que no haya problemas con que tomemos una misma fila y columna dos veces, había que pensar en esa estructura rara que ahora no me acuerdo... igual habría que hacer o pensar estas cosas juntos en lo posible...
+
+
+Dos experimentos + sorpresa:
+
+-Mirar m y n:
+
+muy parecido al de expandir calles, solo que esta vez vamos a expandir solo a m y a n.. o sea..
+________________
+|O		|		
+|		|		
+|		|		
+|		|
+|		|		
+|		|		
+|______________X|
+	|
+	|
+	| (noencontre flecha para abajo=( )
+	^
+________________________
+|O			|	
+|			|	
+|			|	
+|			|
+|			|	
+|			|	
+|______________X________|
+
+haríamos esto si quisieramos expandir n...
+
+y analogamente para m.
+
+m y n iniciales 30....
+subir de a 5 hasta llegar el 300
+cuando digo subir de a 5 es, dejar n estatico y subir m de a 5 hasta 300, y luego dejar m estatico en 30 y subir n de a 5 hasta 300.
+
+Atención!! el experimento puede llegar a tener que repetirse por caso especial!!
+igualmente las probabilidades de esto son muy bajas, el caso especial sería que, por ejemplo en el caso de expandir n, cuando yo extiendo mi ciudad hacia la derecha, todas las calles horizontales que llevarían a la nueva parte de la ciudad, esten infestadas de zombies impidiendo el paso. Esto solo se podría preveer de antemano haciendo filtros o giladas por el estilo que no recomiendo usar... si los graficos dan mal, me parece mas barato volver a hacerlos.
+
+-Mirando s:
+
+Tomamos una grilla de 30 x 30.
+debe poder resolverse con a lo sumo 50 soldados minimo
+
+Necesito saber si se llego a destino o no. va a ser importante para la explicacion de los graficos(creo). Creo que zombielando si no llegaba te devolvía un 0... si quiere devolverme un bool por algun lado para sabeeeeeer
+
+entonces, tomo esta ciudad y la corro con un soldado... le sumo 1 y la corro con 2, luego con 3, y asi hasta los 110 soldados
+
+la idea es que veamos que si la ciudad se salva con 50 soldados, correrla con 30 soldados toma menos que correrla con 40, que toma menos que correrla con 50, que toma menos que correrla con 60 y bla... sin embargo, luego del 100, correrla con 100 o 110, es mas o menos lo mismo. El tiempo debería ser lineal. la constante entre 100 y 110 se explica por "como armamos la grilla", y es para mostrar una peculiaridad de nuestro codigo: que despues de cierto momento, poner mas soldados no tarda mas.
+
+
+Experimento bonus track!!
+
+este ya lo hicimos, pero muestra que la distribución de zombies no influye tanto...
+la idea es..
+
+dejo soldados fijos,
+
+aumento m y n a la vez de 10 en 10 hasta 300, empezando en 30...
+
+para cada uno de estos, corro el mejor caso, el peor caso y casos aleatorios(ponele 20 casos aleatorios??)...
+el de 30 x 30 salvo el peor caso que no se que tanto influye, debería ser mejor en tiempo en gral que el de 40 x 40.
+
+Este experimento puede o no estar... pero si esta mejorXD
+
