@@ -16,86 +16,124 @@ Mapa generar_ciudad_facil(int n, int m, int s);
 Mapa generar_ciudad_zigzag(int n, int m, int s);
 void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies);
 void completar_izquierda(Mapa& ciudad, int i, int m, int& zombies);
-void inhabilitar_esquina(Mapa& ciudad, int i, int j, int n, int m);
 void restablecer(Mapa& ciudad, int n, int m, int s);
+list<int> zombies_aleatorios(int total, int s);
+void anular(Mapa& ciudad, int n, int m, int s);
 void testear_2_A();
 void testear_2_B();
-void testear_2_C(Mapa ciudad, pos inicio, pos bunker, int n, int m, int s, double tiempo);
-void testear_2_D(Mapa ciudad, pos inicio, pos bunker, int n, int m, int s, double tiempo);
+void testear_2_C();
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
 
+list<int> zombies_aleatorios(int total, int s)
+{
+	int z;
+	int tope = 2*s + 1;
+	int diez = total*10/100;
+	int veinte = total*20/100;
+	int resto = total - (diez + veinte);
+	list<int> z_random;
+	
+	for(int i = 0; i < total; i++)
+	{
+		z = rand() % tope;
+		z_random.push_back(z);
+		
+		if(s < z && z <= (s + s/2))
+		{
+			veinte--;
+			if(veinte == 0)
+			{
+				if(diez == 0){
+					tope = s + 1;
+				}else{
+					veinte = diez;
+					diez = 0;
+					tope = s + s/2 + 1;
+				}
+			}
+		}
+		
+		if(s > (s + s/2))
+		{
+			diez--;
+			if(diez == 0){
+				tope = s + s/2 + 1;
+			}
+		}
+	}
+	
+	return z_random;
+}
+
+
 Mapa generar_ciudad(int n, int m, int s)
 {
-	int i;
-	int j;
-	int zombies;
-	int tope;
-	int cont = 0;
+	int r;
+	int contador = n*(m-1) + m*(n-1);
+	list<int> z_random = zombies_aleatorios(contador,s);
+	list<int>::iterator it;
 	Mapa ciudad(n, Vect(m));
 	
 	// señalo las calles inválidas (bordes)
-	for(i = 0; i < n; i++)
-	{
+	for(int i = 0; i < n; i++){
 		ciudad[i][0].izquierda = -1;
 		ciudad[i][m-1].derecha = -1;
 	}
-	for(j = 0; j < m; j++)
-	{
+	for(int j = 0; j < m; j++){
 		ciudad[0][j].arriba = -1;
 		ciudad[n-1][j].abajo = -1;
 	}
 	
 	// valor por defecto para .parcial (para cada nodo)
-	for(i = 0; i < n; i++){
-		for(j = 0; j < m; j++){
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < m; j++){
 			ciudad[i][j].parcial = 0;
 		}
 	}
 	
 	// Cant de zombies x calle
-	for(i = 0; i < n; i++)
+	for(int i = 0; i < n; i++)
 	{
-		tope = 2*s + 1;
-		cont = 0;
-		
-		for(j = 0; j < m-1; j++)	// calles horizontales
+		for(int j = 0; j < m-1; j++)	// calles horizontales
 		{
-			if(cont == m/8){ tope = s; }
-			
-			zombies = rand() % tope;
+			it = z_random.begin();
+			r = rand() % contador;
+			advance(it,r);
 			
 			// si la cant de zombies es muy grande, invalido la calle
-			if(zombies < 2*s){
-				ciudad[i][j].derecha = zombies;
-				ciudad[i][j+1].izquierda = zombies;
-				if(zombies > s){ cont++; }
+			if(*it < 2*s){
+				ciudad[i][j].derecha = *it;
+				ciudad[i][j+1].izquierda = *it;
 			}else{
 				ciudad[i][j].derecha = -1;
 				ciudad[i][j+1].izquierda = -1;
-				tope--;
 			}
+			
+			z_random.erase(it);
+			contador--;
 		}
 		
 		if(i != (n - 1))		// calles verticales
 		{
-			for(j = 0; j < m; j++)
+			for(int j = 0; j < m; j++)
 			{
-				if(cont == m/8){ tope = s; }
+				it = z_random.begin();
+				r = rand() % contador;
+				advance(it,r);
 			
-				zombies = rand() % tope;
-				
 				// si la cant de zombies es muy grande, invalido la calle
-				if(zombies < 2*s){
-					ciudad[i][j].abajo = zombies;
-					ciudad[i+1][j].arriba = zombies;
-					if(zombies > s){ cont++; }
+				if(*it < 2*s){
+					ciudad[i][j].abajo = *it;
+					ciudad[i+1][j].arriba = *it;
 				}else{
 					ciudad[i][j].abajo = -1;
 					ciudad[i+1][j].arriba = -1;
-					tope--;
 				}
+				
+				z_random.erase(it);
+				contador--;
 			}
 		}
 	}
@@ -149,18 +187,15 @@ Mapa generar_ciudad_zigzag(int n, int m, int s)
 	}
 	
 	// Cant de zombies x calle
-	for(i = 0; i < n; i++)
-	{	//cout << i << endl;
+	for(i = 0; i < n; i++){
 		if(i % 2 == 0){
-			//~ cout << "derecha" << endl;
 			completar_derecha(ciudad,i,n,m,zombies);
 		}
 		else{
-			//~ cout << "izquierda" << endl;
 			completar_izquierda(ciudad,i,m,zombies);
 		}
 	}
-	//~ cout << "generado ok" << endl;
+	
 	return ciudad;
 }
 
@@ -207,28 +242,6 @@ void completar_izquierda(Mapa& ciudad, int i, int m, int& zombies)
 	return;
 }
 
-void inhabilitar_esquina(Mapa& ciudad, int i, int j, int n, int m)
-{
-	if(i != 0){
-		ciudad[i][j].arriba = -1;
-		ciudad[i-1][j].abajo = -1;
-	}
-	if(i != n - 1){
-		ciudad[i][j].abajo = -1;
-		ciudad[i+1][j].arriba = -1;
-	}
-	if(j != 0){
-		ciudad[i][j].izquierda = -1;
-		ciudad[i][j-1].derecha = -1;
-	}
-	if(j != m - 1){
-		ciudad[i][j].derecha = -1;
-		ciudad[i][j+1].izquierda = -1;
-	}
-	
-	return;
-}
-
 void restablecer(Mapa& ciudad, int n, int m, int s)
 {
 	for(int i = 1; i < n - 1; i++)
@@ -261,8 +274,22 @@ void restablecer(Mapa& ciudad, int n, int m, int s)
 
 }
 
+void anular(Mapa& ciudad, int n, int m, int s)
+{
+	for(int i = 0; i < n; i++)
+	{
+		for(int j = 0; j < m; j++)
+		{
+			if(ciudad[i][j].arriba >= s){ ciudad[i][j].arriba = -1; }
+			if(ciudad[i][j].abajo >= s){ ciudad[i][j].abajo = -1; }
+			if(ciudad[i][j].izquierda >= s){ ciudad[i][j].izquierda = -1; }
+			if(ciudad[i][j].derecha >= s){ ciudad[i][j].derecha = -1; }
+		}
+	}
+}
 
-void testear_2_A()
+
+void testear_2_A()	// EXTIENDO N
 {
 	FILE * pTest = fopen("../Resultados_tests_nuestros/testing2A.txt","w");
 	clock_t start;
@@ -270,10 +297,9 @@ void testear_2_A()
 	double t = 0;	
 	
 	bool marca = false;
-	int unica = 0;
-	int n = 29;
-	int m = 29;
-	int s = 841;
+	int n = 300;
+	int m = 30;
+	int s = 50;
 	
 	pos inicio = (pos){
 			.horizontal = 0,
@@ -281,147 +307,29 @@ void testear_2_A()
 		};
 		
 	pos bunker = (pos){
-			.horizontal = n-1,
-			.vertical = m-1,
+			.horizontal = 29,
+			.vertical = 29,
 		};
 		
-	pair<pos,int> primero = make_pair(inicio,s);
-	//~ 
-	for(int i = 0; i < 30; i++)
-	{	//cout << i << endl;
-		t = 0;
-		Mapa ciudad = generar_ciudad(n,m,s);
-		
-		for(int j = 0; j < 20; j++)
-		{
-			int soldados = s;
-			Mapa ciudad_aux = ciudad;
-			list<pair <pos,int> > cola;
-			list<pos> salida;
-			cola.push_back(primero);
-			
-			start = clock();
-			zombieland(ciudad_aux,cola,soldados,bunker);
-			armo_resultado(ciudad_aux,salida,inicio,bunker);
-			end = clock();			
-			t = t + difftime(end,start);
-			
-			cola.clear();
-			salida.clear();
-			if(soldados != 0){ marca = true; }
-			else{ marca = false; }
-		}
-		fprintf(pTest,"%f \n",t/20);
-		
-		if(marca)
-		{
-			testear_2_D(ciudad,inicio,bunker,n,m,s,t/20);
-			
-			if(unica == 0){
-				testear_2_C(ciudad,inicio,bunker,n,m,s,t/20);
-				unica++;
-			}
-		}
-	}
-	
-	Mapa ciudad1 = generar_ciudad_facil(n,m,s);
-	Mapa ciudad2 = generar_ciudad_zigzag(n,m,s);
-	
-	t = 0;
-	for(int i = 0; i < 20; i++)
-	{	//cout << i << endl;
-		int soldados = s;
-		Mapa ciudad_aux = ciudad1;
-		list<pair <pos,int> > cola;
-		list<pos> salida;
-		cola.push_back(primero);
-		
-		start = clock();
-		zombieland(ciudad_aux,cola,soldados,bunker);
-		armo_resultado(ciudad_aux,salida,inicio,bunker);
-		end = clock();
-		t = t + difftime(end,start);
-		
-		cola.clear();
-		salida.clear();
-	}
-	fprintf(pTest,"%f \n",t/20);
-	//~ cout << "una parte de ciudad1" << endl;
-	//~ testear_2_D(ciudad1,inicio,bunker,n,m,s,t/20);
-	//~ cout << "termine ciudad1" << endl;
-	t = 0;
-	for(int i = 0; i < 20; i++)
-	{
-		int soldados = s;
-		Mapa ciudad_aux = ciudad2;
-		list<pair <pos,int> > cola;
-		cola.push_back(primero);
-		list<pos> salida;
-		
-		start = clock();
-		zombieland(ciudad_aux,cola,soldados,bunker);
-		armo_resultado(ciudad_aux,salida,inicio,bunker);
-		end = clock();
-		t = t + difftime(end,start);
-		
-		cola.clear();
-		salida.clear();
-	}
-	fprintf(pTest,"%f \n",t/20);
-	//~ testear_2_D(ciudad2,inicio,bunker,n,m,s,t/20);
-	
-	fclose(pTest);
-}
-
-void testear_2_B()
-{
-	FILE * pTest = fopen("../Resultados_tests_nuestros/testing2B.txt","w");
-	clock_t start;
-	clock_t end;
-	double t = 0;	
-	
-	int n = 30;
-	int m = 30;
-	int s = 900;
-	int tam = n;
-	int it = 0;
-	
 	Mapa ciudad = generar_ciudad(n,m,s);
 	
-	pos inicio = (pos){
-			.horizontal = 12,
-			.vertical = 12,
-		};
-		
-	pos bunker = (pos){
-			.horizontal = 17,
-			.vertical = 17,
-		};
-		
-	for(int tam = n; tam >= 6; tam = tam - 2)
-	{	cout << tam << endl;
+	for(int tam = n; tam >= 30 ; tam = tam - 5)
+	{
 		t = 0;
-		
+
 		for(int h = 0; h < 20; h++)
 		{
 			int soldados = s;
-			Mapa ciudad_aux (tam, Vect(tam));
+			Mapa ciudad_aux (tam, Vect(m));
 			for(int i = 0; i < tam; i++)
 			{
-				for(int j = 0; j < tam; j++){
-					ciudad_aux[i][j] = ciudad[i+it][j+it];
+				for(int j = 0; j < m; j++){
+					ciudad_aux[i][j] = ciudad[i][j];
 				}
 			}
 			// señalo las calles inválidas (bordes)
-			for(int i = 0; i < tam; i++)
-			{
-				ciudad[i+it][0+it].izquierda = -1;
-				ciudad[i+it][tam-1+it].derecha = -1;
-			}
-			for(int j = 0; j < tam; j++)
-			{
-				ciudad[0+it][j+it].arriba = -1;
-				ciudad[tam-1+it][j+it].abajo = -1;
+			for(int j = 0; j < m; j++){
+				ciudad[tam-1][j].abajo = -1;
 			}
 			pair<pos,int> primero = make_pair(inicio,soldados);
 			list<pair <pos,int> > cola;
@@ -437,32 +345,106 @@ void testear_2_B()
 			cola.clear();
 			salida.clear();
 		}
-		fprintf(pTest,"%i, %i, %f \n",tam,tam,t/20);
+		fprintf(pTest,"%i, %f \n",tam,t/20);
+	}
+	
+	fclose(pTest);
+}
+	
+void testear_2_B()	// EXTIENDO M
+{
+	FILE * pTest = fopen("../Resultados_tests_nuestros/testing2B.txt","w");
+	clock_t start;
+	clock_t end;
+	double t = 0;	
+	
+	int n = 30;
+	int m = 300;
+	int s = 50;
+	
+	pos inicio = (pos){
+			.horizontal = 0,
+			.vertical = 0,
+		};
 		
-		inicio.horizontal--;
-		inicio.vertical--;
-		bunker.horizontal--;
-		bunker.vertical--;
-		it++;
+	pos bunker = (pos){
+			.horizontal = 29,
+			.vertical = 29,
+		};
+		
+	Mapa ciudad = generar_ciudad(n,m,s);
+	
+	for(int tam = m; tam >= 30 ; tam = tam - 5)
+	{
+		t = 0;
+
+		for(int h = 0; h < 20; h++)
+		{
+			int soldados = s;
+			Mapa ciudad_aux (n, Vect(tam));
+			for(int i = 0; i < n; i++)
+			{
+				for(int j = 0; j < tam; j++){
+					ciudad_aux[i][j] = ciudad[i][j];
+				}
+			}
+			// señalo las calles inválidas (bordes)
+			for(int i = 0; i < tam; i++){
+				ciudad[i][tam-1].derecha = -1;
+			}
+			pair<pos,int> primero = make_pair(inicio,soldados);
+			list<pair <pos,int> > cola;
+			list<pos> salida;
+			cola.push_back(primero);
+			
+			start = clock();
+			zombieland(ciudad_aux,cola,soldados,bunker);
+			armo_resultado(ciudad_aux,salida,inicio,bunker);
+			end = clock();
+			t = t + difftime(end,start);
+			
+			cola.clear();
+			salida.clear();
+		}
+		fprintf(pTest,"%i, %f \n",tam,t/20);
 	}
 	
 	fclose(pTest);
 }
 
-void testear_2_C(Mapa ciudad, pos inicio, pos bunker, int n, int m, int s, double tiempo)
+void testear_2_C()
 {
 	FILE * pTest = fopen("../Resultados_tests_nuestros/testing2C.txt","w");
 	clock_t start;
 	clock_t end;
 	double t = 0;	
 	
-	fprintf(pTest,"%i, %f \n",s,tiempo);
+	int n = 30;
+	int m = 30;
+	int s = 25;
+	
+	pos inicio = (pos){
+			.horizontal = 0,
+			.vertical = 0,
+		};
+		
+	pos bunker = (pos){
+			.horizontal = 29,
+			.vertical = 29,
+		};
+		
+	Mapa ciudad = generar_ciudad(n,m,s);
 	
 	restablecer(ciudad,n,m,2*s);
 	
-	for(int soldados = s + 10; soldados <= 2*s; soldados = soldados + 10)
+	for(int soldados = 75; soldados > 0; soldados--)
 	{
 		t = 0;
+		
+		if(soldados <= 25){
+			anular(ciudad,n,m,2*soldados);
+		}
+		
 		for(int h = 0; h < 20; h++)
 		{
 			int sold_aux = soldados;
@@ -483,104 +465,6 @@ void testear_2_C(Mapa ciudad, pos inicio, pos bunker, int n, int m, int s, doubl
 		}
 		fprintf(pTest,"%i, %f \n",soldados,t/20);
 	}
-	
-	fclose(pTest);
-}
-
-void testear_2_D(Mapa ciudad, pos inicio, pos bunker, int n, int m, int s, double tiempo)
-{
-	FILE * pTest = fopen("../Resultados_tests_nuestros/testing2D.txt","a");
-	clock_t start;
-	clock_t end;
-	double t = 0;	
-	
-	int g;
-	int h;
-	int v;
-	
-	pair<pos,int> primero = make_pair(inicio,s);
-	
-	Mapa ciudad_s_bunker = ciudad;
-	Mapa ciudad_s_inicio = ciudad;
-	Mapa ciudad_s_medio = ciudad;
-	
-	h = bunker.horizontal;
-	v = bunker.vertical;
-	inhabilitar_esquina(ciudad_s_bunker,h,v,n,m);
-	
-	h = inicio.horizontal;
-	v = inicio.vertical;
-	inhabilitar_esquina(ciudad_s_inicio,h,v,n,m);
-	
-	g = n/2;
-	
-	for(int j = 0; j < m; j++){
-		ciudad_s_medio[g][j].arriba = -1;
-		ciudad_s_medio[g-1][j].abajo = -1;
-		ciudad_s_medio[g][j].abajo = -1;
-		ciudad_s_medio[g+1][j].arriba = -1;
-	}
-	
-	fprintf(pTest,"%f ",tiempo);
-	
-	for(int i = 0; i < 20; i++)
-	{
-		int soldados = s;
-		Mapa ciudad_aux = ciudad_s_bunker;
-		list<pair <pos,int> > cola;
-		list<pos> salida;
-		cola.push_back(primero);
-		
-		start = clock();
-		zombieland(ciudad_aux,cola,soldados,bunker);
-		armo_resultado(ciudad_aux,salida,inicio,bunker);
-		end = clock();
-		t = t + difftime(end,start);
-		
-		cola.clear();
-		salida.clear();
-	}
-	fprintf(pTest,"%f ",t/20);
-	
-	t = 0;
-	for(int i = 0; i < 20; i++)
-	{
-		int soldados = s;
-		Mapa ciudad_aux = ciudad_s_inicio;
-		list<pair <pos,int> > cola;
-		cola.push_back(primero);
-		list<pos> salida;
-		
-		start = clock();
-		zombieland(ciudad_aux,cola,soldados,bunker);
-		armo_resultado(ciudad_aux,salida,inicio,bunker);
-		end = clock();
-		t = t + difftime(end,start);
-		
-		cola.clear();
-		salida.clear();
-	}
-	fprintf(pTest,"%f ",t/20);
-	
-	t = 0;
-	for(int i = 0; i < 20; i++)
-	{
-		int soldados = s;
-		Mapa ciudad_aux = ciudad_s_medio;
-		list<pair <pos,int> > cola;
-		cola.push_back(primero);
-		list<pos> salida;
-		
-		start = clock();
-		zombieland(ciudad_aux,cola,soldados,bunker);
-		armo_resultado(ciudad_aux,salida,inicio,bunker);
-		end = clock();
-		t = t + difftime(end,start);
-		
-		cola.clear();
-		salida.clear();
-	}
-	fprintf(pTest,"%f \n",t/20);
 	
 	fclose(pTest);
 }
