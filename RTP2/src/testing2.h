@@ -15,7 +15,7 @@ Mapa generar_ciudad(int n, int m, int s);
 Mapa generar_ciudad_facil(int n, int m, int s);
 Mapa generar_ciudad_zigzag(int n, int m, int s);
 void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies);
-void completar_izquierda(Mapa& ciudad, int i, int m, int& zombies);
+void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies);
 void restablecer(Mapa& ciudad, int n, int m, int s);
 list<int> zombies_aleatorios(int total, int s);
 void anular(Mapa& ciudad, int n, int m, int s);
@@ -198,7 +198,11 @@ Mapa generar_ciudad_zigzag(int n, int m, int s)
 {
 	int i;
 	int j;
-	int zombies = s + 1;
+	int zombies;
+	
+	if(s < n*m){ zombies = n*m; }
+	else{ zombies = s + 1; }
+	
 	Mapa ciudad(n, Vect(m));
 	
 	// señalo las calles inválidas (bordes)
@@ -226,7 +230,7 @@ Mapa generar_ciudad_zigzag(int n, int m, int s)
 			completar_derecha(ciudad,i,n,m,zombies);
 		}
 		else{
-			completar_izquierda(ciudad,i,m,zombies);
+			completar_izquierda(ciudad,i,n,m,zombies);
 		}
 	}
 	
@@ -260,20 +264,27 @@ void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies)
 	return;
 }
 
-void completar_izquierda(Mapa& ciudad, int i, int m, int& zombies)
+void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies)
 {
 	for(int j = m-1; j > 0; j--)
 	{
 		ciudad[i][j].izquierda = zombies;
-		ciudad[i][j].abajo = -1;
 		ciudad[i][j-1].derecha = zombies;
-		ciudad[i+1][j].arriba = -1;
 		zombies--;
 	}
 	
-	ciudad[i][0].abajo = zombies;
-	ciudad[i+1][0].arriba = zombies;
-	zombies--;
+	if(i != (n - 1))
+	{
+		for(int j = 0; j < m-1; j++)
+		{
+			ciudad[i][j].abajo = -1;
+			ciudad[i+1][j].arriba = -1;
+		}
+		
+		ciudad[i][0].abajo = zombies;
+		ciudad[i+1][0].arriba = zombies;
+		zombies--;
+	}
 	
 	return;
 }
