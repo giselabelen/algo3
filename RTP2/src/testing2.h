@@ -198,7 +198,11 @@ Mapa generar_ciudad_zigzag(int n, int m, int s)
 {
 	int i;
 	int j;
-	int zombies = s + 1;
+	int zombies;
+	
+	if(s < n*m){ zombies = n*m; }
+	else{ zombies = s + 1; }
+	
 	Mapa ciudad(n, Vect(m));
 	
 	// señalo las calles inválidas (bordes)
@@ -265,15 +269,22 @@ void completar_izquierda(Mapa& ciudad, int i, int m, int& zombies)
 	for(int j = m-1; j > 0; j--)
 	{
 		ciudad[i][j].izquierda = zombies;
-		ciudad[i][j].abajo = -1;
 		ciudad[i][j-1].derecha = zombies;
-		ciudad[i+1][j].arriba = -1;
 		zombies--;
 	}
 	
-	ciudad[i][0].abajo = zombies;
-	ciudad[i+1][0].arriba = zombies;
-	zombies--;
+	if(i != (n - 1))
+	{
+		for(int j = 0; j < m-1; j++)
+		{
+			ciudad[i][j].abajo = -1;
+			ciudad[i+1][j].arriba = -1;
+		}
+		
+		ciudad[i][0].abajo = zombies;
+		ciudad[i+1][0].arriba = zombies;
+		zombies--;
+	}
 	
 	return;
 }
