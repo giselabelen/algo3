@@ -1,0 +1,16 @@
+Sea G = (V, E) un grafo simple:
+
+1)Un conjunto D ⊆ V es un conjunto dominante de G si todo vértice de G está en D o bien tiene al menos un vecino que está en D.
+
+2)Un conjunto I ⊆ V es un conjunto independiente de G si no existe ningún eje de E entre dos vértices de I.
+
+3)Un conjunto independiente dominante de G es un conjunto independiente que a su vez es un conjunto
+dominante del grafo G.
+
+4)Un conjunto independiente de I ⊆ V se dice maximal si no existe otro conjunto independiente J ⊆ V tal que I ⊂ J, es decir que I está incluido estrictamente en J.
+
+Demostrar que todo conjunto independiente maximal es un conjunto dominante:
+
+Idea de demo, más formal:
+
+Supongamos que no. O sea, que existe algun grafo (V,E)/ su conjunto independiente maximal(CIM) no es un conjunto dominante. Si esto es así, entonces por no ser dominante, existe un nodo n que pertenece al grafo pero no al CIM, y que además dentro del grafo original, n no es vecino de ningún elemento de CIM. Pero entonces, si añadimos n a CIM se obtiene un conjunto independiente que tiene los mismos elementos de CIM más un nodo, o sea que este nuevo conjunto contiene a CIM, lo cual es absurdo, puesto que habíamos dicho que CIM era maximal. El absurdo proviene de suponer que el conjunto no es dominante, por lo tanto, el conjunto debe ser dominante.
