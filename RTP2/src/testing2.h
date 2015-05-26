@@ -15,7 +15,7 @@ Mapa generar_ciudad(int n, int m, int s);
 Mapa generar_ciudad_facil(int n, int m, int s);
 Mapa generar_ciudad_zigzag(int n, int m, int s);
 void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies);
-void completar_izquierda(Mapa& ciudad, int i, int m, int& zombies);
+void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies);
 void restablecer(Mapa& ciudad, int n, int m, int s);
 list<int> zombies_aleatorios(int total, int s);
 void anular(Mapa& ciudad, int n, int m, int s);
@@ -230,7 +230,7 @@ Mapa generar_ciudad_zigzag(int n, int m, int s)
 			completar_derecha(ciudad,i,n,m,zombies);
 		}
 		else{
-			completar_izquierda(ciudad,i,m,zombies);
+			completar_izquierda(ciudad,i,n,m,zombies);
 		}
 	}
 	
@@ -264,7 +264,7 @@ void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies)
 	return;
 }
 
-void completar_izquierda(Mapa& ciudad, int i, int m, int& zombies)
+void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies)
 {
 	for(int j = m-1; j > 0; j--)
 	{
