@@ -19,3 +19,6 @@ Si esto fuera asi, puedo considerar a cada casillero como un nodo, y que las ari
 teniendo en cuenta los caballos preubicados, se pensará en otro momento, pero no encuentro una relación tan fácilXD
 
 Se está considerando decir que si tiene caballos preubicados no se puede traducir exactamente en un CIDM puesto que la ubicación de esos caballos condiciona mucho al conjunto.
+
+Se puede llamar como contraejemplo a un tablero de 5x5 que tiene un caballo en una esquina... podemos correr nuestro algoritmo para comprobarlo, pero creo que no hay forma de ganar el juego poniendo menos de 5 caballos nuevos, que agregado al precolocado dan 6, y la solución óptima creo que era 5
+
