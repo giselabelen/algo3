@@ -568,9 +568,9 @@ void testear_2_C()
 	double t = 0;	
 	double tmax = 0;	
 	
-	int n = 30;
-	int m = 30;
-	int s = 2000;
+	int n = 5;
+	int m = 5;
+	int s = 100;
 	
 	pos inicio = (pos){
 			.horizontal = 0,
@@ -578,8 +578,8 @@ void testear_2_C()
 		};
 		
 	pos bunker = (pos){
-			.horizontal = 29,
-			.vertical = 29,
+			.horizontal = 4,
+			.vertical = 4,
 		};
 		
 	Mapa ciudad;
@@ -652,7 +652,7 @@ void testear_2_C()
 			salida.clear();
 		}
 		
-		fprintf(pTest,"%i, %f, %f \n",s,t/20,tmax);	
+		fprintf(pTest,"%i, %f, %f \n",soldados,t/20,tmax);	
 	}
 	
 	fclose(pTest);
