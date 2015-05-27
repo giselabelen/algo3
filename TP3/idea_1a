@@ -17,3 +17,5 @@ Supongamos que la idea fuera simplemente completar el tablero, y no hubiera ning
 Si esto fuera asi, puedo considerar a cada casillero como un nodo, y que las aristas de un nodo n, son las posiciones hacia donde puede llegar un caballo, o sea, un nodo apunto hacia aquellos nodos a donde un caballo podría ir.. si ese fuera el problema, entonces con un CIDM, se podría llegar a la solución correcta...
 
 teniendo en cuenta los caballos preubicados, se pensará en otro momento, pero no encuentro una relación tan fácilXD
+
+Se está considerando decir que si tiene caballos preubicados no se puede traducir exactamente en un CIDM puesto que la ubicación de esos caballos condiciona mucho al conjunto.
