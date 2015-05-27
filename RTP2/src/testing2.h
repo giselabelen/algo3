@@ -371,18 +371,20 @@ void testear_2_A()	// EXTIENDO N
 	
 	for(int tam = n; tam >= 10 ; tam--)
 	{
+		tmax = 0;
+		
 		bunker = (pos){
 			.horizontal = tam - 1,
 			.vertical = 9,
 		};
 		
-		for(int a = 0; a < 10000; a++)
+		for(int a = 0; a < 50; a++)
 		{
 			t = 0;
 			ciudad = generar_ciudad(tam,m,s);
 			
 			for(int h = 0; h < 20; h++)
-			{	cout << n << " " << a << " " << h << endl;
+			{	cout << tam << " " << a << " " << h << endl;
 				int soldados = s;
 				Mapa ciudad_aux (tam, Vect(m));
 				for(int i = 0; i < tam; i++)
@@ -418,7 +420,7 @@ void testear_2_A()	// EXTIENDO N
 		ciudad = generar_ciudad_zigzag(tam,m,s);
 		
 		for(int h = 0; h < 20; h++)
-		{
+		{	cout << tam << " zigzag " << h << endl;
 			int soldados = s;
 			Mapa ciudad_aux (tam, Vect(m));
 			for(int i = 0; i < tam; i++)
@@ -475,18 +477,20 @@ void testear_2_B()	// EXTIENDO M
 	
 	for(int tam = m; tam >= 10 ; tam--)
 	{
+		tmax = 0;
+		
 		bunker = (pos){
 			.horizontal = 9,
 			.vertical = tam - 1,
 		};
 		
-		for(int a = 0; a < 10000; a++)
+		for(int a = 0; a < 50; a++)
 		{
 			t = 0;
 			ciudad = generar_ciudad(n,tam,s);
 
 			for(int h = 0; h < 20; h++)
-			{
+			{	cout << tam << " " << a << " " << h << endl;
 				int soldados = s;
 				Mapa ciudad_aux (n, Vect(tam));
 				for(int i = 0; i < n; i++)
@@ -522,7 +526,7 @@ void testear_2_B()	// EXTIENDO M
 		ciudad = generar_ciudad_zigzag(n,tam,s);
 		
 		for(int h = 0; h < 20; h++)
-		{
+		{	cout << tam << " zigzag " << h << endl;
 			int soldados = s;
 			Mapa ciudad_aux (n, Vect(tam));
 			for(int i = 0; i < n; i++)
@@ -581,14 +585,16 @@ void testear_2_C()
 	Mapa ciudad;
 	
 	for(int soldados = s; soldados > 0; soldados--)
-	{		
-		for(int a = 0; a < 10000; a++)
+	{
+		tmax = 0;	
+		
+		for(int a = 0; a < 50; a++)
 		{
 			t = 0;
 			ciudad = generar_ciudad(n,m,s);
 
 			for(int h = 0; h < 20; h++)
-			{
+			{	cout << soldados << " " << a << " " << h << endl;
 				int soldados = s;
 				Mapa ciudad_aux (n, Vect(m));
 				for(int i = 0; i < n; i++)
@@ -621,7 +627,7 @@ void testear_2_C()
 		ciudad = generar_ciudad_zigzag(n,m,s);
 		
 		for(int h = 0; h < 20; h++)
-		{
+		{	cout << soldados << " zigzag " << h << endl;
 			int soldados = s;
 			Mapa ciudad_aux (n, Vect(m));
 			for(int i = 0; i < n; i++)
