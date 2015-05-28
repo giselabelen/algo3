@@ -1,0 +1,24 @@
+Todavia no me decido como obtener una solución base, pero supongamos que la obtengo de alguna manera(podría ser por ejemplo usando el algoritmo del ejercicio 3, pero eso no se si no sería parecido a grasp no estudie tantoXD)... aparte creo que no deberiamos obtener la solucion asi, pero en fin...
+
+Pero supongamos que la obtengo....
+
+Ahora como me muevo en las vecindades??
+
+Lo que propongo es:
+(me voy a meter solo un toque con la implementacion)
+
+A la solucion que encuentre, le doy la caracteristica a cada nodo del grafo original de saber cuantas veces fue "tomado". O sea, si el nodo esta en la solucion, entonces se le agrega uno a cuantas veces fue tomado. Luego, se le agrega 1 por cada elemento en mi solución CIMD tal que tiene una arista hacia ese nodo.
+
+Teniendo en cuenta eso:
+
+veo mi solucion
+elijo dos nodos
+le decremento 1 a esos nodos, y a todos los nodos tales que se conectan con una arista a esos nodos(obviamente que si un nodo se conecta a los dos nodos anteriormente dichos, a ese nodo se le resta 2).
+ahora, trato de tomar un solo nodo de los que no estan en mi solución, de forma tal que todos los nodos de mi grafo original tengan por lo menos 1 en cantidad de veces tomados.
+
+Y repito esto muchas veces.
+
+A esta idea le faltan cosas como, como obtener la sol original?? y cuando paro?? cuanto es"muchas veces"?
+
+Todo eso lo respondere en otra ocasión... o tal vez nunca, MUAJAJAJAJAJA!!!!
+
