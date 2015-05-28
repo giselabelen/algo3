@@ -200,9 +200,10 @@ Mapa generar_ciudad_zigzag(int n, int m, int s)
 	int j;
 	int zombies;
 	
-	if(s < n*m){ zombies = n*m; }
-	else{ zombies = s + 1; }
-	
+	//Modifique esto!!(ALE)
+	//if(s < n*m){ zombies = n*m; }
+	//else{ zombies = s + 1; }
+	zombies =s*2 -1;
 	Mapa ciudad(n, Vect(m));
 	
 	// señalo las calles inválidas (bordes)
@@ -225,6 +226,7 @@ Mapa generar_ciudad_zigzag(int n, int m, int s)
 	}
 	
 	// Cant de zombies x calle
+	//cout << zombies << endl;   //SACALO DESPUES
 	for(i = 0; i < n; i++){
 		if(i % 2 == 0){
 			completar_derecha(ciudad,i,n,m,zombies,s);
@@ -235,13 +237,14 @@ Mapa generar_ciudad_zigzag(int n, int m, int s)
 	}
 	
 	if(n % 2 == 1){
-		ciudad[n-1][m-1].izquierda = 2*zombies - 1;
-		ciudad[n-1][m-2].derecha = 2*zombies - 1;
+		ciudad[n-1][m-1].izquierda = zombies;	//para volver al anterior, cambiar 
+		ciudad[n-1][m-2].derecha = zombies;		//zombies por 2*zombies - 1 (ALE)
 	}else{
-		ciudad[n-1][0].derecha = 2*zombies - 1;
-		ciudad[n-1][1].izquierda = 2*zombies - 1;
+		ciudad[n-1][0].derecha = zombies;
+		ciudad[n-1][1].izquierda = zombies;
 	}
-	
+	//zombies no debeŕia existir, lo pongo para qe se parezca mas al anterior codigo(ALE)
+	//cout << 2*zombies - 1 << endl;    //SACALO DEPUES
 	if(s < n*m){ anular(ciudad,n,m,s); }
 	
 	return ciudad;
@@ -251,9 +254,10 @@ void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies, int s)
 {
 	for(int j = 0; j < m-1; j++)	// calles horizontales
 	{
-		ciudad[i][j].derecha = zombies;
-		ciudad[i][j+1].izquierda = zombies;
-		zombies--;
+		ciudad[i][j].derecha = 0;		//para volver al anterior, descomentar zombies--, y 
+		ciudad[i][j+1].izquierda = 0;	//donde dice 0 poner zombies (ALE)
+		//zombies--;
+	//	cout << zombies << endl;   //SACALO DESPUES
 	}
 	
 	if(i != (n - 1))		// calles verticales
@@ -264,11 +268,12 @@ void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies, int s)
 			ciudad[i+1][j].arriba = 2*s - 1;
 		}
 		
-		ciudad[i][m-1].abajo = zombies;
-		ciudad[i+1][m-1].arriba = zombies;
-		zombies--;
+		ciudad[i][m-1].abajo = 0;		//aca tambien(ALE)
+		ciudad[i+1][m-1].arriba = 0;
+		//zombies--;
+	//	cout << zombies << endl;   //SACALO DESPUES
 	}
-	
+
 	return;
 }
 
@@ -276,24 +281,25 @@ void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies, int s)
 {
 	for(int j = m-1; j > 0; j--)
 	{
-		ciudad[i][j].izquierda = zombies;
-		ciudad[i][j-1].derecha = zombies;
-		zombies--;
+		ciudad[i][j].izquierda = 0;		//para volver al ant, lo mismo que derecha(ALE)
+		ciudad[i][j-1].derecha = 0;
+		//zombies--;
+		cout << zombies << endl;   //SACALO DESPUES
 	}
 	
 	if(i != (n - 1))
 	{
-		for(int j = 0; j < m-1; j++)
+		for(int j = 0; j < m; j++)
 		{
 			ciudad[i][j].abajo = 2*s - 1;
 			ciudad[i+1][j].arriba = 2*s - 1;
 		}
 		
-		ciudad[i][0].abajo = zombies;
-		ciudad[i+1][0].arriba = zombies;
-		zombies--;
+		ciudad[i][0].abajo = 0;
+		ciudad[i+1][0].arriba = 0;
+		//zombies--;
+		cout << zombies << endl;   //SACALO DESPUES
 	}
-	
 	return;
 }
 
@@ -600,11 +606,28 @@ void testear_2_C()
 	{
 		tmax = 0;	
 		
-		for(int a = 0; a < 10; a++)
+		for(int a = 0; a < 1; a++)
 		{
 			t = 0;
 			ciudad = generar_ciudad(n,m,s);
 			ciudad[0][0].parcial = s;
+
+
+			//borrar esto despues, esto imprime por pantalla la ciudad
+			for(int i = 0; i < n; i++){
+				for(int h = 0; h < m; h++){
+					cout << ciudad[i][h].derecha << "  " ;
+
+					}	
+				cout << endl;
+				for(int j = 0; j < m; j++){
+					
+					cout << ciudad[i][j].abajo << "  " ;
+				}
+				cout << endl;
+			}
+
+
 
 			for(int h = 0; h < 20; h++)
 			{	
@@ -640,6 +663,21 @@ void testear_2_C()
 		t = 0;
 		ciudad = generar_ciudad_zigzag(n,m,s);
 		ciudad[0][0].parcial = s;
+
+		//borrar esto despues, esto imprime por pantalla la ciudad
+			for(int i = 0; i < n; i++){
+				for(int h = 0; h < m; h++){
+					cout << ciudad[i][h].derecha << "  " ;
+
+					}	
+				cout << endl;
+				for(int j = 0; j < m; j++){
+					
+					cout << ciudad[i][j].abajo << "  " ;
+				}
+				cout << endl;
+			}
+
 		
 		for(int h = 0; h < 20; h++)
 		{	cout << soldados << " zigzag " << h << endl;
