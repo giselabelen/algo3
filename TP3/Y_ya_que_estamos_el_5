@@ -1,0 +1,34 @@
+A ver....
+
+while(criterio de parada){
+
+	me la chupan
+	if(lesacabo){
+	criterio de parada= ¬criterio de parada //esto se los aseguro
+	}
+}
+
+hablando fuera de joda
+
+while (criteriodeparada){
+
+	mela ah no re loco...
+	
+	la cuestion es asi, ahora vamos a sacar un goloso randomizado, como se hace esto??
+
+	Es igual al goloso que hayamos elegido en el tres, pero en cada ocasión...primero, supongamos que estamos en el goloso que mira los nodos tomados nuevos, asi elijo uno, de ultima se adapta(aparte tengo preferencias por esteXD)
+
+	en vez de agarrar a aquel que mas nodos nuevos agrega, tomemos a aquellos que difieren en a lo sumo un 10% del que mas nodos nuevos agrega(ese numero fue eleccion mia, y decidi tomar lo que en las diapos dice por valor porque me parecio mas bonito, se puede cambar cuando gusten), y de todos los que obtenga, con un random elijo uno... Luego repito este procedimiento hasta que el nodo que mas flacos nuevos agrega sea el nodo que agrega 0 flacos y listo, obtengo mi solución
+
+Luego de esto, con lo que hicimos en el punto 4, refinamos la s
+y guardamos la cantidad de elementos que tomamos en una variable
+
+me fijo si la solución anteriormente encontrada es mejor o peor que la nueva... me quedo con la que menos flacos(nodos) tiene, obviamente
+
+y vuelvo a empezar
+}
+
+
+El criterio de parada, podría ser no se mejoro la solución en 50 iteraciones(no tengo idea si ese número es bueno o no, habría que probar) Entonces cada vez que se reemplaze efectivamente la solución, habría que llevar este contador a 0 y volver a empezarlo.
+
+Si me comi algo avisen, pero esto es máaaaaaaaaaaaaaaas o menos lo que habría que hacer en el 5.
