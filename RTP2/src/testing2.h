@@ -14,8 +14,8 @@ using namespace std;
 Mapa generar_ciudad(int n, int m, int s);
 Mapa generar_ciudad_facil(int n, int m, int s);
 Mapa generar_ciudad_zigzag(int n, int m, int s);
-void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies);
-void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies);
+void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies,int s);
+void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies,int s);
 void restablecer(Mapa& ciudad, int n, int m, int s);
 list<int> zombies_aleatorios(int total, int s);
 void anular(Mapa& ciudad, int n, int m, int s);
@@ -73,7 +73,7 @@ Mapa generar_ciudad(int n, int m, int s)
 	//~ 
 	//~ /** OJO ACA **/
 	//~ FILE * pCiudad = fopen("../Resultados_tests_nuestros/ciudad.txt","w");
-	//~ 
+	
 	
 	int r;
 	int contador = n*(m-1) + m*(n-1);
@@ -101,10 +101,10 @@ Mapa generar_ciudad(int n, int m, int s)
 	// Cant de zombies x calle
 	for(int i = 0; i < n; i++)
 	{
-		//~ 
+		
 			//~ /** OJO ACA **/
 			//~ fprintf(pCiudad,"\n");
-			
+			//~ 
 		
 		for(int j = 0; j < m-1; j++)	// calles horizontales
 		{
@@ -138,7 +138,7 @@ Mapa generar_ciudad(int n, int m, int s)
 			//~ 
 			//~ /** OJO ACA **/
 			//~ fprintf(pCiudad,"\n");
-				
+				//~ 
 				
 				
 			for(int j = 0; j < m; j++)
@@ -150,7 +150,7 @@ Mapa generar_ciudad(int n, int m, int s)
 				//~ 
 				//~ /** OJO ACA **/
 				//~ fprintf(pCiudad,"%i        ",*it);
-				
+				//~ 
 				
 			
 				// si la cant de zombies es muy grande, invalido la calle
@@ -167,10 +167,10 @@ Mapa generar_ciudad(int n, int m, int s)
 			}
 		}
 	}
-	//~ 
+	
 	//~ /** OJO ACA */
 	//~ fclose(pCiudad);
-	//~ 
+	
 	
 	return ciudad;
 }
@@ -227,11 +227,19 @@ Mapa generar_ciudad_zigzag(int n, int m, int s)
 	// Cant de zombies x calle
 	for(i = 0; i < n; i++){
 		if(i % 2 == 0){
-			completar_derecha(ciudad,i,n,m,zombies);
+			completar_derecha(ciudad,i,n,m,zombies,s);
 		}
 		else{
-			completar_izquierda(ciudad,i,n,m,zombies);
+			completar_izquierda(ciudad,i,n,m,zombies,s);
 		}
+	}
+	
+	if(n % 2 == 1){
+		ciudad[n-1][m-1].izquierda = 2*zombies - 1;
+		ciudad[n-1][m-2].derecha = 2*zombies - 1;
+	}else{
+		ciudad[n-1][0].derecha = 2*zombies - 1;
+		ciudad[n-1][1].izquierda = 2*zombies - 1;
 	}
 	
 	if(s < n*m){ anular(ciudad,n,m,s); }
@@ -239,7 +247,7 @@ Mapa generar_ciudad_zigzag(int n, int m, int s)
 	return ciudad;
 }
 
-void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies)
+void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies, int s)
 {
 	for(int j = 0; j < m-1; j++)	// calles horizontales
 	{
@@ -252,8 +260,8 @@ void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies)
 	{	
 		for(int j = 0; j < m-1; j++)
 		{
-			ciudad[i][j].abajo = -1;
-			ciudad[i+1][j].arriba = -1;
+			ciudad[i][j].abajo = 2*s - 1;
+			ciudad[i+1][j].arriba = 2*s - 1;
 		}
 		
 		ciudad[i][m-1].abajo = zombies;
@@ -264,7 +272,7 @@ void completar_derecha(Mapa& ciudad, int i, int n, int m, int& zombies)
 	return;
 }
 
-void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies)
+void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies, int s)
 {
 	for(int j = m-1; j > 0; j--)
 	{
@@ -277,8 +285,8 @@ void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies)
 	{
 		for(int j = 0; j < m-1; j++)
 		{
-			ciudad[i][j].abajo = -1;
-			ciudad[i+1][j].arriba = -1;
+			ciudad[i][j].abajo = 2*s - 1;
+			ciudad[i+1][j].arriba = 2*s - 1;
 		}
 		
 		ciudad[i][0].abajo = zombies;
@@ -378,10 +386,11 @@ void testear_2_A()	// EXTIENDO N
 			.vertical = 9,
 		};
 		
-		for(int a = 0; a < 50; a++)
+		for(int a = 0; a < 10; a++)
 		{
 			t = 0;
 			ciudad = generar_ciudad(tam,m,s);
+			ciudad[0][0].parcial = s;
 			
 			for(int h = 0; h < 20; h++)
 			{	cout << tam << " " << a << " " << h << endl;
@@ -418,6 +427,7 @@ void testear_2_A()	// EXTIENDO N
 		
 		t = 0;
 		ciudad = generar_ciudad_zigzag(tam,m,s);
+		ciudad[0][0].parcial = s;
 		
 		for(int h = 0; h < 20; h++)
 		{	cout << tam << " zigzag " << h << endl;
@@ -484,10 +494,11 @@ void testear_2_B()	// EXTIENDO M
 			.vertical = tam - 1,
 		};
 		
-		for(int a = 0; a < 50; a++)
+		for(int a = 0; a < 10; a++)
 		{
 			t = 0;
 			ciudad = generar_ciudad(n,tam,s);
+			ciudad[0][0].parcial = s;
 
 			for(int h = 0; h < 20; h++)
 			{	cout << tam << " " << a << " " << h << endl;
@@ -524,6 +535,7 @@ void testear_2_B()	// EXTIENDO M
 		
 		t = 0;
 		ciudad = generar_ciudad_zigzag(n,tam,s);
+		ciudad[0][0].parcial = s;
 		
 		for(int h = 0; h < 20; h++)
 		{	cout << tam << " zigzag " << h << endl;
@@ -584,17 +596,19 @@ void testear_2_C()
 		
 	Mapa ciudad;
 	
-	for(int soldados = s; soldados > 0; soldados--)
+	for(int soldados = s; soldados > 99; soldados--)
 	{
 		tmax = 0;	
 		
-		for(int a = 0; a < 50; a++)
+		for(int a = 0; a < 10; a++)
 		{
 			t = 0;
 			ciudad = generar_ciudad(n,m,s);
+			ciudad[0][0].parcial = s;
 
 			for(int h = 0; h < 20; h++)
-			{	cout << soldados << " " << a << " " << h << endl;
+			{	
+				cout << soldados << " " << a << " " << h << endl;
 				int soldados = s;
 				Mapa ciudad_aux (n, Vect(m));
 				for(int i = 0; i < n; i++)
@@ -625,6 +639,7 @@ void testear_2_C()
 		
 		t = 0;
 		ciudad = generar_ciudad_zigzag(n,m,s);
+		ciudad[0][0].parcial = s;
 		
 		for(int h = 0; h < 20; h++)
 		{	cout << soldados << " zigzag " << h << endl;
