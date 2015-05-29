@@ -284,7 +284,7 @@ void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies, int s)
 		ciudad[i][j].izquierda = 0;		//para volver al ant, lo mismo que derecha(ALE)
 		ciudad[i][j-1].derecha = 0;
 		//zombies--;
-		cout << zombies << endl;   //SACALO DESPUES
+		//~ cout << zombies << endl;   //SACALO DESPUES
 	}
 	
 	if(i != (n - 1))
@@ -298,7 +298,7 @@ void completar_izquierda(Mapa& ciudad, int i, int n, int m, int& zombies, int s)
 		ciudad[i][0].abajo = 0;
 		ciudad[i+1][0].arriba = 0;
 		//zombies--;
-		cout << zombies << endl;   //SACALO DESPUES
+		//~ cout << zombies << endl;   //SACALO DESPUES
 	}
 	return;
 }
@@ -387,10 +387,19 @@ void testear_2_A()	// EXTIENDO N
 	{
 		tmax = 0;
 		
-		bunker = (pos){
-			.horizontal = tam - 1,
-			.vertical = 9,
-		};
+		if(tam % 2 == 0)
+		{
+			bunker = (pos){
+				.horizontal = tam - 1,
+				.vertical = 0,
+			};
+			
+		}else{
+			bunker = (pos){
+				.horizontal = tam - 1,
+				.vertical = 9,
+			};
+		}
 		
 		for(int a = 0; a < 10; a++)
 		{
@@ -496,9 +505,9 @@ void testear_2_B()	// EXTIENDO M
 		tmax = 0;
 		
 		bunker = (pos){
-			.horizontal = 9,
-			.vertical = tam - 1,
-		};
+				.horizontal = 9,
+				.vertical = 0,	// OJO ACA, ESTO DEPENDE DE LA PARIDAD DE N
+			};
 		
 		for(int a = 0; a < 10; a++)
 		{
