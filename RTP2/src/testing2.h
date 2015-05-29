@@ -595,8 +595,8 @@ void testear_2_C()
 	double t = 0;	
 	double tmax = 0;	
 	
-	int n = 5;
-	int m = 5;
+	int n = 20;
+	int m = 20;
 	int s = 100;
 	
 	pos inicio = (pos){
@@ -605,17 +605,17 @@ void testear_2_C()
 		};
 		
 	pos bunker = (pos){
-			.horizontal = 4,
-			.vertical = 4,
+			.horizontal = 19,
+			.vertical = 0,
 		};
 		
 	Mapa ciudad;
 	
-	for(int soldados = s; soldados > 99; soldados--)
+	for(int soldados = s; soldados > 0; soldados--)
 	{
 		tmax = 0;	
 		
-		for(int a = 0; a < 1; a++)
+		for(int a = 0; a < 10; a++)
 		{
 			t = 0;
 			ciudad = generar_ciudad(n,m,s);
@@ -623,18 +623,18 @@ void testear_2_C()
 
 
 			//borrar esto despues, esto imprime por pantalla la ciudad
-			for(int i = 0; i < n; i++){
-				for(int h = 0; h < m; h++){
-					cout << ciudad[i][h].derecha << "  " ;
-
-					}	
-				cout << endl;
-				for(int j = 0; j < m; j++){
-					
-					cout << ciudad[i][j].abajo << "  " ;
-				}
-				cout << endl;
-			}
+			//~ for(int i = 0; i < n; i++){
+				//~ for(int h = 0; h < m; h++){
+					//~ cout << ciudad[i][h].derecha << "  " ;
+//~ 
+					//~ }	
+				//~ cout << endl;
+				//~ for(int j = 0; j < m; j++){
+					//~ 
+					//~ cout << ciudad[i][j].abajo << "  " ;
+				//~ }
+				//~ cout << endl;
+			//~ }
 
 
 
@@ -674,18 +674,18 @@ void testear_2_C()
 		ciudad[0][0].parcial = s;
 
 		//borrar esto despues, esto imprime por pantalla la ciudad
-			for(int i = 0; i < n; i++){
-				for(int h = 0; h < m; h++){
-					cout << ciudad[i][h].derecha << "  " ;
-
-					}	
-				cout << endl;
-				for(int j = 0; j < m; j++){
-					
-					cout << ciudad[i][j].abajo << "  " ;
-				}
-				cout << endl;
-			}
+			//~ for(int i = 0; i < n; i++){
+				//~ for(int h = 0; h < m; h++){
+					//~ cout << ciudad[i][h].derecha << "  " ;
+//~ 
+					//~ }	
+				//~ cout << endl;
+				//~ for(int j = 0; j < m; j++){
+					//~ 
+					//~ cout << ciudad[i][j].abajo << "  " ;
+				//~ }
+				//~ cout << endl;
+			//~ }
 
 		
 		for(int h = 0; h < 20; h++)
