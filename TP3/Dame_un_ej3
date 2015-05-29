@@ -1,7 +1,7 @@
 La idea podría ser la siguiente
 me entran nodos
 ordeno esos nodos segun su grado de mayor a menor
-los voy tomando uno a uno en orden. Sería correcto revisar que no este tomando ningun nodo que no aporte nada, o sea, por mas que sea de mayor a menor en grados, si agarro un nodo tal que el nodo ya estaba tomado por algun nodo anteriormente elegido(lean lo que puse en el ej 2 si no entienden como uso la palabra tomar... probablemente no les ayude en nada), y las aristas de este nodo son todos nodos que ya estaban tomados, entonces es al pedo agarrar ese nodo.
+los voy tomando uno a uno en orden. Sería correcto revisar que no este tomando ningun nodo que no aporte nada(ni ningun nodo que tenga una arista con alguien que ya había tomado), o sea, por mas que sea de mayor a menor en grados, si agarro un nodo tal que el nodo ya estaba tomado por algun nodo anteriormente elegido(lean lo que puse en el ej 2 si no entienden como uso la palabra tomar... probablemente no les ayude en nada), y las aristas de este nodo son todos nodos que ya estaban tomados, entonces es al pedo agarrar ese nodo.
 
 Otro enfoque, más caro en complejidad creo yo, sería ser golosos en la cantidad de cosas nuevas que tomo.. esto sería
 agarro al nodo de mayor grado
@@ -13,11 +13,11 @@ luego, agarro al nodo tal que toma más nodos nuevos entre todas las opciones qu
 1-------2   Aca, los de mayor grado son 1 y 4, agarro 1 por ejemplo. 1, toma a los nodos 1,2,3,y 6.
 |	|   ahora, elijo al nodo que toma mas nodos nuevos, 6 no toma a nada nuevo, 2 y 3 toman a 4
 |	|   solamente, y 4 y 5 toman a 4 y 5, asi que puedo agarrar a 4 o 5 y ya esta. elijo 5 solo
-|	|   por joder.
-|	|
+|	|   por joder. PD: 6, 2 y 3 de todas formas no puedo tomarlos para cumplir independencia
+|	|   pero espero se entienda la idea
 |	|
 3-------4-----5
 
 y este paso se repite hasta terminar con todos los nodos.
 
-Este segundo me parece mas caro, pero mas cool, no se por que.
+Este segundo me parece mas caro, pero mas cool, no se por que. De hecho, me parece el más correcto....

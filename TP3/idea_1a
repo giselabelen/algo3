@@ -16,9 +16,13 @@ Supongamos que la idea fuera simplemente completar el tablero, y no hubiera ning
 
 Si esto fuera asi, puedo considerar a cada casillero como un nodo, y que las aristas de un nodo n, son las posiciones hacia donde puede llegar un caballo, o sea, un nodo apunto hacia aquellos nodos a donde un caballo podría ir.. si ese fuera el problema, entonces con un CIDM, se podría llegar a la solución correcta...
 
+pensandolo mejor, ver que no es tan parecido a los caballos vacíos... se parecería más si solo pidiera ser dominante... pero el status de independencia causa diferencias, puesto que recordemos que una casilla podía tener un caballo y ademas tener un caballo en otra casilla que amenazara dicha posición. básicamente, los caballos es un ejemplo de buscar un subgrafo dominante dentro de un grafo. Y el mínimo.(PARRAFO NUEVO)
+
 teniendo en cuenta los caballos preubicados, se pensará en otro momento, pero no encuentro una relación tan fácilXD
 
 Se está considerando decir que si tiene caballos preubicados no se puede traducir exactamente en un CIDM puesto que la ubicación de esos caballos condiciona mucho al conjunto.
 
 Se puede llamar como contraejemplo a un tablero de 5x5 que tiene un caballo en una esquina... podemos correr nuestro algoritmo para comprobarlo, pero creo que no hay forma de ganar el juego poniendo menos de 5 caballos nuevos, que agregado al precolocado dan 6, y la solución óptima creo que era 5
 
+
+Luego de parrafo nuevo, si consideramos que los caballos es un ejemplo de la busqueda de un grafo dominante, con caballos preubicados el problema se traduce al grafo dominante de menos nodos tal que contiene ciertos nodos.(PARRAFO NUEVO)
