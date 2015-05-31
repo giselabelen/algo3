@@ -9,7 +9,8 @@ Creo que esta idea podría adaptarse a:
 Se quiere organizar una fiesta, y se conoce las personas que van a ir. Se quiere que los organizadores de la fiesta sean algunos de sus mismos integrantes, puesto que con sus conocimientos sobre sus compañeros, se obtendrá una fiesta más amena. Sin embargo, como a cada organizador hay que pagarle, se quiere contratar a la minima cantidad de organizadores, tal que estos conozcan a todo el grupo. o algo asi.
 
 Para que este ejemplo cumpla con la independencia, habría que agregarle algo asi como que para evitar algun tipo de complot, o algo asi, algun chamuyo, los organizadores no se pueden conocer entre si(Agregado)
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 Otro:
 
 Recordemos el ejecicio de peteolio:
@@ -17,11 +18,22 @@ Recordemos el ejecicio de peteolio:
 El señor burns descubrió, que solo puede refinar peteolio si un pozo tiene una refinería, o si un pozo esta conectado a un pozo que posee refinería, PERO NO si un pozo esta conectado a un pozo que se conecta indirectamente con una refinería. Por otro lado, se puso tan tacaño con el tema de las tuberías, que el costo de cualquier par de tuberías se volvio ínfimo comparado con el de una refinería, razón por la cual nosotros tomaremos a una tubería como si tuviera costo 0. Si asi fuera, entonces con CIDM conseguiríamos la mínima cantidad de refinerías que deberían construirse y en donde.
 
 Para que cumpla la independencia, podemos agregar que burns no quiere que dos sitios que pueden ser conectados mediante una tubería, tengan ambos una refinería, porque no quiere que se alien y provoquen huelga, que se yo.(Agregado)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Podemos decir que sabemos que el costo de las tuberías es despreciable y podemos agregar todas las que hagan falta, pero que como son tan baratas, no aguantan el cauce de petróleo de muchos pozos a la vez, por lo cual tenemos que encontrar la forma de poner refinerías tal que todos los pozos refinen su petróleo. Entonces,
+	- si un pozo tiene refinería, ya está
+	- si un pozo tiene tubería hacia otro que tiene refinería, está ok
+	- si un pozo no tiene tubería hacia un pozo con refinería, va a tener que ponerse una refinería ahí, sino no puede procesar su petróleo
+Como queremos minimizar el costo, tenemos que poner la menor cantidad de refinerías posibles.
+Creo que esto cumple dominancia e independencia, hay que mirar con cuidado igual.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 Otro:
 
 Una empresa P, tiene sus actividades divididas en áreas. Algunas áreas se relacionan entre si, lo que produce que un atraso importante en un área, causa un retraso en todas las areas a las cuales esta se relaciona. Sin embargo, debido al buen funcionamiento de la empresa, un area que tiene tan solo un retraso, no interfiere con el funcionamiento de las areas con las cuales se relaciona. La empresa C, archirequetecontrarival de la empresa P, nos ha contratado. Ambas empresas intentan lanzar una nueva bebida sabor cola, y se sabe que aquella que la lanze primero, obtendra las mayores ganancias. Sin embargo, la empresa P lleva la ventaja, y solo si todas las áreas de esta tienen o un atraso importante, o un retraso, la empresa C lograra lanzar primero la bebida. Nuestra misión es enviar infiltrados a la empresa P, de manera tal de causar la situación anteriormente dicha. Sin embargo, dado que la empresa P no es estúpida, debemos enviar infiltrados a la menor cantidad de areas posibles. Si se conoce la cantidad de áreas de la empresa P, y cuales se relacionan con cuales, y un solo infiltrado puede causar un atraso importante en un area. Cuantos infiltrados y a cuales areas debemos enviar?? Tener en cuenta que las relaciones no son transitivas, que el area A se relacione con el area B, y la B con la C, no significa que A se relacione con C.
 Para que cumpla independencia, se puede agregar que un area no puede tener un atraso importante y un retraso a la vez, puesto que esto haría entender a P que algo raro sucede, y C cagaría fuego.(agregado)
 ESTA IDEA ES EL MAYOR CHAMUYO, NO SE ME OCURRE OTRA COSA, ASI QUE ME PUSE A INVENTAR.	
 Y ENCIMA NO ES LEGAAAAAAAAAAAL!!!! 
-
-(Otro día se hará;))
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ADAPTACIÓN POSITIVA
+Una empresa de bebidas gaseosas tiene sus actividades divididas en áreas, las cuales se interrelacionan de cierta manera (no necesariamente todas con todas).  Esta empresa está por sacar una nueva bebida sabor cola y quiere hacerlo antes que su rival, quien está más adelantado en la producción.  Para lograr sacar el producto antes que su contrincante, nuestra empresa debe lograr una mejora en el trabajo de sus diferentes áreas.  Por cómo está estructurada la empresa, si un área tiene una mejora considerable en tiempo, todas las áreas que se relacionan con ella tendrán también se verán beneficiadas al respecto, pero este beneficio ya no impacta en las áreas relacionadas con estas últimas.  Queremos entonces lograr impulsar mejoras considerables en las áreas que sean necesarias para que toda la empresa funcione más rápido y logre sacar su producto a tiempo.  Para ello se contratarán especialistas con sueldos sumamente importantes, por lo cual se desea que la cantidad de áreas a mejorar considerablemente sea mínima (para minimizar la inversión en especialistas).
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
