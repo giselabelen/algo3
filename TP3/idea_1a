@@ -26,3 +26,14 @@ Se puede llamar como contraejemplo a un tablero de 5x5 que tiene un caballo en u
 
 
 Luego de parrafo nuevo, si consideramos que los caballos es un ejemplo de la busqueda de un grafo dominante, con caballos preubicados el problema se traduce al grafo dominante de menos nodos tal que contiene ciertos nodos.(PARRAFO NUEVO)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+La línea 17 no necesariamente incluye independencia.  Ver que la solución de nuestro programa para un tablero vacío de 5x5 devuelve lo siguiente:
+3 2 
+3 3 
+3 4 
+4 3 
+4 4 
+que claramente no es independiente.  Existe una solución independiente (ocupar la línea del medio) pero no es la única.  El enunciado sólo pide DOMINANCIA, no necesariamente INDEPENDENCIA.
+Existen casos que podrían traducirse en CIDM pero no es la regla (se podría ver si existe una familia de casos que juuuusto se pueden resolver así, pero eso es sólo para el que tenga ganas, jajaja).
