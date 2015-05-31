@@ -1,6 +1,0 @@
-Si tenemos un grafo que representa relaciones entre las personas tipo:
-
-- cada nodo representa una persona
-- cada arista indica que tal persona conoce a tal otra
-
-el conjunto de los CIDM's del grafo podria indicar a quienes tenes que presentar con quienes para que todos se conozcan entre sí, o algún chamuyo asi.
