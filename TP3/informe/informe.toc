@@ -1,0 +1,31 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}Objetivos generales}{3}{section.1}
+\contentsline {section}{\numberline {2}Plataforma de pruebas}{3}{section.2}
+\contentsline {section}{\numberline {3}Problema 1: Dakkar}{4}{section.3}
+\contentsline {subsection}{\numberline {3.1}Descripci\IeC {\'o}n del problema.}{4}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Desarrollo de la idea y correctitud.}{4}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}An\IeC {\'a}lisis de complejidad.}{7}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{8}{subsection.3.4}
+\contentsline {subsubsection}{\numberline {3.4.1}Test 1}{8}{subsubsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.2}Test 2}{9}{subsubsection.3.4.2}
+\contentsline {section}{\numberline {4}Problema 2: Zombieland II}{10}{section.4}
+\contentsline {subsection}{\numberline {4.1}Descripci\IeC {\'o}n del problema.}{10}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Desarrollo de la idea y correctitud.}{11}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}An\IeC {\'a}lisis de complejidad.}{12}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{16}{subsection.4.4}
+\contentsline {subsubsection}{\numberline {4.4.1}Test 1}{16}{subsubsection.4.4.1}
+\contentsline {subsubsection}{\numberline {4.4.2}Test 2}{16}{subsubsection.4.4.2}
+\contentsline {subsubsection}{\numberline {4.4.3}Test 3}{16}{subsubsection.4.4.3}
+\contentsline {section}{\numberline {5}Problema 3: Refinando petr\IeC {\'o}leo}{18}{section.5}
+\contentsline {subsection}{\numberline {5.1}Descripci\IeC {\'o}n del problema.}{18}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Desarrollo de la idea y correctitud.}{18}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}An\IeC {\'a}lisis de complejidad.}{21}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Experimentaci\IeC {\'o}n y gr\IeC {\'a}ficos.}{23}{subsection.5.4}
+\contentsline {subsubsection}{\numberline {5.4.1}Test 1}{23}{subsubsection.5.4.1}
+\contentsline {subsubsection}{\numberline {5.4.2}Test 2}{23}{subsubsection.5.4.2}
+\contentsline {subsubsection}{\numberline {5.4.3}Test 3}{23}{subsubsection.5.4.3}
+\contentsline {section}{\numberline {6}Ap\IeC {\'e}ndice 1: acerca de los tests}{24}{section.6}
+\contentsline {section}{\numberline {7}Ap\IeC {\'e}ndice 2: secciones relevantes del c\IeC {\'o}digo}{25}{section.7}
+\contentsline {subsection}{\numberline {7.1}C\IeC {\'o}digo del Problema 1}{25}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}C\IeC {\'o}digo del Problema 2}{26}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}C\IeC {\'o}digo del Problema 3}{29}{subsection.7.3}
