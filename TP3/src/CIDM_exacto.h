@@ -71,7 +71,7 @@ void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado,
 
 		for (list<int>::iterator it = vec[pos].begin(); it != vec[pos].end(); it++)
 		{
-			if(!estado[*it]){
+			if(estado[*it] != 0){
 				estado[*it]--;
 			}
 		}
