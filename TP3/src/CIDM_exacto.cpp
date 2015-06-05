@@ -30,9 +30,9 @@ int main()
 	backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0);
 	
 	// Armo la salida
-	printf("%i \n",res);
+	printf("%i ",cota);
 	
-	for (list<int>::iterator it = cidm.begin(); it != cidm.end(); it++){
-		printf("%i \n",*it);
+	for (list<int>::iterator it = cidm_sol.begin(); it != cidm_sol.end(); it++){
+		printf("%i ",*it + 1);
 	}
 }
