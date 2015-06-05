@@ -14,3 +14,17 @@ hay algunos errores, desp los corrijo
 Bueno, para corregir errores, basicamente la idea es el mismo backtracking, pero no puedo tomar a alguien que tiene un arista con alguien que ya había tomado....
 y en cuanto a podaaaaaaas...
 jajajajja
+
+
+
+/-------------------------------------------------------------------------------------/
+/----------------------PODAS LOCAS REMIAU PONGO COSAS PARA CENTRAR--------------------/
+/-------------------------------------------------------------------------------------/
+
+1)Y que tal si usamos la demo??
+La demo dice si es independiente maximal, es dominante
+una forma pete de usarla es decir, bueno si es independiente maximal al menos toma tantos elementos como la cantidad de nodods no vecinos al nodo que mas aristas tiene, porque se me ocurrio que eso funciona  me gusta la magia
+algo mas interesante seria, y si hayo ese conjunto independiente maximal de forma barata y lo uso como poda?? porque es un conjunto independiente dominante, no se si es el minimo pero de algo tiene que servir... y es un buen comienzo... es mejor que todos los nodos al menos.
+Propongo ver si se puede hayarlo de manera golosa, comiendome a los nodos que tienen menor grado y obviamente fijandome de no romper la independencia, siempre agarrando nodos que no tienen aristas con sus compatriotas
+estoy tratando de demostrar que eso funciona...en principio no lo pude romper, y el algoritmo sería nlogn, mucho mejor que un puto exponencial
+estoy tratando de decir, supongamos que no, supongamos que existe al menos una solucion mejor, luego pienso del conjunto de mejores soluciones tomo la que mas se parece... ahora empiezo a ver a partir de los elementos que difieren... localmente mi solución es mejor o igual, pero y que onda con las consecuencias?? en principio pareciera que las consecuencias la pueden cagar, peroooo, es cierto?? y eso estoy pensando
