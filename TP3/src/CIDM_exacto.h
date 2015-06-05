@@ -56,8 +56,8 @@ void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado,
 		
 		for (list<int>::iterator it = vec[pos].begin(); it != vec[pos].end(); it++)
 		{
-			estado[*it]++;
 			if(estado[*it] == 0){ cont++; }
+			estado[*it]++;
 		}
 		
 		backtracking(cidm,cidm_sol,estado,vec,pos+1,n,cota,res,cont);
