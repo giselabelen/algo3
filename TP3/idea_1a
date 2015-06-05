@@ -37,3 +37,17 @@ La línea 17 no necesariamente incluye independencia.  Ver que la solución de n
 4 4 
 que claramente no es independiente.  Existe una solución independiente (ocupar la línea del medio) pero no es la única.  El enunciado sólo pide DOMINANCIA, no necesariamente INDEPENDENCIA.
 Existen casos que podrían traducirse en CIDM pero no es la regla (se podría ver si existe una familia de casos que juuuusto se pueden resolver así, pero eso es sólo para el que tenga ganas, jajaja).
+
+Dibujar después este ejemplo:
+
+
+|-----------------|
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+|  |X |X |  |X |X |
+|  |X |X |  |X |X |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+|-----------------|
+
+creo que no hay manera de hacer a 6x6 CIDM

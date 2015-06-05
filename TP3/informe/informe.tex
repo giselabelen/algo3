@@ -76,9 +76,40 @@
 \newpage
 
 %\normalsize
-
+ 
 \newpage
-\section{Objetivos generales}
+\section{Introducción}
+El problema de Conjunto Independiente Dominante Mínimo (CIDM) consiste en hallar un conjunto independiente dominante de $G$ con mínima cardinalidad. Sea $G = (V, E)$ un grafo simple. Un conjunto $D$ ⊆ $V$ es un conjunto dominante de $G$ si todo vértice de $G$ está en $D$ o bien tiene al menos un vecino que está en $D$. Por otro lado, un conjunto $I$ ⊆ $V$ es un conjunto independiente de $G$ si no existe ningún eje de $E$ entre dos vértices de $I$. Definimos entonces un
+conjunto independiente dominante de $G$ como un conjunto independiente que a su vez es un conjunto dominante del grafo $G$.
+En el presente trabajo, se pretende analizar y comparar diferentes maneras de encarar este problema. En particular se utilizará un algoritmo exacto, una heurística golosa, una heurística de busqueda local, y la metahuristica de GRASP.
+
+\section{Relación con trabajos previos y ejemplos de Uso}
+
+En el TP1 de la materia, hemos encontrado y analizado un algoritmo que resolvía un problema que fue llamado El Señor de los Caballos. El problema era el siguiente:
+
+Se tiene un juego de mesa cuyo tablero, dividido en casillas, posee igual cantidad de filas y columnas y hace uso de una conocida pieza del popular ajedrez: el caballo. El juego es solamente para un jugador y consiste en, teniendo caballos ubicados en distintos casilleros, insertar en casilleros vacíos la mínima cantidad de caballos extras, de manera tal que, siguiendo las reglas del movimiento de los caballos en el ajedrez, todas las casillas se encuentren ocupadas o amenazadas por un caballo.
+Aspectos a tener en cuenta:
+
+\begin{itemize}
+   \item Se conoce la cantidad de filas y columnas del tablero
+   \item Se conoce la cantidad de caballos que ocupan el tablero inicialmente.
+   \item Para cada uno de estos caballos, se sabe su ubicación en el tablero
+   \item Una casilla se considera amenazada si existe un caballo tal que en una movida pueda ocupar dicha casilla
+\end{itemize}
+
+Observemos que si consideramos a cada casilla como un nodo, y que las aristas hacia otros nodos se dan por las casillas a las cuales puede llegar un caballo ubicado en ese lugar, entonces el señor de los caballos puede ser visto como la busqueda de un conjunto dominante minimal que tenga a los nodos/casillas que tienen un caballo preubicado. Sin embargo, no podemos traducir este problema a un CIDM, puesto que no necesariamente debe cumplir el requisito de independencia. O sea, no necesariamente si la solución tiene un caballos en una casilla determinada, no haya ningún caballo ubicado en alguna de las casillas que este caballo amenaza. Veamos un ejemplo:
+
+(desde ver... hasta 4 4 habría que poner una imagen de un tablero de 5x5 vacío(1), y de esta solución(2) y de la solución que respeta CIDM(3), que es la que tiene 5 caballos en el centro.)
+Ver que la solución de nuestro programa para un tablero vacío de 5x5 devuelve lo siguiente:
+3 2 
+3 3 
+3 4 
+4 3 
+4 4
+
+Si nuestro tablero fuera el de la figura 1, una solución posible(de hecho, la encontrada con el algoritmo usado en el TP1) es la figura 2. Esta solución podemos observar que es dominante, pero no independiente puesto que el caballo de la fila 3 columna 2 amenaza al de la fila 4 columna 4. Sin embargo en este caso, existe una solución CIDM como lo es la figura 3. 
+
+(Dejo la parte de trabajos previos hasta aca, puesto que hay un ejemplo en el txt que quiero probar si funciona y agregaría un par de líneas)
 
 
 %\newpage
