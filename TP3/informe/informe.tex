@@ -132,6 +132,13 @@ Para toda la experimentación se utilizará un procesador Intel Core i3, de 4 nu
 
 El software utilizado será Ubuntu 14.04, y G++ 4.8.2.
 \newpage
+\section{Propiedad}
+Un conjunto independiente de $I$ $\subseteq$ $V$ se dice maximal si no existe otro conjunto independiente $J \subseteq V$ tal que $I \subset J$, es decir que $I$ está incluido estrictamente en $J$. Se sabe que todo conjunto independiente maximal es un conjunto dominante. En esta sección demostraremos esta propiedad, puesto que será utilizada a lo largo del presente trabajo varias veces.
+
+Demostración:
+
+Supongamos que no. O sea, que existe algun grafo $(V,E)$ tal que su conjunto independiente maximal(CIM) no es un conjunto dominante. Si esto es así, entonces por no ser dominante, existe un nodo $n$ que pertenece al grafo pero no al CIM, y que además dentro del grafo original, $n$ no es vecino de ningún elemento de CIM. Pero entonces, si añadimos n a CIM se obtiene un conjunto independiente que tiene los mismos elementos de CIM más un nodo, o sea que este nuevo conjunto contiene a CIM, lo cual es absurdo, puesto que habíamos dicho que CIM era maximal. El absurdo proviene de suponer que el conjunto no es dominante, por lo tanto, el conjunto debe ser dominante.
+
 \section{Algoritmo Exacto}
 \input{1exacto}
 
