@@ -1,5 +1,8 @@
 #include <cstdio>
+#include "CIDM_grasp.h"
 #include "CIDM_goloso.h"
+#include "CIDM_busqlocal.h"
+
 
 int main()
 {
