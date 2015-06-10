@@ -35,4 +35,8 @@ estoy tratando de decir, supongamos que no, supongamos que existe al menos una s
 me la chupan todos
 por cierto, una posible poda, muy boluda, pero que come ramas es, si un flaco no tiene aristas, no tiene sentido pensar en la posibilidad de no agarrarlo
 
+que sepa el mundo que en marcha estoy por una rama tal que me faltan tomar 8 nodos... y justo me toca agarrar a un nodo que toma a los 8 nodos que me faltan... a partir de ahi no tiene sentido seguir viendo esa rama... observar que nuestra poda principal, la de no ver algo que va a tener peor solución que una mejor solución que ya obtuvimos , parece contener a esta poda, pero no es asi... preguntenme y les cuento, no se como escribirlo,pero si quieren pensarlo, esta poda se ahorra la rama del no no tomo el proximo nodo y blabla
 
+
+
+tengo sueño, hace frío y no hay sol... buuuuu... propongo estas quejas como una poda(?)
