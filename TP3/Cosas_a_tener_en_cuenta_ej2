@@ -28,3 +28,11 @@ algo mas interesante seria, y si hayo ese conjunto independiente maximal de form
 Propongo ver si se puede hayarlo de manera golosa, comiendome a los nodos que tienen menor grado y obviamente fijandome de no romper la independencia, siempre agarrando nodos que no tienen aristas con sus compatriotas
 estoy tratando de demostrar que eso funciona...en principio no lo pude romper, y el algoritmo sería nlogn, mucho mejor que un puto exponencial
 estoy tratando de decir, supongamos que no, supongamos que existe al menos una solucion mejor, luego pienso del conjunto de mejores soluciones tomo la que mas se parece... ahora empiezo a ver a partir de los elementos que difieren... localmente mi solución es mejor o igual, pero y que onda con las consecuencias?? en principio pareciera que las consecuencias la pueden cagar, peroooo, es cierto?? y eso estoy pensando
+
+
+
+
+me la chupan todos
+por cierto, una posible poda, muy boluda, pero que come ramas es, si un flaco no tiene aristas, no tiene sentido pensar en la posibilidad de no agarrarlo
+
+
