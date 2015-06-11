@@ -1,10 +1,10 @@
 #include <cstdio>
 #include "CIDM_goloso.h"
+#include "CIDM_busqlocal.h"
+#include "CIDM_grasp.h"
 
 int main()
 {
-	srand(time(0));
-	
 	int n;					// Cantidad de nodos
 	int m;					// Cantidad de vértices
 	int e1;					// Para procesar las aristas	
@@ -16,6 +16,7 @@ int main()
 	scanf("%i",&m);
 
 	Vecinos vec(n);			// Lista de adyacencia
+	Vecinos vec_copia(n);	// Lista de adyacencia
 	
 	for(int i = 0; i < n; i++){
 		vec[i].second = 0;
@@ -29,11 +30,35 @@ int main()
 		(vec[e1-1].first).push_back(e2-1);
 		(vec[e2-1].first).push_back(e1-1);
 		
+		(vec_copia[e1-1].first).push_back(e2-1);
+		(vec_copia[e2-1].first).push_back(e1-1);
+		
 		vec[e1-1].second++;
 		vec[e2-1].second++;
+		
+		vec_copia[e1-1].second++;
+		vec_copia[e2-1].second++;
 	}
-	
+
+	// SOLUCIONES (USAR SÓLO UNA)
+
+	// SOLUCIÓN GOLOSA CONSTRUCTIVA
 	res = goloso(cidm_sol,vec,n,0,0);
+
+	//~ // SOLUCIÓN DE BÚSQUEDA LOCAL
+	//~ // Soluciones iniciales (usar sólo una)
+	//~ //res = goloso(cidm_sol,vec_copia,n);
+	//~ res = otro_inicio(cidm_sol,vec,n);
+	//~ 
+	//~ // Vecindades (usar sólo una)
+	//~ if(res != 1)
+	//~ {
+		//~ busqueda1(cidm_sol,vec,n,res);
+		//~ //busqueda2();
+	//~ }
+	//~ 
+	//~ // SOLUCIÓN POR GRASP
+	//~ res = grasp(cidm_sol,vec,n,0.1,0,50);
 	
 	// Armo la salida
 	printf("%i ",res);
