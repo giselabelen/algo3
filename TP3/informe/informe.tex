@@ -136,13 +136,13 @@ Para toda la experimentación se utilizará un procesador Intel Core i3, de 4 nu
 
 El software utilizado será Ubuntu 14.04, y G++ 4.8.2.
 \newpage
-\section{Propiedad}
+\section{Propiedades}
 En esta sección demostraremos ciertas propiedades que serán usadas a lo largo del trabajo.
 
-\subsection{1) Todo conjunto independiente maximal es dominante}
+\subsection{ Todo conjunto independiente maximal es dominante}
 Supongamos que no. O sea, que existe algun grafo $(V,E)$ tal que su conjunto independiente maximal(CIM) no es un conjunto dominante. Si esto es así, entonces por no ser dominante, existe un nodo $n$ que pertenece al grafo pero no al CIM, y que además dentro del grafo original, $n$ no es vecino de ningún elemento de CIM. Pero entonces, si añadimos n a CIM se obtiene un conjunto independiente que tiene los mismos elementos de CIM más un nodo, o sea que este nuevo conjunto contiene a CIM, lo cual es absurdo, puesto que habíamos dicho que CIM era maximal. El absurdo proviene de suponer que el conjunto no es dominante, por lo tanto, el conjunto debe ser dominante.
 
-\subsection{2) Todo conjunto independiente dominante es independiente maximal}
+\subsection{ Todo conjunto independiente dominante es independiente maximal}
 
 Supongo que no. Entonces, definamos $G$ un grafo tal que tiene un conjunto independiente dominante pero no independiente maximal, que llamaremos $I$. Como no es independiente maximal, puedo suponer que existe algun conjunto $J$ independiente, tal que $I \subset J$. Entonces, existe $v$ un nodo que pertenece a $J$ pero no a $I$ tal que $v$ no es vecino de ningún elemento de $I$, lo cual es absurdo, ya que suponer eso es decir que I no era dominante. 
 
