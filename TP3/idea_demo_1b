@@ -14,3 +14,8 @@ Demostrar que todo conjunto independiente maximal es un conjunto dominante:
 Idea de demo, más formal:
 
 Supongamos que no. O sea, que existe algun grafo (V,E)/ su conjunto independiente maximal(CIM) no es un conjunto dominante. Si esto es así, entonces por no ser dominante, existe un nodo n que pertenece al grafo pero no al CIM, y que además dentro del grafo original, n no es vecino de ningún elemento de CIM. Pero entonces, si añadimos n a CIM se obtiene un conjunto independiente que tiene los mismos elementos de CIM más un nodo, o sea que este nuevo conjunto contiene a CIM, lo cual es absurdo, puesto que habíamos dicho que CIM era maximal. El absurdo proviene de suponer que el conjunto no es dominante, por lo tanto, el conjunto debe ser dominante.
+
+es todo conjunto independiente dominante, independiente maximal??
+
+supongo que no
+entonces, como es independiente, pero no maximal, existe otro conjunto independiente tal que lo contiene. En otras palabras existe al menos un nodo tal que no tiene aristas en comun con ningun elemento de mi conjunto independiente dominante, y no se encuentra tampoco dentro del mismo, lo cual es absurdo, puesto que entonces mi conjunto no es dominante.
