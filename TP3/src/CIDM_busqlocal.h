@@ -14,9 +14,11 @@ typedef vector< pair< list<int>, int> > Vecinos;
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
 int otro_inicio(list<int>& cidm_sol, Vecinos vecinos, int n);
-int vecindades(list<int> vec, Vecinos vecinos, vector<int>& cercanos, int cont_ceros);
-bool mejorador(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int& res);
-void busqueda1(list<int>& cidm_sol, Vecinos vecinos, int n, int& res);
+int vecindad1(list<int> vec, Vecinos vecinos, vector<int>& cercanos, int cont_ceros);
+int vecindad2(list<int> intercambios, Vecinos vecinos, vector<int>& cercanos);
+bool mejorador1(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int& res);
+bool mejorador2(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int& res, int n);
+void busqueda(list<int>& cidm_sol, Vecinos vecinos, int n, int& res, int mej);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -46,7 +48,7 @@ int otro_inicio(list<int>& cidm_sol, Vecinos vecinos, int n)
 }
 
 
-int vecindades(list<int> vec, Vecinos vecinos, vector<int>& cercanos, int cont_ceros)
+int vecindad1(list<int> vec, Vecinos vecinos, vector<int>& cercanos, int cont_ceros)
 {
 	int cont_aux = 0;
 	list<int>::iterator it1;
@@ -81,7 +83,32 @@ int vecindades(list<int> vec, Vecinos vecinos, vector<int>& cercanos, int cont_c
 }
 
 
-bool mejorador(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int& res)
+int vecindad2(list<int> intercambios, Vecinos vecinos, vector<int>& cercanos)
+{
+	int cont_aux = 0;
+	list<int>::iterator it1;
+	list<int>::iterator it2;
+	
+	for(it1 = intercambios.begin(); it1 != intercambios.end(); it1++)
+	{
+		for(it2 = (vecinos[*it1].first).begin(); it2 != (vecinos[*it1].first).end(); it2++)
+		{
+			if(cercanos[*it2] > 1)
+			{
+				cercanos[*it2]--;
+			}
+			else if(cercanos[*it2] == 1)
+			{
+				return 1;
+			}
+		}
+	}
+	
+	return 0;
+}
+
+
+bool mejorador1(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int& res)
 {
 	int cont_ceros;				// Cantidad de nodos que quedan 'libres'
 	int cambio;					// Nodo que vamos a insertar
@@ -114,12 +141,12 @@ bool mejorador(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int&
 			}
 			
 			// Veo si puedo cambiar estos 2 con un amigo del primero
-			cambio = vecindades(vecinos[*it1].first,vecinos,cercanos,cont_ceros);
+			cambio = vecindad1(vecinos[*it1].first,vecinos,cercanos,cont_ceros);
 			
 			if(cambio == -1)
 			{
 				// Si no se pudo, veo de cambiar con un amigo del segundo
-				cambio = vecindades(vecinos[*it2].first,vecinos,cercanos,cont_ceros);
+				cambio = vecindad1(vecinos[*it2].first,vecinos,cercanos,cont_ceros);
 			}
 			
 			// Si tuve un cambio, actualizo 'cidm_sol' y 'res'
@@ -154,7 +181,71 @@ bool mejorador(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int&
 }
 
 
-void busqueda1(list<int>& cidm_sol, Vecinos vecinos, int n, int& res)
+bool mejorador2(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int& res, int n)
+{
+	int cont_ceros;				// Cantidad de nodos que quedan 'libres'
+	int cambio;	
+	int aux;
+	vector<int> cercanos_aux;
+	list<int> intercambios;		// Nodos que vamos a sacar
+	list<int>::iterator it1;
+	list<int>::iterator it2;
+	list<int>::iterator it3;
+	
+	for(int i = 0; i < n; i++)
+	{
+		if(cercanos[i] > 1)
+		{
+			intercambios.clear();
+			aux = cercanos[i];
+			cercanos[i] = -1;
+			
+			// Actualizo 'cercanos' para los vecinos del nodo elegido
+			for(it1 = (vecinos[i].first).begin(); it1 != (vecinos[i].first).end(); it1++)
+			{
+				if(cercanos[*it1] == -1)
+				{ 
+					cercanos[*it1] = 1; 
+					intercambios.push_back(cercanos[*it1]);
+				}else{
+					cercanos[*it1]++;
+				}
+			}
+			
+			cercanos_aux = cercanos;
+			
+			cambio = vecindad2(intercambios, vecinos, cercanos_aux);
+			
+			// Si tuve un cambio, actualizo 'cercanos', 'cidm_sol' y 'res'
+			if(cambio == 0)
+			{
+				cercanos = cercanos_aux;
+				
+				for(it1 = intercambios.begin(); it1 != intercambios.end(); it1++)
+				{
+					it2 = cidm_sol.begin();
+					
+					while(*it2 != *it1){ it2++; }
+					
+					it2 = cidm_sol.erase(it2);
+					res--;
+				}
+				
+				cidm_sol.push_back(i);
+				res++;
+				return true;
+			}
+			
+			// Si no tuve un cambio, vuelvo al 'cercanos' original
+			cercanos[i] = aux;
+		}
+	}
+	
+	return false;
+}
+
+
+void busqueda(list<int>& cidm_sol, Vecinos vecinos, int n, int& res, int mej)
 {
 	bool hay_cambios = true;
 	vector<int> cercanos(n,0);	// Conexiones con los de la solución
@@ -174,12 +265,14 @@ void busqueda1(list<int>& cidm_sol, Vecinos vecinos, int n, int& res)
 	// Itero hasta que no mejore
 	while(hay_cambios && res != 1)
 	{
-		hay_cambios = mejorador(cidm_sol,vecinos,cercanos,res);
+		if(mej == 1){
+			hay_cambios = mejorador1(cidm_sol,vecinos,cercanos,res);
+		}else{
+			hay_cambios = mejorador2(cidm_sol,vecinos,cercanos,res,n);
+		}
 	}
 	
 	return;
 }
-
-
 
 #endif // CIDM_BUSQLOCAL_H_INCLUDED

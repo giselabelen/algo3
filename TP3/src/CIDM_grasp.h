@@ -45,7 +45,7 @@ int grasp(list<int>& cidm_sol, Vecinos vecinos, int n, float alpha, int beta, in
 		}
 		
 		res_aux = goloso(cidm_aux,vecinos_aux,n,alpha,beta);	// goloso
-		busqueda1(cidm_aux,vecinos_aux,n,res);				// mejora por local search
+		busqueda(cidm_aux,vecinos_aux,n,res,1);				// mejora por local search
 		
 		if(res_aux < res)
 		{
