@@ -79,8 +79,12 @@
  
 \newpage
 \section{Introducción}
-El problema de Conjunto Independiente Dominante Mínimo (CIDM) consiste en hallar un conjunto independiente dominante de $G$ con mínima cardinalidad. Sea $G = (V, E)$ un grafo simple. Un conjunto $D$ $\subseteq$ $V$ es un conjunto dominante de $G$ si todo vértice de $G$ está en $D$ o bien tiene al menos un vecino que está en $D$. Por otro lado, un conjunto $I$ $\subseteq$ $V$ es un conjunto independiente de $G$ si no existe ningún eje de $E$ entre dos vértices de $I$. Definimos entonces un
-conjunto independiente dominante de $G$ como un conjunto independiente que a su vez es un conjunto dominante del grafo $G$.
+El problema de Conjunto Independiente Dominante Mínimo (CIDM) consiste en hallar un conjunto independiente dominante de $G$ con mínima cardinalidad.
+
+ Sea $G = (V, E)$ un grafo simple. Un conjunto $D$ $\subseteq$ $V$ es un conjunto dominante de $G$ si todo vértice de $G$ está en $D$ o bien tiene al menos un vecino que está en $D$. Por otro lado, un conjunto $I$ $\subseteq$ $V$ es un conjunto independiente de $G$ si no existe ningún eje de $E$ entre dos vértices de $I$. Definimos entonces un conjunto independiente dominante de $G$ como un conjunto independiente que a su vez es un conjunto dominante del grafo $G$.
+
+Un conjunto independiente de $I$ $\subseteq$ $V$ se dice maximal si no existe otro conjunto independiente $J \subseteq V$ tal que $I \subset J$, es decir que $I$ está incluido estrictamente en $J$. En otra sección de este informe se demostrará que todo conjunto independiente dominante, es particularmente independiente maximal.
+
 En el presente trabajo, se pretende analizar y comparar diferentes maneras de encarar este problema. En particular se utilizará un algoritmo exacto, una heurística golosa, una heurística de busqueda local, y la metahuristica de GRASP.
 
 \section{Relación con trabajos previos y ejemplos de Uso}
@@ -132,12 +136,15 @@ Para toda la experimentación se utilizará un procesador Intel Core i3, de 4 nu
 
 El software utilizado será Ubuntu 14.04, y G++ 4.8.2.
 \newpage
-\section{Propiedad}
-Un conjunto independiente de $I$ $\subseteq$ $V$ se dice maximal si no existe otro conjunto independiente $J \subseteq V$ tal que $I \subset J$, es decir que $I$ está incluido estrictamente en $J$. Se sabe que todo conjunto independiente maximal es un conjunto dominante. En esta sección demostraremos esta propiedad, puesto que será utilizada a lo largo del presente trabajo varias veces.
+\section{Propiedades}
+En esta sección demostraremos ciertas propiedades que serán usadas a lo largo del trabajo.
 
-Demostración:
-
+\subsection{ Todo conjunto independiente maximal es dominante}
 Supongamos que no. O sea, que existe algun grafo $(V,E)$ tal que su conjunto independiente maximal(CIM) no es un conjunto dominante. Si esto es así, entonces por no ser dominante, existe un nodo $n$ que pertenece al grafo pero no al CIM, y que además dentro del grafo original, $n$ no es vecino de ningún elemento de CIM. Pero entonces, si añadimos n a CIM se obtiene un conjunto independiente que tiene los mismos elementos de CIM más un nodo, o sea que este nuevo conjunto contiene a CIM, lo cual es absurdo, puesto que habíamos dicho que CIM era maximal. El absurdo proviene de suponer que el conjunto no es dominante, por lo tanto, el conjunto debe ser dominante.
+
+\subsection{ Todo conjunto independiente dominante es independiente maximal}
+
+Supongo que no. Entonces, definamos $G$ un grafo tal que tiene un conjunto independiente dominante pero no independiente maximal, que llamaremos $I$. Como no es independiente maximal, puedo suponer que existe algun conjunto $J$ independiente, tal que $I \subset J$. Entonces, existe $v$ un nodo que pertenece a $J$ pero no a $I$ tal que $v$ no es vecino de ningún elemento de $I$, lo cual es absurdo, ya que suponer eso es decir que I no era dominante. 
 
 \section{Algoritmo Exacto}
 \input{1exacto}
