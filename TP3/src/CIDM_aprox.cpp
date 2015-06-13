@@ -47,8 +47,8 @@ int main()
 
 	//~ // SOLUCIÓN DE BÚSQUEDA LOCAL
 	//~ // Soluciones iniciales (usar sólo una)
-	res = goloso(cidm_sol,vec_copia,n,0,0);
-	//res = otro_inicio(cidm_sol,vec,n);
+	//~ res = goloso(cidm_sol,vec_copia,n,0,0);
+	res = otro_inicio(cidm_sol,vec,n);
 	
 	// Vecindades
 	if(res != 1)

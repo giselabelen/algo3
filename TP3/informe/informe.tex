@@ -79,72 +79,95 @@
  
 \newpage
 \section{Introducción}
-El problema de Conjunto Independiente Dominante Mínimo (CIDM) consiste en hallar un conjunto independiente dominante de $G$ con mínima cardinalidad.
 
- Sea $G = (V, E)$ un grafo simple. Un conjunto $D$ $\subseteq$ $V$ es un conjunto dominante de $G$ si todo vértice de $G$ está en $D$ o bien tiene al menos un vecino que está en $D$. Por otro lado, un conjunto $I$ $\subseteq$ $V$ es un conjunto independiente de $G$ si no existe ningún eje de $E$ entre dos vértices de $I$. Definimos entonces un conjunto independiente dominante de $G$ como un conjunto independiente que a su vez es un conjunto dominante del grafo $G$.
+En el presente trabajo, se pretende analizar y comparar diferentes maneras de encarar el problema de {\it Conjunto Independiente Dominante Mínimo (CIDM)}, el cual consiste en hallar un conjunto independiente dominante de un grafo, con mínima cardinalidad. En particular se utilizará un algoritmo exacto, una heurística golosa, una heurística de busqueda local, y la metahuristica de GRASP.
 
-Un conjunto independiente de $I$ $\subseteq$ $V$ se dice maximal si no existe otro conjunto independiente $J \subseteq V$ tal que $I \subset J$, es decir que $I$ está incluido estrictamente en $J$. En otra sección de este informe se demostrará que todo conjunto independiente dominante, es particularmente independiente maximal.
+A continuación se presentan algunas definiciones que nos serán útiles para comprender y abordar el problema:
 
-En el presente trabajo, se pretende analizar y comparar diferentes maneras de encarar este problema. En particular se utilizará un algoritmo exacto, una heurística golosa, una heurística de busqueda local, y la metahuristica de GRASP.
+\begin{itemize}
 
-\section{Relación con trabajos previos y ejemplos de Uso}
+\item Sea $G = (V, E)$ un grafo simple. Un conjunto $D \subseteq V$ es un conjunto dominante de $G$ si todo vértice de $G$ está en $D$ o bien tiene al menos un vecino que está en $D$. Por otro lado, un conjunto $I \subseteq V$ es un conjunto independiente de $G$ si no existe ningún eje de $E$ entre dos vértices de $I$. Definimos entonces un conjunto independiente dominante de $G$ como un conjunto independiente que a su vez es un conjunto dominante del grafo $G$.
 
-En el TP1 de la materia, hemos encontrado y analizado un algoritmo que resolvía un problema que fue llamado El Señor de los Caballos. El problema era el siguiente:
+\item Un conjunto independiente de $I \subseteq V$ se dice maximal si no existe otro conjunto independiente $J \subseteq V$ tal que $I \subset J$, es decir tal que $I$ está incluido estrictamente en $J$. %En otra sección de este informe se demostrará que todo conjunto independiente dominante, es particularmente independiente maximal.
+
+\end{itemize}
+
+\section{Relación con trabajos previos y aplicaciones}
+
+En el TP1 de la materia, hemos encontrado y analizado un algoritmo que resolvía un problema que fue llamado {\bf El Señor de los Caballos}. El problema era el siguiente:
 
 Se tiene un juego de mesa cuyo tablero, dividido en casillas, posee igual cantidad de filas y columnas y hace uso de una conocida pieza del popular ajedrez: el caballo. El juego es solamente para un jugador y consiste en, teniendo caballos ubicados en distintos casilleros, insertar en casilleros vacíos la mínima cantidad de caballos extras, de manera tal que, siguiendo las reglas del movimiento de los caballos en el ajedrez, todas las casillas se encuentren ocupadas o amenazadas por un caballo.
 Aspectos a tener en cuenta:
 
 \begin{itemize}
-   \item Se conoce la cantidad de filas y columnas del tablero
+   \item Se conoce la cantidad de filas y columnas del tablero.
    \item Se conoce la cantidad de caballos que ocupan el tablero inicialmente.
-   \item Para cada uno de estos caballos, se sabe su ubicación en el tablero
-   \item Una casilla se considera amenazada si existe un caballo tal que en una movida pueda ocupar dicha casilla
+   \item Para cada uno de estos caballos, se sabe su ubicación en el tablero.
+   \item Una casilla se considera amenazada si existe un caballo tal que en una movida pueda ocupar dicha casilla.
 \end{itemize}
 
-Observemos que si consideramos a cada casilla como un nodo, y que las aristas hacia otros nodos se dan por las casillas a las cuales puede llegar un caballo ubicado en ese lugar, entonces el señor de los caballos puede ser visto como la busqueda de un conjunto dominante minimal que tenga a los nodos/casillas que tienen un caballo preubicado. Sin embargo, no podemos traducir este problema a un CIDM, puesto que no necesariamente debe cumplir el requisito de independencia. O sea, no necesariamente si la solución tiene un caballos en una casilla determinada, no haya ningún caballo ubicado en alguna de las casillas que este caballo amenaza. Veamos un ejemplo:
+Observemos que si consideramos a cada casilla como un nodo, y que dos nodos son adyacentes cuando un caballo puede llegar de uno a otro con un movimiento, entonces {\bf El Señor de los Caballos} puede ser visto como la búsqueda de un conjunto dominante minimal que tenga a los nodos/casillas que tienen un caballo preubicado. Sin embargo, no podemos traducir este problema a un CIDM, puesto que no necesariamente debe cumplir el requisito de independencia. O sea, si la solución tiene un caballo en una casilla determinada, no necesariamente ocurre que no haya ningún caballo ubicado en alguna de las casillas que este caballo amenaza. Veamos un ejemplo:
 
-(desde ver... hasta 4 4 habría que poner una imagen de un tablero de 5x5 vacío(1), y de esta solución(2) y de la solución que respeta CIDM(3), que es la que tiene 5 caballos en el centro.)
-Ver que la solución de nuestro programa para un tablero vacío de 5x5 devuelve lo siguiente:
-3 2 
-3 3 
-3 4 
-4 3 
-4 4
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+\begin{center}
+  \includegraphics[scale=0.5]{imagenes/tab5vacio.png}
+\end{center}
+  \caption{Tablero vacío de $5 \times 5$}\label{fig:tab5vacio}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+\begin{center}
+  \includegraphics[scale=0.5]{imagenes/tab5nuestro.png}
+\end{center}
+  \caption{Sol. no independiente}\label{fig:tab5nunestro}
+\endminipage\hfill
+\minipage{0.32\textwidth}%
+\begin{center}
+  \includegraphics[scale=0.5]{imagenes/tab5cidm.png}
+\end{center}
+  \caption{Solución independiente}\label{fig:tab5cidm}
+\endminipage
+\end{figure}
 
-Si nuestro tablero fuera el de la figura 1, una solución posible(de hecho, la encontrada con el algoritmo usado en el TP1) es la figura 2. Esta solución podemos observar que es dominante, pero no independiente puesto que el caballo de la fila 3 columna 2 amenaza al de la fila 4 columna 4. Sin embargo en este caso, existe una solución CIDM como lo es la figura 3. 
+Si nuestro tablero fuera el de la Figura \ref{fig:tab5vacio}, una solución posible (de hecho, la encontrada con el algoritmo propuesto en el TP1) es la Figura \ref{fig:tab5nunestro}. Esta solución podemos observar que es dominante, pero no independiente puesto que el caballo de la fila 3 - columna 2 amenaza al de la fila 4 - columna 4. Sin embargo en este caso, existe una solución CIDM como se muestra en la Figura \ref{fig:tab5cidm}. 
 
 (Dejo la parte de trabajos previos hasta aca, puesto que hay un ejemplo en el txt que quiero probar si funciona y agregaría un par de líneas)
 
-Como por lo visto hasta ahora CIDM no se adapta del todo al problema de los caballos(asumo eso por ahora, desp de última se cambia(ALE)) cabe preguntarse, en que situaciones de la vida real podría aplicarse este problema? Veamos algunos ejemplos realistas y alguno no tanto.
-
-\begin{enumerate}
-	\item Una empresa de bebidas gaseosas tiene sus actividades divididas en áreas, las cuales se interrelacionan de cierta manera (no necesariamente todas con todas).  Esta empresa está por sacar una nueva bebida sabor cola y quiere hacerlo antes que su rival, quien está más adelantado en la producción.  Para lograr sacar el producto antes que su contrincante, nuestra empresa debe lograr una mejora en el trabajo de sus diferentes áreas.  Por cómo está estructurada la empresa, si un área tiene una mejora considerable en tiempo, todas las áreas que se relacionan con ella se verán beneficiadas, pero este beneficio ya no impacta en las áreas relacionadas con estas últimas.  Queremos entonces lograr impulsar mejoras considerables en las áreas que sean necesarias para que toda la empresa funcione más rápido y logre sacar su producto a tiempo.  Para ello se contratarán especialistas con sueldos sumamente importantes, por lo cual se desea que la cantidad de áreas a mejorar considerablemente sea mínima (para minimizar la inversión en especialistas).  Además, sabemos que estos especialistas son excelentes, pero muy soberbios/tercos, y ponerlos a cargo de áreas relacionadas puede devenir en discusiones que retrasarían a la empresa, por lo cual procuraremos colocarlos en áreas "no adyacentes".
-	\item Se tiene un caso de asesinato, y debemos resolverlo. Nuestras investigaciones previas, nos han dado información de todas las personas que tuvieron algo que ver con el incidente, y sabemos cuales se conocen entre si y cuales no, además de que sabemos que toda persona que conoce a otra, sabe lo que hizo dicha persona el día del incidente. Debido a que somos detectives principiantes, el alquiler por día de nuestra oficina nos sale caro, y entrevistar a un testigo, independientemente del volumen de información obtenida, nos toma un día. Si para resolver el caso debieramos escuchar información sobre todas las personas involucradas. A quienes deberíamos llamar de testigos, de manera tal que reduzcamos el alquiler de oficina al mínimo? (Estos testigos no pueden conocerse entre si, para evitar complot y falsos datos.)
-	\item Milo de escorpio, guardian de la casa de escorpio, ha recibido muchas quejas de parte del gran patriarca, debido a que por su casa pasa todo el mundo. Cansado de ser tantas veces derrotados, nos pide ayuda, y para esto nos explica la verdad sobre su gran técnica, la aguja escarlata. Lejos de lo que se cuenta en el animé Los caballeros del zodiaco, el verdadero poder de la aguja escarlata es el siguiente:
-
-Milo nos explica, que el cuerpo de cada ser humano, puede ser dividido en trozos, pero no trozos como el brazo, o la pierna, sino a porciones mas pequeñas de cuerpo. Estos trozos, pueden tener una correspondencia con muchos otros trozos de cuerpo, y estas correspondencias no son necesariamente a nivel local(por ejemplo, una porcion del dedo indice de un humano, puede estar conectada a una porción de la cabeza). Estos trozos pueden ser fácilmente vistos como un grafo. Cuando la aguja escarlata toca un trozo de cuerpo, este y todos aquellos trozos que tengan una correspondencia, se inmobilizan. Pero esto sucede solo si la aguja escarlata impacta contra un trozo sano de cuerpo. Si el trozo en cuestión ya estuviese inmobilizado, entonces la aplicación de la aguja escarlata no resulta en ningun efecto.
-
-Dado que el uso de una aguja escarlata, resulta en un fuerte uso del cosmos de milo, milo quiere que dado un oponente, y la información sobre todos sus trozos y correspondencias, nosotros le fabriquemos un algoritmo tal que le diga en que sectores del cuerpo el debe usar la aguja escarlata, de manera tal que deba utilizar la mínima cantidad de agujas escarlata posibles. Milo nos asegura que el tiempo de dicho algoritmo no tiene importancia, dado que le pidio prestada la habitación del tiempo a kamisama, que esta equipada con una notebook y un enchufe para dejar la bateria cargada(lo que si, no tiene wifi dado a una muy mala señal, por lo que debemos darle un pendrive con el codigo).
+Como por lo visto hasta ahora CIDM no se adapta del todo al problema de los caballos(asumo eso por ahora, desp de última se cambia(ALE)) cabe preguntarse, en qué situaciones de la vida real podría aplicarse este problema. Veamos algunos ejemplos realistas y alguno no tanto.
 
 
-\end{enumerate} 
+\paragraph{Gaseosas:} Una empresa de bebidas gaseosas tiene sus actividades divididas en áreas, las cuales se interrelacionan de cierta manera (no necesariamente todas con todas).  Esta empresa está por sacar una nueva bebida sabor cola y quiere hacerlo antes que su rival, quien está más adelantado en la producción.  Para lograr sacar el producto antes que su contrincante, nuestra empresa debe lograr una mejora en el trabajo de sus diferentes áreas.  Por cómo está estructurada la empresa, si un área tiene una mejora considerable en tiempo, todas las áreas que se relacionan con ella se verán beneficiadas, pero este beneficio ya no impacta en las áreas relacionadas con estas últimas.  Queremos entonces lograr impulsar mejoras considerables en las áreas que sean necesarias para que toda la empresa funcione más rápido y logre sacar su producto a tiempo.  Para ello se contratarán especialistas con sueldos sumamente importantes, por lo cual se desea que la cantidad de áreas a mejorar considerablemente sea mínima (para minimizar la inversión en especialistas).  Además, sabemos que estos especialistas son excelentes, pero muy soberbios/tercos, y ponerlos a cargo de áreas relacionadas puede devenir en discusiones que retrasarían a la empresa, por lo cual procuraremos colocarlos en áreas "no adyacentes".
+
+\paragraph{Detectives:} Se tiene un caso de asesinato, y debemos resolverlo. Nuestras investigaciones previas nos han dado información de todas las personas que tuvieron algo que ver con el incidente, y sabemos cuáles se conocen entre sí y cuáles no, además de que sabemos que toda persona que conoce a otra, sabe lo que hizo dicha persona el día del incidente. Debido a que somos detectives principiantes, el alquiler por día de nuestra oficina nos sale caro, y entrevistar a un testigo, independientemente del volumen de información obtenida, nos toma un día. Si para resolver el caso debiéramos escuchar información sobre todas las personas involucradas, ¿a quienes deberíamos llamar de testigos, de manera tal que reduzcamos el alquiler de oficina al mínimo? (Estos testigos no pueden conocerse entre sí, para evitar complot y falsos datos).
+
+\paragraph{Caballeros del Zodíaco:} Milo de Escorpio\footnote{\url{http://es.wikipedia.org/wiki/Milo_de_Escorpio}}, guardián de la casa de Escorpio, ha recibido muchas quejas de parte del gran patriarca, debido a que por su casa pasa todo el mundo. Cansado de ser tantas veces derrotado, nos pide ayuda, y para esto nos explica la verdad sobre su gran técnica, la aguja escarlata. Lejos de lo que se cuenta en el animé {\it Los caballeros del zodíaco}\footnote{\url{http://es.wikipedia.org/wiki/Saint_Seiya}}, el verdadero poder de la aguja escarlata es el siguiente:
+
+Milo nos explica que el cuerpo de cada ser humano puede ser dividido en sectores energéticos.  Estos sectores energéticos pueden tener una correspondencia entre sí, las cuales no son necesariamente a nivel local (por ejemplo, una porcion del dedo indice de un humano, puede estar conectada a una porción de la cabeza). %Por lo tanto, estos sectores energéticos pueden ser fácilmente vistos como un grafo. 
+Cuando la aguja escarlata toca un sector energético de un cuerpo, éste y todos aquéllos sectores que tengan una correspondencia, se inmovilizan. Pero esto sucede sólo si la aguja escarlata impacta contra un sector energético ``sano''. Si el sector en cuestión ya estuviese inmovilizado, entonces la aplicación de la aguja escarlata no hace ningun efecto.
+
+Dado que el uso de una aguja escarlata, resulta en un fuerte uso del cosmos de Milo, se nos pide que, dado un oponente y la información sobre todos sus sectores energéticos y correspondencias, nosotros le fabriquemos un algoritmo tal que le diga en qué sectores del cuerpo debe usar la aguja escarlata, de manera tal que deba utilizar la mínima cantidad de agujas escarlata posibles. Milo nos asegura que el tiempo de dicho algoritmo no tiene importancia, dado que le pidió prestada la habitación del tiempo\footnote{\url{http://es.dragonball.wikia.com/wiki/Habitacion_del_Tiempo}} a Kamisama\footnote{\url{http://es.wikipedia.org/wiki/Kamisama_(personaje)}}, que está equipada con una notebook y un enchufe para dejar la bateria cargada (eso sí, no tiene wifi dado a una muy mala señal, por lo que debemos darle un pendrive con el código).
+
+
 
 %\newpage
+
+\section{Propiedades}
+
+En esta sección demostraremos ciertas propiedades que serán usadas a lo largo del trabajo.
+
+\subsection{Todo conjunto independiente maximal es dominante.}
+Lo probaremos por absurdo.  Supongamos que existe algún grafo $G = (V,E)$ tal que tiene un conjunto independiente maximal $C$ que no es un conjunto dominante. Como $C$ no es dominante, entonces existe un nodo $v \in V$ tal que $v \not \in C$, y que además dentro del grafo original, $v$ no es vecino de ningún elemento de $C$. Pero entonces, si añadimos a $v$ a $C$ se obtiene un conjunto $C' = {C + v}$ que es independiente, o sea que $C \subset C'$, lo cual es absurdo, puesto que habíamos dicho que $C$ era maximal. El absurdo proviene de suponer que el conjunto no es dominante, por lo tanto, el conjunto debe ser dominante.
+
+\subsection{Todo conjunto independiente dominante es independiente maximal.}
+Lo probaremos por absurdo.  Supongamos que existe un grafo $G = (V,E)$ tal que tiene un conjunto independiente dominante $I$ que no es independiente maximal. Como $I$ no es independiente maximal, podemos suponer que existe algún conjunto $J \subseteq V$ independiente, tal que $I \subset J$. Entonces, existe $v$ un nodo que pertenece a $J$ pero no a $I$, tal que $v$ no es vecino de ningún elemento de $I$, lo cual es absurdo, ya que suponer eso es decir que $I$ no era dominante. 
+
+
 \section{Plataforma de pruebas}
 
 Para toda la experimentación se utilizará un procesador Intel Core i3, de 4 nucleos a 2.20 GHZ.
 
 El software utilizado será Ubuntu 14.04, y G++ 4.8.2.
-\newpage
-\section{Propiedades}
-En esta sección demostraremos ciertas propiedades que serán usadas a lo largo del trabajo.
 
-\subsection{ Todo conjunto independiente maximal es dominante}
-Supongamos que no. O sea, que existe algun grafo $(V,E)$ tal que su conjunto independiente maximal(CIM) no es un conjunto dominante. Si esto es así, entonces por no ser dominante, existe un nodo $n$ que pertenece al grafo pero no al CIM, y que además dentro del grafo original, $n$ no es vecino de ningún elemento de CIM. Pero entonces, si añadimos n a CIM se obtiene un conjunto independiente que tiene los mismos elementos de CIM más un nodo, o sea que este nuevo conjunto contiene a CIM, lo cual es absurdo, puesto que habíamos dicho que CIM era maximal. El absurdo proviene de suponer que el conjunto no es dominante, por lo tanto, el conjunto debe ser dominante.
-
-\subsection{ Todo conjunto independiente dominante es independiente maximal}
-
-Supongo que no. Entonces, definamos $G$ un grafo tal que tiene un conjunto independiente dominante pero no independiente maximal, que llamaremos $I$. Como no es independiente maximal, puedo suponer que existe algun conjunto $J$ independiente, tal que $I \subset J$. Entonces, existe $v$ un nodo que pertenece a $J$ pero no a $I$ tal que $v$ no es vecino de ningún elemento de $I$, lo cual es absurdo, ya que suponer eso es decir que I no era dominante. 
 
 \section{Algoritmo Exacto}
 \input{1exacto}
@@ -162,7 +185,7 @@ Supongo que no. Entonces, definamos $G$ un grafo tal que tiene un conjunto indep
 \input{4grasp}
 
 \newpage
-\section{Comparación de los distintos Métodos}
+\section{Comparación de los distintos métodos}
 \input{5todos}
 
 \newpage
