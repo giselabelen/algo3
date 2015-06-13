@@ -43,18 +43,18 @@ int main()
 	// SOLUCIONES (USAR SÓLO UNA)
 
 	// SOLUCIÓN GOLOSA CONSTRUCTIVA
-	//~ res = goloso(cidm_sol,vec,n,0,0);
+	 res = goloso(cidm_sol,vec,n,0,0);
 
 	//~ // SOLUCIÓN DE BÚSQUEDA LOCAL
 	//~ // Soluciones iniciales (usar sólo una)
 	//~ //res = goloso(cidm_sol,vec_copia,n);
-	res = otro_inicio(cidm_sol,vec,n);
+	//res = otro_inicio(cidm_sol,vec,n);
 	
 	// Vecindades
-	if(res != 1)
-	{
-		busqueda(cidm_sol,vec,n,res,0);	// 1 para busq1 y 2 para busq2
-	}
+	//if(res != 1)
+	//{
+	//	busqueda(cidm_sol,vec,n,res,0);	// 1 para busq1 y 2 para busq2
+	//}
 	//~ 
 	//~ // SOLUCIÓN POR GRASP
 	//~ res = grasp(cidm_sol,vec,n,0.1,0,50);
