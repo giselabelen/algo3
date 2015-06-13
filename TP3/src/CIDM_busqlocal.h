@@ -265,6 +265,7 @@ void busqueda(list<int>& cidm_sol, Vecinos vecinos, int n, int& res, int mej)
 	// Itero hasta que no mejore
 	while(hay_cambios && res != 1)
 	{
+		printf("%i \n",res);
 		if(mej == 1){
 			hay_cambios = mejorador1(cidm_sol,vecinos,cercanos,res);
 		}else{
