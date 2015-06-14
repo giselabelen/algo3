@@ -22,15 +22,16 @@ int grasp(list<int>& cidm_sol, Vecinos vecinos, int n, float alpha, int beta, in
 
 int grasp(list<int>& cidm_sol, Vecinos vecinos, int n, float alpha, int beta, int parada)
 {
+	//~ srand(time(0));
 	int res = n + 1;
 	int res_aux;
 	int k = 0;
 	list<int> cidm_aux;
 	list<int>::iterator it;
-	Vecinos vecinos_aux;
+	Vecinos vecinos_aux(n);
 	
 	while(k != parada)
-	{
+	{	
 		// COPIO VECINOS A VECINOS_AUX PORQUE EL GOLOSO ROMPE
 		for(int i = 0; i < n; i++)
 		{
@@ -43,10 +44,19 @@ int grasp(list<int>& cidm_sol, Vecinos vecinos, int n, float alpha, int beta, in
 			
 			vecinos_aux[i].second = vecinos[i].second;
 		}
+		//~ printf("%i \n",k);
+		
+		cidm_aux.clear();
 		
 		res_aux = goloso(cidm_aux,vecinos_aux,n,alpha,beta);	// goloso
-		busqueda(cidm_aux,vecinos_aux,n,res,1);				// mejora por local search
+		busqueda(cidm_aux,vecinos_aux,n,res_aux,1);				// mejora por local search
 		
+		//~ printf("%i ",res_aux);
+		//~ for (it = cidm_aux.begin(); it != cidm_aux.end(); it++){
+			//~ printf("%i ",*it + 1);
+		//~ }
+		//~ printf("\n");
+		//~ 
 		if(res_aux < res)
 		{
 			// SI TENGO UNA SOLUCIÓN MEJOR, ACTUALIZO RES Y CIDM_SOL

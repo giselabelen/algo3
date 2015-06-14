@@ -16,7 +16,7 @@ typedef vector< pair< list<int>, int> > Vecinos;
 
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
-int goloso(list<int>& cidm_sol,	Vecinos vecinos, int n, int alpha, int beta);
+int goloso(list<int>& cidm_sol,	Vecinos vecinos, int n, float alpha, int beta);
 int rcl_alpha(int opc, Vecinos vecinos, int n, float alpha);
 int rcl_beta(Vecinos vecinos,int n,int beta);
 
@@ -77,6 +77,8 @@ int rcl_beta(Vecinos vecinos,int n,int beta)
 			{
 				it1 = it2;
 			}
+			
+			it2++;
 		}
 		
 		for(int h = i; h < n; h++)
@@ -95,6 +97,7 @@ int rcl_beta(Vecinos vecinos,int n,int beta)
 					{
 						it1 = it2;
 					}
+					it2++;
 				}
 			}
 		}
@@ -106,8 +109,9 @@ int rcl_beta(Vecinos vecinos,int n,int beta)
 	return *it1;
 }	
 
-int goloso(list<int>& cidm_sol,	Vecinos vecinos, int n, int alpha, int beta)
+int goloso(list<int>& cidm_sol,	Vecinos vecinos, int n, float alpha, int beta)
 {
+	//~ srand(time(0));
 	int res = 0;
 	int elegido;
 	int opc;

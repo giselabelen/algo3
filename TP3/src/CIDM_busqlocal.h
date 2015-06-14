@@ -264,11 +264,11 @@ void busqueda(list<int>& cidm_sol, Vecinos vecinos, int n, int& res, int mej)
 	// Itero hasta que no mejore
 	while(hay_cambios && res != 1)
 	{
-		printf("%i ",res);
-		for (list<int>::iterator it = cidm_sol.begin(); it != cidm_sol.end(); it++){
-			printf("%i ",*it + 1);
-		}
-		printf("\n");
+		//~ printf("%i ",res);
+		//~ for (list<int>::iterator it = cidm_sol.begin(); it != cidm_sol.end(); it++){
+			//~ printf("%i ",*it + 1);
+		//~ }
+		//~ printf("\n");
 		
 		if(mej == 1){
 			hay_cambios = mejorador1(cidm_sol,vecinos,cercanos,res);
