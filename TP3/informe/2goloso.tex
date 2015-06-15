@@ -12,6 +12,21 @@
 
 \vspace*{0.3cm}
 
+\begin{figure}
+\begin{codebox}
+\Procname{$\proc{CIDM_goloso}$} 
+\li $res \leftarrow$ 0
+\li \While no se hayan ``tomado'' todos los nodos
+\li 	\Do 
+ 		$elegido \leftarrow$ nodo ``óptimo''
+\li 		$cidm\_sol \leftarrow$ agregar $elegido$
+\li 		incrementar $res$
+\li 		marcar a $elegido$ y a sus vecinos como ``tomados''
+	\End
+\end{codebox}
+\caption{Algoritmo goloso para CIDM}\label{code:goloso}
+\end{figure}
+%\FloatBarrier
 
 \vspace*{0.6cm}
 %\newpage
