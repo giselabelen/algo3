@@ -67,7 +67,7 @@ void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado,
 	}
 		
 	// RAMA NO LO ELIJO
-	if((grado != 0) || (cont == n))		// PARA DOS PODAS
+	if((grado != 0) || (cont != n))		// PARA DOS PODAS
 	{
 		if(est_aux == 0)
 		{
