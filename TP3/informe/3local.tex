@@ -12,6 +12,79 @@
 
 \vspace*{0.3cm}
 
+\begin{figure}
+\begin{codebox}
+\Procname{$\proc{CIDM_busqueda}(int$ $mej)$}
+\li $cidm\_sol \leftarrow$ lista vacía de nodos
+\li $res \leftarrow$ {\sc CIDM_goloso}($cidm\_sol$)
+\li \While haya mejoras y la última solución tenga más de un nodo
+\li \Do 
+		\If $mej == 1$
+\li 		\Then {\sc mejorador1}($cidm\_sol,res$)
+\li 		\Else {\sc mejorador2}
+		\End
+	\End
+\end{codebox}
+\caption{Heurística de búsqueda local para CIDM}\label{code:busqueda}
+\end{figure}
+%\FloatBarrier
+
+
+\begin{figure}
+\begin{codebox}
+\Procname{$\proc{Mejorador1}(lista\_nodos$ $cidm\_sol,int$ $res)$} 
+\li \For cada par de nodos en $cidm\_sol$
+\li \Do 
+		``sacar'' ambos nodos
+\li 		\For cada vecino de estos nodos
+\li 		\Do 
+			\If quedó ``desconectado''
+\li			\Then ``agregar'' ese vecino
+			\End
+\li 			\If se forma una solución válida
+\li 			\Then salir del ciclo
+			\End
+		\End
+\li 		\If se encontró una solución mejor
+\li 		\Then
+			actualizar $cidm\_sol$
+\li 			actualizar $res$
+\li 			\Return
+		\End
+	\End
+\end{codebox}
+\caption{Pseudocódigo de la mejora 1}\label{code:mej1}
+\end{figure}
+%\FloatBarrier
+
+
+
+\begin{figure}
+\begin{codebox}
+\Procname{$\proc{Mejorador2}(lista\_nodos$ $cidm\_sol,int$ $res)$} 
+\li \For cada nodo $n$
+\li \Do 
+		\If $n$ se conecta con al menos dos nodos de $cidm\_sol$
+\li 		\Then 
+			\For cada nodo de $cidm\_sol$ que se conectan $n$
+\li 			\Do 
+				``sacar'' el nodo
+\li 				\If se forma una solución válida
+\li 				\Then salir del ciclo
+				\End
+			\End
+\li 		\If se encontró una solución mejor
+\li 		\Then
+			actualizar $cidm\_sol$
+\li 			actualizar $res$
+\li 			\Return
+		\End
+	\End
+\end{codebox}
+\caption{Pseudocódigo de la mejora 2}\label{code:mej2}
+\end{figure}
+%\FloatBarrier
+
 
 \vspace*{0.6cm}
 %\newpage
