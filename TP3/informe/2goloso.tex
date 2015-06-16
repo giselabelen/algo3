@@ -1,8 +1,11 @@
-\subsection{Desarrollo de la idea y correctitud.}
+\subsection{Desarrollo de la idea.}
 
 \vspace*{0.3cm}
 
+Sea $G$ un grafo cualquiera, $I$ un conjunto independiente de ese nodo, y $n_{1}$,$n_{2}$ nodos de G que no pertenecen a $I$ y no tienen aristas en común con ningún elemento de $I$, diremos que $n_{1}$ es óptimo si no existe ningún $n_{2}$ tal que $( \# (Vecinos(n_{2})) - \# (Vecinos(n_{2}) \cap Vecinos(I))) > ( \# (Vecinos(n_{1})) - \# (Vecinos(n_{1}) \cap Vecinos(I)))$. Definimos $Vecinos(\alpha)$ como el conjunto de nodos a los cuales $\alpha$ lleva una arista si $\alpha$ es un nodo, y si $\alpha$ es un conjunto, entonces es el conjunto de nodos a los cuales les llega un arista desde por lo menos un elemento de $\alpha$.
 
+Nuestra heurística se basa en formar un conjunto independiente maximal de la siguiente manera:
+Primero, considerando al conjunto independiente vacío, tomamos a un nodo óptimo, y lo agregamos como nuevo elemento de nuestro conjunto independiente. Luego con nuestro nuevo conjunto independiente, tomamos un nodo óptimo, y lo agregamos a nuestro conjunto independiente. Repetimos esto hasta que no exista un nodo óptimo, puesto que nuestro conjunto independiente se transformó en maximal, y por lo tanto en un conjunto dominante.
  
 \vspace*{0.6cm}
 
@@ -14,7 +17,7 @@
 
 \begin{figure}
 \begin{codebox}
-\Procname{$\proc{CIDM_goloso}$} 
+\Procname{$\proc{CIDM_goloso}(lista\_nodos$ $cidm\_sol)$} 
 \li $res \leftarrow$ 0
 \li \While no se hayan ``tomado'' todos los nodos
 \li 	\Do 
@@ -23,6 +26,7 @@
 \li 		incrementar $res$
 \li 		marcar a $elegido$ y a sus vecinos como ``tomados''
 	\End
+\li \Return $res$
 \end{codebox}
 \caption{Heurística golosa constructiva para CIDM}\label{code:goloso}
 \end{figure}

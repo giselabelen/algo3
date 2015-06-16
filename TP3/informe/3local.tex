@@ -21,7 +21,7 @@
 \li \Do 
 		\If $mej == 1$
 \li 		\Then {\sc mejorador1}($cidm\_sol,res$)
-\li 		\Else {\sc mejorador2}
+\li 		\Else {\sc mejorador2}($cidm\_sol,res$)
 		\End
 	\End
 \end{codebox}
@@ -36,22 +36,24 @@
 \li \For cada par de nodos en $cidm\_sol$
 \li \Do 
 		``sacar'' ambos nodos
-\li 		\For cada vecino de estos nodos
+\li 		\For cada vecino $n$ de estos nodos
 \li 		\Do 
-			\If quedó ``desconectado''
-\li			\Then ``agregar'' ese vecino
+			\If $n$ quedó ``desconectado''
+\li			\Then
+				``agregar'' $n$
+\li 				\If se forma una solución válida
+\li 				\Then salir del ciclo
+				\End
 			\End
-\li 			\If se forma una solución válida
-\li 			\Then salir del ciclo
+\li 			\If se encontró una solución mejor
+\li 			\Then
+				actualizar $cidm\_sol$
+\li 				actualizar $res$
+\li 				\Return
 			\End
-		\End
-\li 		\If se encontró una solución mejor
-\li 		\Then
-			actualizar $cidm\_sol$
-\li 			actualizar $res$
-\li 			\Return
 		\End
 	\End
+\li \Return
 \end{codebox}
 \caption{Pseudocódigo de la mejora 1}\label{code:mej1}
 \end{figure}
@@ -73,13 +75,15 @@
 \li 				\Then salir del ciclo
 				\End
 			\End
-\li 		\If se encontró una solución mejor
-\li 		\Then
-			actualizar $cidm\_sol$
-\li 			actualizar $res$
-\li 			\Return
+\li 			\If se encontró una solución mejor
+\li 			\Then
+				actualizar $cidm\_sol$
+\li 				actualizar $res$
+\li 				\Return
+			\End
 		\End
 	\End
+\li \Return
 \end{codebox}
 \caption{Pseudocódigo de la mejora 2}\label{code:mej2}
 \end{figure}
