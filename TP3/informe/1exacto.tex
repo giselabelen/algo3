@@ -2,18 +2,33 @@
 
 \vspace*{0.3cm}
 
-Para resolver el problema de CIDM hemos decidido utilizar la técnica de backtracking. Por todo lo dicho en la seccion de propiedades, nuestro backtracking se encargará de, dado un grafo, ver todos los posibles conjuntos independientes maximales, y tomará aquel que sea menor en cardinalidad. Para esto, le daremos un orden a los grafos (mismo orden que la entrada), tomaremos el primero, y nos dividiremos en dos ramas, en tomarlo como parte del conjunto independiente maximal, y en no tomarlo:
+Para resolver el problema de CIDM hemos decidido utilizar la técnica de backtracking. Por todo lo dicho en la seccion de propiedades, nuestro backtracking se encargará de, dado un grafo, ver todos los posibles conjuntos independientes maximales, y tomará aquel que sea menor en cardinalidad. Para esto, le daremos un orden a los nodos (mismo orden que la entrada), tomaremos el primero, y nos dividiremos en dos ramas, en tomarlo como parte del conjunto independiente maximal, y en no tomarlo:
 \begin{itemize}
-	\item  En caso de tomarlo, marcaremos a todos sus vecinos, de manera de no tomarlos nuevamente en el futuro de esa rama, puesto que si tomasemos a alguno de ellos en el conjunto, este no sería maximal.	
-	\item En caso de no tomar al nodo, no se hará nada. 
+	\item  En caso de tomarlo, marcaremos a todos sus vecinos, de manera de no tomarlos nuevamente en el futuro de esa rama, puesto que si tomasemos a alguno de ellos en el conjunto, este no sería independiente. Luego de eso se procederá a observar el próximo nodo.
+	\item En caso de no tomar al nodo, no se hará nada, y se observará el próximo nodo. 
 
 \end{itemize}
 
-A partir del segundo nodo y hasta el final se realizarán las siguientes acciones:
+A partir del segundo nodo, hasta el último, se realizarán las siguientes acciones:
 \begin{itemize}
-	\item 
+	\item si estamos parados en el último nodo y no están todos los nodos marcados, el conjunto obtenido no es un independiente maximal, por lo que no lo tomamos en cuenta.
+	\item si todos los nodos estan marcados, el conjunto obtenido es independiente maximal, se verá su cardinalidad, y de ser mejor que el de la mejor solución hasta el momento, se lo guardará como nueva mejor solución.
+	\item de no estar parados en el último nodo, y tener nodos no marcados, si el nodo en el cual estamos está marcado, veremos el próximo nodo. Sino, nos separaremos en dos ramas:
+	\begin{itemize}
+	\item  En caso de tomarlo, marcaremos a todos sus vecinos, de manera de no tomarlos nuevamente en el futuro de esa rama, puesto que si tomasemos a alguno de ellos en el conjunto, este no sería independiente. Luego de eso se procederá a observar el próximo nodo.
+	\item En caso de no tomar al nodo, no se hará nada, y se observará el próximo nodo. 
+	\end{itemize}
+	
 \end{itemize}
- 
+
+Para poder afirmar que nuestro algoritmo es correcto, basta con poder probar que realmente todo conjunto que forma es independiente maximal, y que realmente observa todo conjunto independiente maximal de un grafo:
+\begin{itemize}
+	\item Podemos afirmar que este procedimiento encuentra conjuntos independientes, puesto que solo tomo a aquellos nodos que no estan marcados, o sea, que no tienen ninguna arista en comun con los elementos del conjunto.
+	\item Podemos afirmar que este procedimiento encuentra conjuntos independientes que son maximales puesto que el programa deja de agregar nodos cuando todos estos están marcados, lo que significa que todos los nodos del grafo o tienen una arista al menos que los conecta con algún elemento del conjunto, o están en el conjunto. Por eso, no podemos tomar ningún elemento de modo tal que el nuevo conjunto sea independiente.
+	\item Podemos afirmar que se observan todos los posibles conjuntos independientes maximales, dado que sea $C$ un conjunto independiente maximal del grafo $G$, conformado por los vertices $v_{1}, v_{2}, ... , v_{h}$. Supongamos que estos vertices se encuentran en el mismo orden que aparacen en el grafo original(de no ser así, solo habría que reordenarlos). Entonces, por como esta hecho nuestro programa, se llegaría a observar este conjunto independiente máximal cuando estemos en la rama que solo toma a $v_{1}, v_{2}, ... , v_{h}$.
+
+\end{itemize}
+	
 \vspace*{0.6cm}
 
 %\newpage
