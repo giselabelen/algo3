@@ -2,7 +2,17 @@
 
 \vspace*{0.3cm}
 
+Para resolver el problema de CIDM hemos decidido utilizar la técnica de backtracking. Por todo lo dicho en la seccion de propiedades, nuestro backtracking se encargará de, dado un grafo, ver todos los posibles conjuntos independientes maximales, y tomará aquel que sea menor en cardinalidad. Para esto, le daremos un orden a los grafos (mismo orden que la entrada), tomaremos el primero, y nos dividiremos en dos ramas, en tomarlo como parte del conjunto independiente maximal, y en no tomarlo:
+\begin{itemize}
+	\item  En caso de tomarlo, marcaremos a todos sus vecinos, de manera de no tomarlos nuevamente en el futuro de esa rama, puesto que si tomasemos a alguno de ellos en el conjunto, este no sería maximal.	
+	\item En caso de no tomar al nodo, no se hará nada. 
 
+\end{itemize}
+
+A partir del segundo nodo y hasta el final se realizarán las siguientes acciones:
+\begin{itemize}
+	\item 
+\end{itemize}
  
 \vspace*{0.6cm}
 
