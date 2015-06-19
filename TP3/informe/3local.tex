@@ -2,9 +2,14 @@
 
 \vspace*{0.3cm}
 
-En este caso, hemos diseñado una heurística de búsqueda local para el problema de CIDM.
+La heurística de búsqueda local que hemos diseñado, parte de una solución inicial, y a partir de ahí irá encontrando nuevas soluciones ``vecinas''.  Si una solución ``vecina'' resulta ser mejor, es decir, es un conjunto independiente maximal con menos elementos que la solución anterior, entonces la reemplazará.  Estos pasos se repitirán hasta que se encuentre una solución que no pueda mejorarse, es decir, una solución óptima local.
 
-Dicha heurística parte de una solución inicial, y a partir de ahí irá encontrando nuevas soluciones ``vecinas''.  Si una solución ``vecina'' resulta ser mejor, es decir, es un conjunto independiente maximal con menos elementos que la solución anterior, entonces la reemplazará.  Estos pasos se repitirán hasta que se encuentre una solución que no pueda mejorarse, es decir, una solución óptima local.
+Se analizarán dos posibles soluciones iniciales:
+
+\begin{itemize}
+\item La solución hallada por el algoritmo goloso presentado anteriormente.
+\item Una solución hallada de la siguiente manera: tomando los nodos del grafo en cierto orden, si el nodo actual no forma parte del conjunto solución ni es adyacente a un nodo del conjunto solución, entonces agregarlo al mismo; en caso contrario, avanzar al siguiente nodo.
+\end{itemize}
 
 Para cada solución factible $S$, se define $N(S)$ como el conjunto de ``soluciones vecinas'' de $S$.  Plantearemos dos ``vecindades'' posibles para las soluciones.  
 

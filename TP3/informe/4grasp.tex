@@ -1,9 +1,32 @@
-\subsection{Desarrollo de la idea y correctitud.}
+\subsection{Desarrollo de la idea.}
 
 \vspace*{0.3cm}
 
+GRASP (Greedy Randomized Adaptative Search Procedure) es una combinación entre una heurística golosa ``aleatorizada'' y un procedimiento de búsqueda local.  La idea es la siguiente:
 
- 
+\begin{codebox}
+\li \While no se alcance el {\it criterio de terminación}
+\li \Do 
+		Obtener una solución inicial mediante una {\it heurística golosa aleatorizada}.
+\li 		Mejorar la solución mediante búsqueda local.
+\li 		Recordar la mejor solución obtenida hasta el momento.
+	\End
+\end{codebox}
+
+Como criterios de terminación, analizaremos dos casos particulares:
+
+\begin{itemize}
+\item Se realizaron $k$ iteraciones.
+\item Se realizaron $k$ iteraciones sin encontrar una solución mejor.
+\end{itemize}
+
+En cuanto a la heurística golosa aleatorizada, hemos continuado con la idea del algoritmo goloso descrito anteriormente, con la variación de que, en cada paso, se genera una Lista Restricta de Candidatos (RCL) y se elige aleatoriamente un candidato de esa lista.  Analizaremos dos posibles maneras de construir dicha RCL:
+
+\begin{itemize}
+\item Hallar al mejor candidato, es decir, el nodo que hemos definido como óptimo, y colocar en la RCL los nodos candidatos cuya cantidad de vecinos ``libres'' sea no menor a un cierto porcentaje $\alpha$ de la cantidad de vecinos ``libres'' del mejor candidato.
+\item Hallar al mejor candidato y colocar en la RCL los $\beta$ mejores candidatos, es decir, los $\beta$ nodos que más nodos ``libres'' cubran.
+\end{itemize}
+
 \vspace*{0.6cm}
 
 %\newpage

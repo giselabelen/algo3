@@ -2,33 +2,39 @@
 
 \vspace*{0.3cm}
 
-Para resolver el problema de CIDM hemos decidido utilizar la técnica de backtracking. Por todo lo dicho en la seccion de propiedades, nuestro backtracking se encargará de, dado un grafo, ver todos los posibles conjuntos independientes maximales, y tomará aquel que sea menor en cardinalidad. Para esto, le daremos un orden a los nodos (mismo orden que la entrada), tomaremos el primero, y nos dividiremos en dos ramas, en tomarlo como parte del conjunto independiente maximal, y en no tomarlo:
-\begin{itemize}
-	\item  En caso de tomarlo, marcaremos a todos sus vecinos, de manera de no tomarlos nuevamente en el futuro de esa rama, puesto que si tomasemos a alguno de ellos en el conjunto, este no sería independiente. Luego de eso se procederá a observar el próximo nodo.
-	\item En caso de no tomar al nodo, no se hará nada, y se observará el próximo nodo. 
+Para resolver el problema de CIDM de manera exacta hemos decidido utilizar la técnica de backtracking. Por todo lo dicho en la seccion de propiedades, nuestro backtracking se encargará de, dado un grafo, ver todos los posibles conjuntos independientes maximales, y tomará aquel que sea menor en cardinalidad. 
 
+Para esto, le daremos a los nodos un orden en particular, y para cada nodo consideraremos las siguientes dos opciones o ``ramas'':
+
+\begin{itemize}
+	\item Tomar el nodo como parte del conjunto solución. Esta rama sólo será considerada cuando el nodo no sea adyacente a otro nodo que ya fue colocado anteriormente en el conjunto.  Por eso, en caso de tomar el nodo actual, marcaremos a este nodo y a todos sus vecinos, de manera de no tomarlos nuevamente en el futuro de esa rama, puesto que si tomásemos a alguno de ellos en el conjunto, este no sería independiente. 
+	\item No tomar el nodo como parte del conjunto solución.  En este caso no se hará nada, y se avanzará hacia el próximo nodo, de existir éste.
 \end{itemize}
 
-A partir del segundo nodo, hasta el último, se realizarán las siguientes acciones:
+Luego de la elección tomada para un determinado nodo, consultaremos las siguientes posibilidades:
+
 \begin{itemize}
-	\item si estamos parados en el último nodo y no están todos los nodos marcados, el conjunto obtenido no es un independiente maximal, por lo que no lo tomamos en cuenta.
-	\item si todos los nodos estan marcados, el conjunto obtenido es independiente maximal, se verá su cardinalidad, y de ser mejor que el de la mejor solución hasta el momento, se lo guardará como nueva mejor solución.
-	\item de no estar parados en el último nodo, y tener nodos no marcados, si el nodo en el cual estamos está marcado, veremos el próximo nodo. Sino, nos separaremos en dos ramas:
-	\begin{itemize}
-	\item  En caso de tomarlo, marcaremos a todos sus vecinos, de manera de no tomarlos nuevamente en el futuro de esa rama, puesto que si tomasemos a alguno de ellos en el conjunto, este no sería independiente. Luego de eso se procederá a observar el próximo nodo.
-	\item En caso de no tomar al nodo, no se hará nada, y se observará el próximo nodo. 
-	\end{itemize}
-	
+	\item Si el nodo tratado en el último paso es el último nodo y no están todos los nodos marcados, el conjunto obtenido no es un independiente maximal, por lo que no lo tomamos en cuenta.
+	\item Si todos los nodos quedaron marcados, el conjunto obtenido es independiente maximal.  Se verá entonces la cardinalidad de este conjunto, y de ser mejor que el de la mejor solución obtenida hasta el momento, se lo guardará como nueva mejor solución.
+	\item De no haber visto el último nodo, y de existir nodos no marcados aún, avanzaremos al siguiente nodo y repetiremos el procedimiento.
 \end{itemize}
 
-Para poder afirmar que nuestro algoritmo es correcto, basta con poder probar que realmente todo conjunto que forma es independiente maximal, y que realmente observa todo conjunto independiente maximal de un grafo:
-\begin{itemize}
-	\item Podemos afirmar que este procedimiento encuentra conjuntos independientes, puesto que solo tomo a aquellos nodos que no estan marcados, o sea, que no tienen ninguna arista en comun con los elementos del conjunto.
-	\item Podemos afirmar que este procedimiento encuentra conjuntos independientes que son maximales puesto que el programa deja de agregar nodos cuando todos estos están marcados, lo que significa que todos los nodos del grafo o tienen una arista al menos que los conecta con algún elemento del conjunto, o están en el conjunto. Por eso, no podemos tomar ningún elemento de modo tal que el nuevo conjunto sea independiente.
-	\item Podemos afirmar que se observan todos los posibles conjuntos independientes maximales, dado que sea $C$ un conjunto independiente maximal del grafo $G$, conformado por los vertices $v_{1}, v_{2}, ... , v_{h}$. Supongamos que estos vertices se encuentran en el mismo orden que aparacen en el grafo original(de no ser así, solo habría que reordenarlos). Entonces, por como esta hecho nuestro programa, se llegaría a observar este conjunto independiente máximal cuando estemos en la rama que solo toma a $v_{1}, v_{2}, ... , v_{h}$.
+Para poder afirmar que nuestro algoritmo es correcto, basta con poder probar que todo conjunto que forma es independiente maximal, y que realmente observa todo conjunto independiente maximal de un grafo:
 
+\begin{itemize}
+	\item Podemos afirmar que este procedimiento encuentra {\bf conjuntos independientes}, puesto que sólo se toman aquellos nodos que no están marcados, o sea, que no tienen ninguna arista en común con los elementos del conjunto.
+	\item Podemos afirmar que este procedimiento encuentra conjuntos independientes que son {\bf maximales} puesto que el programa deja de agregar nodos cuando todos estos están marcados, lo que significa que todos los nodos del grafo, o bien son adyacentes a algún elemento del conjunto, o bien están dentro del conjunto. Por eso, no podemos tomar ningún nuevo elemento de modo tal que el nuevo conjunto sea independiente.
+	\item Podemos afirmar que se observan {\bf todos} los posibles conjuntos independientes maximales por lo siguiente:  sea $C$ un conjunto independiente maximal del grafo $G$, conformado por los vertices $v_{1}, v_{2}, ... , v_{h}$, entonces, por cómo esta diseñado nuestro algoritmo, se llegaría a observar este conjunto independiente maximal cuando estemos en la rama que solo toma a $v_{1}, v_{2}, ... , v_{h}$ y no toma a los demás. Notemos que esta rama existe, pues $v_{1}, v_{2}, ... , v_{h}$ son nodos independientes, y por lo tanto, al tomar uno de ellos, los otros no se marcan y quedan disponibles para ser tomados como parte de la solución.
 \end{itemize}
-	
+
+Para mejorar la velocidad de ejecución del algoritmo, se han aplicado las siguientes podas:
+
+\begin{itemize}
+	\item Poda Clásica: Si en la rama actual que está revisando nuestro algoritmo, la cantidad de elementos del conjunto maximal de esta rama es mayor a la cantidad de elementos de la mejor solución encontrada hasta el momento, esta rama deja de ser considerada, puesto que, de conseguir una solución, seguro no es la mejor.
+	\item Nodos solitarios: Si el grafo tiene algún nodo con grado 0, no tiene sentido considerar la opción de no tomarlo como parte de la solución, por lo cual dicha rama no será revisada cuando el nodo cumple esta característica.
+	\item El nodo decisivo: Si durante el procesamiento de un nodo, al tomarlo, cubre a todos los que estaban libres hasta el momento, entonces no se considerará la rama resultante de no tomarlo, ya que en el mejor de los casos uno de los nodos siguientes también cubre a todos y esto no mejora la cardinalidad del conjunto hallado, y en casos peores, será necesario tomar más de uno de los nodos siguientes para lograr un conjunto independiente maximal.
+\end{itemize}
+
 \vspace*{0.6cm}
 
 %\newpage
