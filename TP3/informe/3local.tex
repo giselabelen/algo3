@@ -2,17 +2,46 @@
 
 \vspace*{0.3cm}
 
-Una mejora propuesta al algoritmo goloso explicado anteriormente, es llevar a cabo un procedimiento de búsqueda local.
+En este caso, hemos diseñado una heurística de búsqueda local para el problema de CIDM.
 
-A partir de una solución hallada por dicha heurística golosa, se irán encontrando nuevas soluciones ``vecinas''.  Si una solución ``vecina'' resulta ser mejor, es decir, logra encontrar un conjunto independiente maximal con menos elementos que la solución anterior, entonces la reemplazará.  Estos pasos se repitirán hasta que se encuentre una solución que no pueda mejorarse, es decir, una solución óptima local.
+Dicha heurística parte de una solución inicial, y a partir de ahí irá encontrando nuevas soluciones ``vecinas''.  Si una solución ``vecina'' resulta ser mejor, es decir, es un conjunto independiente maximal con menos elementos que la solución anterior, entonces la reemplazará.  Estos pasos se repitirán hasta que se encuentre una solución que no pueda mejorarse, es decir, una solución óptima local.
 
-Plantearemos dos ``vecindades'' posibles para las soluciones:
+Para cada solución factible $S$, se define $N(S)$ como el conjunto de ``soluciones vecinas'' de $S$.  Plantearemos dos ``vecindades'' posibles para las soluciones.  
 
 \begin{itemize}
-\item {\bf Vecindad 1:}
-\item {\bf Vecindad 2:}
+\item {\bf Vecindad 1:} Una solución $S' \in N(S)$ si y sólo si puede obtenerse intercambiando dos nodos de $S$ por un nodo que no pertenecía a $S$.  Es decir, para $u,v \in S$, y $w$ un nodo del grafo original tal que $w \not \in S$, definimos $S' = S - \{u,v\} + \{w\}$ y decimos que $S'$ es ``vecina'' de $S$ si y sólo si $S'$ es un conjunto independiente maximal del grafo original. La Figura \ref{fig:vec1} es un ejemplo de solución ``vecina'' conisderando a la Figura \ref{fig:solinicial} como solución inicial para el grafo de la Figura \ref{fig:estrellita}.  En este caso, se han quitado los nodos 1 y 8 para agregar el nodo 3.
+\item {\bf Vecindad 2:} Una solución $S' \in N(S)$ si y sólo si puede obtenerse agregando a $S$ un nodo del grafo original que no pertenezca a $S$, y quitando todos los nodos de $S$ adyacentes a este nuevo nodo.  Es decir, para $v$ un nodo del grafo original tal que $v \not \in S$, y $A \subseteq S$ tal que para todo $w \in S$, si $w$ es adyacente a $v$ entonces $w \in A$, definimos $S' = S - A + \{v\}$ y decimos que $S'$ es ``vecina'' de $S$ si y sólo si $S'$ es un conjunto independiente maximal del grafo original.  La Figura \ref{fig:vec2} es un ejemplo de solución ``vecina'' conisderando a la Figura \ref{fig:solinicial} como solución inicial para el grafo de la Figura \ref{fig:estrellita}.  En este caso, se ha agregado el nodo 2 y se han quitado los nodos 1, 6 y 7.
 \end{itemize}
 
+ 
+\begin{figure}[!htb]
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.8]{imagenes/estrellita.png}
+\end{center}
+  \caption{Ejemplo de grafo}\label{fig:estrellita}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.8]{imagenes/estrellitasolinicial.png}
+\end{center}
+  \caption{Posible solución inicial}\label{fig:solinicial}
+\endminipage
+\vspace*{0.3cm}
+\minipage{0.5\textwidth}%
+\begin{center}
+  \includegraphics[scale=0.8]{imagenes/estrellitavec1.png}
+\end{center}
+  \caption{Solución vecina según Vecindad 1}\label{fig:vec1}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.8]{imagenes/estrellitavec2.png}
+\end{center}
+  \caption{Solución vecina según Vecindad 2}\label{fig:vec2}
+\endminipage
+\end{figure}
+ 
  
 \vspace*{0.6cm}
 
@@ -25,8 +54,8 @@ Plantearemos dos ``vecindades'' posibles para las soluciones:
 \begin{figure}
 \begin{codebox}
 \Procname{$\proc{CIDM_busqueda}(int$ $mej)$}
-\li $cidm\_sol \leftarrow$ lista vacía de nodos
-\li $res \leftarrow$ {\sc CIDM_goloso}($cidm\_sol$)
+\li $cidm\_sol \leftarrow$ lista de nodos de una solución inicial
+\li $res \leftarrow |cidm\_sol|$
 \li \While haya mejoras y la última solución tenga más de un nodo
 \li \Do 
 		\If $mej == 1$
