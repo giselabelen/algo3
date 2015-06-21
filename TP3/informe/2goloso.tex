@@ -41,13 +41,13 @@ Primero, considerando al conjunto independiente vacío, tomamos a un nodo óptim
 
 A continuación presentaremos dos familias de grafos para las cuales nuestra heurística golosa no siempre encuentra una solución óptima.
 
-\subsubsection*{Familia 1}
+\subsubsection*{Familia 1 - Estrellas}
 
 La forma de los grafos pertenecientes a esta familia responde a las siguientes características:
 
 \begin{itemize}
 \item Existe un único vértice $v$ con grado máximo.  Sea $\delta_{max}$ el grado de este nodo.
-\item Para cada vértice $w$ adyacente $v$, $\delta(w) < \delta_{max}$, y sus nodos adyacentes (salvo $v$) tienen grado 1.	
+\item Para cada vértice $w$ adyacente a $v$, $\delta(w) < \delta_{max}$, y sus nodos adyacentes (salvo $v$) tienen grado 1.	
 \end{itemize}
 
 Dado que el algoritmo propuesto va tomando en cada paso el nodo ``óptimo'', o sea, aquél que más nodos ``libres'' cubre, en un grafo como el descrito primero tomará al vértice $v$ con grado máximo $\delta_{max}$.  Luego, para cumplir con la independencia y la dominancia, deberá tomar a los vértices adyacentes a los vecinos de $v$. Como el grado de cada vecino de $v$ es menor a $\delta_{max}$, el peor de los casos sería que cada uno de ellos tuviera grado $\delta_{max} - 1$.  En este caso, cada vértice adyacente a $v$ tendría $\delta_{max} - 2$ vecinos además del mismo $v$, y entonces la solución hallada por nuestra heurística estaría conformada por $\delta_{max} \times (\delta_{max} - 2)$ nodos.  Sin embargo, para un grafo como el detallado, existe una solución mejor conformada por $\delta_{max}$ nodos, y corresponde al conjunto compuesto por los vecinos del nodo $v$.
@@ -66,6 +66,56 @@ La Figura \ref{fig:familia1} muestra un ejemplo de grafo perteneciente a esta fa
   \includegraphics[scale=0.5]{imagenes/familia1-res.png}
 \end{center}
   \caption{Solución hallada por nuestra heurística}\label{fig:familia1res}
+\endminipage
+\end{figure}
+
+\subsubsection*{Familia 2 - Circuitos}
+
+Como miembros de esta familia consideraremos a los circuitos simples.  Para este tipo de grafos, la calidad de la solución hallada por nuestro algoritmo dependerá de la forma en que se hayan rotulado los vértices.
+
+Tomemos el grafo $C_{n}$ formado por los vértices $v_1,v_2,...,v_n$.
+
+\begin{itemize}
+\item Si los vértices se relacionan de manera que $v_1$ se relaciona con $v_n$ y $v_2$, $v_n$ se relaciona con $v_{n-1}$ y $v_1$, y para todo $1 < i < n$ el vértice $v_i$ se relaciona con los vértices $v_{i-1}$ y $v_{i+1}$, y si consideramos que nuestro algoritmo recibe los nodos $v_i$ en orden creciente de $i$, entonces formará la solución de la siguiente manera:
+
+	\begin{itemize}
+	\item Tomará a $v_1$.
+	\item Luego, $v_2$ no podrá ser tomado por ser adyacente a $v_1$.
+	\item Si $n = 3$, $v_3$ también quedaría cubierto por $v_1$ y el conjunto solución sería $\{v_1\}$.  
+	\item Si $n = 4$, $v_4$ estaría cubierto por $v_1$ y el único vértice ``libre'' restante sería $v_3$, por lo cual sería tomado y el conjunto solución sería $\{v_1,v_3\}$.
+	\item Si $n > 4$, $v_3$ no sería un nodo óptimo, ya que uno de sus nodos adyacentes ($v_2$) ya fue cubierto por $v_1$, mientras que $v_4$ sí sería óptimo dado que podría cubrir a $v_3$ y a $v_5$, así que $v_4$ pasaría a formar parte de la solución.
+	\item Los demás nodos del conjunto solución irán siendo tomados siguiendo los mismos pasos.
+	\end{itemize}
+	
+	Podríamos decir, entonces, que la solución se genera tomando los vértices $v_j$ con $j = 1 + 3 \times k$ ($k$ entero no negativo) siempre que $j < n-1$. [VER COMO ENCHUFAR LO DE UN TERCIO]
+	
+\item Si los vértices se relacionan... [NO SE COMO ESCRIBIR EL CASO FEO]
+\end{itemize}
+
+\begin{figure}[!htb]
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.8]{imagenes/faimilia2.png}
+\end{center}
+  \caption{Circuito simple rotulado ``en orden''}\label{fig:familia2}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.8]{imagenes/faimilia2-resopt.png}
+\end{center}
+  \caption{Solución hallada por nuestra heurística}\label{fig:familia2res}
+\endminipage\\
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.8]{imagenes/faimilia2rename.png}
+\end{center}
+  \caption{Circuito simple rotulado ``no en orden''}\label{fig:familia2bis}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.8]{imagenes/faimilia2rename-solnoopt.png}
+\end{center}
+  \caption{Solución hallada por nuestra heurística}\label{fig:familia2bisres}
 \endminipage
 \end{figure}
 
