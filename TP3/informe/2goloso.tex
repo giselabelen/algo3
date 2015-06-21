@@ -71,26 +71,61 @@ La Figura \ref{fig:familia1} muestra un ejemplo de grafo perteneciente a esta fa
 
 \subsubsection*{Familia 2 - Circuitos}
 
-Como miembros de esta familia consideraremos a los circuitos simples.  Para este tipo de grafos, la calidad de la solución hallada por nuestro algoritmo dependerá de la forma en que se hayan rotulado los vértices.
+Como miembros de esta familia consideraremos a los circuitos simples.  Para este tipo de grafos, la calidad de la solución hallada por nuestro algoritmo dependerá de la cantidad de vértices que tenga y de la forma en que se hayan rotulado los mismos.
 
-Tomemos el grafo $C_{n}$ formado por los vértices $v_1,v_2,...,v_n$.
+Consideremos un circuito $C_{n}$ y supongamos por un momento que los vértices están rotulados como $v_1,v_2,...,v_n$ tal que existe una arista entre $v_i$ y $v_j$ cuando $j = (i+1) mod (n)$.
+
+Una forma de armar un CIDM $C$ para este grafo podría ser la siguiente: [HABRIA QUE PROBARLO]
 
 \begin{itemize}
-\item Si los vértices se relacionan de manera que $v_1$ se relaciona con $v_n$ y $v_2$, $v_n$ se relaciona con $v_{n-1}$ y $v_1$, y para todo $1 < i < n$ el vértice $v_i$ se relaciona con los vértices $v_{i-1}$ y $v_{i+1}$, y si consideramos que nuestro algoritmo recibe los nodos $v_i$ en orden creciente de $i$, entonces formará la solución de la siguiente manera:
+\item Si $n \equiv 0 (3)$, tomar $C = \{v_i | i \equiv 1 (3)\}$.
+\item Si $n \equiv 1 (3)$, tomar $C = \{v_i | 1 \leq i < n, i \equiv 1 (3)\} \cup \{v_{n-1}\}$.
+\item Si $n \equiv 2 (3)$, tomar $C = \{v_i | 1 \leq i < n-1, i \equiv 1 (3)\} \cup \{v_{n-2}\}$.
+\end{itemize}
+
+Si el grafo está rotulado de esta forma, nuestro algoritmo procederá de la siguiente manera:
+
+\begin{itemize}
+\item El primer nodo ``óptimo'' hallado será $v_1$, así que lo incluirá en la solución y lo marcará como ``tomado'' junto a $v_2$ y $v_n$. Por lo tanto, $v_3$ y $v_{n-1}$ pasarán a poder cubrir 1 nodo ``libre'' cada uno, de existir éste (notar que para $n = 3$ todos los nodos ya quedan ``tomados'', y para $n = 4, v_3 = v_{n-1}$ y es el único nodo que queda ``libre'').
+\item Mientras queden nodos ``libres'', siendo $v_i$ el último vértice incluido en el conjunto
 
 	\begin{itemize}
-	\item Tomará a $v_1$.
-	\item Luego, $v_2$ no podrá ser tomado por ser adyacente a $v_1$.
-	\item Si $n = 3$, $v_3$ también quedaría cubierto por $v_1$ y el conjunto solución sería $\{v_1\}$.  
-	\item Si $n = 4$, $v_4$ estaría cubierto por $v_1$ y el único vértice ``libre'' restante sería $v_3$, por lo cual sería tomado y el conjunto solución sería $\{v_1,v_3\}$.
-	\item Si $n > 4$, $v_3$ no sería un nodo óptimo, ya que uno de sus nodos adyacentes ($v_2$) ya fue cubierto por $v_1$, mientras que $v_4$ sí sería óptimo dado que podría cubrir a $v_3$ y a $v_5$, así que $v_4$ pasaría a formar parte de la solución.
-	\item Los demás nodos del conjunto solución irán siendo tomados siguiendo los mismos pasos.
+	\item Si el siguiente nodo ``óptimo'' cubre 2 nodos ``libres'' (aparte de sí mismo), éste será necesariamente $v_{i+3}$.
+	\item Si el siguiente nodo ``óptimo'' cubre 1 nodo ``libre'' (aparte de sí mismo), éste será necesariamente $v_{i+2}$.
 	\end{itemize}
-	
-	Podríamos decir, entonces, que la solución se genera tomando los vértices $v_j$ con $j = 1 + 3 \times k$ ($k$ entero no negativo) siempre que $j < n-1$. [VER COMO ENCHUFAR LO DE UN TERCIO]
-	
-\item Si los vértices se relacionan... [NO SE COMO ESCRIBIR EL CASO FEO]
+
 \end{itemize}
+
+HABRÍA QUE MOSTRAR QUE NUESTRO ALGORITMO AGARRA EXACTAMENTE LOS NODOS QUE FORMAN LA SOLUCIÓN EXACTA DESCRITA ANTES
+
+Ahora cambiemos la rotulación del grafo a $w_1,w_2,...,w_n$ de la siguiente manera:
+
+\begin{itemize}
+\item Para $1 \leq j \leq h$, $v_{j+3(j-1)} = w_j$
+\item Para $h < j \leq n$, $v_i = w_j$ siendo $j$ algún índice que aún no fue asignado.
+\end{itemize}
+
+Donde $h =
+\begin{cases}
+\left\lfloor \dfrac{n}{4} \right\rfloor + 1 & \text{ si } n \equiv 3 (4)\\\\
+\left\lfloor \dfrac{n}{4} \right\rfloor & \text{ en otro caso }
+\end{cases}$
+
+Bajo esta nueva rotulación, nuestro algoritmo procederá de la siguiente manera:
+
+\begin{itemize}
+\item El primer nodo ``óptimo'' hallado será $w_1$, así que lo incluirá en la solución y lo marcará como ``tomado'' junto a sus dos vecinos. 
+\item Mientras quede al menos 1 nodo ``óptimo'' que cubre 2 nodos ``libres'' (aparte de sí mismo), si $w_i$ el último vértice incluido en el conjunto, el siguiente nodo ``óptimo'' a tomar será $w_{i+1}$.  Notar que los vértices que cumplen esta condición, no comparten vecinos.
+\item Mientras quede al menos 1 nodo ``óptimo'' que cubre 1 nodo ``libre'' (aparte de sí mismo), lo tomará y lo marcará junto a sus vecinos como ``tomado''.
+\item Si quedan vértices ``libres'' serán tomados, pero a esta altura estos vértices no tendrán vecinos ``libres''.
+\end{itemize}
+
+FALTA MOSTRAR QUE LO QUE QUEDA ES EN GENERAL PEOR A LA OTRA ROTULACIÓN.
+
+CUANDO SE ACOMODE LO QUE FALTA, HAY QUE REFERENCIAR A LAS IMÁGENES CORRESPONDIENTES.
+
+
+
 
 \begin{figure}[!htb]
 \minipage{0.5\textwidth}
