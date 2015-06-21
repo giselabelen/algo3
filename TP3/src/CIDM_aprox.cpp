@@ -55,7 +55,7 @@ int main()
 	// Vecindades
 	if(res != 1)
 	{
-		busqueda(cidm_sol,vec,n,res,2);	// 1 para busq1 y 2 para busq2
+		busqueda(cidm_sol,vec,n,res,1);	// 1 para busq1 y 2 para busq2
 	}
 	//~ 
 	//~ // SOLUCIÓN POR GRASP

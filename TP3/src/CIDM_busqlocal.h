@@ -14,11 +14,13 @@ typedef vector< pair< list<int>, int> > Vecinos;
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
 int otro_inicio(list<int>& cidm_sol, Vecinos vecinos, int n);
-int vecindad1(list<int> vec, Vecinos vecinos, vector<int>& cercanos, int cont_ceros);
+pair<int,int> vecindad1(list<int> salientes,Vecinos vecinos, vector<int>& cercanos, int cont_ceros,int n);
 int vecindad2(list<int> intercambios, Vecinos vecinos, vector<int>& cercanos);
-bool mejorador1(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int& res);
+bool mejorador1(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int& res, int n);
 bool mejorador2(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int& res, int n);
 void busqueda(list<int>& cidm_sol, Vecinos vecinos, int n, int& res, int mej);
+list<int> fusion_vecinos(list<int> nodos, Vecinos vecinos, int n);
+bool son_vecinos(int n1, int n2, Vecinos vecinos);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -48,42 +50,109 @@ int otro_inicio(list<int>& cidm_sol, Vecinos vecinos, int n)
 }
 
 
-int vecindad1(list<int> vec, Vecinos vecinos, vector<int>& cercanos, int cont_ceros)
+list<int> fusion_vecinos(list<int> nodos, Vecinos vecinos, int n)
 {
-	int cont_aux;
+	list<int> res;
 	list<int>::iterator it1;
 	list<int>::iterator it2;
+	vector<bool> cand_bool(n,false);
 	
-	// Recorro esta lista de nodos
-	for(it1 = vec.begin(); it1 != vec.end(); it1++)
+	for(it1 = nodos.begin(); it1 != nodos.end(); it1++)
 	{
-		cont_aux = 0;
-		
-		// Si el nodo me sirve
-		if(cercanos[*it1] == 0)
+		for(it2 = (vecinos[*it1].first).begin(); it2 != (vecinos[*it1].first).end(); it2++)
 		{
-			// Cuento cuántos huecos cubre
-			for(it2 = (vecinos[*it1].first).begin(); it2 != (vecinos[*it1].first).end(); it2++)
+			if(!cand_bool[*it2])
 			{
-				if(cercanos[*it2] == 0){ cont_aux++; }
-			}
-			
-			// Si el nodo cubre todos los huecos, actualizo 'cercanos' y lo devuelvo
-			if(cont_ceros-1 == cont_aux)
-			{
-				cercanos[*it1] = -1;
-				
-				for(it2 = (vecinos[*it1].first).begin(); it2 != (vecinos[*it1].first).end(); it2++)
-				{
-					cercanos[*it2]++;
-				}
-
-				return *it1;
+				cand_bool[*it2] = true;
+				res.push_back(*it2);
 			}
 		}
 	}
 	
-	return -1;
+	return res;
+}
+
+
+bool son_vecinos(int n1, int n2, Vecinos vecinos)
+{
+	list<int>::iterator it;
+	
+	for(it = (vecinos[n1].first).begin(); it != (vecinos[n1].first).end(); it++)
+	{
+		if(*it == n2){ return true; }
+	}
+	
+	return false;
+}
+
+
+pair<int,int> vecindad1(list<int> salientes, Vecinos vecinos, vector<int>& cercanos, int cont_ceros, int n)
+{
+	int cont_aux;
+	pair<int,int> res;
+	list<int> nodos;
+	list<int> aux_vecinos;
+	list<int>::iterator it1;
+	list<int>::iterator it2;
+	list<int>::iterator it3;
+	
+	// Armo una lista de candidatos
+	list<int> candidatos = fusion_vecinos(salientes,vecinos,n);
+	
+	// Recorro esta lista de nodos
+	for(it1 = candidatos.begin(); it1 != candidatos.end(); it1++)
+	{
+		it2 = it1;
+		it2++;
+		
+		while(it2 != candidatos.end())
+		{
+			cont_aux = 0;
+			
+			// Si ambos nodos me sirven
+			if(cercanos[*it1] == 0 && cercanos[*it2] == 0 && !son_vecinos(*it1,*it2,vecinos))
+			{
+				aux_vecinos.clear();
+				nodos.clear();
+				
+				nodos.push_back(*it1);
+				nodos.push_back(*it2);
+				
+				aux_vecinos = fusion_vecinos(nodos,vecinos,n);
+				
+				// Cuento cuántos huecos cubren
+				for(it3 = aux_vecinos.begin(); it3 != aux_vecinos.end(); it3++)
+				{
+					if(cercanos[*it3] == 0){ cont_aux++; }
+				}
+				
+				// Si se cubren todos los huecos, actualizo 'cercanos' y devuelvo
+				if(cont_ceros-2 == cont_aux)
+				{
+					cercanos[*it1] = -1;
+					cercanos[*it2] = -1;
+					
+					for(it3 = (vecinos[*it1].first).begin(); it3 != (vecinos[*it1].first).end(); it3++)
+					{
+						cercanos[*it3]++;
+					}
+					for(it3 = (vecinos[*it2].first).begin(); it3 != (vecinos[*it2].first).end(); it3++)
+					{
+						cercanos[*it3]++;
+					}
+					
+					res = make_pair(*it1,*it2);
+					return res;
+				}
+				
+			}
+			
+			it2++;
+		}
+	}
+	
+	res = make_pair(-1,-1);
+	return res;
 }
 
 
@@ -111,13 +180,15 @@ int vecindad2(list<int> intercambios, Vecinos vecinos, vector<int>& cercanos)
 }
 
 
-bool mejorador1(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int& res)
+bool mejorador1(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int& res, int n)
 {
 	int cont_ceros;				// Cantidad de nodos que quedan 'libres'
-	int cambio;					// Nodo que vamos a insertar
+	pair<int,int> cambio;		// Nodos que vamos a insertar
+	list<int> salientes;		// Nodos que vamos a sacar
 	list<int>::iterator it1;
 	list<int>::iterator it2;
 	list<int>::iterator it3;
+	list<int>::iterator it4;
 	
 	for(it1 = cidm_sol.begin(); it1 != cidm_sol.end(); it1++)
 	{
@@ -125,55 +196,74 @@ bool mejorador1(list<int>& cidm_sol, Vecinos vecinos, vector<int>& cercanos, int
 		it2++;
 		while(it2 != cidm_sol.end())
 		{
-			// Tomo 2 nodos de la solución
-			cercanos[*it1] = 0;
-			cercanos[*it2] = 0;
-			cont_ceros = 2;
-			
-			// Actualizo 'cercanos' y 'cont_ceros' para los vecinos de los 2 nodos elegidos
-			for(it3 = (vecinos[*it1].first).begin(); it3 != (vecinos[*it1].first).end(); it3++)
+			it4 = it2;
+			it4++;
+			while(it4 != cidm_sol.end())
 			{
-				cercanos[*it3]--;
-				if(cercanos[*it3] == 0){ cont_ceros++; }
-			}
-			
-			for(it3 = (vecinos[*it2].first).begin(); it3 != (vecinos[*it2].first).end(); it3++)
-			{
-				cercanos[*it3]--;
-				if(cercanos[*it3] == 0){ cont_ceros++; }
-			}
-			
-			// Veo si puedo cambiar estos 2 con un amigo del primero
-			cambio = vecindad1(vecinos[*it1].first,vecinos,cercanos,cont_ceros);
-			
-			if(cambio == -1)
-			{
-				// Si no se pudo, veo de cambiar con un amigo del segundo
-				cambio = vecindad1(vecinos[*it2].first,vecinos,cercanos,cont_ceros);
-			}
-			
-			// Si tuve un cambio, actualizo 'cidm_sol' y 'res'
-			if(cambio != -1)
-			{
-				it1 = cidm_sol.erase(it1);
-				it2 = cidm_sol.erase(it2);
-				cidm_sol.push_back(cambio);
-				res--;
-				return true;
-			}
-			
-			// Si no tuve un cambio, vuelvo al 'cercanos' original
-			cercanos[*it1] = -1;
-			cercanos[*it2] = -1;
-			
-			for(it3 = (vecinos[*it1].first).begin(); it3 != (vecinos[*it1].first).end(); it3++)
-			{
-				cercanos[*it3]++;
-			}
-			
-			for(it3 = (vecinos[*it2].first).begin(); it3 != (vecinos[*it2].first).end(); it3++)
-			{
-				cercanos[*it3]++;
+				salientes.clear();
+				
+				// Tomo 3 nodos de la solución
+				cercanos[*it1] = 0;
+				cercanos[*it2] = 0;
+				cercanos[*it4] = 0;
+				cont_ceros = 3;
+				
+				// Actualizo 'cercanos' y 'cont_ceros' para los vecinos de los 3 nodos elegidos
+				for(it3 = (vecinos[*it1].first).begin(); it3 != (vecinos[*it1].first).end(); it3++)
+				{
+					cercanos[*it3]--;
+					if(cercanos[*it3] == 0){ cont_ceros++; }
+				}
+				
+				for(it3 = (vecinos[*it2].first).begin(); it3 != (vecinos[*it2].first).end(); it3++)
+				{
+					cercanos[*it3]--;
+					if(cercanos[*it3] == 0){ cont_ceros++; }
+				}
+				
+				for(it3 = (vecinos[*it4].first).begin(); it3 != (vecinos[*it4].first).end(); it3++)
+				{
+					cercanos[*it3]--;
+					if(cercanos[*it3] == 0){ cont_ceros++; }
+				}
+				
+				salientes.push_back(*it1);
+				salientes.push_back(*it2);
+				salientes.push_back(*it4);
+				
+				// Veo si puedo cambiar estos 3 con otros 2 nodos fuera del conjunto
+				cambio = vecindad1(salientes,vecinos,cercanos,cont_ceros,n);
+				
+				// Si tuve un cambio, actualizo 'cidm_sol' y 'res'
+				if(cambio.first != -1)
+				{
+					it1 = cidm_sol.erase(it1);
+					it2 = cidm_sol.erase(it2);
+					it4 = cidm_sol.erase(it4);
+					cidm_sol.push_back(cambio.first);
+					cidm_sol.push_back(cambio.second);
+					res--;
+					return true;
+				}
+				
+				// Si no tuve un cambio, vuelvo al 'cercanos' original
+				cercanos[*it1] = -1;
+				cercanos[*it2] = -1;
+				cercanos[*it4] = -1;
+				
+				for(it3 = (vecinos[*it1].first).begin(); it3 != (vecinos[*it1].first).end(); it3++){
+					cercanos[*it3]++;
+				}
+				
+				for(it3 = (vecinos[*it2].first).begin(); it3 != (vecinos[*it2].first).end(); it3++){
+					cercanos[*it3]++;
+				}
+				
+				for(it3 = (vecinos[*it4].first).begin(); it3 != (vecinos[*it4].first).end(); it3++){
+					cercanos[*it3]++;
+				}
+				
+				it4++;
 			}
 			
 			it2++;
@@ -271,7 +361,7 @@ void busqueda(list<int>& cidm_sol, Vecinos vecinos, int n, int& res, int mej)
 		printf("\n");
 		
 		if(mej == 1){
-			hay_cambios = mejorador1(cidm_sol,vecinos,cercanos,res);
+			hay_cambios = mejorador1(cidm_sol,vecinos,cercanos,res,n);
 		}else{
 			hay_cambios = mejorador2(cidm_sol,vecinos,cercanos,res,n);
 		}
