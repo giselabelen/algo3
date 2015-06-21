@@ -45,14 +45,11 @@ Para mejorar la velocidad de ejecución del algoritmo, se han aplicado las sigui
 
 \begin{figure}
 \begin{codebox}
-\Procname{$\proc{CIDM_exacto}(lista\_nodos$ $cidm,lista\_nodos$ $cidm\_sol,nodo,int$ $n,int$ $cota,int$ $res)$} 
-\li \If se superó la $cota$
-\li \Then \Return
-	\End
-\li \If se encontró una solución
+\Procname{$\proc{CIDM_exacto}(lista\_nodos$ $cidm,lista\_nodos$ $cidm\_sol,nodo,int$ $n,int$ $res\_sol,int$ $res)$} 
+\li \If se encontró una solución mejor a la obtenida hasta el momento
 \li \Then 
  		$cidm\_sol \leftarrow cidm$
-\li 		$cota \leftarrow res$
+\li 		$res\_sol \leftarrow res$ 		
 \li 		\Return
 	\End
 \li \If se llegó al final y no se encontró una solución
@@ -63,17 +60,15 @@ Para mejorar la velocidad de ejecución del algoritmo, se han aplicado las sigui
 		$cidm \leftarrow$ agregar $nodo$
 \li 		incrementar $res$
 \li 		marcar a $nodo$ y a sus vecinos como ``tomados''
-\li		{\sc CIDM_exacto}($cidm,cidm\_sol,nodo\_siguiente,n,cota,res$)
+\li		{\sc CIDM_exacto}($cidm,cidm\_sol,nodo\_siguiente,n,res\_sol,res$)
 	\End
-\li \If $nodo$ tiene vecinos ó todavía no se llegó a una solución
-\li \Then
- 		\If se modificó en la rama anterior
-\li 		\Then
-			$cidm \leftarrow$ sacar $nodo$
-\li			decrementar $res$
-\li 			marcar a $nodo$ y a sus vecinos como ``no tomados''
-		\End
-\li 		{\sc CIDM_exacto}($cidm,cidm\_sol,nodo\_siguiente,n,cota,res$)
+\li 	\If $nodo$ se tomó en la rama anterior
+\li 	\Then
+		$cidm \leftarrow$ sacar $nodo$
+\li		decrementar $res$
+\li 		marcar a $nodo$ y a sus vecinos como ``no tomados''
+	\End
+\li 	{\sc CIDM_exacto}($cidm,cidm\_sol,nodo\_siguiente,n,res\_sol,res$)
 \end{codebox}
 \caption{Algoritmo exacto para CIDM}\label{code:exacto}
 \end{figure}

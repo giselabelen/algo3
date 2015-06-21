@@ -14,7 +14,7 @@ Se analizarán dos posibles soluciones iniciales:
 Para cada solución factible $S$, se define $N(S)$ como el conjunto de ``soluciones vecinas'' de $S$.  Plantearemos dos ``vecindades'' posibles para las soluciones.  
 
 \begin{itemize}
-\item {\bf Vecindad 1:} Una solución $S' \in N(S)$ si y sólo si puede obtenerse intercambiando tres nodos de $S$ por dos nodos que no pertenecía a $S$.  Es decir, para $u,v,w \in S$, y $x,y$ nodos del grafo original tal que $x \not \in S$ y $y \not \in S$, definimos $S' = S - \{u,v,w\} + \{x,y\}$ y decimos que $S'$ es ``vecina'' de $S$ si y sólo si $S'$ es un conjunto independiente maximal del grafo original. La Figura \ref{fig:vec1} es un ejemplo de solución ``vecina'' conisderando a la Figura \ref{fig:solinicial} como solución inicial para el grafo de la Figura \ref{fig:estrellita}.  En este caso, se han quitado los nodos 1 y 8 para agregar el nodo 3.
+\item {\bf Vecindad 1:} Una solución $S' \in N(S)$ si y sólo si puede obtenerse intercambiando tres nodos de $S$ por dos nodos que no pertenecía a $S$.  Es decir, para $u,v,w \in S$, y $x,y$ nodos del grafo original tal que $x \not \in S$ y $y \not \in S$, definimos $S' = S - \{u,v,w\} + \{x,y\}$ y decimos que $S'$ es ``vecina'' de $S$ si y sólo si $S'$ es un conjunto independiente maximal del grafo original. La Figura \ref{fig:vec1} es un ejemplo de solución ``vecina'' conisderando a la Figura \ref{fig:solinicial} como solución inicial para el grafo de la Figura \ref{fig:estrellita}.  En este caso, se han quitado los nodos 1, 8 y 11 para agregar los nodos 3 y 5.
 \item {\bf Vecindad 2:} Una solución $S' \in N(S)$ si y sólo si puede obtenerse agregando a $S$ un nodo del grafo original que no pertenezca a $S$, y quitando todos los nodos de $S$ adyacentes a este nuevo nodo.  Es decir, para $v$ un nodo del grafo original tal que $v \not \in S$, y $A \subseteq S$ tal que para todo $w \in S$, si $w$ es adyacente a $v$ entonces $w \in A$, definimos $S' = S - A + \{v\}$ y decimos que $S'$ es ``vecina'' de $S$ si y sólo si $S'$ es un conjunto independiente maximal del grafo original.  La Figura \ref{fig:vec2} es un ejemplo de solución ``vecina'' conisderando a la Figura \ref{fig:solinicial} como solución inicial para el grafo de la Figura \ref{fig:estrellita}.  En este caso, se ha agregado el nodo 2 y se han quitado los nodos 1, 6 y 7.
 \end{itemize}
 
@@ -77,24 +77,24 @@ Para cada solución factible $S$, se define $N(S)$ como el conjunto de ``solucio
 \begin{figure}
 \begin{codebox}
 \Procname{$\proc{Mejorador1}(lista\_nodos$ $cidm\_sol,int$ $res)$} 
-\li \For cada par de nodos en $cidm\_sol$
+\li \For cada grupo de 3 de nodos en $cidm\_sol$
 \li \Do 
-		``sacar'' ambos nodos
-\li 		\For cada vecino $n$ de estos nodos
+		``sacar'' los 3 nodos
+\li 		\For cada par de vecinos $n1,n2$ de estos nodos
 \li 		\Do 
-			\If $n$ quedó ``desconectado''
+			\If $n1$ y $n2$ quedaron ``libres'' y no son adyacentes
 \li			\Then
-				``agregar'' $n$
+				``agregar'' $n1$ y $n2$
 \li 				\If se forma una solución válida
 \li 				\Then salir del ciclo
 				\End
 			\End
-\li 			\If se encontró una solución mejor
-\li 			\Then
-				actualizar $cidm\_sol$
-\li 				actualizar $res$
-\li 				\Return
-			\End
+		\End
+\li 		\If se encontró una solución mejor
+\li 		\Then
+			actualizar $cidm\_sol$
+\li 			actualizar $res$
+\li 			\Return
 		\End
 	\End
 \li \Return
@@ -112,7 +112,7 @@ Para cada solución factible $S$, se define $N(S)$ como el conjunto de ``solucio
 \li \Do 
 		\If $n$ se conecta con al menos dos nodos de $cidm\_sol$
 \li 		\Then 
-			\For cada nodo de $cidm\_sol$ que se conectan $n$
+			\For cada nodo de $cidm\_sol$ que se conecta a $n$
 \li 			\Do 
 				``sacar'' el nodo
 \li 				\If se forma una solución válida
