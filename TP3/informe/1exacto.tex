@@ -43,6 +43,25 @@ Para mejorar la velocidad de ejecución del algoritmo, se han aplicado las sigui
 
 \vspace*{0.3cm}
 
+Trataremos ahora de justificar que la complejidad de nuestro algoritmo es $\mathcal{O}(2^n * n)$.
+
+Observemos que, como también dijimos anteriormente, nuestro backtracking irá generando distintas soluciones mediante la generación de distintas ramas en base a si un nodo es tomado como parte de la solución o no. Notemos que partiendo de esto tenemos $2^n$ casos posibles. Como indica el pseudocódigo (Figura \ref{code:exacto}), sea cual sea la ruta que tomemos, nos vemos obligados a marcar a este nodo y a sus vecinos como ``no tomados'' o ``tomados''. Esto no es más que recorrer una lista de vecinos realizando operaciones $\mathcal{O}(1)$, llegando a tener un costo de, en el peor caso, $\mathcal{O}(n)$. Luego por cada uno de los $2^n$ casos tendriamos un costo de $\mathcal{O}(n)$.
+
+Por otro lado hay que mencionar que si se llegara a una solución, esta tendría que ser comparada con la solución óptima obtenida hasta ese momento y, en caso de ser mejor, reemplazarla mediante la copia de todos los elementos que componen a esta solución: $\mathcal{O}(n)$. A este costo tendríamos que incurrir una cantidad $k$ de veces, donde $k$ es la cantidad de soluciones que resultan ser mejores que las que se poseían hasta el momento.
+
+Teniendo todo esto en cuenta, y siendo $T(n)$ la complejidad de nuestro algoritmo tenemos:
+
+\begin{equation*}
+\begin{array}{l}
+T(n) = \mathcal{O}(n)*2^n + k\mathcal{O}(n)\\
+T(n) = \mathcal{O}(2^n *n)
+\end{array}
+\end{equation*}
+
+
+
+
+
 \begin{figure}
 \begin{codebox}
 \Procname{$\proc{CIDM_exacto}(lista\_nodos$ $cidm,lista\_nodos$ $cidm\_sol,nodo,int$ $n,int$ $res\_sol,int$ $res)$} 
@@ -73,22 +92,6 @@ Para mejorar la velocidad de ejecución del algoritmo, se han aplicado las sigui
 \caption{Algoritmo exacto para CIDM}\label{code:exacto}
 \end{figure}
 %\FloatBarrier
-
-Trataremos ahora de justificar que la complejidad de nuestro algoritmo es \mathcal{O}(2^n * n).
-Observemos que, como también dijimos anteriormente, nuestro backtracking irá generando distintas soluciones mediante la generación de distintas ramas en base a si un nodo es tomado como parte de la solución o no. Notemos que partiendo de esto tenemos $2^n$ casos posibles. Como indica el pseudocódigo, sea cual sea la ruta que tomemos, nos vemos obligados a marcar a este nodo y a sus vecinos como ``no tomados'' o ``tomados''. Esto no es más que recorrer una lista de vecinos realizando operaciones \mathcal{O}(1), llegando a tener un costo de, en el peor caso \mathcal{O}(n). Luego por cada uno de los $2^n$ casos tendriamos un costo de \mathcal{O}(n).
-
-Por otro lado hay que mencionar que si se llegara a una solución, esta tendría que ser comparada con la solución óptima obtenida hasta ese momento y, en caso de ser mejor, reemplazarla mediante la copia de todos los elementos que componen a esta solución \mathcal{O}(n). A este costo tendríamos que incurrir una cantidad k de veces, donde k es la cantidad de soluciones que resultan ser mejores que las que se poseían hasta el momento.
-
-Teniendo todo esto en cuenta, y siendo $T(n)$ la complejidad de nuestro algoritmo tenemos:
-
-\begin{equation*}
-\begin{array}{l}
-T(n) = \mathcal{O}(n)*2^n + k\mathcal{O}(n)\\
-T(n) = \mathcal{O}(2^n *n)
-\end{array}
-\end{equation*}
-
-
 
 \vspace*{0.6cm}
 %\newpage
