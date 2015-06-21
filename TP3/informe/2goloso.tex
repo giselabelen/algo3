@@ -37,11 +37,47 @@ Primero, considerando al conjunto independiente vacío, tomamos a un nodo óptim
 
 \subsection{Instancias no óptimas.}
 
+\vspace*{0.3cm}
+
+A continuación presentaremos dos familias de grafos para las cuales nuestra heurística golosa no siempre encuentra una solución óptima.
+
+\subsubsection*{Familia 1}
+
+La forma de los grafos pertenecientes a esta familia responde a las siguientes características:
+
+\begin{itemize}
+\item Existe un único vértice $v$ con grado máximo.  Sea $\delta_{max}$ el grado de este nodo.
+\item Para cada vértice $w$ adyacente $v$, $\delta(w) < \delta_{max}$, y sus nodos adyacentes (salvo $v$) tienen grado 1.	
+\end{itemize}
+
+Dado que el algoritmo propuesto va tomando en cada paso el nodo ``óptimo'', o sea, aquél que más nodos ``libres'' cubre, en un grafo como el descrito primero tomará al vértice $v$ con grado máximo $\delta_{max}$.  Luego, para cumplir con la independencia y la dominancia, deberá tomar a los vértices adyacentes a los vecinos de $v$. Como el grado de cada vecino de $v$ es menor a $\delta_{max}$, el peor de los casos sería que cada uno de ellos tuviera grado $\delta_{max} - 1$.  En este caso, cada vértice adyacente a $v$ tendría $\delta_{max} - 2$ vecinos además del mismo $v$, y entonces la solución hallada por nuestra heurística estaría conformada por $\delta_{max} \times (\delta_{max} - 2)$ nodos.  Sin embargo, para un grafo como el detallado, existe una solución mejor conformada por $\delta_{max}$ nodos, y corresponde al conjunto compuesto por los vecinos del nodo $v$.
+
+La Figura \ref{fig:familia1} muestra un ejemplo de grafo perteneciente a esta familia, y la Figura \ref{fig:familia1res} muestra en color verde la solución hallada por nuestro algoritmo, la cual claramente es peor que la solución formada por los vértices que quedaron en rojo en la misma Figura.
+
+\begin{figure}[!htb]
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.5]{imagenes/familia1.png}
+\end{center}
+  \caption{Grafo perteneciente a la Familia 1}\label{fig:familia1}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.5]{imagenes/familia1-res.png}
+\end{center}
+  \caption{Solución hallada por nuestra heurística}\label{fig:familia1res}
+\endminipage
+\end{figure}
+
+
+
+\vspace*{0.6cm}
 
 \subsection{Experimentación y gráficos.}
 
 \vspace*{0.3cm}
 
+\vspace*{0.6cm}
 
 \subsubsection{Test 1}
 \vspace*{0.3cm}
