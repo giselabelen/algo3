@@ -33,7 +33,7 @@ void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado,
 	if(res > cota){ return; }	// PODA CLÁSICA
 	
 	// si encontré una solución, la guardo y me voy
-	if(cont == n)
+	if(cont == n /*&& res <= cota*/)	// PARA NO VER PODA CLÁSICA
 	{
 		cidm_sol.clear();
 		for (list<int>::iterator it = cidm.begin(); it != cidm.end(); it++){
