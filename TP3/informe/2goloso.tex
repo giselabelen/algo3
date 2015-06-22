@@ -142,18 +142,55 @@ CUANDO SE ACOMODE LO QUE FALTA, HAY QUE REFERENCIAR A LAS IMÁGENES CORRESPONDIE
 \endminipage\\
 \minipage{0.5\textwidth}
 \begin{center}
-  \includegraphics[scale=0.8]{imagenes/faimilia2rename.png}
+  \includegraphics[scale=1.0]{imagenes/faimilia2rename.png}
 \end{center}
   \caption{Circuito simple rotulado ``no en orden''}\label{fig:familia2bis}
 \endminipage\hfill
 \minipage{0.5\textwidth}
 \begin{center}
-  \includegraphics[scale=0.8]{imagenes/faimilia2rename-solnoopt.png}
+  \includegraphics[scale=1.0]{imagenes/faimilia2rename-solnoopt.png}
 \end{center}
   \caption{Solución hallada por nuestra heurística}\label{fig:familia2bisres}
 \endminipage
 \end{figure}
 
+
+
+\vspace*{0.6cm}
+
+\subsection{Instancias óptimas.}
+
+\vspace*{0.3cm}
+
+A continuación presentaremos una familia de grafos para la cual nuestra heurística golosa siempre encuentra una solución óptima.
+
+La forma de los grafos pertenecientes a esta familia responde a las siguientes características:
+
+\begin{itemize}
+\item Existe un único vértice $v$ que llamaremos ``central'', con grado $\delta(v)$.
+\item Para cada vértice $w$ adyacente a $v$, $\delta(w) > \delta(v)$, y sus nodos adyacentes (salvo $v$) tienen grado 1.	
+\end{itemize}
+
+Dado que el algoritmo propuesto va tomando en cada paso el nodo ``óptimo'', o sea, aquél que más nodos ``libres'' cubre, en un grafo como el descrito se irá formando el conjunto solución con los vértices adyacentes al nodo ``central'' $v$.  
+
+FALTA MOSTRAR QUE ES LA MEJOR
+
+La Figura \ref{fig:familia3} muestra un ejemplo de grafo perteneciente a esta familia, y la Figura \ref{fig:familia3res} muestra en color verde la solución hallada por nuestro algoritmo.
+
+\begin{figure}[!htb]
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.5]{imagenes/familia3.png}
+\end{center}
+  \caption{Grafo perteneciente a la Familia óptima}\label{fig:familia3}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.5]{imagenes/familia3-res.png}
+\end{center}
+  \caption{Solución hallada por nuestra heurística}\label{fig:familia3res}
+\endminipage
+\end{figure}
 
 
 \vspace*{0.6cm}
