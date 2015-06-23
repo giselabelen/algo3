@@ -4,7 +4,7 @@
 int main()
 {
 	int n;					// Cantidad de nodos
-	int m;					// Cantidad de vértices
+	int m;					// Cantidad de aristas
 	int e1;					// Para procesar las aristas	
 	int e2;					// Idem
 	int res = 0;			// Total de nodos de la solución
