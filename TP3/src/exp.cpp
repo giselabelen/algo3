@@ -18,4 +18,7 @@ int main()
 	exp_goloso_completos();
 	exp_goloso_aleatorio();
 	exp_goloso_estrellas();
+	exp_goloso_circuito_ord();
+	exp_goloso_circuito_rnd();
+	exp_goloso_galaxias();
 }

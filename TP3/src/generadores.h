@@ -22,9 +22,10 @@ Vec gen_k2_ord(int k);
 Vec gen_k2_rnd(int k);
 Vecinos generar_solitarios(int n);
 Vecinos generar_aleatorio(int n, int a);
-Vecinos generar_completo(int n);		// OJO ACA QUE FALTA ALEATORIZAR
+Vecinos generar_completo(int n);
 Vecinos generar_estrella(int& n);
-Vecinos generar_circuito(int n);
+Vecinos generar_circuito_ord(int n);
+Vecinos generar_circuito_rnd(int n);
 Vecinos generar_galaxia(int& n);
 
 
@@ -317,7 +318,7 @@ Vecinos generar_estrella(int& n)
 }
 
 
-Vecinos generar_circuito(int n)
+Vecinos generar_circuito_ord(int n)
 {
 	Vecinos vec(n);
 	
@@ -331,6 +332,53 @@ Vecinos generar_circuito(int n)
 	(vec[0].first).push_back(n-1);
 	(vec[n-1].first).push_back(0);
 	vec[n-1].second = 2;
+	
+	return vec;
+}
+
+
+Vecinos generar_circuito_rnd(int n)
+{
+	int n1;
+	int n2;
+	int n_aux;
+	int aux;
+	list<int> nodos;
+	list<int>::iterator it;
+	Vecinos vec(n);
+	
+	for(int i = 0; i < n; i++){	nodos.push_back(i);	}
+	
+	// NODO 1
+	it = nodos.begin();
+	aux = rand() % n;
+	advance(it,aux);
+	n1 = *it;
+	it = nodos.erase(it);
+	n--;
+	
+	n_aux = n1;
+	
+	while(n > 0)
+	{
+		// NODO 2
+		it = nodos.begin();
+		aux = rand() % n;
+		advance(it,aux);
+		n2 = *it;
+		it = nodos.erase(it);
+		n--;
+		
+		(vec[n1].first).push_back(n2);
+		(vec[n2].first).push_back(n1);
+		
+		n1 = n2;
+	}
+	
+	(vec[n1].first).push_back(n_aux);
+	(vec[n_aux].first).push_back(n1);
+	
+	for(int i = 0; i < n; i++){ vec[i].second = 2; }
 	
 	return vec;
 }
