@@ -15,7 +15,7 @@ int main()
 	scanf("%i",&m);
 	
 	vector<int> estado(n,0);
-	Vecinos vec(n);			// Lista de adyacencia
+	Vec vec(n);				// Lista de adyacencia
 	int cota = n;
 	
 	for(int i = 0; i < m; i++)

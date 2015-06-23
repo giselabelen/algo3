@@ -8,19 +8,19 @@ using namespace std;
 
 /**************************** ESTRUCTURAS ****************************/
 
-typedef vector< list<int> > Vecinos;
+typedef vector< list<int> > Vec;
 
 
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
 void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado, 
-				Vecinos vec, int pos, int n, int& cota, int res, int cont);
+				Vec vec, int pos, int n, int& cota, int res, int cont);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
 
 void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado,
-					Vecinos vec, int pos, int n, int& cota, int res, int cont)
+					Vec vec, int pos, int n, int& cota, int res, int cont)
 {
 	// Guardo valores iniciales para deshacer después
 	int grado;					// PARA UNA PODA
