@@ -8,19 +8,19 @@ using namespace std;
 
 /**************************** ESTRUCTURAS ****************************/
 
-typedef vector< list<int> > Vec;
+typedef vector< pair< list<int>, int> > Vecinos;
 
 
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
 void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado, 
-				Vec vec, int pos, int n, int& cota, int res, int cont);
+				Vecinos vec, int pos, int n, int& cota, int res, int cont);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
 
 void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado,
-					Vec vec, int pos, int n, int& cota, int res, int cont)
+					Vecinos vec, int pos, int n, int& cota, int res, int cont)
 {
 	// Guardo valores iniciales para deshacer después
 	int grado;					// PARA UNA PODA
@@ -56,7 +56,7 @@ void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado,
 		cont++;
 		grado = 0;		// PARA UNA PODA
 		
-		for (list<int>::iterator it = vec[pos].begin(); it != vec[pos].end(); it++)
+		for (list<int>::iterator it = (vec[pos].first).begin(); it != (vec[pos].first).end(); it++)
 		{
 			if(estado[*it] == 0){ cont++; }
 			estado[*it]++;
@@ -74,7 +74,7 @@ void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado,
 			cidm.pop_back();
 			estado[pos]--;
 
-			for (list<int>::iterator it = vec[pos].begin(); it != vec[pos].end(); it++)
+			for (list<int>::iterator it = (vec[pos].first).begin(); it != (vec[pos].first).end(); it++)
 			{
 				if(estado[*it] != 0){
 					estado[*it]--;

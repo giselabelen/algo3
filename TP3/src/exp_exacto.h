@@ -6,16 +6,16 @@
 
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
-void exp_exacto_solitarios();
-void exp_exacto_completos();
-void exp_exacto_k2_ord();
-void exp_exacto_k2_rnd();
-void exp_exacto_aleatorio();
+void exp_exacto_solitarios(int cant_min, int cant_max);
+void exp_exacto_completos(int cant_min, int cant_max);
+void exp_exacto_k2_ord(int cant);
+void exp_exacto_k2_rnd(int cant);
+void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
 
-void exp_exacto_solitarios()
+void exp_exacto_solitarios(int cant_min, int cant_max)
 {
 	// CORRER UNA VEZ CON CADA PODA
 	
@@ -28,10 +28,10 @@ void exp_exacto_solitarios()
 	list<int> cidm;	
 	list<int> cidm_sol;
 	
-	for(int n = 3; n < 21; n++)
+	for(int n = cant_min; n < cant_max+1; n++)
 	{
 		t = 0;
-		Vec vec(n);
+		Vecinos vec = generar_solitarios(n);
 		vector<int> estado(n);
 	
 		for(int i = 0; i < 20; i++)
@@ -58,7 +58,7 @@ void exp_exacto_solitarios()
 }
 
 
-void exp_exacto_completos()
+void exp_exacto_completos(int cant_min, int cant_max)
 {
 	// CORRER UNA VEZ CON CADA PODA
 	
@@ -72,11 +72,10 @@ void exp_exacto_completos()
 	list<int> cidm;	
 	list<int> cidm_sol;
 	
-	for(int n = 3; n < 21; n++)
+	for(int n = cant_min; n < cant_max+1; n++)
 	{
 		t = 0;
-		m = n*(n-1)/2;
-		Vec vec = gen_completo(n);
+		Vecinos vec = generar_completo(n);
 		vector<int> estado(n);
 		
 		for(int i = 0; i < 20; i++)
@@ -103,7 +102,7 @@ void exp_exacto_completos()
 }
 
 
-void exp_exacto_k2_ord()
+void exp_exacto_k2_ord(int cant)
 {
 	// CORRER UNA VEZ CON CADA PODA
 	
@@ -116,10 +115,10 @@ void exp_exacto_k2_ord()
 	list<int> cidm;	
 	list<int> cidm_sol;
 	
-	for(int k = 1; k < 11; k++)
+	for(int k = 1; k < cant+1; k++)
 	{
 		t = 0;
-		Vec vec = gen_k2_ord(k);
+		Vecinos vec = generar_k2_ord(k);
 		vector<int> estado(2*k);
 		
 		for(int i = 0; i < 20; i++)
@@ -146,7 +145,7 @@ void exp_exacto_k2_ord()
 }
 
 
-void exp_exacto_k2_rnd()
+void exp_exacto_k2_rnd(int cant)
 {
 	// CORRER UNA VEZ CON CADA PODA
 	
@@ -160,10 +159,10 @@ void exp_exacto_k2_rnd()
 	list<int> cidm;	
 	list<int> cidm_sol;
 	
-	for(int k = 1; k < 11; k++)
+	for(int k = 1; k < cant+1; k++)
 	{
 		t = 0;
-		Vec vec = gen_k2_rnd(k);
+		Vecinos vec = generar_k2_rnd(k);
 		vector<int> estado(2*k);
 		
 		// Imprimo la instancia actual
@@ -171,7 +170,7 @@ void exp_exacto_k2_rnd()
 	
 		for(int i = 0; i < 2*k; i++)
 		{
-			for (list<int>::iterator it = vec[i].begin(); it != vec[i].end(); it++){
+			for (list<int>::iterator it = (vec[i].first).begin(); it != (vec[i].first).end(); it++){
 				fprintf(pIn,"%i %i \n",i+1,*it + 1);
 			}
 		}
@@ -204,7 +203,7 @@ void exp_exacto_k2_rnd()
 }
 
 
-void exp_exacto_aleatorio()
+void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it)
 {
 	// CORRER UNA VEZ CON CADA PODA
 	
@@ -221,12 +220,12 @@ void exp_exacto_aleatorio()
 	list<int> cidm;	
 	list<int> cidm_sol;
 	
-	for(int k = 0; k < 100; k++)
+	for(int k = 0; k < cant_it; k++)
 	{
 		t = 0;
-		n = (rand() % 11) + 2;			// random entre 2 y 12
-		a = rand() % ((n*(n-1)/2)+1);	// Cantidad aleatoria de aristas
-		Vec vec = gen_aleatorio(n,a);
+		n = (rand() % (cant_max-cant_min+1)) + cant_min;	
+		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
+		Vecinos vec = generar_aleatorio(n,a);
 		vector<int> estado(n);
 		
 		// Imprimo la instancia actual
@@ -234,7 +233,7 @@ void exp_exacto_aleatorio()
 	
 		for(int i = 0; i < n; i++)
 		{
-			for (list<int>::iterator it = vec[i].begin(); it != vec[i].end(); it++){
+			for (list<int>::iterator it = (vec[i].first).begin(); it != (vec[i].first).end(); it++){
 				fprintf(pIn,"%i %i \n",i+1,*it + 1);
 			}
 		}

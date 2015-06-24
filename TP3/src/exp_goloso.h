@@ -2,21 +2,23 @@
 #define EXP_GOLOSO_INCLUDED
 
 #include "generadores.h"
+#include "CIDM_goloso.h"
 
 
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
-void exp_goloso_solitarios();
-void exp_goloso_completos();
-void exp_goloso_aleatorio();
-void exp_goloso_estrellas();
-
-void exp_goloso_galaxias();
+void exp_goloso_solitarios(int cant_min,int cant_max);
+void exp_goloso_completos(int cant_min,int cant_max);
+void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it);
+void exp_goloso_estrellas(int min,int max,int cant_it);
+void exp_goloso_circuito_ord(int cant_it);
+void exp_goloso_circuito_rnd(int cant_it);
+void exp_goloso_galaxias(int min,int med,int max,int cant_it);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
 
-void exp_goloso_solitarios()
+void exp_goloso_solitarios(int cant_min,int cant_max)
 {	
 	FILE * pExp = fopen("../Resultados_experimentos/goloso/solitarios.txt","w");
 	clock_t start;
@@ -25,7 +27,7 @@ void exp_goloso_solitarios()
 	int res;
 	list<int> cidm_sol;
 	
-	for(int n = 3; n < 21; n++)
+	for(int n = cant_min; n < cant_max+1; n++)
 	{
 		t = 0;
 		Vecinos vec = generar_solitarios(n);
@@ -58,7 +60,7 @@ void exp_goloso_solitarios()
 }
 
 
-void exp_goloso_completos()
+void exp_goloso_completos(int cant_min,int cant_max)
 {	
 	FILE * pExp = fopen("../Resultados_experimentos/goloso/completos.txt","w"); // Resultados de tiempo
 	clock_t start;
@@ -68,7 +70,7 @@ void exp_goloso_completos()
 	int res;
 	list<int> cidm_sol;
 	
-	for(int n = 5; n < 101; n++)
+	for(int n = cant_min; n < cant_max+1; n++)
 	{
 		t = 0;
 		m = n*(n-1)/2;
@@ -102,7 +104,7 @@ void exp_goloso_completos()
 }
 
 
-void exp_goloso_aleatorio()
+void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/goloso/aleatorio.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/goloso/aleatorio.in","w");	// Instancias de entrada
@@ -115,11 +117,11 @@ void exp_goloso_aleatorio()
 	int res;
 	list<int> cidm_sol;
 	
-	for(int k = 0; k < 1000; k++)
+	for(int k = 0; k < cant_it; k++)
 	{
 		t = 0;
-		n = (rand() % 12) + 4;			// random entre 4 y 15
-		a = rand() % ((n*(n-1)/2)+1);	// Cantidad aleatoria de aristas
+		n = (rand() % (cant_max-cant_min+1)) + cant_min;
+		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
 		Vecinos vec = generar_aleatorio(n,a);
 		Vecinos vec_aux(n);
 		
@@ -164,7 +166,7 @@ void exp_goloso_aleatorio()
 }
 
 
-void exp_goloso_estrellas()
+void exp_goloso_estrellas(int min,int max,int cant_it)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/goloso/estrellas.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/goloso/estrellas.in","w");	// Instancias de entrada
@@ -173,11 +175,9 @@ void exp_goloso_estrellas()
 	int res;
 	list<int> cidm_sol;
 	
-	for(int k = 0; k < 1000; k++)
-	{
-		// FALTA PONER UN VALOR PARA N
-		
-		Vecinos vec = generar_estrella(n);
+	for(int k = 0; k < cant_it; k++)
+	{		
+		Vecinos vec = generar_estrella(n,min,max);
 		
 		// Imprimo la instancia actual
 		fprintf(pIn,"%i \n",n);
@@ -205,32 +205,19 @@ void exp_goloso_estrellas()
 }
 
 
-void exp_goloso_circuito_ord()
+void exp_goloso_circuito_ord(int cant_it)
 {
-	FILE * pExp = fopen("../Resultados_experimentos/goloso/circuito_ord.txt","w");	// Resultados
-	FILE * pIn = fopen("../Resultados_experimentos/goloso/circuito_ord.in","w");	// Instancias de entrada
+	FILE * pExp = fopen("../Resultados_experimentos/goloso/circuito_ord.txt","w");
 
 	int n;
 	int res;
 	list<int> cidm_sol;
 	
-	for(int k = 0; k < 1000; k++)
+	for(int k = 0; k < cant_it; k++)
 	{
 		// FALTA PONER UN VALOR PARA N
 		
 		Vecinos vec = generar_circuito_ord(n);
-		
-		// Imprimo la instancia actual
-		fprintf(pIn,"%i \n",n);
-	
-		for(int i = 0; i < n; i++)
-		{
-			for (list<int>::iterator it = (vec[i].first).begin(); it != (vec[i].first).end(); it++){
-				fprintf(pIn,"%i %i \n",i+1,*it + 1);
-			}
-		}
-		
-		fprintf(pIn,"\n");
 		
 		// Resuelvo
 		cidm_sol.clear();
@@ -240,13 +227,11 @@ void exp_goloso_circuito_ord()
 		fprintf(pExp,"%i, %i \n",n,res);
 	}
 
-	// Cierro los archivos
 	fclose(pExp);
-	fclose(pIn);
 }
 
 
-void exp_goloso_circuito_rnd()
+void exp_goloso_circuito_rnd(int cant_it)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/goloso/circuito_rnd.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/goloso/circuito_rnd.in","w");	// Instancias de entrada
@@ -255,7 +240,7 @@ void exp_goloso_circuito_rnd()
 	int res;
 	list<int> cidm_sol;
 	
-	for(int k = 0; k < 1000; k++)
+	for(int k = 0; k < cant_it; k++)
 	{
 		// FALTA PONER UN VALOR PARA N
 		
@@ -287,7 +272,7 @@ void exp_goloso_circuito_rnd()
 }
 
 
-void exp_goloso_galaxias()
+void exp_goloso_galaxias(int min,int med,int max,int cant_it)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/goloso/galaxias.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/goloso/galaxias.in","w");	// Instancias de entrada
@@ -296,11 +281,11 @@ void exp_goloso_galaxias()
 	int res;
 	list<int> cidm_sol;
 	
-	for(int k = 0; k < 1000; k++)
+	for(int k = 0; k < cant_it; k++)
 	{
 		// FALTA PONER UN VALOR PARA N
 		
-		Vecinos vec = generar_galaxia(n);
+		Vecinos vec = generar_galaxia(n,min,med,max);
 		
 		// Imprimo la instancia actual
 		fprintf(pIn,"%i \n",n);
