@@ -2,6 +2,7 @@
 #define EXP_GOLOSO_INCLUDED
 
 #include "generadores.h"
+#include "CIDM_exacto.h"
 #include "CIDM_goloso.h"
 
 
@@ -10,9 +11,10 @@
 void exp_goloso_solitarios(int cant_min,int cant_max);
 void exp_goloso_completos(int cant_min,int cant_max);
 void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it);
+void exp_goloso_aleatorio_comp(int cant_min,int cant_max,int cant_it);
 void exp_goloso_estrellas(int min,int max,int cant_it);
-void exp_goloso_circuito_ord(int cant_it);
-void exp_goloso_circuito_rnd(int cant_it);
+void exp_goloso_circuito_ord(int min, int max);
+void exp_goloso_circuito_rnd(int min, int max);
 void exp_goloso_galaxias(int min,int med,int max,int cant_it);
 
 
@@ -111,7 +113,6 @@ void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
 	double t;
 	int a;
 	int n;
-	int m;
 	int res;
 	list<int> cidm_sol;
 	
@@ -140,7 +141,7 @@ void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
 			// Acomodo las variables
 			cidm_sol.clear();
 			
-			for(int j = 0; i < n; i++)
+			for(int j = 0; j < n; j++)
 			{
 				(vec_aux[i].first).clear();
 				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
@@ -155,7 +156,7 @@ void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
 		}
 		
 		// Imprimo los resultados
-		fprintf(pExp,"%i, %f, %i \n",n,t/20,res);
+		fprintf(pExp,"%i, %i, %f, %i \n",n,a,t/20,res);
 	}
 
 	// Cierro los archivos
@@ -166,15 +167,16 @@ void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
 
 void exp_goloso_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 {
-	FILE * pExp = fopen("../Resultados_experimentos/goloso/aleatorio.txt","w");	// Resultados
-	FILE * pIn = fopen("../Resultados_experimentos/goloso/aleatorio.in","w");	// Instancias de entrada
+	FILE * pExp = fopen("../Resultados_experimentos/goloso/aleatorio_comp.txt","w");	// Resultados
+	FILE * pIn = fopen("../Resultados_experimentos/goloso/aleatorio_comp.in","w");	// Instancias de entrada
 	clock_t start;
 	clock_t end;
 	double t;
 	int a;
 	int n;
-	int m;
 	int res;
+	int cota;
+	list<int> cidm;	
 	list<int> cidm_sol;
 	
 	for(int k = 0; k < cant_it; k++)
@@ -183,7 +185,6 @@ void exp_goloso_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 		n = (rand() % (cant_max-cant_min+1)) + cant_min;
 		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
 		Vecinos vec = generar_aleatorio(n,a);
-		Vecinos vec_aux(n);
 		
 		// Imprimo la instancia actual
 		fprintf(pIn,"%i %i \n",n,m);
@@ -197,27 +198,21 @@ void exp_goloso_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 		
 		fprintf(pIn,"\n");
 		
-		for(int i = 0; i < 20; i++)
-		{
-			// Acomodo las variables
-			cidm_sol.clear();
-			
-			for(int j = 0; i < n; i++)
-			{
-				(vec_aux[i].first).clear();
-				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
-				{ (vec_aux[i].first).push_back(*it); }
-			}
-			
-			// Mido el tiempo
-			start = clock();
-			res = goloso(cidm_sol,vec_aux,n,0,0);
-			end = clock();
-			t = t + difftime(end,start);
-		}
+		// Acomodo las variables
+		cota = n;
+		res = 0;
+		vector<int> estado(n,0);
+		
+		backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,1);
+
+		fprintf(pExp,"%i, %i, %i, ",n,a,res);
+
+		cidm_sol.clear();
+		
+		res = goloso(cidm_sol,vec_aux,n,0,0);
 		
 		// Imprimo los resultados
-		fprintf(pExp,"%i, %f, %i \n",n,t/20,res);
+		fprintf(pExp,"%i \n",res);
 	}
 
 	// Cierro los archivos
@@ -265,18 +260,15 @@ void exp_goloso_estrellas(int min,int max,int cant_it)
 }
 
 
-void exp_goloso_circuito_ord(int cant_it)
+void exp_goloso_circuito_ord(int min, int max)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/goloso/circuito_ord.txt","w");
 
-	int n;
 	int res;
 	list<int> cidm_sol;
 	
-	for(int k = 0; k < cant_it; k++)
+	for(int n = min; n < max+1; n++)
 	{
-		// FALTA PONER UN VALOR PARA N
-		
 		Vecinos vec = generar_circuito_ord(n);
 		
 		// Resuelvo
@@ -291,16 +283,15 @@ void exp_goloso_circuito_ord(int cant_it)
 }
 
 
-void exp_goloso_circuito_rnd(int cant_it)
+void exp_goloso_circuito_rnd(int min, int max)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/goloso/circuito_rnd.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/goloso/circuito_rnd.in","w");	// Instancias de entrada
 
-	int n;
 	int res;
 	list<int> cidm_sol;
 	
-	for(int k = 0; k < cant_it; k++)
+	for(int n = min; n < max+1; n++)
 	{
 		// FALTA PONER UN VALOR PARA N
 		

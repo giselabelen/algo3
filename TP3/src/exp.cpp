@@ -21,9 +21,10 @@ int main()
 	
 	//~ exp_goloso_solitarios(10,1000);
 	//~ exp_goloso_completos(5,100);
-	//~ exp_goloso_aleatorio(4,15,1000);
-	//~ exp_goloso_estrellas(5,10,1000);
-	//~ exp_goloso_circuito_ord(1000);
-	//~ exp_goloso_circuito_rnd(1000);
-	//~ exp_goloso_galaxias(6,10,20,1000);
+	//~ exp_goloso_aleatorio(4,1000,10000);
+	//~ exp_goloso_aleatorio_comp(4,15,1000);
+	//~ exp_goloso_estrellas(5,50,1000);
+	//~ exp_goloso_circuito_ord(5,100);
+	//~ exp_goloso_circuito_rnd(5,100);
+	//~ exp_goloso_galaxias(6,25,50,1000);
 }
