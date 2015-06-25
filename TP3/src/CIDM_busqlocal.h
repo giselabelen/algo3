@@ -361,7 +361,10 @@ void busqueda(list<int>& cidm_sol, Vecinos vecinos, int n, int& res, int mej)
 		printf("\n");
 		
 		if(mej == 1){
-			hay_cambios = mejorador1(cidm_sol,vecinos,cercanos,res,n);
+			if( res>2 ){
+				hay_cambios = mejorador1(cidm_sol,vecinos,cercanos,res,n);
+			}
+			else{hay_cambios = false;}
 		}else{
 			hay_cambios = mejorador2(cidm_sol,vecinos,cercanos,res,n);
 		}
