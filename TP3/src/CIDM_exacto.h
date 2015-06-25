@@ -32,7 +32,7 @@ void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado,
 	bool chequear;
 	
 	// si me pasé de la cota ya no me importa
-	if((podas == 0) && (res > cota)){ return; }	// PODA CLÁSICA
+	if((podas != 0) && (res > cota)){ return; }	// PODA CLÁSICA
 	
 	if(podas == 0){ chequear = (cont == n) && (res <= cota); }	// sin podas
 	else{ chequear = (cont == n); }								// con podas
@@ -59,18 +59,20 @@ void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado,
 		estado[pos]++;
 		res++;
 		cont++;
-		grado = 0;		// PARA UNA PODA
+		//~ grado = 0;		// PARA UNA PODA
 		
 		for (list<int>::iterator it = (vec[pos].first).begin(); it != (vec[pos].first).end(); it++)
 		{
 			if(estado[*it] == 0){ cont++; }
 			estado[*it]++;
-			grado++;	// PARA UNA PODA
+			//~ grado++;	// PARA UNA PODA
 		}
 		
 		backtracking(cidm,cidm_sol,estado,vec,pos+1,n,cota,res,cont,podas);
 	}
 		
+	grado = vec[pos].second;
+	
 	// RAMA NO LO ELIJO	
 	switch(podas)
 	{
@@ -95,21 +97,21 @@ void backtracking(list<int>& cidm, list<int>& cidm_sol, vector<int>& estado,
 			break;
 	}
 	
-	if(pasar)
+	if(est_aux == 0)
 	{
-		if(est_aux == 0)
-		{
-			cidm.pop_back();
-			estado[pos]--;
+		cidm.pop_back();
+		estado[pos]--;
 
-			for (list<int>::iterator it = (vec[pos].first).begin(); it != (vec[pos].first).end(); it++)
-			{
-				if(estado[*it] != 0){
-					estado[*it]--;
-				}
+		for (list<int>::iterator it = (vec[pos].first).begin(); it != (vec[pos].first).end(); it++)
+		{
+			if(estado[*it] != 0){
+				estado[*it]--;
 			}
 		}
-		
+	}
+	
+	if(pasar)
+	{		
 		backtracking(cidm,cidm_sol,estado,vec,pos+1,n,cota,res_aux,cont_aux,podas);
 	}
 }
