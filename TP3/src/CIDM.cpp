@@ -49,21 +49,22 @@ int main()
 	// SOLUCIONES (USAR SÓLO UNA)
 
 	// SOLUCIÓN EXACTA
-	//~ backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,1);
+	//~ backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,4);
+	//~ res = cota;
 
 	// SOLUCIÓN GOLOSA CONSTRUCTIVA
-	//~ res = goloso(cidm_sol,vec,n,0,0);
+	res = goloso(cidm_sol,vec,n,0,0);
 
 	//~ // SOLUCIÓN DE BÚSQUEDA LOCAL
 	//~ // Soluciones iniciales (usar sólo una)
-	res = goloso(cidm_sol,vec_copia,n,0,0);
+	//~ res = goloso(cidm_sol,vec_copia,n,0,0);
 	//~ res = otro_inicio(cidm_sol,vec,n);
 	
 	// Vecindades
-	if(res != 1)
-	{
-		busqueda(cidm_sol,vec,n,res,2);	// 1 para busq1 y 2 para busq2
-	}
+	//~ if(res != 1)
+	//~ {
+		//~ busqueda(cidm_sol,vec,n,res,2);	// 1 para busq1 y 2 para busq2
+	//~ }
 	//~ 
 	//~ // SOLUCIÓN POR GRASP
 	//~ res = grasp(cidm_sol,vec,n,0.5,0,50);

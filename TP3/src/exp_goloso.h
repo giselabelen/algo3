@@ -207,9 +207,9 @@ void exp_goloso_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 		res = 0;
 		vector<int> estado(n,0);
 		
-		backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,1);
+		backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,0);
 
-		fprintf(pExp,"%i, %i, %i, ",n,a,res);
+		fprintf(pExp,"%i, %i, %i, ",n,a,cota);
 
 		cidm_sol.clear();
 		
@@ -232,12 +232,13 @@ void exp_goloso_estrellas(int min,int max,int cant_it)
 
 	int n;
 	int res;
+	int sol;
 	list<int> cidm_sol;
 	
 	for(int k = 0; k < cant_it; k++)
 	{	
 		cout << "iteracion " << k << endl;
-		Vecinos vec = generar_estrella(n,min,max);
+		Vecinos vec = generar_estrella(n,min,max,sol);
 		
 		// Imprimo la instancia actual
 		fprintf(pIn,"%i \n",n);
@@ -256,7 +257,7 @@ void exp_goloso_estrellas(int min,int max,int cant_it)
 		res = goloso(cidm_sol,vec,n,0,0);
 		
 		// Imprimo los resultados
-		fprintf(pExp,"%i, %i \n",n,res);
+		fprintf(pExp,"%i, %i, %i \n",n,res,sol);
 	}
 
 	// Cierro los archivos
@@ -335,12 +336,13 @@ void exp_goloso_galaxias(int min,int med,int max,int cant_it)
 
 	int n;
 	int res;
+	int sol;
 	list<int> cidm_sol;
 	
 	for(int k = 0; k < cant_it; k++)
 	{
 		cout << "iteracion" << k << endl;
-		Vecinos vec = generar_galaxia(n,min,med,max);
+		Vecinos vec = generar_galaxia(n,min,med,max,sol);
 		
 		// Imprimo la instancia actual
 		fprintf(pIn,"%i \n",n);
@@ -359,7 +361,7 @@ void exp_goloso_galaxias(int min,int med,int max,int cant_it)
 		res = goloso(cidm_sol,vec,n,0,0);
 		
 		// Imprimo los resultados
-		fprintf(pExp,"%i, %i \n",n,res);
+		fprintf(pExp,"%i, %i, %i \n",n,res,sol);
 	}
 
 	// Cierro los archivos

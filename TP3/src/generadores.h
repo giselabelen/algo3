@@ -20,10 +20,10 @@ Vecinos generar_aleatorio(int n, int a);
 Vecinos generar_k2_ord(int k);
 Vecinos generar_k2_rnd(int k);
 Vecinos generar_completo(int n);
-Vecinos generar_estrella(int& n,int min,int max);
+Vecinos generar_estrella(int& n,int min,int max,int& sol);
 Vecinos generar_circuito_ord(int n);
 Vecinos generar_circuito_rnd(int n);
-Vecinos generar_galaxia(int& n,int min,int med,int max);
+Vecinos generar_galaxia(int& n,int min,int med,int max,int& sol);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -189,7 +189,7 @@ Vecinos generar_aleatorio(int n, int a)
 	return vec;
 }
 
-Vecinos generar_estrella(int& n,int min,int max)
+Vecinos generar_estrella(int& n,int min,int max,int& sol)
 {
 	int aux1 = (rand() % (max-min+1)) + min;
 	int aux2;
@@ -199,6 +199,7 @@ Vecinos generar_estrella(int& n,int min,int max)
 	list<int>::iterator it;
 	
 	cant_nodos.push_back(aux1);
+	sol = aux1;
 	
 	for(i = 0; i < aux1; i++)
 	{
@@ -219,6 +220,9 @@ Vecinos generar_estrella(int& n,int min,int max)
 		{
 			(vec[i].first).push_back(j);
 			(vec[j].first).push_back(i);
+			
+			if(i != 0){ vec[j].second = 1; }
+			
 			j++;
 		}
 		
@@ -255,6 +259,7 @@ Vecinos generar_circuito_rnd(int n)
 	int n1;
 	int n2;
 	int n_aux;
+	int n_copia = n;
 	int aux;
 	list<int> nodos;
 	list<int>::iterator it;
@@ -291,15 +296,15 @@ Vecinos generar_circuito_rnd(int n)
 	(vec[n1].first).push_back(n_aux);
 	(vec[n_aux].first).push_back(n1);
 	
-	for(int i = 0; i < n; i++){ vec[i].second = 2; }
+	for(int i = 0; i < n_copia; i++){ vec[i].second = 2; }
 	
 	return vec;
 }
 
 
-Vecinos generar_galaxia(int& n,int min,int med,int max)
+Vecinos generar_galaxia(int& n,int min,int med,int max,int& sol)
 {
-	int aux1 = (rand() % (med-min+1)) + min;	// PARAMETRIZAR ESTOS VALORES - ahora esta de 6 a 10
+	int aux1 = (rand() % (med-min+1)) + min;
 	int aux2;
 	int i;
 	int j;
@@ -307,10 +312,11 @@ Vecinos generar_galaxia(int& n,int min,int med,int max)
 	list<int>::iterator it;
 	
 	cant_nodos.push_back(aux1);
+	sol = aux1;
 	
 	for(i = 0; i < aux1; i++)
 	{
-		aux2 = (rand() % ((max+1) - aux1)) + aux1;	// PARAMETRIZAR ESTE VALOR - ahora está hasta 20
+		aux2 = (rand() % ((max+1) - aux1)) + aux1;
 		cant_nodos.push_back(aux2);
 	}
 	
@@ -327,6 +333,9 @@ Vecinos generar_galaxia(int& n,int min,int med,int max)
 		{
 			(vec[i].first).push_back(j);
 			(vec[j].first).push_back(i);
+			
+			if(i != 0){ vec[j].second = 1; }
+			
 			j++;
 		}
 		
