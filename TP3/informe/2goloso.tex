@@ -15,6 +15,27 @@ Primero, considerando al conjunto independiente vacío, tomamos a un nodo óptim
 
 \vspace*{0.3cm}
 
+Pasemos a analizar la complejidad del algoritmo en cuestión, tal vez abstrayendonos del peor caso, pero si tratando de maximizar los costos de los distintos pasos a realizar. Notemos primero que buscar el nodo ``óptimo'' nos toma $\mathcal{O}(n)$ ya que se trata de recorrer los nodos del grafo haciendo comparaciones sobre la cantidad de vecinos que possen $\mathcal{O}(1)$. (Creo que no sería errado decir que si entro $n$ veces a buscar al optimo, es porque todos tenian grado 0, sino se irian eliminando posibilidades, por ende la complejidad seria $\mathcal{O}(n^2)$).
+
+
+Supongamos un caso en el que debo entrar $n-1$ veces a buscar el ``óptimo'' $\mathcal{O}(n)$. Luego tendría un costo de $\mathcal{O}(n^2)$.
+
+
+A este se le suma el costo de marcar a los nodos elegidos y a sus vecinos como ``tomados''. Para esto debemos tener en cuenta que marcarlos toma $\mathcal{O}(1)$, y que cada nodo puede tener como máximo $n-1$ vecinos, pero la suma total de nodos vecinos a marcar como tomados es siempre $n-1$ ($\mathcal{O}(n)$). Luego, y ya metiéndonos un poco con lo que respecta a la implementación, debemos actualizar los grados de los nodos vecinos de los vecinos del nodo tomado como ``óptimo''. Como ya dijimos, la suma de los vecinos del nodo tomado puede llegar a $n-1$, y estos a su vez podrían llegar a tener $n-1$ vecinos. Como debo recorrerlos para actualizarlos estaríamos hablando de una complejidad de $\mathcal{O}(n^2)$
+
+
+Por último la solución del algoritmo consiste integrar cada nodo ``óptimo'' a la solución final, lo que puede llegar a tomar $\mathcal{O}(n)$.
+
+Siendo $T(n)$ la complejidad de nuestro algoritmo tenemos:
+
+\begin{equation*}
+\begin{array}{l}
+T(n) = \mathcal{O}(n^2) + \mathcal{O}(n) + \mathcal{O}(n^2)\\
+T(n) = 2\mathcal{O}(n^2)
+T(n) = \mathcal{O}(n^2)
+\end{array}
+\end{equation*}
+
 \begin{figure}
 \begin{codebox}
 \Procname{$\proc{CIDM_goloso}(lista\_nodos$ $cidm\_sol)$} 
