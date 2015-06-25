@@ -125,7 +125,7 @@ void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
 		Vecinos vec_aux(n);
 		
 		// Imprimo la instancia actual
-		fprintf(pIn,"%i %i \n",n,m);
+		fprintf(pIn,"%i %i \n",n,a);
 	
 		for(int i = 0; i < n; i++)
 		{
@@ -187,7 +187,7 @@ void exp_goloso_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 		Vecinos vec = generar_aleatorio(n,a);
 		
 		// Imprimo la instancia actual
-		fprintf(pIn,"%i %i \n",n,m);
+		fprintf(pIn,"%i %i \n",n,a);
 	
 		for(int i = 0; i < n; i++)
 		{
@@ -209,7 +209,7 @@ void exp_goloso_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 
 		cidm_sol.clear();
 		
-		res = goloso(cidm_sol,vec_aux,n,0,0);
+		res = goloso(cidm_sol,vec,n,0,0);
 		
 		// Imprimo los resultados
 		fprintf(pExp,"%i \n",res);
