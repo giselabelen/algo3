@@ -1,8 +1,10 @@
 #ifndef EXP_EXACTO_H_INCLUDED
 #define EXP_EXACTO_H_INCLUDED
 
+#include <iostream>
 #include "generadores.h"
 
+using namespace std;
 
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
@@ -17,8 +19,6 @@ void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it);
 
 void exp_exacto_solitarios(int cant_min, int cant_max)
 {
-	// CORRER UNA VEZ CON CADA PODA
-	
 	FILE * pExp = fopen("../Resultados_experimentos/exacto/solitarios.txt","w");
 	clock_t start;
 	clock_t end;
@@ -30,28 +30,35 @@ void exp_exacto_solitarios(int cant_min, int cant_max)
 	
 	for(int n = cant_min; n < cant_max+1; n++)
 	{
+		fprintf(pExp,"%i, ",n);
+		cout << n << " nodos" << endl;
 		t = 0;
 		Vecinos vec = generar_solitarios(n);
 		vector<int> estado(n);
-	
-		for(int i = 0; i < 20; i++)
+		
+		for(int p = 0; p < 5; p++)
 		{
-			// Limpio las variables
-			cidm.clear();
-			cidm_sol.clear();
-			for(int j = 0; i < n; i++){ estado[i] = 0; }
-			cota = n;			// VER SI ACHICAMOS ESTO CON EL GOLOSO O NO
-			res = 0;
+			for(int i = 0; i < 20; i++)
+			{
+				// Limpio las variables
+				cidm.clear();
+				cidm_sol.clear();
+				for(int j = 0; j < n; j++){ estado[j] = 0; }
+				cota = n;			// VER SI ACHICAMOS ESTO CON EL GOLOSO O NO
+				res = 0;
+				
+				// Mido el tiempo
+				start = clock();
+				backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,p);
+				end = clock();
+				t = t + difftime(end,start);
+			}
 			
-			// Mido el tiempo
-			start = clock();
-			backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0);
-			end = clock();
-			t = t + difftime(end,start);
+			// Imprimo los resultados
+			fprintf(pExp,"%f, ",t/20);
 		}
 		
-		// Imprimo los resultados
-		fprintf(pExp,"%i, %f, %i \n",n,t/20,cota);
+		fprintf(pExp,"%i \n",cota);
 	}
 	
 	fclose(pExp);
@@ -60,8 +67,6 @@ void exp_exacto_solitarios(int cant_min, int cant_max)
 
 void exp_exacto_completos(int cant_min, int cant_max)
 {
-	// CORRER UNA VEZ CON CADA PODA
-	
 	FILE * pExp = fopen("../Resultados_experimentos/exacto/completos.txt","w");
 	clock_t start;
 	clock_t end;
@@ -74,28 +79,35 @@ void exp_exacto_completos(int cant_min, int cant_max)
 	
 	for(int n = cant_min; n < cant_max+1; n++)
 	{
+		fprintf(pExp,"%i, ",n);
+		cout << n << " nodos" << endl;
 		t = 0;
 		Vecinos vec = generar_completo(n);
 		vector<int> estado(n);
 		
-		for(int i = 0; i < 20; i++)
+		for(int p = 0; p < 5; p++)
 		{
-			// Limpio las variables
-			cidm.clear();
-			cidm_sol.clear();
-			for(int j = 0; i < n; i++){ estado[i] = 0; }
-			cota = n;			// VER SI ACHICAMOS ESTO CON EL GOLOSO O NO
-			res = 0;
-			
-			// Mido el tiempo
-			start = clock();
-			backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0);
-			end = clock();
-			t = t + difftime(end,start);
+			for(int i = 0; i < 20; i++)
+			{
+				// Limpio las variables
+				cidm.clear();
+				cidm_sol.clear();
+				for(int j = 0; j < n; j++){ estado[j] = 0; }
+				cota = n;			// VER SI ACHICAMOS ESTO CON EL GOLOSO O NO
+				res = 0;
+				
+				// Mido el tiempo
+				start = clock();
+				backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,p);
+				end = clock();
+				t = t + difftime(end,start);
+			}
+		
+			// Imprimo los resultados
+			fprintf(pExp,"%f, ",t/20);
 		}
 		
-		// Imprimo los resultados
-		fprintf(pExp,"%i, %f, %i \n",n,t/20,cota);
+		fprintf(pExp,"%i \n",cota);
 	}
 
 	fclose(pExp);
@@ -104,8 +116,6 @@ void exp_exacto_completos(int cant_min, int cant_max)
 
 void exp_exacto_k2_ord(int cant)
 {
-	// CORRER UNA VEZ CON CADA PODA
-	
 	FILE * pExp = fopen("../Resultados_experimentos/exacto/k2_ord.txt","w");
 	clock_t start;
 	clock_t end;
@@ -117,28 +127,35 @@ void exp_exacto_k2_ord(int cant)
 	
 	for(int k = 1; k < cant+1; k++)
 	{
+		fprintf(pExp,"%i, ",2*k);
+		cout << k << " componentes" << endl;
 		t = 0;
 		Vecinos vec = generar_k2_ord(k);
 		vector<int> estado(2*k);
 		
-		for(int i = 0; i < 20; i++)
+		for(int p = 0; p < 5; p++)
 		{
-			// Limpio las variables
-			cidm.clear();
-			cidm_sol.clear();
-			for(int j = 0; i < 2*k; i++){ estado[i] = 0; }
-			cota = 2*k;			// VER SI ACHICAMOS ESTO CON EL GOLOSO O NO
-			res = 0;
+			for(int i = 0; i < 20; i++)
+			{
+				// Limpio las variables
+				cidm.clear();
+				cidm_sol.clear();
+				for(int j = 0; j < 2*k; j++){ estado[j] = 0; }
+				cota = 2*k;			// VER SI ACHICAMOS ESTO CON EL GOLOSO O NO
+				res = 0;
+				
+				// Mido el tiempo
+				start = clock();
+				backtracking(cidm,cidm_sol,estado,vec,0,2*k,cota,res,0,p);
+				end = clock();
+				t = t + difftime(end,start);
+			}
 			
-			// Mido el tiempo
-			start = clock();
-			backtracking(cidm,cidm_sol,estado,vec,0,2*k,cota,res,0);
-			end = clock();
-			t = t + difftime(end,start);
+			// Imprimo los resultados
+			fprintf(pExp,"%f, ",t/20);
 		}
 		
-		// Imprimo los resultados
-		fprintf(pExp,"%i, %f, %i \n",2*k,t/20,cota);
+		fprintf(pExp,"%i \n",cota);
 	}
 	
 	fclose(pExp);
@@ -161,6 +178,8 @@ void exp_exacto_k2_rnd(int cant)
 	
 	for(int k = 1; k < cant+1; k++)
 	{
+		fprintf(pExp,"%i, ",2*k);
+		cout << k << " componentes" << endl;
 		t = 0;
 		Vecinos vec = generar_k2_rnd(k);
 		vector<int> estado(2*k);
@@ -177,24 +196,28 @@ void exp_exacto_k2_rnd(int cant)
 		
 		fprintf(pIn,"\n");
 		
-		for(int i = 0; i < 20; i++)
+		for(int p = 0; p < 5; p++)
 		{
-			// Limpio las variables
-			cidm.clear();
-			cidm_sol.clear();
-			for(int j = 0; i < 2*k; i++){ estado[i] = 0; }
-			cota = 2*k;			// VER SI ACHICAMOS ESTO CON EL GOLOSO O NO
-			res = 0;
+			for(int i = 0; i < 20; i++)
+			{
+				// Limpio las variables
+				cidm.clear();
+				cidm_sol.clear();
+				for(int j = 0; j < 2*k; j++){ estado[j] = 0; }
+				cota = 2*k;			// VER SI ACHICAMOS ESTO CON EL GOLOSO O NO
+				res = 0;
+				
+				// Mido el tiempo
+				start = clock();
+				backtracking(cidm,cidm_sol,estado,vec,0,2*k,cota,res,0,p);
+				end = clock();
+				t = t + difftime(end,start);
+			}
 			
-			// Mido el tiempo
-			start = clock();
-			backtracking(cidm,cidm_sol,estado,vec,0,2*k,cota,res,0);
-			end = clock();
-			t = t + difftime(end,start);
+			// Imprimo los resultados
+			fprintf(pExp,"%f, ",t/20);
 		}
-		
-		// Imprimo los resultados
-		fprintf(pExp,"%i, %f, %i \n",2*k,t/20,cota);
+		fprintf(pExp,"%i \n",cota);
 	}
 
 	// Cierro los archivos
@@ -205,8 +228,6 @@ void exp_exacto_k2_rnd(int cant)
 
 void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it)
 {
-	// CORRER UNA VEZ CON CADA PODA
-	
 	FILE * pExp = fopen("../Resultados_experimentos/exacto/aleatorio.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/exacto/aleatorio.in","w");	// Instancias de entrada
 	clock_t start;
@@ -214,7 +235,6 @@ void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it)
 	double t;
 	int a;
 	int n;
-	int m;
 	int res;
 	int cota;
 	list<int> cidm;	
@@ -222,14 +242,16 @@ void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it)
 	
 	for(int k = 0; k < cant_it; k++)
 	{
+		cout << "iteracion " << k << endl;
 		t = 0;
 		n = (rand() % (cant_max-cant_min+1)) + cant_min;	
 		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
 		Vecinos vec = generar_aleatorio(n,a);
 		vector<int> estado(n);
+		fprintf(pExp,"%i, %i, ",n,a);
 		
 		// Imprimo la instancia actual
-		fprintf(pIn,"%i %i \n",n,m);
+		fprintf(pIn,"%i %i \n",n,a);
 	
 		for(int i = 0; i < n; i++)
 		{
@@ -240,24 +262,28 @@ void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it)
 		
 		fprintf(pIn,"\n");
 		
-		for(int i = 0; i < 20; i++)
+		for(int p = 0; p < 2; p++)
 		{
-			// Limpio las variables
-			cidm.clear();
-			cidm_sol.clear();
-			for(int j = 0; i < n; i++){ estado[i] = 0; }
-			cota = n;			// VER SI ACHICAMOS ESTO CON EL GOLOSO O NO
-			res = 0;
+			for(int i = 0; i < 20; i++)
+			{
+				// Limpio las variables
+				cidm.clear();
+				cidm_sol.clear();
+				for(int j = 0; j < n; j++){ estado[j] = 0; }
+				cota = n;			// VER SI ACHICAMOS ESTO CON EL GOLOSO O NO
+				res = 0;
+				
+				// Mido el tiempo
+				start = clock();
+				backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,p);
+				end = clock();
+				t = t + difftime(end,start);
+			}
 			
-			// Mido el tiempo
-			start = clock();
-			backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0);
-			end = clock();
-			t = t + difftime(end,start);
+			// Imprimo los resultados
+			fprintf(pExp,"%f, ",t/20);
 		}
-		
-		// Imprimo los resultados
-		fprintf(pExp,"%i, %f, %i \n",n,t/20,cota);
+		fprintf(pExp,"%i \n",cota);
 	}
 
 	// Cierro los archivos
