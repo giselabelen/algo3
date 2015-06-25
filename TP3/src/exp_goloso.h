@@ -31,6 +31,7 @@ void exp_goloso_solitarios(int cant_min,int cant_max)
 	
 	for(int n = cant_min; n < cant_max+1; n++)
 	{
+		cout << n << " nodos" << endl;
 		t = 0;
 		Vecinos vec = generar_solitarios(n);
 		Vecinos vec_aux(n);
@@ -42,9 +43,9 @@ void exp_goloso_solitarios(int cant_min,int cant_max)
 			
 			for(int j = 0; j < n; j++)
 			{
-				(vec_aux[i].first).clear();
+				(vec_aux[j].first).clear();
 				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
-				{ (vec_aux[i].first).push_back(*it); }
+				{ (vec_aux[j].first).push_back(*it); }
 			}
 			
 			// Mido el tiempo
@@ -73,6 +74,7 @@ void exp_goloso_completos(int cant_min,int cant_max)
 	
 	for(int n = cant_min; n < cant_max+1; n++)
 	{
+		cout << n << " nodos" << endl;
 		t = 0;
 		Vecinos vec = generar_completo(n);
 		Vecinos vec_aux(n);
@@ -82,11 +84,11 @@ void exp_goloso_completos(int cant_min,int cant_max)
 			// Acomodo las variables
 			cidm_sol.clear();
 			
-			for(int j = 0; i < n; i++)
+			for(int j = 0; j < n; j++)
 			{
-				(vec_aux[i].first).clear();
+				(vec_aux[j].first).clear();
 				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
-				{ (vec_aux[i].first).push_back(*it); }
+				{ (vec_aux[j].first).push_back(*it); }
 			}
 			
 			// Mido el tiempo
@@ -118,6 +120,7 @@ void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
 	
 	for(int k = 0; k < cant_it; k++)
 	{
+		cout << "iteracion " << k << endl;
 		t = 0;
 		n = (rand() % (cant_max-cant_min+1)) + cant_min;
 		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
@@ -143,9 +146,9 @@ void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
 			
 			for(int j = 0; j < n; j++)
 			{
-				(vec_aux[i].first).clear();
+				(vec_aux[j].first).clear();
 				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
-				{ (vec_aux[i].first).push_back(*it); }
+				{ (vec_aux[j].first).push_back(*it); }
 			}
 			
 			// Mido el tiempo
@@ -181,6 +184,7 @@ void exp_goloso_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 	
 	for(int k = 0; k < cant_it; k++)
 	{
+		cout << "iteracion " << k << endl;
 		t = 0;
 		n = (rand() % (cant_max-cant_min+1)) + cant_min;
 		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
@@ -231,7 +235,8 @@ void exp_goloso_estrellas(int min,int max,int cant_it)
 	list<int> cidm_sol;
 	
 	for(int k = 0; k < cant_it; k++)
-	{		
+	{	
+		cout << "iteracion " << k << endl;
 		Vecinos vec = generar_estrella(n,min,max);
 		
 		// Imprimo la instancia actual
@@ -269,6 +274,7 @@ void exp_goloso_circuito_ord(int min, int max)
 	
 	for(int n = min; n < max+1; n++)
 	{
+		cout << n << " nodos" << endl;
 		Vecinos vec = generar_circuito_ord(n);
 		
 		// Resuelvo
@@ -292,9 +298,8 @@ void exp_goloso_circuito_rnd(int min, int max)
 	list<int> cidm_sol;
 	
 	for(int n = min; n < max+1; n++)
-	{
-		// FALTA PONER UN VALOR PARA N
-		
+	{	
+		cout << n << " nodos" << endl;
 		Vecinos vec = generar_circuito_rnd(n);
 		
 		// Imprimo la instancia actual
@@ -334,8 +339,7 @@ void exp_goloso_galaxias(int min,int med,int max,int cant_it)
 	
 	for(int k = 0; k < cant_it; k++)
 	{
-		// FALTA PONER UN VALOR PARA N
-		
+		cout << "iteracion" << k << endl;
 		Vecinos vec = generar_galaxia(n,min,med,max);
 		
 		// Imprimo la instancia actual

@@ -202,7 +202,7 @@ Vecinos generar_estrella(int& n,int min,int max)
 	
 	for(i = 0; i < aux1; i++)
 	{
-		aux2 = (rand() % (aux1 - 5)) + 3;
+		aux2 = (rand() % (aux1 - 4)) + 3;
 		cant_nodos.push_back(aux2);
 	}
 	
