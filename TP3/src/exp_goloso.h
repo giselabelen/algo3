@@ -38,7 +38,7 @@ void exp_goloso_solitarios(int cant_min,int cant_max)
 			// Acomodo las variables
 			cidm_sol.clear();
 			
-			for(int j = 0; i < n; i++)
+			for(int j = 0; j < n; j++)
 			{
 				(vec_aux[i].first).clear();
 				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
@@ -66,14 +66,12 @@ void exp_goloso_completos(int cant_min,int cant_max)
 	clock_t start;
 	clock_t end;
 	double t;
-	int m;	
 	int res;
 	list<int> cidm_sol;
 	
 	for(int n = cant_min; n < cant_max+1; n++)
 	{
 		t = 0;
-		m = n*(n-1)/2;
 		Vecinos vec = generar_completo(n);
 		Vecinos vec_aux(n);
 		
@@ -105,6 +103,68 @@ void exp_goloso_completos(int cant_min,int cant_max)
 
 
 void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
+{
+	FILE * pExp = fopen("../Resultados_experimentos/goloso/aleatorio.txt","w");	// Resultados
+	FILE * pIn = fopen("../Resultados_experimentos/goloso/aleatorio.in","w");	// Instancias de entrada
+	clock_t start;
+	clock_t end;
+	double t;
+	int a;
+	int n;
+	int m;
+	int res;
+	list<int> cidm_sol;
+	
+	for(int k = 0; k < cant_it; k++)
+	{
+		t = 0;
+		n = (rand() % (cant_max-cant_min+1)) + cant_min;
+		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
+		Vecinos vec = generar_aleatorio(n,a);
+		Vecinos vec_aux(n);
+		
+		// Imprimo la instancia actual
+		fprintf(pIn,"%i %i \n",n,m);
+	
+		for(int i = 0; i < n; i++)
+		{
+			for (list<int>::iterator it = (vec[i].first).begin(); it != (vec[i].first).end(); it++){
+				fprintf(pIn,"%i %i \n",i+1,*it + 1);
+			}
+		}
+		
+		fprintf(pIn,"\n");
+		
+		for(int i = 0; i < 20; i++)
+		{
+			// Acomodo las variables
+			cidm_sol.clear();
+			
+			for(int j = 0; i < n; i++)
+			{
+				(vec_aux[i].first).clear();
+				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
+				{ (vec_aux[i].first).push_back(*it); }
+			}
+			
+			// Mido el tiempo
+			start = clock();
+			res = goloso(cidm_sol,vec_aux,n,0,0);
+			end = clock();
+			t = t + difftime(end,start);
+		}
+		
+		// Imprimo los resultados
+		fprintf(pExp,"%i, %f, %i \n",n,t/20,res);
+	}
+
+	// Cierro los archivos
+	fclose(pExp);
+	fclose(pIn);
+}
+
+
+void exp_goloso_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/goloso/aleatorio.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/goloso/aleatorio.in","w");	// Instancias de entrada

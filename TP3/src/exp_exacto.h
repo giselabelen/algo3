@@ -32,12 +32,13 @@ void exp_exacto_solitarios(int cant_min, int cant_max)
 	{
 		fprintf(pExp,"%i, ",n);
 		cout << n << " nodos" << endl;
-		t = 0;
 		Vecinos vec = generar_solitarios(n);
 		vector<int> estado(n);
 		
 		for(int p = 0; p < 5; p++)
 		{
+			t = 0;
+			
 			for(int i = 0; i < 20; i++)
 			{
 				// Limpio las variables
@@ -81,12 +82,13 @@ void exp_exacto_completos(int cant_min, int cant_max)
 	{
 		fprintf(pExp,"%i, ",n);
 		cout << n << " nodos" << endl;
-		t = 0;
 		Vecinos vec = generar_completo(n);
 		vector<int> estado(n);
 		
 		for(int p = 0; p < 5; p++)
 		{
+			t = 0;
+			
 			for(int i = 0; i < 20; i++)
 			{
 				// Limpio las variables
@@ -129,12 +131,13 @@ void exp_exacto_k2_ord(int cant)
 	{
 		fprintf(pExp,"%i, ",2*k);
 		cout << k << " componentes" << endl;
-		t = 0;
 		Vecinos vec = generar_k2_ord(k);
 		vector<int> estado(2*k);
 		
 		for(int p = 0; p < 5; p++)
 		{
+			t = 0;
+			
 			for(int i = 0; i < 20; i++)
 			{
 				// Limpio las variables
@@ -180,7 +183,6 @@ void exp_exacto_k2_rnd(int cant)
 	{
 		fprintf(pExp,"%i, ",2*k);
 		cout << k << " componentes" << endl;
-		t = 0;
 		Vecinos vec = generar_k2_rnd(k);
 		vector<int> estado(2*k);
 		
@@ -198,6 +200,8 @@ void exp_exacto_k2_rnd(int cant)
 		
 		for(int p = 0; p < 5; p++)
 		{
+			t = 0;
+			
 			for(int i = 0; i < 20; i++)
 			{
 				// Limpio las variables
@@ -243,7 +247,6 @@ void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it)
 	for(int k = 0; k < cant_it; k++)
 	{
 		cout << "iteracion " << k << endl;
-		t = 0;
 		n = (rand() % (cant_max-cant_min+1)) + cant_min;	
 		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
 		Vecinos vec = generar_aleatorio(n,a);
@@ -264,6 +267,8 @@ void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it)
 		
 		for(int p = 0; p < 2; p++)
 		{
+			t = 0;
+			
 			for(int i = 0; i < 20; i++)
 			{
 				// Limpio las variables

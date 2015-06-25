@@ -19,7 +19,7 @@ int main()
 	cout << "aleatorio" << endl;
 	exp_exacto_aleatorio(5,18,500);	
 	
-	//~ exp_goloso_solitarios(3,20);
+	//~ exp_goloso_solitarios(10,1000);
 	//~ exp_goloso_completos(5,100);
 	//~ exp_goloso_aleatorio(4,15,1000);
 	//~ exp_goloso_estrellas(5,10,1000);
