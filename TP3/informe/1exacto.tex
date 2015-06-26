@@ -98,13 +98,107 @@ T(n) = \mathcal{O}(2^n *n)
 \subsection{Experimentación y gráficos.}
 
 \vspace*{0.3cm}
+En esta sección, trataremos de mostrar de manera empírica que nuestro algoritmo es exponencial, y la utilidad de las podas.
 
-
-\subsubsection{Test 1}
+\subsubsection{Exponencial}
 \vspace*{0.3cm}
+
+Si fuera cierto que nuestro algoritmo es exponencial, entonces correr instancias muy grandes puede tardar horas, días, o siglos, dependiendo el caso, por lo tanto, se ha decidido correr instancias de a lo sumo 20 nodos. Por otro lado, debido a la gran variedad de posibles grafos que aún con pocos nodos se pueden generar, se ha decidido probar la complejidad acudiendo a la ley de los grandes números, y por lo tanto generando muchos grafos de manera aleatoria. Para esto, se han generado 1000 grafos de entre 5 y 18 nodos de manera aleatoria. Luego, se han tomado los tiempos de ejecución de estos grafos, y se ha calculado un promedio sobre aquellos grados que tenían la misma cantidad de nodos. Esto dió como resultado el siguiente gráfico.
+
+
+Gŕafico sin podas de aleatorios.
+
+
+Luego, se ha tomado cada uno de estos valores, y se le ha aplicado la raíz n-ésima, siendo n la cantidad de nodos que el valor representa, y obteniendose el siguiente gráfico:
+
+Grafico de la raiz enesima.
+
+Aqui se puede observar como el número obtenido se aproxima al $2$, lo cual tiende a sugerir que realmente nuestro algoritmo tiene una forma del estilo $2^n$, o sea, que es exponencial.
 
 \vspace*{0.6cm}
 %\newpage
 
-\subsubsection{Test 2}
+\subsubsection{Podas:}
 
+Además de la poda clásica, se han generado dos podas más, llamadas ``nodos solitarios'' y ``nodo decisivo'', explicadas anteriormente. Trataremos de ver en esta sección la utilidad de las mismas. Para ello veremos algunas familias de grafos y como repercuten en estas podas, y tomaremos las instancias aleatorias que usamos para mostrar la complejidad, para ver como mejoran con cada poda, y con la combinación de varias.
+
+\paragraph{*}
+Grafo compuesto por nodos de grado 0.
+
+
+
+Se han creado 18 instancias, con grafos que tienen nodos de grado 0 que tienen desde 3 a 20 nodos. Se han corrido nuestro programas de 5 maneras:
+
+\begin{itemize}
+	\item Sin ninguna poda
+	\item Con todas las podas 
+	\item Con la poda Clásica
+	\item Con la poda Clásica y la poda de los nodos solitarios
+	\item Con la poda Clásica y la poda del nodo decisivo
+\end{itemize}
+
+Y el gráfico obtenido es el siguiente
+
+Grafico del pelotudo de los solitarios.
+
+Por lo visto en este gráfico, la poda de los nodos solitarios tiene muy buena repercusión cuando el grafo tiene nodos de grado 0.
+
+\paragraph{*} 
+Grafos k completos
+
+
+
+Se han creado 18 instancias, con grafos $k_n$ completos, con n desde 3 a 20. Se han corrido nuestro programas de 5 maneras:
+
+\begin{itemize}
+	\item Sin ninguna poda
+	\item Con todas las podas 
+	\item Con la poda Clásica
+	\item Con la poda Clásica y la poda de los nodos solitarios
+	\item Con la poda Clásica y la poda del nodo decisivo
+\end{itemize}
+
+Y el gráfico obtenido es el siguiente
+
+Grafico del pelotudo de los K n.
+
+Por lo visto en este gráfico, la poda del nodo decisivo tiene muy buena repercusión cuando el grafo tiene nodos de grado máximo.
+
+
+\paragraph{*}
+Grafo compuesto por varios $k_2$
+
+
+Se han creado 10 instancias, con grafos compuestos por $n$ $k_2$, con $n$ desde 3 a 20. Se han corrido nuestro programas de 5 maneras:
+
+\begin{itemize}
+	\item Sin ninguna poda
+	\item Con todas las podas 
+	\item Con la poda Clásica
+	\item Con la poda Clásica y la poda de los nodos solitarios
+	\item Con la poda Clásica y la poda del nodo decisivo
+\end{itemize}
+
+Y el gráfico obtenido es el siguiente
+
+Grafico del pelotudo de los K 2.
+
+Por lo visto en este gráfico, existe por lo menos una familia tal que nuestras podas no surten efectos significativos.
+
+
+\paragraph{*}
+grafo de los aleatorios
+
+
+Se han creado 500 instancias aleatorias, con grafos compuestos por $n$ nodos, con $n$ desde 5 a 18. Se han corrido nuestro programas de 5 maneras:
+
+\begin{itemize}
+	\item Sin ninguna poda
+	\item Con todas las podas 
+\end{itemize}
+
+Y el gráfico obtenido es el siguiente
+
+Grafico del pelotudo de los aleatorios
+
+Por lo visto en este gráfico, en general, parecería que usar las podas mejora ligeramente el tiempode ejecución de nuestro algoritmo.
