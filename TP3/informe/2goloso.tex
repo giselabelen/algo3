@@ -96,7 +96,7 @@ Como miembros de esta familia consideraremos a los circuitos simples.  Para este
 
 Consideremos un circuito $C_{n}$ y supongamos por un momento que los vértices están rotulados como $v_0,v_1,...,v_{n-1}$ tal que existe una arista entre $v_i$ y $v_j$ cuando $j = (i+1) mod (n)$.
 
-Una forma de armar un conjunto independiente maximal $C$ para este grafo podría ser la siguiente:
+1. Una forma de armar un conjunto independiente maximal $C$ para este grafo podría ser la siguiente:
 
 \begin{itemize}
 \item Si $n \equiv 0 (3)$, tomar $C = \{v_i | i \equiv 1 (3)\}$.
@@ -104,7 +104,7 @@ Una forma de armar un conjunto independiente maximal $C$ para este grafo podría
 \item Si $n \equiv 2 (3)$, tomar $C = \{v_i | i \equiv 1 (3)\}$.
 \end{itemize}
 
-Veamos que $C$ efectivamente es independiente maximal, y por lo tanto, dominante.
+2. Veamos que $C$ efectivamente es independiente maximal, y por lo tanto, dominante.
 
 \paragraph*{Independencia:} Cuando $n \equiv 0 (3)$, el conjunto $C$ está formado por los vértices $v_i$ tal que $i \equiv 1 (3)$, por lo cual $v_i$ se comunica con $v_{i-1}$ y con $v_{i+1}$. Como $i-1 \equiv 0 (3)$ y $i+1 \equiv 2 (3)$, entonces los vértices incluidos en $C$ no se comunican entre sí. Cuando $n \equiv 1 (3)$ ó $n \equiv 2 (3)$, todo lo antes escrito también vale, considerando que $v_{n-1}$ (que en ambos casos pertenece a $C$) tiene por vecinos a $v_{n-2}$ y $v_{0}$, y sucede que $0 \equiv 0 (3)$ y $n-2 \equiv 2 (3)$ ó $n-2 \equiv 0 (3)$, por lo cual sigue cumpliéndose la independencia.
 
@@ -116,7 +116,9 @@ Veamos que $C$ efectivamente es independiente maximal, y por lo tanto, dominante
 	\item Agregar un vértice $v_i$ tal que $i \equiv 0 (3)$.  Pero entonces $v_i$ o bien se conecta al vértice $v_{i+1}$ con $i+1 \equiv 1 (3)$ y por lo tanto $v_{i+1} \in C$, o bien $i = n-1$ cuando $n \equiv 1 (3)$ así que también pertenece a $C$. ABSURDO.
 \end{itemize}
 
-Luego, $C$ es un conjunto independiente maximal, y por consiguiente, dominante. Veamos ahora que $C$ también es mínimo (o sea, un CIDM de $C_n$).
+Luego, $C$ es un conjunto independiente maximal, y por consiguiente, dominante. 
+
+3. Veamos ahora que $C$ también es mínimo (o sea, un CIDM de $C_n$).
 
 Primero, diremos que, dentro de un grafo, un vértice $v$ ``cubre'' a un vértice $w$ o bien cuando $v = w$, o bien cuando $v$ y $w$ son adyacentes. Por lo tanto, un vértice $v$ cubre exactamente a $\delta(v) + 1$ vértices.
 
@@ -148,32 +150,28 @@ Para probar que $C$ es un CIDM, supongamos que no lo es.  Es decir, que existe u
 
 Luego, concluimos que $C$ es un CIDM de $C_n$.
 
-Definimos ahora la siguiente función $f:V \rightarrow \mathbb{N} \in [0,n)$ para rotular los vértices de $C_n$:
+4. Supongamos ahora que vamos armando al conjunto $C$ tomando los nodos $v_i$ de la manera indicada anteriormente, pero de forma secuencial, de menor a mayor valor de $i$. Notamos entonces que:
+
+\begin{itemize}
+	\item Cuando $n \equiv 0 (3)$, cada vértice $v_i$ que se incluye en $C$ cubre exactamente 3 vértices ``libres'' (sus dos vecinos y él mismo).
+	\item Cuando $n \equiv 1 (3)$, cada vértice $v_i$ que se incluye en $C$ tal que $i \equiv 1 (3)$ también cubre exactamente 3 vértices ``libres'', y por último $v_{n-1}$ sólo se cubre a sí mismo, ya que sus vecinos fueron cubiertos anteriormente por $v_1$ y $v_{n-3}$.
+	\item Cuando $n \equiv 2 (3)$, cada vértice $v_i$ que se incluye en $C$ tal que $i \equiv 1 (3)$ también cubre exactamente 3 vértices ``libres'', y por último $v_{n-1}$ se cubre a sí mismo y a $v_{n-2}$, ya que $v_0$ fue cubierto anteriormente por $v_1$.
+\end{itemize}
+
+Por lo tanto, podemos decir que al momento de tomar cada vértice de $C$, el mismo califica como nodo ``óptimo''.
+
+5. Definimos ahora la siguiente función $f:V \rightarrow \mathbb{N} \in (0,n]$ para rotular los vértices de $C_n$:
 
 \begin{equation*}
 f(v_i) = \begin{cases}
-\dfrac{i-1}{3} & \text{si } i \equiv 1 (3)\\
-k \in [|C|,n) \text{ no utilizado aún} & \text{si no}
+\dfrac{i-1}{3}+1 & \text{si } i \equiv 1 (3)\\
+k \in (|C|,n] \text{ no utilizado aún} & \text{si no}
 \end{cases}
 \end{equation*}
 
+6. Por una decisión implementativa, nuestra heurística golosa va tomando secuencialmente los nodos ``óptimos'' en el orden en el que fueron rotulados (o sea que siempre toma el nodo ``óptimo'' con rotulado menor). Entonces, si tomamos un circuito $C_n$ donde los vértices son $v_0,v_1,...,v_{n-1}$ tal que existe una arista entre $v_i$ y $v_j$ cuando $j = (i+1) mod (n)$, podemos formar un conjunto $C$ como se indica en el punto 1, y sabemos por los puntos 2 y 3 que se trata de un CIDM.  Si además, rotulamos los vértices como se indica en el punto 5, podemos ver que, por lo dicho en el punto 4, nuestro algoritmo encuentra una solución exacta, idéntica al conjunto $C$. La Figura \ref{fig:familia2} muestra un ejemplo de circuito rotulado de la manera indicada, y la Figura \ref{fig:familia2res} muestra la respuesta hallada por nuestro algoritmo.
 
 ---------------
-
-Si el grafo está rotulado de esta forma, nuestro algoritmo procederá de la siguiente manera:
-
-\begin{itemize}
-\item El primer nodo ``óptimo'' hallado será $v_1$, así que lo incluirá en la solución y lo marcará como ``tomado'' junto a $v_2$ y $v_n$. Por lo tanto, $v_3$ y $v_{n-1}$ pasarán a poder cubrir 1 nodo ``libre'' cada uno, de existir éste (notar que para $n = 3$ todos los nodos ya quedan ``tomados'', y para $n = 4, v_3 = v_{n-1}$ y es el único nodo que queda ``libre'').
-\item Mientras queden nodos ``libres'', siendo $v_i$ el último vértice incluido en el conjunto
-
-	\begin{itemize}
-	\item Si el siguiente nodo ``óptimo'' cubre 2 nodos ``libres'' (aparte de sí mismo), éste será necesariamente $v_{i+3}$.
-	\item Si el siguiente nodo ``óptimo'' cubre 1 nodo ``libre'' (aparte de sí mismo), éste será necesariamente $v_{i+2}$.
-	\end{itemize}
-
-\end{itemize}
-
-HABRÍA QUE MOSTRAR QUE NUESTRO ALGORITMO AGARRA EXACTAMENTE LOS NODOS QUE FORMAN LA SOLUCIÓN EXACTA DESCRITA ANTES
 
 Ahora cambiemos la rotulación del grafo a $w_1,w_2,...,w_n$ de la siguiente manera:
 
