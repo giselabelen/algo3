@@ -2,6 +2,7 @@
 #include "exp_exacto.h"
 #include "exp_goloso.h"
 #include "exp_busqlocal.h"
+#include "exp_grasp.h"
 
 
 int main()
@@ -19,12 +20,12 @@ int main()
 	//~ cout << "aleatorio" << endl;
 	//~ exp_exacto_aleatorio(5,18,500);	
 	
-	cout << "solitarios" << endl;
-	exp_goloso_solitarios(10,1000);
-	cout << "completos" << endl;
-	exp_goloso_completos(5,100);
-	cout << "aleatorio" << endl;
-	exp_goloso_aleatorio(4,200,3000);
+	//~ cout << "solitarios" << endl;
+	//~ exp_goloso_solitarios(10,1000);
+	//~ cout << "completos" << endl;
+	//~ exp_goloso_completos(5,100);
+	//~ cout << "aleatorio" << endl;
+	//~ exp_goloso_aleatorio(4,200,3000);
 	//~ cout << "aleatorio_comp" << endl;
 	//~ exp_goloso_aleatorio_comp(4,15,1000);
 	//~ cout << "estrellas" << endl;
@@ -40,4 +41,9 @@ int main()
 	//~ exp_busqlocal_aleatorio(4,50,500);
 	//~ cout << "aleatorio_comp" << endl;
 	//~ exp_busqlocal_aleatorio_comp(4,15,1000);
+	
+	cout << "aleatorio" << endl;
+	exp_grasp_aleatorio(4,20,50);
+	cout << "aleatorio_comp" << endl;
+	exp_grasp_aleatorio_comp(4,15,100);
 }
