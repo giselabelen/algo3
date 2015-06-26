@@ -69,7 +69,7 @@ T(n) = \mathcal{O}(n^5)
 \end{array}
 \end{equation*}
 
-En el caso de utilizar mejorador2, el procedimiento es distinto. Partimos buscando nodos que se relacionen con al menos dos nodos de la solución inicial (preguntar por cada nodo nos toma $\mathcal{O}(n)$). Por cada nodo que cumpla, se actualizan variables relacionadas con ese nodo para simular su eliminación de la solución (para esto se requiere recorrer los vecinos de ese nodo con costo $\mathcal{O}(n)$). Luego revisamos si eliminando el nodo previamente seleccionado llegamos a una solución válida ($\mathcal{O}(n)$), de ser así, modifico variables para seguir teniendo en cuenta el cambio realizado ($\mathcal{O}(n)$) y termino la iteración. En caso contrario, termino la iteración (al no modificar las variables del otro caso, estas se verán reseteadas en la siguiente iteración).
+En el caso de utilizar mejorador2, el procedimiento es distinto. Partimos buscando nodos que se relacionen con al menos dos nodos de la solución inicial (preguntar por cada nodo nos toma $\mathcal{O}(n)$). Por cada nodo que cumpla, se actualizan variables relacionadas con ese nodo para simular su incorporación a la solución (para esto se requiere recorrer los vecinos de ese nodo con costo $\mathcal{O}(n)$). Luego revisamos si incorporando el nodo previamente seleccionado llegamos a una solución válida ($\mathcal{O}(n)$), de ser así, quitamos los nodos que se relacionan con éste, modificamos variables para seguir teniendo en cuenta el cambio realizado ($\mathcal{O}(n)$) y terminamos la iteración. En caso contrario, terminamos la iteración (al no modificar las variables del otro caso, estas se verán reseteadas en la siguiente iteración).
 
 En este caso, siendo $T(n)$ la complejidad de nuestro algoritmo, tenemos:
 
