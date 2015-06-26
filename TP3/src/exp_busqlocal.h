@@ -32,6 +32,7 @@ void exp_busqlocal_aleatorio(int cant_min,int cant_max,int cant_it)
 	
 	for(int k = 0; k < cant_it; k++)
 	{
+		cout << "iteracion " << k << endl;
 		n = (rand() % (cant_max-cant_min+1)) + cant_min;
 		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
 		Vecinos vec = generar_aleatorio(n,a);
@@ -67,10 +68,13 @@ void exp_busqlocal_aleatorio(int cant_min,int cant_max,int cant_it)
 					(vec_aux[j].first).clear();
 					for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
 					{ (vec_aux[j].first).push_back(*it); }
+					vec_aux[j].second = vec[j].second;
 				}
 				
 				res1 = goloso(cidm_sol1,vec_aux,n,0,0);
 				res2 = otro_inicio(cidm_sol2,vec,n);
+				
+				if(i == 0){ fprintf(pExp,"%i, %i, ",res1,res2); }
 				
 				// Mido el tiempo
 				start = clock();
@@ -97,8 +101,8 @@ void exp_busqlocal_aleatorio(int cant_min,int cant_max,int cant_it)
 
 void exp_busqlocal_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 {
-	FILE * pExp = fopen("../Resultados_experimentos/busqlocal/aleatorio.txt","w");	// Resultados
-	FILE * pIn = fopen("../Resultados_experimentos/busqlocal/aleatorio.in","w");	// Instancias de entrada
+	FILE * pExp = fopen("../Resultados_experimentos/busqlocal/aleatorio_comp.txt","w");	// Resultados
+	FILE * pIn = fopen("../Resultados_experimentos/busqlocal/aleatorio_comp.in","w");	// Instancias de entrada
 	int a;
 	int n;
 	int res1;
@@ -109,6 +113,7 @@ void exp_busqlocal_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 	
 	for(int k = 0; k < cant_it; k++)
 	{
+		cout << "iteracion " << k << endl;
 		n = (rand() % (cant_max-cant_min+1)) + cant_min;
 		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
 		Vecinos vec = generar_aleatorio(n,a);
@@ -134,7 +139,7 @@ void exp_busqlocal_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 		
 		backtracking(cidm_sol2,cidm_sol1,estado,vec,0,n,cota,res1,0,1);
 
-		fprintf(pExp,"%i, ",res1);
+		fprintf(pExp,"%i, ",cota);
 		
 		for(int m = 1; m < 3; m++)
 		{
@@ -147,6 +152,7 @@ void exp_busqlocal_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 				(vec_aux[j].first).clear();
 				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
 				{ (vec_aux[j].first).push_back(*it); }
+				vec_aux[j].second = vec[j].second;
 			}
 			
 			res1 = goloso(cidm_sol1,vec_aux,n,0,0);

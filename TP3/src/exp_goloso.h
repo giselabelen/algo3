@@ -46,6 +46,7 @@ void exp_goloso_solitarios(int cant_min,int cant_max)
 				(vec_aux[j].first).clear();
 				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
 				{ (vec_aux[j].first).push_back(*it); }
+				vec_aux[j].second = vec[j].second;
 			}
 			
 			// Mido el tiempo
@@ -89,6 +90,7 @@ void exp_goloso_completos(int cant_min,int cant_max)
 				(vec_aux[j].first).clear();
 				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
 				{ (vec_aux[j].first).push_back(*it); }
+				vec_aux[j].second = vec[j].second;
 			}
 			
 			// Mido el tiempo
@@ -149,6 +151,7 @@ void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
 				(vec_aux[j].first).clear();
 				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
 				{ (vec_aux[j].first).push_back(*it); }
+				vec_aux[j].second = vec[j].second;
 			}
 			
 			// Mido el tiempo
