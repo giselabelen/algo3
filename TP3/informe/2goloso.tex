@@ -136,7 +136,7 @@ Volviendo ahora a nuestro conjunto independiente maximal $C$ del circuito $C_n$ 
 	\item Cuando $n \equiv 2 (3), |C| = \frac{n-2}{3} + 1$.	
 \end{itemize}
 
-Para probar que $C$ es un CIDM, supongamos que no lo es.  Es decir, que existe un conjunto independiente y dominante $C'$ con menor cardinalidad que $C$.  Podemos decir que $|C'| = |C| - k$ para algún $k \in [1 |C|)$ Como $C_n$ es un circuito simple, cada vértice tiene grado exactamente 2.  Entonces,
+Para probar que $C$ es un CIDM, supongamos que no lo es.  Es decir, que existe un conjunto independiente y dominante $C'$ con menor cardinalidad que $C$.  Podemos decir que $|C'| = |C| - k$ para algún $k \in [1, |C|)$. Como $C_n$ es un circuito simple, cada vértice tiene grado exactamente 2.  Entonces,
 
 \begin{equation*}
 \sum_{v \in C'} \text{nodos cubiertos por }v = |C'| + \sum_{v \in C'} \delta(v) = |C'| + 2|C'| = 3 |C'| = 3(|C| - k) = 3|C| - 3k
@@ -171,35 +171,63 @@ k \in (|C|,n] \text{ no utilizado aún} & \text{si no}
 
 6. Por una decisión implementativa, nuestra heurística golosa va tomando secuencialmente los nodos ``óptimos'' en el orden en el que fueron rotulados (o sea que siempre toma el nodo ``óptimo'' con rotulado menor). Entonces, si tomamos un circuito $C_n$ donde los vértices son $v_0,v_1,...,v_{n-1}$ tal que existe una arista entre $v_i$ y $v_j$ cuando $j = (i+1) mod (n)$, podemos formar un conjunto $C$ como se indica en el punto 1, y sabemos por los puntos 2 y 3 que se trata de un CIDM.  Si además, rotulamos los vértices como se indica en el punto 5, podemos ver que, por lo dicho en el punto 4, nuestro algoritmo encuentra una solución exacta, idéntica al conjunto $C$. La Figura \ref{fig:familia2} muestra un ejemplo de circuito rotulado de la manera indicada, y la Figura \ref{fig:familia2res} muestra la respuesta hallada por nuestro algoritmo.
 
----------------
 
-Ahora cambiemos la rotulación del grafo a $w_1,w_2,...,w_n$ de la siguiente manera:
+A. Ahora, considerando el circuito $C_n$ inicial, tomemos el siguiente conjunto de vértices $C = \{v_i |(i \equiv 1 (4)) \vee (i \equiv 3 (4))\}$.  Básicamente, tomamos los nodos $v_i$ tal que $i$ es impar.
 
-\begin{itemize}
-\item Para $1 \leq j \leq h$, $v_{j+3(j-1)} = w_j$
-\item Para $h < j \leq n$, $v_i = w_j$ siendo $j$ algún índice que aún no fue asignado.
-\end{itemize}
+B. Veamos que $C$ es independiente maximal, y por lo tanto, dominante.
 
-Donde $h =
-\begin{cases}
-\left\lfloor \dfrac{n}{4} \right\rfloor + 1 & \text{ si } n \equiv 3 (4)\\\\
-\left\lfloor \dfrac{n}{4} \right\rfloor & \text{ en otro caso }
-\end{cases}$
+\paragraph*{Independencia:} El conjunto $C$ está formado por los vértices $v_i$ tal que $i \equiv 1 (4)$ ó $i \equiv 3 (4)$. Si $n$ es impar, sabemos que $v_i$ se comunica con $v_{(i-1)}$ y con $v_{(i+1)}$. Si $i \equiv 1 (4)$ entonces $i-1 \equiv 0 (4)$ y $i+1 \equiv 2 (4)$, y si $i \equiv 3 (4)$ entonces $i-1 \equiv 2 (4)$ y $i+1 \equiv 0 (4)$, así que los vértices incluidos en $C$ no se comunican entre sí. Si $n$ es impar, todo lo antes escrito también vale, considerando que $v_{n-1}$ (que pertenece a $C$) tiene por vecinos a $v_{n-2}$ y $v_{0}$, y sucede que $0 \equiv 0 (4)$ y $n-2 \equiv 2 (4)$ ó $n-2 \equiv 0 (4)$, por lo cual sigue cumpliéndose la independencia.
 
-Bajo esta nueva rotulación, nuestro algoritmo procederá de la siguiente manera:
+\paragraph*{Maximalidad:} Supongamos que $C$ no es maximal, es decir, que podemos incluir al menos un vértice más y seguir teniendo un conjunto independiente. Analicemos los siguientes casos:
 
 \begin{itemize}
-\item El primer nodo ``óptimo'' hallado será $w_1$, así que lo incluirá en la solución y lo marcará como ``tomado'' junto a sus dos vecinos. 
-\item Mientras quede al menos 1 nodo ``óptimo'' que cubre 2 nodos ``libres'' (aparte de sí mismo), si $w_i$ el último vértice incluido en el conjunto, el siguiente nodo ``óptimo'' a tomar será $w_{i+1}$.  Notar que los vértices que cumplen esta condición, no comparten vecinos.
-\item Mientras quede al menos 1 nodo ``óptimo'' que cubre 1 nodo ``libre'' (aparte de sí mismo), lo tomará y lo marcará junto a sus vecinos como ``tomado''.
-\item Si quedan vértices ``libres'' serán tomados, pero a esta altura estos vértices no tendrán vecinos ``libres''.
+	\item Agregar un vértice $v_i$ tal que $i \equiv 1 (4)$.  Pero todos ya forman parte de $C$. ABSURDO.
+	\item Agregar un vértice $v_i$ tal que $i \equiv 3 (4)$.  Pero todos ya forman parte de $C$. ABSURDO.
+	\item Agregar un vértice $v_i$ tal que $i \equiv 0 (4)$.  Pero todos se encuentran conectados al vértice $v_{i+1}$ y como en este caso $i+1 \equiv 1(4)$, entonces por definición $v_{i+1} \in C$. ABSURDO.
+	\item Agregar un vértice $v_i$ tal que $i \equiv 2 (4)$.  Pero todos se encuentran conectados al vértice $v_{i-1}$ y como en este caso $i-1 \equiv 1(4)$, entonces por definición $v_{i+1} \in C$. ABSURDO.
 \end{itemize}
 
-FALTA MOSTRAR QUE LO QUE QUEDA ES EN GENERAL PEOR A LA OTRA ROTULACIÓN.
+Luego, $C$ es un conjunto independiente maximal, y por consiguiente, dominante. 
 
-CUANDO SE ACOMODE LO QUE FALTA, HAY QUE REFERENCIAR A LAS IMÁGENES CORRESPONDIENTES.
+C. Veamos ahora que el conjunto $C$ es un conjunto independiente máximo.  Para ello observemos la cardinalidad de $C$ (la cual es trivial dado que sólo tomamos a los vértices $v_i$ con $i$ impar):
 
+\begin{itemize}
+	\item Cuando $n$ es par,$|C| = \frac{n}{2}$.
+	\item Cuando $n$ es impar, $|C| = \frac{n-1}{2}$.	
+\end{itemize}
 
+Para probar que $C$ es un conjunto independiente máximo, supongamos que no lo es.  Es decir, que existe un conjunto independiente maximal $C'$ con mayor cardinalidad que $C$.  Podemos decir que $|C'| = |C| + k$ para algún $k \in [1, (n -|C|))$. Pero dada la cardinalidad de $C$, tener un conjunto con más elementos implicaría que dicho conjunto contiene a más de la mitad de los vértices del grafo, y como se trata de un circuito simple y cada vértice tiene grado 2, obliga a que al menos dos vértices de $C'$ sean adyacentes.  Esto es absurdo puesto que supusimos $C'$ independiente.  Entonces, $C$ es un conjunto independiente máximo.
+
+D. Supongamos ahora que vamos armando al conjunto $C$ tomando los nodos $v_i$ de la manera indicada anteriormente, pero de forma secuencial, de menor a mayor valor de $i$ con $i \equiv 1 (4)$, y luego de menor a mayor valor de $i$ con $i \equiv 3 (4)$. Notamos entonces que:
+
+\begin{itemize}
+	\item Cuando tomamos los $v_i$ tal que $i \equiv 1 (4)$, cada uno cubre exactamente 3 vértices ``libres'' (sus dos vecinos y él mismo).
+	\item Cuando pasamos a tomar los $v_i$ tal que $i \equiv 3 (4)$ $n \equiv 1 (3)$, cada uno sólo cubre 1 vértice ``libre'' que es él mismo.  Esto sucede porque sus dos vecinos fueron cubiertos anteriormente por los $v_i$ con $i \equiv 1 (4)$.
+\end{itemize}
+
+Por lo tanto, podemos decir que al momento de tomar cada vértice de $C$, el mismo califica como nodo ``óptimo''.
+
+E. Definimos ahora la siguiente función $f:V \rightarrow \mathbb{N} \in (0,n]$ para rotular los vértices de $C_n$:
+
+\begin{equation*}
+f(v_i) = \begin{cases}
+\dfrac{i-1}{4}+1 & \text{si } i \equiv 1 (4)\\
+\dfrac{i-3}{4}+\left\lfloor \dfrac{n}{4} \right\rfloor + 1 & \text{si } i \equiv 3 (4) \wedge (n \equiv 0 (4) \vee n \equiv 1 (4))\\
+\dfrac{i-3}{4}+\left\lceil \dfrac{n}{4} \right\rceil + 1 & \text{si } i \equiv 3 (4) \wedge (n \equiv 2 (4) \vee n \equiv 3 (4))\\
+k \in \left(\dfrac{n}{2},n\right] \text{ no utilizado aún} & \text{si } (i \equiv 0 (4) \vee i \equiv 2 (4)) \wedge (n \equiv 0 (4) \vee n \equiv 2 (4))\\
+k \in \left(\dfrac{n-1}{2},n\right] \text{ no utilizado aún} & \text{si } (i \equiv 0 (4) \vee i \equiv 2 (4)) \wedge (n \equiv 1 (4) \vee n \equiv 3 (4))\\
+\end{cases}
+\end{equation*}
+
+F. Como hemos decidido nuestra heurística golosa vaya tomando secuencialmente los nodos ``óptimos'' en el orden en el que fueron rotulados, entonces si tomamos un circuito $C_n$ donde los vértices son $v_0,v_1,...,v_{n-1}$ tal que existe una arista entre $v_i$ y $v_j$ cuando $j = (i+1) mod (n)$, podemos formar un conjunto $C$ como se indica en el punto A, y sabemos por los puntos B y C que se trata de un conjunto independiente máximo, y por consiguiente, dominante.  Si además, rotulamos los vértices como se indica en el punto E, podemos ver que, por lo dicho en el punto D, nuestro algoritmo encuentra una solución idéntica al conjunto $C$. 
+
+Hay una excepción para el caso $n \equiv 2 (4)$. En estos casos, el vértice $n-1 \equiv 1 (4)$, pero el vértice $v_{n-1}$ no será tomado por nuestro algoritmo dado que se conecta al vértice $v_0$ que ya fue cubierto por $v_1$ y sólo podría cubrir a su otro vecino y a él mismo como nodos ``libres'', así que en su lugar se tomará al vértice $v_{i-2}$ que puede cubrir a 3 vértices ``libres'' (él mismo, $v_{n-1}$ y $v_{n-3}$, ya que $n-3 \equiv 3 (4)$ y aún no fue tomado). Por consiguiente, al comenzar a tomar a los $v_i$ tales que $i \equiv 3 (4)$, $v_{n-3}$ no será tomado en cuenta ya que no está ``libre''.  Luego, cuando $n \equiv 2 (4)$, la solución hallada por nuestra heurística toma a todos los $v_i$ tal que $i \equiv 1 (4)$ salvo $v_{n-1}$, luego toma a $v_{i-2}$, y finalmente toma a todos los $v_i$ tal que $i \equiv 3 (4)$ salvo $v_{n-3}$.  El tamaño del conjunto hallado, entonces, difiere sólo en una unidad respecto al conjunto planteado en el punto A.
+
+La Figura \ref{fig:familia2bis} muestra un ejemplo de circuito rotulado de la manera indicada, y la Figura \ref{fig:familia2bisres} muestra la respuesta hallada por nuestro algoritmo.
+
+\vspace*{0.3cm}
+
+Para poder comparar las soluciones halladas por nuestra heurística para los rotulados propuestos, aproximaremos la cardinalidad del conjunto encontrado a $\frac{n}{3}$ para el primer caso y $\frac{n}{2}$ para el último, ya que a valores de $n$ muy grandes, la diferencia respecto a $\frac{n-1}{3}+1$ y a $\frac{n-2}{3}+1$ para el primero, y a $\frac{n-1}{2}$ en el segundo, es despreciable.  Entonces podemos decir que la mejor solución para un circuito simple $C_n$ contiene $\frac{n}{3}$ elementos mientras que la peor solución hallada para el mismo circuito contiene $\frac{n}{2}$ elementos.  En otras palabras, para un rotulado como el propuesto en E, el conjunto encontrado por nuestro algoritmo es un $50\%$ peor que el exacto.
 
 
 \begin{figure}[!htb]
