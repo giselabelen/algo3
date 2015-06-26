@@ -94,15 +94,22 @@ La Figura \ref{fig:familia1} muestra un ejemplo de grafo perteneciente a esta fa
 
 Como miembros de esta familia consideraremos a los circuitos simples.  Para este tipo de grafos, la calidad de la solución hallada por nuestro algoritmo dependerá de la cantidad de vértices que tenga y de la forma en que se hayan rotulado los mismos.
 
-Consideremos un circuito $C_{n}$ y supongamos por un momento que los vértices están rotulados como $v_1,v_2,...,v_n$ tal que existe una arista entre $v_i$ y $v_j$ cuando $j = (i+1) mod (n)$.
+Consideremos un circuito $C_{n}$ y supongamos por un momento que los vértices están rotulados como $v_0,v_1,...,v_{n-1}$ tal que existe una arista entre $v_i$ y $v_j$ cuando $j = (i+1) mod (n)$.
 
-Una forma de armar un CIDM $C$ para este grafo podría ser la siguiente: [HABRIA QUE PROBARLO]
+Una forma de armar un conjunto independiente maximal $C$ para este grafo podría ser la siguiente:
 
 \begin{itemize}
 \item Si $n \equiv 0 (3)$, tomar $C = \{v_i | i \equiv 1 (3)\}$.
-\item Si $n \equiv 1 (3)$, tomar $C = \{v_i | 1 \leq i < n, i \equiv 1 (3)\} \cup \{v_{n-1}\}$.
-\item Si $n \equiv 2 (3)$, tomar $C = \{v_i | 1 \leq i < n-1, i \equiv 1 (3)\} \cup \{v_{n-2}\}$.
+\item Si $n \equiv 1 (3)$, tomar $C = \{v_i | i \equiv 1 (3)\} \cup \{v_{n-1}\}$.
+\item Si $n \equiv 2 (3)$, tomar $C = \{v_i | i \equiv 1 (3)\}$.
 \end{itemize}
+
+Veamos que $C$ efectivamente es independiente maximal.
+
+\paragraph*{Independencia:} Cuando $n \equiv 0 (3)$, el conjunto $C$ está formado por los vértices $v_i$ tal que $i \equiv 1 (3)$, por lo cual $v_i$ se comunica con $v_{i-1}$ y con $v_{i+1}$. Como $i-1 \equiv 0 (3)$ y $i+1 \equiv 2 (3)$, entonces los vértices incluidos en $C$ no se comunican entre sí. Cuando $n \equiv 1 (3)$ ó $n \equiv 2 (3)$, todo lo antes escrito también vale, considerando que $v_{n-1}$ (que en ambos casos pertenece a $C$) tiene por vecinos a $v_{n-2}$ y $v_{0}$, y sucede que $0 \equiv 0 (3)$ y $n-2 \equiv 2 (3)$ ó $n-2 \equiv 0 (3)$, por lo cual sigue cumpliéndose la independencia.
+
+
+---------------
 
 Si el grafo está rotulado de esta forma, nuestro algoritmo procederá de la siguiente manera:
 
