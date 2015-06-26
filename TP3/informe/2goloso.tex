@@ -116,7 +116,47 @@ Veamos que $C$ efectivamente es independiente maximal, y por lo tanto, dominante
 	\item Agregar un vértice $v_i$ tal que $i \equiv 0 (3)$.  Pero entonces $v_i$ o bien se conecta al vértice $v_{i+1}$ con $i+1 \equiv 1 (3)$ y por lo tanto $v_{i+1} \in C$, o bien $i = n-1$ cuando $n \equiv 1 (3)$ así que también pertenece a $C$. ABSURDO.
 \end{itemize}
 
-Luego, $C$ es un conjunto independiente maximal, y por consiguiente, dominante.
+Luego, $C$ es un conjunto independiente maximal, y por consiguiente, dominante. Veamos ahora que $C$ también es mínimo (o sea, un CIDM de $C_n$).
+
+Primero, diremos que, dentro de un grafo, un vértice $v$ ``cubre'' a un vértice $w$ o bien cuando $v = w$, o bien cuando $v$ y $w$ son adyacentes. Por lo tanto, un vértice $v$ cubre exactamente a $\delta(v) + 1$ vértices.
+
+Particularmente, dado un CIDM para un determinado grafo $G = (V,E)$, entre todos los vértices pertenecientes a dicho conjunto ``cubren'' a todos los vértices de $G$ (porque es dominante). Notemos además, que dos vértices diferentes del CIDM pueden cubrir a un mismo vértice dentro de $G$ (es decir, pueden tener vecinos en común). Entonces, si tomamos un CIDM $S$ para $G$, y sabiendo que cada vértice $v \in S$ cubre a $\delta(v) + 1$ vértices dentro de $G$, podemos decir que 
+
+\begin{equation*}
+\sum_{v \in S} \text{nodos cubiertos por }v = |S| + \sum_{v \in S} \delta(v) \geq |V|
+\end{equation*}
+
+Volviendo ahora a nuestro conjunto independiente maximal $C$ del circuito $C_n$ definido anteriormente. En principio, fácilmente vemos su cardinalidad:
+
+\begin{itemize}
+	\item Cuando $n \equiv 0 (3), |C| = \frac{n}{3}$.
+	\item Cuando $n \equiv 1 (3), |C| = \frac{n-1}{3} + 1$.	
+	\item Cuando $n \equiv 2 (3), |C| = \frac{n-2}{3} + 1$.	
+\end{itemize}
+
+Para probar que $C$ es un CIDM, supongamos que no lo es.  Es decir, que existe un conjunto independiente y dominante $C'$ con menor cardinalidad que $C$.  Podemos decir que $|C'| = |C| - k$ para algún $k \in [1 |C|)$ Como $C_n$ es un circuito simple, cada vértice tiene grado exactamente 2.  Entonces,
+
+\begin{equation*}
+\sum_{v \in C'} \text{nodos cubiertos por }v = |C'| + \sum_{v \in C'} \delta(v) = |C'| + 2|C'| = 3 |C'| = 3(|C| - k) = 3|C| - 3k
+\end{equation*}
+
+\begin{itemize}
+	\item Cuando $n \equiv 0 (3), 3|C| - 3k = 3\frac{n}{3} - 3k = n-3k < n$ pues $k$ es al menos 1. ABSURDO.
+	\item Cuando $n \equiv 1 (3), 3|C| - 3k = 3(\frac{n-1}{3} + 1) - 3k = n+2-3k < n$ pues $k$ es al menos 1. ABSURDO.
+	\item Cuando $n \equiv 2 (3), 3|C| - 3k = 3(\frac{n-2}{3} + 1) - 3k = n+1-3k < n$ pues $k$ es al menos 1. ABSURDO.
+\end{itemize}
+
+Luego, concluimos que $C$ es un CIDM de $C_n$.
+
+Definimos ahora la siguiente función $f:V \rightarrow \mathbb{N} \in [0,n)$ para rotular los vértices de $C_n$:
+
+\begin{equation*}
+f(v_i) = \begin{cases}
+\dfrac{i-1}{3} & \text{si } i \equiv 1 (3)\\
+k \in [|C|,n) \text{ no utilizado aún} & \text{si no}
+\end{cases}
+\end{equation*}
+
 
 ---------------
 
