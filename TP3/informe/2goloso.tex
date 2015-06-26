@@ -68,10 +68,19 @@ La forma de los grafos pertenecientes a esta familia responde a las siguientes c
 
 \begin{itemize}
 \item Existe un único vértice $v$ con grado máximo.  Sea $\delta_{max}$ el grado de este nodo.
-\item Para cada vértice $w$ adyacente a $v$, $\delta(w) < \delta_{max}$, y sus nodos adyacentes (salvo $v$) tienen grado 1.	
+\item Para cada vértice $w$ adyacente a $v$, $1 < \delta(w) < \delta_{max}$, y sus nodos adyacentes (salvo $v$) tienen grado 1.	
 \end{itemize}
 
-Dado que el algoritmo propuesto va tomando en cada paso el nodo ``óptimo'', o sea, aquél que más nodos ``libres'' cubre, en un grafo como el descrito primero tomará al vértice $v$ con grado máximo $\delta_{max}$.  Luego, para cumplir con la independencia y la dominancia, deberá tomar a los vértices adyacentes a los vecinos de $v$. Como el grado de cada vecino de $v$ es menor a $\delta_{max}$, el peor de los casos sería que cada uno de ellos tuviera grado $\delta_{max} - 1$.  En este caso, cada vértice adyacente a $v$ tendría $\delta_{max} - 2$ vecinos además del mismo $v$, y entonces la solución hallada por nuestra heurística estaría conformada por $\delta_{max} \times (\delta_{max} - 2)$ nodos.  Sin embargo, para un grafo como el detallado, existe una solución mejor conformada por $\delta_{max}$ nodos, y corresponde al conjunto compuesto por los vecinos del nodo $v$.
+Dado que el algoritmo propuesto va tomando en cada paso el nodo ``óptimo'', o sea, aquél que más nodos ``libres'' cubre, en un grafo como el descrito primero tomará al vértice $v$ con grado máximo $\delta_{max}$.  Luego, para cumplir con la independencia y la dominancia, deberá tomar a los vértices adyacentes a los vecinos de $v$. Como el grado de cada vecino de $v$ es menor a $\delta_{max}$, el peor de los casos sería que cada uno de ellos tuviera grado $\delta_{max} - 1$.  En este caso, cada vértice adyacente a $v$ tendría $\delta_{max} - 2$ vecinos además del mismo $v$, y entonces la solución hallada por nuestra heurística estaría conformada por $\delta_{max} \times (\delta_{max} - 2)$ nodos.  
+
+Sin embargo, para un grafo como el detallado, existe una solución mejor conformada por $\delta_{max}$ nodos, y corresponde al conjunto compuesto por los vecinos del nodo $v$. Veamos que esta solución es óptima.
+
+\begin{itemize}
+	\item Como ya dijimos, si tomamos al nodo $v$ nos vemos obligados a tomar como parte del conjunto a los vértices adyacentes a cada vecino de $v$, y ya notamos que esta solución no es buena.
+	\item Analicemos qué sucede si no tomamos a $v$ como parte de la solución. Supongamos por un momento que se elimina dicho nodo.  En ese caso, nos quedan $\delta_{max}$ componentes conexas que son $K_{1,n}$.  Trivialmente, para un grafo no conexo, el CIDM es la unión de los CIDMs de cada una de sus componentes conexas, y en el caso de los grafos $K_{1,n}$ el CIDM consta del elemento perteneciente a la partición con un único nodo. Luego, el CIDM del grafo total contiene exactamente al vértice correspondiente a cada componente.  Si volvemos a considerar a $v$ como parte del grafo, vemos que el mismo queda ``cubierto'' por cada uno de los vértices que ubicamos en el conjunto, así que dicho CIDM es también un CIDM para el grafo original.
+\end{itemize}
+
+Comparemos entonces la solución hallada con la solución óptima analizada. Como vimos, en el peor de los casos la solución hallada por nuestra heurística estaría conformada por $\delta_{max} \times (\delta_{max} - 2)$ nodos. Pero observemos que para valores de $\delta_{max}$ muy grandes, podemos decir que dicha solución contiene aproximadamente $\delta_{max}^2$ elementos, y esa es la diferencia con una solución óptima.
 
 La Figura \ref{fig:familia1} muestra un ejemplo de grafo perteneciente a esta familia, y la Figura \ref{fig:familia1res} muestra en color verde la solución hallada por nuestro algoritmo, la cual claramente es peor que la solución formada por los vértices que quedaron en rojo en la misma Figura.
 
@@ -171,6 +180,21 @@ k \in (|C|,n] \text{ no utilizado aún} & \text{si no}
 
 6. Por una decisión implementativa, nuestra heurística golosa va tomando secuencialmente los nodos ``óptimos'' en el orden en el que fueron rotulados (o sea que siempre toma el nodo ``óptimo'' con rotulado menor). Entonces, si tomamos un circuito $C_n$ donde los vértices son $v_0,v_1,...,v_{n-1}$ tal que existe una arista entre $v_i$ y $v_j$ cuando $j = (i+1) mod (n)$, podemos formar un conjunto $C$ como se indica en el punto 1, y sabemos por los puntos 2 y 3 que se trata de un CIDM.  Si además, rotulamos los vértices como se indica en el punto 5, podemos ver que, por lo dicho en el punto 4, nuestro algoritmo encuentra una solución exacta, idéntica al conjunto $C$. La Figura \ref{fig:familia2} muestra un ejemplo de circuito rotulado de la manera indicada, y la Figura \ref{fig:familia2res} muestra la respuesta hallada por nuestro algoritmo.
 
+\begin{figure}[!htb]
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.8]{imagenes/faimilia2.png}
+\end{center}
+  \caption{Circuito simple rotulado ``en orden''}\label{fig:familia2}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.8]{imagenes/faimilia2-resopt.png}
+\end{center}
+  \caption{Solución hallada por nuestra heurística}\label{fig:familia2res}
+\endminipage
+\end{figure}
+
 
 A. Ahora, considerando el circuito $C_n$ inicial, tomemos el siguiente conjunto de vértices $C = \{v_i |(i \equiv 1 (4)) \vee (i \equiv 3 (4))\}$.  Básicamente, tomamos los nodos $v_i$ tal que $i$ es impar.
 
@@ -229,29 +253,16 @@ La Figura \ref{fig:familia2bis} muestra un ejemplo de circuito rotulado de la ma
 
 Para poder comparar las soluciones halladas por nuestra heurística para los rotulados propuestos, aproximaremos la cardinalidad del conjunto encontrado a $\frac{n}{3}$ para el primer caso y $\frac{n}{2}$ para el último, ya que a valores de $n$ muy grandes, la diferencia respecto a $\frac{n-1}{3}+1$ y a $\frac{n-2}{3}+1$ para el primero, y a $\frac{n-1}{2}$ en el segundo, es despreciable.  Entonces podemos decir que la mejor solución para un circuito simple $C_n$ contiene $\frac{n}{3}$ elementos mientras que la peor solución hallada para el mismo circuito contiene $\frac{n}{2}$ elementos.  En otras palabras, para un rotulado como el propuesto en E, el conjunto encontrado por nuestro algoritmo es un $50\%$ peor que el exacto.
 
-
 \begin{figure}[!htb]
 \minipage{0.5\textwidth}
 \begin{center}
-  \includegraphics[scale=0.8]{imagenes/faimilia2.png}
-\end{center}
-  \caption{Circuito simple rotulado ``en orden''}\label{fig:familia2}
-\endminipage\hfill
-\minipage{0.5\textwidth}
-\begin{center}
-  \includegraphics[scale=0.8]{imagenes/faimilia2-resopt.png}
-\end{center}
-  \caption{Solución hallada por nuestra heurística}\label{fig:familia2res}
-\endminipage\\
-\minipage{0.5\textwidth}
-\begin{center}
-  \includegraphics[scale=1.0]{imagenes/faimilia2rename.png}
+  \includegraphics[scale=0.8]{imagenes/faimilia2rename.png}
 \end{center}
   \caption{Circuito simple rotulado ``no en orden''}\label{fig:familia2bis}
 \endminipage\hfill
 \minipage{0.5\textwidth}
 \begin{center}
-  \includegraphics[scale=1.0]{imagenes/faimilia2rename-solnoopt.png}
+  \includegraphics[scale=0.8]{imagenes/faimilia2rename-solnoopt.png}
 \end{center}
   \caption{Solución hallada por nuestra heurística}\label{fig:familia2bisres}
 \endminipage
@@ -274,9 +285,7 @@ La forma de los grafos pertenecientes a esta familia responde a las siguientes c
 \item Para cada vértice $w$ adyacente a $v$, $\delta(w) > \delta(v)$, y sus nodos adyacentes (salvo $v$) tienen grado 1.	
 \end{itemize}
 
-Dado que el algoritmo propuesto va tomando en cada paso el nodo ``óptimo'', o sea, aquél que más nodos ``libres'' cubre, en un grafo como el descrito se irá formando el conjunto solución con los vértices adyacentes al nodo ``central'' $v$.  
-
-FALTA MOSTRAR QUE ES LA MEJOR
+Dado que el algoritmo propuesto va tomando en cada paso el nodo ``óptimo'', o sea, aquél que más nodos ``libres'' cubre, en un grafo como el descrito se irá formando el conjunto solución con los vértices adyacentes al nodo ``central'' $v$, y por lo tanto tendrá $\delta(v)$ elementos.  Veamos que esta solución es la mejor. Para esto, veamos que la única diferencia entre esta familia de grafos, y la familia de los grafos estrella, es que el nodo central tiene menor grado que los nodos periféricos. También notemos, que en este caso, nuestra heurística ha tomado la solución óptima descripta para los grafos estrellas. Dado que la explicación sobre por qué esa solución era realmente óptima no tomaba en cuenta el grado del nodo central y de sus periféricos (salvo que implícitamente pedía que estos últimos tengan al menos grado dos, cuestión que en este caso también sucede), podemos usarla para probar que nuestro goloso realmente halla un óptimo.
 
 La Figura \ref{fig:familia3} muestra un ejemplo de grafo perteneciente a esta familia, y la Figura \ref{fig:familia3res} muestra en color verde la solución hallada por nuestro algoritmo.
 
