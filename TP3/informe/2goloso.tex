@@ -104,10 +104,19 @@ Una forma de armar un conjunto independiente maximal $C$ para este grafo podría
 \item Si $n \equiv 2 (3)$, tomar $C = \{v_i | i \equiv 1 (3)\}$.
 \end{itemize}
 
-Veamos que $C$ efectivamente es independiente maximal.
+Veamos que $C$ efectivamente es independiente maximal, y por lo tanto, dominante.
 
 \paragraph*{Independencia:} Cuando $n \equiv 0 (3)$, el conjunto $C$ está formado por los vértices $v_i$ tal que $i \equiv 1 (3)$, por lo cual $v_i$ se comunica con $v_{i-1}$ y con $v_{i+1}$. Como $i-1 \equiv 0 (3)$ y $i+1 \equiv 2 (3)$, entonces los vértices incluidos en $C$ no se comunican entre sí. Cuando $n \equiv 1 (3)$ ó $n \equiv 2 (3)$, todo lo antes escrito también vale, considerando que $v_{n-1}$ (que en ambos casos pertenece a $C$) tiene por vecinos a $v_{n-2}$ y $v_{0}$, y sucede que $0 \equiv 0 (3)$ y $n-2 \equiv 2 (3)$ ó $n-2 \equiv 0 (3)$, por lo cual sigue cumpliéndose la independencia.
 
+\paragraph*{Maximalidad:} Supongamos que $C$ no es maximal, es decir, que podemos incluir al menos un vértice más y seguir teniendo un conjunto independiente. Analicemos los siguientes casos:
+
+\begin{itemize}
+	\item Agregar un vértice $v_i$ tal que $i \equiv 1 (3)$.  Pero todos ya forman parte de $C$. ABSURDO.
+	\item Agregar un vértice $v_i$ tal que $i \equiv 2 (3)$.  Pero todos se encuentran conectados al vértice $v_{i-1}$ y como en este caso $i-1 \equiv 1(3)$, entonces por definición $v_{i-1} \in C$. ABSURDO.
+	\item Agregar un vértice $v_i$ tal que $i \equiv 0 (3)$.  Pero entonces $v_i$ o bien se conecta al vértice $v_{i+1}$ con $i+1 \equiv 1 (3)$ y por lo tanto $v_{i+1} \in C$, o bien $i = n-1$ cuando $n \equiv 1 (3)$ así que también pertenece a $C$. ABSURDO.
+\end{itemize}
+
+Luego, $C$ es un conjunto independiente maximal, y por consiguiente, dominante.
 
 ---------------
 
