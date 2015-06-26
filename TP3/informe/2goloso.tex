@@ -311,13 +311,65 @@ La Figura \ref{fig:familia3} muestra un ejemplo de grafo perteneciente a esta fa
 
 \vspace*{0.3cm}
 
+En esta sección, trataremos de mostrar de manera empírica que nuestro algoritmo es cuadrático, y tener una estimación de la calidad de las soluciones que presenta el mismo.
+
 \vspace*{0.6cm}
 
-\subsubsection{Test 1}
+\subsubsection{Complejidad:}
 \vspace*{0.3cm}
+
+Para empezar tratamos de analizar distintas instancias de grafos particulares, como son los grafos ``solitarios'' y los grafos ``completos''. Tal vez breve explicacion de que caracteristicas tiene cada uno.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/goloso-solitarios.png}
+	\end{center}
+	\caption{Goloso - Solitarios\label{fig:2A}}
+\end{figure}
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/goloso-solitarios-div.png}
+	\end{center}
+	\caption{Goloso - solitarios div n, y n2\label{fig:2B}}
+\end{figure}
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/goloso-completos.png}
+	\end{center}
+	\caption{Goloso - completos\label{fig:2C}}
+\end{figure}
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/goloso-completos-div.png}
+	\end{center}
+	\caption{Goloso - completos div n, n2\label{fig:2D}}
+\end{figure}
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/goloso-aleatorio.png}
+	\end{center}
+	\caption{Goloso - Aleatorios\label{fig:2E}}
+\end{figure}
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/goloso-aleatorio-div.png}
+	\end{center}
+	\caption{Goloso - Aleatorios div n, n2\label{fig:2F}}
+\end{figure}
+\FloatBarrier
+Se puede observar que ambas funciones de complejidad, al ser divididas por $n$ nos perimten ver lo que serían rectas. En cambio, al ser divididas por $n^2$ asemejan a una curva cuadrática. Inicialmente esto parece justificar nuestra afirmación sobre que la complejidad de nuestro algoritmo es $\mathcal{O}(n^2)$.
+
+Para un análisis más general del algortimo planteamos también distintas instancias generadas de manera aleatoria. Parecería ser, de nuevo, que la curva descripta por la complejidad en estos casos, es una función cuadrática.
+
+Todo lo previamente indicado nos permitiría llegar a la conclusión de que, resultararía dificil describir un contexto para el algoritmo que se pudiera calificar como el peor caso. Todas las corridas realizadas estarían diciendo que, cualquiera sea el caso, la complejidad de nuestro algoritmo es $\mathcal{O}(n^2)$, que era lo que queríamos observar en definitiva.  
 
 \vspace*{0.6cm}
 %\newpage
 
-\subsubsection{Test 2}
+%\subsubsection{Calidad: }
 

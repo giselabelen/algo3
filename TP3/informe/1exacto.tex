@@ -103,17 +103,27 @@ En esta sección, trataremos de mostrar de manera empírica que nuestro algoritm
 \subsubsection{Exponencial}
 \vspace*{0.3cm}
 
-Si fuera cierto que nuestro algoritmo es exponencial, entonces correr instancias muy grandes puede tardar horas, días, o siglos, dependiendo el caso, por lo tanto, se ha decidido correr instancias de a lo sumo 20 nodos. Por otro lado, debido a la gran variedad de posibles grafos que aún con pocos nodos se pueden generar, se ha decidido probar la complejidad acudiendo a la ley de los grandes números, y por lo tanto generando muchos grafos de manera aleatoria. Para esto, se han generado 1000 grafos de entre 5 y 18 nodos de manera aleatoria. Luego, se han tomado los tiempos de ejecución de estos grafos, y se ha calculado un promedio sobre aquellos grados que tenían la misma cantidad de nodos. Esto dió como resultado el siguiente gráfico.
+Si fuera cierto que nuestro algoritmo es exponencial, entonces correr instancias muy grandes puede tardar horas, días, o siglos, dependiendo el caso, por lo tanto, se ha decidido correr instancias de a lo sumo 20 nodos. Por otro lado, debido a la gran variedad de posibles grafos que aún con pocos nodos se pueden generar, se ha decidido probar la complejidad acudiendo a la ley de los grandes números, y por lo tanto generando muchos grafos de manera aleatoria. Para esto, se han generado 1000 grafos de entre 5 y 18 nodos de manera aleatoria. Luego, se han tomado los tiempos de ejecución de estos grafos, y se ha calculado un promedio sobre aquellos grados que tenían la misma cantidad de nodos. Esto dió como resultado el gráfico de la Figura \ref{fig:1A}.
 
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/exacto-aleatorio-sin.png}
+	\end{center}
+	\caption{Exacto - Sin podas}\label{fig:1A}
+\end{figure}
+\FloatBarrier
 
-Gŕafico sin podas de aleatorios.
+Luego, se ha tomado cada uno de estos valores, y se le ha aplicado la raíz n-ésima, siendo n la cantidad de nodos que el valor representa, y obteniendose el gráfico de la Figura \ref{fig:1B}.
 
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/exacto-aleatorio-sin-raiz.png}
+	\end{center}
+	\caption{Exacto - Raíz n-ésima}\label{fig:1B}
+\end{figure}
+\FloatBarrier
 
-Luego, se ha tomado cada uno de estos valores, y se le ha aplicado la raíz n-ésima, siendo n la cantidad de nodos que el valor representa, y obteniendose el siguiente gráfico:
-
-Grafico de la raiz enesima.
-
-Aqui se puede observar como el número obtenido se aproxima al $2$, lo cual tiende a sugerir que realmente nuestro algoritmo tiene una forma del estilo $2^n$, o sea, que es exponencial.
+En esta Figura se puede observar como el número obtenido se aproxima al $2$, lo cual tiende a sugerir que realmente nuestro algoritmo tiene una forma del estilo $2^n$, o sea, que es exponencial.
 
 \vspace*{0.6cm}
 %\newpage
@@ -122,10 +132,7 @@ Aqui se puede observar como el número obtenido se aproxima al $2$, lo cual tien
 
 Además de la poda clásica, se han generado dos podas más, llamadas ``nodos solitarios'' y ``nodo decisivo'', explicadas anteriormente. Trataremos de ver en esta sección la utilidad de las mismas. Para ello veremos algunas familias de grafos y como repercuten en estas podas, y tomaremos las instancias aleatorias que usamos para mostrar la complejidad, para ver como mejoran con cada poda, y con la combinación de varias.
 
-\paragraph{*}
-Grafo compuesto por nodos de grado 0.
-
-
+\paragraph{Grafo compuesto por nodos de grado 0}
 
 Se han creado 18 instancias, con grafos que tienen nodos de grado 0 que tienen desde 3 a 20 nodos. Se han corrido nuestro programas de 5 maneras:
 
@@ -137,16 +144,19 @@ Se han creado 18 instancias, con grafos que tienen nodos de grado 0 que tienen d
 	\item Con la poda Clásica y la poda del nodo decisivo
 \end{itemize}
 
-Y el gráfico obtenido es el siguiente
+Y el gráfico obtenido es el que se muestra en la Figura \ref{fig:1C}
 
-Grafico del pelotudo de los solitarios.
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/exacto-solitarios.png}
+	\end{center}
+	\caption{Exacto - Nodos solitarios}\label{fig:1C}
+\end{figure}
+\FloatBarrier
 
 Por lo visto en este gráfico, la poda de los nodos solitarios tiene muy buena repercusión cuando el grafo tiene nodos de grado 0.
 
-\paragraph{*} 
-Grafos k completos
-
-
+\paragraph{Grafos k completos} 
 
 Se han creado 18 instancias, con grafos $k_n$ completos, con n desde 3 a 20. Se han corrido nuestro programas de 5 maneras:
 
@@ -158,16 +168,21 @@ Se han creado 18 instancias, con grafos $k_n$ completos, con n desde 3 a 20. Se 
 	\item Con la poda Clásica y la poda del nodo decisivo
 \end{itemize}
 
-Y el gráfico obtenido es el siguiente
+Y el gráfico obtenido es el que se muestra en la Figura \ref{fig:1D}
 
-Grafico del pelotudo de los K n.
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/exacto-completos.png}
+	\end{center}
+	\caption{Exacto - Grafos completos}\label{fig:1D}
+\end{figure}
+\FloatBarrier
+
 
 Por lo visto en este gráfico, la poda del nodo decisivo tiene muy buena repercusión cuando el grafo tiene nodos de grado máximo.
 
 
-\paragraph{*}
-Grafo compuesto por varios $k_2$
-
+\paragraph{Grafo compuesto por varios $k_2$}
 
 Se han creado 10 instancias, con grafos compuestos por $n$ $k_2$, con $n$ desde 3 a 20. Se han corrido nuestro programas de 5 maneras:
 
@@ -179,16 +194,19 @@ Se han creado 10 instancias, con grafos compuestos por $n$ $k_2$, con $n$ desde 
 	\item Con la poda Clásica y la poda del nodo decisivo
 \end{itemize}
 
-Y el gráfico obtenido es el siguiente
+Y el gráfico obtenido es el que se muestra en la Figura \ref{fig:1E}.
 
-Grafico del pelotudo de los K 2.
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/exacto-k2ord.png}
+	\end{center}
+	\caption{Exacto -Grafos de los $k_2$}\label{fig:1E}
+\end{figure}
+\FloatBarrier
 
 Por lo visto en este gráfico, existe por lo menos una familia tal que nuestras podas no surten efectos significativos.
 
-
-\paragraph{*}
-grafo de los aleatorios
-
+\paragraph{Grafos aleatorios}
 
 Se han creado 500 instancias aleatorias, con grafos compuestos por $n$ nodos, con $n$ desde 5 a 18. Se han corrido nuestro programas de 5 maneras:
 
@@ -197,8 +215,13 @@ Se han creado 500 instancias aleatorias, con grafos compuestos por $n$ nodos, co
 	\item Con todas las podas 
 \end{itemize}
 
-Y el gráfico obtenido es el siguiente
+Y el gráfico obtenido es el que se muestra en la Figura \ref{fig:1F}
 
-Grafico del pelotudo de los aleatorios
-
-Por lo visto en este gráfico, en general, parecería que usar las podas mejora ligeramente el tiempode ejecución de nuestro algoritmo.
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.6]{imagenes/exacto-aleatorio-conysin.png}
+	\end{center}
+	\caption{Exacto - Aleatorios Con y Sin podas\label{fig:1F}}
+\end{figure}
+\FloatBarrier
+Por lo visto en este gráfico, en general, parecería que usar las podas mejora ligeramente el tiempo de ejecución de nuestro algoritmo.
