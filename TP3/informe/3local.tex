@@ -54,6 +54,33 @@ Para cada solución factible $S$, se define $N(S)$ como el conjunto de ``solucio
 
 \subsection{Análisis de complejidad de una iteración.}
 
+Para analizar la complejidad del algoritmo en este caso, tendremos que hacer una división en dos casos, con mejorador1 y con mejorador2.
+Debemos señalar que conseguir la solución inicial no formará parte del análisis de complejidad dado que es un factor externo, por no estar incluido dentro de una iteración del algoritmo.
+
+En el caso de hacer uso de mejorador1, el procedimiento a realizar en una iteración consiste en obtener un grupo de 3 nodos (esto se hace con 3 iteraciones distintas sobre los elementos de la solución, siendo $\mathcal{O}(n)$ cada iteración y llegando a un costo posible de $\mathcal{O}(n^3)$). Por cada posible combinación de estos 3 nodos, se modifican ciertas variables internas para simular la eliminación de estos elementos (toma $3\mathcal{O}(n)$ ya que implica recorrer los vecinos de estos 3 nodos) y se buscan 2 candidatos entre sus vecinos (uniendo los conjuntos de vecinos de los 3 nodos y eliminando los repetidos), mediante 2 iteraciones anidadas sobre el conjunto de vecinos y verificando si resultan viables ($\mathcal{O}(1)$ la verificación y $\mathcal{O}(n^2)$ encontrar los 2 candidatos, en caso de que los haya). En caso de que se cumplan las condiciones para modificar la solución actual, termina la iteración, de lo contrario, se deshacen las modificaciones realizadas ($3\mathcal{O}(n)$) y termina la iteración.
+
+Con esta información, y siendo $T(n)$ la complejidad de nuestro algoritmo, tenemos:
+
+\begin{equation*}
+\begin{array}{l}
+T(n) = \mathcal{O}(n^3) * \mathcal{O}(n^2) + 3\mathcal{O}(n) + 3\mathcal{O}(n) \\
+T(n) = \mathcal{O}(n^5) + 6\mathcal{O}(n) \\
+T(n) = \mathcal{O}(n^5)
+\end{array}
+\end{equation*}
+
+En el caso de utilizar mejorador2, el procedimiento es distinto. Partimos buscando nodos que se relacionen con al menos dos nodos de la solución inicial (preguntar por cada nodo nos toma $\mathcal{O}(n)$). Por cada nodo que cumpla, se actualizan variables relacionadas con ese nodo para simular su eliminación de la solución (para esto se requiere recorrer los vecinos de ese nodo con costo $\mathcal{O}(n)$). Luego revisamos si eliminando el nodo previamente seleccionado llegamos a una solución válida ($\mathcal{O}(n)$), de ser así, modifico variables para seguir teniendo en cuenta el cambio realizado ($\mathcal{O}(n)$) y termino la iteración. En caso contrario, termino la iteración (al no modificar las variables del otro caso, estas se verán reseteadas en la siguiente iteración).
+
+En este caso, siendo $T(n)$ la complejidad de nuestro algoritmo, tenemos:
+
+\begin{equation*}
+\begin{array}{l}
+T(n) = \mathcal{O}(n) * \mathcal{O}(n) + \mathcal{O}(n) + \mathcal{O}(n)\\
+T(n) = \mathcal{O}(n^2) + 2\mathcal{O}(n) \\
+T(n) = \mathcal{O}(n^2)
+\end{array}
+\end{equation*}
+
 \vspace*{0.3cm}
 
 \begin{figure}
