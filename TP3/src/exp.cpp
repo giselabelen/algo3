@@ -1,6 +1,7 @@
 #include <cstdio>
 #include "exp_exacto.h"
 #include "exp_goloso.h"
+#include "exp_busqlocal.h"
 
 
 int main()
@@ -30,8 +31,13 @@ int main()
 	//~ exp_goloso_estrellas(5,50,1000);
 	//~ cout << "circuito_ord" << endl;
 	//~ exp_goloso_circuito_ord(5,100);
-	cout << "circuito_rnd" << endl;
-	exp_goloso_circuito_rnd(5,100);
+	//~ cout << "circuito_rnd" << endl;
+	//~ exp_goloso_circuito_rnd(5,100);
 	//~ cout << "galaxias" << endl;
 	//~ exp_goloso_galaxias(6,25,50,1000);
+	
+	cout << "aleatorio" << endl;
+	exp_goloso_aleatorio(4,200,3000);
+	cout << "aleatorio_comp" << endl;
+	exp_goloso_aleatorio_comp(4,15,1000);
 }

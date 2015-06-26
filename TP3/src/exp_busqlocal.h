@@ -21,7 +21,8 @@ void exp_busqlocal_aleatorio(int cant_min,int cant_max,int cant_it)
 	FILE * pIn = fopen("../Resultados_experimentos/busqlocal/aleatorio.in","w");	// Instancias de entrada
 	clock_t start;
 	clock_t end;
-	double t;
+	double t1;
+	double t2;
 	int a;
 	int n;
 	int res1;
@@ -36,8 +37,10 @@ void exp_busqlocal_aleatorio(int cant_min,int cant_max,int cant_it)
 		Vecinos vec = generar_aleatorio(n,a);
 		Vecinos vec_aux(n);
 		
+		fprintf(pExp,"%i, %i, ",n,a);
+		
 		// Imprimo la instancia actual
-		fprintf(pIn,"%i %i \n",n,m);
+		fprintf(pIn,"%i %i \n",n,a);
 	
 		for(int i = 0; i < n; i++)
 		{
@@ -50,7 +53,8 @@ void exp_busqlocal_aleatorio(int cant_min,int cant_max,int cant_it)
 		
 		for(int m = 1; m < 3; m++)
 		{
-			t = 0;
+			t1 = 0;
+			t2 = 0;
 
 			for(int i = 0; i < 20; i++)
 			{
@@ -60,24 +64,30 @@ void exp_busqlocal_aleatorio(int cant_min,int cant_max,int cant_it)
 				
 				for(int j = 0; j < n; j++)
 				{
-					(vec_aux[i].first).clear();
+					(vec_aux[j].first).clear();
 					for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
-					{ (vec_aux[i].first).push_back(*it); }
+					{ (vec_aux[j].first).push_back(*it); }
 				}
+				
+				res1 = goloso(cidm_sol1,vec_aux,n,0,0);
+				res2 = otro_inicio(cidm_sol2,vec,n);
 				
 				// Mido el tiempo
 				start = clock();
-				res1 = goloso(cidm_sol1,vec_aux,n,0,0);
-				busqueda(cidm_sol1,vec,n,res,m)
+				busqueda(cidm_sol1,vec,n,res1,m);
 				end = clock();
-				t = t + difftime(end,start);
-
-				res2 = otro_inicio(cidm_sol2,vec,n);
+				t1 = t1 + difftime(end,start);
+				
+				start = clock();
+				busqueda(cidm_sol2,vec,n,res2,m);
+				end = clock();
+				t2 = t2 + difftime(end,start);
 			}
 			
 			// Imprimo los resultados
-			fprintf(pExp,"%i, %i, %f, %i \n",n,a,t/20,res);
+			fprintf(pExp,"%f, %i, %f, %i, ",t1/20,res1,t2/20,res2);
 		}
+		fprintf(pExp,"\n");
 	}
 
 	// Cierro los archivos
@@ -85,30 +95,29 @@ void exp_busqlocal_aleatorio(int cant_min,int cant_max,int cant_it)
 	fclose(pIn);
 }
 
-
 void exp_busqlocal_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 {
-	FILE * pExp = fopen("../Resultados_experimentos/busqlocal/aleatorio_comp.txt","w");	// Resultados
-	FILE * pIn = fopen("../Resultados_experimentos/busqlocal/aleatorio_comp.in","w");	// Instancias de entrada
-	clock_t start;
-	clock_t end;
-	double t;
+	FILE * pExp = fopen("../Resultados_experimentos/busqlocal/aleatorio.txt","w");	// Resultados
+	FILE * pIn = fopen("../Resultados_experimentos/busqlocal/aleatorio.in","w");	// Instancias de entrada
 	int a;
 	int n;
-	int res;
+	int res1;
+	list<int> cidm_sol1;
+	int res2;
+	list<int> cidm_sol2;
 	int cota;
-	list<int> cidm;	
-	list<int> cidm_sol;
 	
 	for(int k = 0; k < cant_it; k++)
 	{
-		t = 0;
 		n = (rand() % (cant_max-cant_min+1)) + cant_min;
 		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
 		Vecinos vec = generar_aleatorio(n,a);
+		Vecinos vec_aux(n);
+		
+		fprintf(pExp,"%i, %i, ",n,a);
 		
 		// Imprimo la instancia actual
-		fprintf(pIn,"%i %i \n",n,m);
+		fprintf(pIn,"%i %i \n",n,a);
 	
 		for(int i = 0; i < n; i++)
 		{
@@ -119,27 +128,42 @@ void exp_busqlocal_aleatorio_comp(int cant_min,int cant_max,int cant_it)
 		
 		fprintf(pIn,"\n");
 		
-		// Acomodo las variables
 		cota = n;
-		res = 0;
+		res1 = 0;
 		vector<int> estado(n,0);
 		
-		backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,1);
+		backtracking(cidm_sol2,cidm_sol1,estado,vec,0,n,cota,res1,0,1);
 
-		fprintf(pExp,"%i, %i, %i, ",n,a,res);
-
-		cidm_sol.clear();
+		fprintf(pExp,"%i, ",res1);
 		
-		res = goloso(cidm_sol,vec_aux,n,0,0);
-		
-		// Imprimo los resultados
-		fprintf(pExp,"%i \n",res);
+		for(int m = 1; m < 3; m++)
+		{
+			// Acomodo las variables
+			cidm_sol1.clear();
+			cidm_sol2.clear();
+			
+			for(int j = 0; j < n; j++)
+			{
+				(vec_aux[j].first).clear();
+				for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
+				{ (vec_aux[j].first).push_back(*it); }
+			}
+			
+			res1 = goloso(cidm_sol1,vec_aux,n,0,0);
+			res2 = otro_inicio(cidm_sol2,vec,n);
+			
+			busqueda(cidm_sol1,vec,n,res1,m);
+			busqueda(cidm_sol2,vec,n,res2,m);
+						
+			// Imprimo los resultados
+			fprintf(pExp,"%i, %i, ",res1,res2);
+		}
+		fprintf(pExp,"\n");
 	}
 
 	// Cierro los archivos
 	fclose(pExp);
 	fclose(pIn);
 }
-
 
 #endif // EXP_BUSQLOCAL_H_INCLUDED
