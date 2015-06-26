@@ -106,30 +106,8 @@ Aspectos a tener en cuenta:
    \item Una casilla se considera amenazada si existe un caballo tal que en una movida pueda ocupar dicha casilla.
 \end{itemize}
 
-Observemos que si consideramos a cada casilla como un nodo, y que dos nodos son adyacentes cuando un caballo puede llegar de uno a otro con un movimiento, entonces {\bf El Señor de los Caballos} puede ser visto como la búsqueda de un conjunto dominante minimal que tenga a los nodos/casillas que tienen un caballo preubicado. Sin embargo, no podemos traducir este problema a un CIDM, puesto que no necesariamente debe cumplir el requisito de independencia. O sea, si la solución tiene un caballo en una casilla determinada, no necesariamente ocurre que no haya ningún caballo ubicado en alguna de las casillas que este caballo amenaza. Veamos un ejemplo:
+Observemos que si consideramos a cada casilla como un nodo, y que dos nodos son adyacentes cuando un caballo puede llegar de uno a otro con un movimiento, entonces {\bf El Señor de los Caballos} puede ser visto como la búsqueda de un conjunto dominante mínimo que contenga a los nodos/casillas que tienen un caballo preubicado. Sin embargo, dado un grafo, no es correcto decir que la cardinalidad del CIDM es menor o igual a la cardinalidad de un conjunto. Para probar esto, podemos observar la figura X. Corriendo el backtracking de CIDM que hemos creado (y que detallaremos en próximas secciones) la solución es la figura X2, mientras que la Figura X3 es el conjunto dominante mínimo. Entonces, no podemos afirmar que El Señor de los Caballos pueda adaptarse a un problema de CIDM. 
 
-\begin{figure}[!htb]
-\minipage{0.32\textwidth}
-\begin{center}
-  \includegraphics[scale=0.5]{imagenes/tab5vacio.png}
-\end{center}
-  \caption{Tablero vacío de $5 \times 5$}\label{fig:tab5vacio}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-\begin{center}
-  \includegraphics[scale=0.5]{imagenes/tab5nuestro.png}
-\end{center}
-  \caption{Sol. no independiente}\label{fig:tab5nunestro}
-\endminipage\hfill
-\minipage{0.32\textwidth}%
-\begin{center}
-  \includegraphics[scale=0.5]{imagenes/tab5cidm.png}
-\end{center}
-  \caption{Solución independiente}\label{fig:tab5cidm}
-\endminipage
-\end{figure}
-
-Si nuestro tablero fuera el de la Figura \ref{fig:tab5vacio}, una solución posible (de hecho, la encontrada con el algoritmo propuesto en el TP1) es la Figura \ref{fig:tab5nunestro}. Esta solución podemos observar que es dominante, pero no independiente puesto que el caballo de la fila 3 - columna 2 amenaza al de la fila 4 - columna 4. Sin embargo en este caso, existe una solución CIDM como se muestra en la Figura \ref{fig:tab5cidm}. Por lo tanto, CIDM no se adapta del todo al problema de los caballos.
 
 De todos modos, cabe preguntarse en qué situaciones de la vida real podría aplicarse este problema. Veamos algunos ejemplos realistas y alguno no tanto.
 
