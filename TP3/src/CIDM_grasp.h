@@ -15,12 +15,12 @@ using namespace std;
 
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
-int grasp(list<int>& cidm_sol, Vecinos vecinos, int n, float alpha, int beta, int parada);
+int grasp(list<int>& cidm_sol, Vecinos vecinos, int n, float alpha, int beta, int parada,int criterio);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
 
-int grasp(list<int>& cidm_sol, Vecinos vecinos, int n, float alpha, int beta, int parada)
+int grasp(list<int>& cidm_sol, Vecinos vecinos, int n, float alpha, int beta, int parada,int criterio)
 {
 	//~ srand(time(0));
 	int res = n + 1;
@@ -67,7 +67,7 @@ int grasp(list<int>& cidm_sol, Vecinos vecinos, int n, float alpha, int beta, in
 				cidm_sol.push_back(*it);
 			}
 			
-			k = 0;		// PARA CRITERIO DE PARADA
+			if(criterio == 1){ k = 0; }		// PARA CRITERIO DE PARADA
 		}
 		
 		k++;

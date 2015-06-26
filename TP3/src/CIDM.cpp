@@ -67,7 +67,7 @@ int main()
 	}
 	//~ 
 	//~ // SOLUCIÓN POR GRASP
-	//~ res = grasp(cidm_sol,vec,n,0.5,0,50);
+	//~ res = grasp(cidm_sol,vec,n,0.5,0,50,1);	// 1 para tantas it sin mejora, 2 para tantas it asi nomas
 	
 	// Armo la salida
 	printf("%i ",res);
