@@ -78,7 +78,10 @@
 %\normalsize
  
 \newpage
+
 \section{Introducción}
+
+\vspace*{0.3cm}
 
 En el presente trabajo, se pretende analizar y comparar diferentes maneras de encarar el problema de {\it Conjunto Independiente Dominante Mínimo (CIDM)}, el cual consiste en hallar un conjunto independiente dominante de un grafo, con mínima cardinalidad. En particular se utilizará un algoritmo exacto, una heurística golosa, una heurística de busqueda local, y la metahuristica de GRASP.
 
@@ -92,11 +95,17 @@ A continuación se presentan algunas definiciones que nos serán útiles para co
 
 \end{itemize}
 
+\vspace*{0.6cm}
+
 \section{Relación con trabajos previos y aplicaciones}
+
+\vspace*{0.3cm}
 
 En el TP1 de la materia, hemos encontrado y analizado un algoritmo que resolvía un problema que fue llamado {\bf El Señor de los Caballos}. El problema era el siguiente:
 
-Se tiene un juego de mesa cuyo tablero, dividido en casillas, posee igual cantidad de filas y columnas y hace uso de una conocida pieza del popular ajedrez: el caballo. El juego es solamente para un jugador y consiste en, teniendo caballos ubicados en distintos casilleros, insertar en casilleros vacíos la mínima cantidad de caballos extras, de manera tal que, siguiendo las reglas del movimiento de los caballos en el ajedrez, todas las casillas se encuentren ocupadas o amenazadas por un caballo.
+\vspace*{0.1cm}
+
+{\it Se tiene un juego de mesa cuyo tablero, dividido en casillas, posee igual cantidad de filas y columnas y hace uso de una conocida pieza del popular ajedrez: el caballo. El juego es solamente para un jugador y consiste en, teniendo caballos ubicados en distintos casilleros, insertar en casilleros vacíos la mínima cantidad de caballos extras, de manera tal que, siguiendo las reglas del movimiento de los caballos en el ajedrez, todas las casillas se encuentren ocupadas o amenazadas por un caballo.
 Aspectos a tener en cuenta:
 
 \begin{itemize}
@@ -105,9 +114,13 @@ Aspectos a tener en cuenta:
    \item Para cada uno de estos caballos, se sabe su ubicación en el tablero.
    \item Una casilla se considera amenazada si existe un caballo tal que en una movida pueda ocupar dicha casilla.
 \end{itemize}
+}
+
+\vspace*{0.1cm}
 
 Observemos que si consideramos a cada casilla como un nodo, y que dos nodos son adyacentes cuando un caballo puede llegar de uno a otro con un movimiento, entonces {\bf El Señor de los Caballos} puede ser visto como la búsqueda de un conjunto dominante mínimo que contenga a los nodos/casillas que tienen un caballo preubicado. Sin embargo, dado un grafo, no es correcto decir que la cardinalidad del CIDM es menor o igual a la cardinalidad de un conjunto. Para probar esto, podemos observar la figura X. Corriendo el backtracking de CIDM que hemos creado (y que detallaremos en próximas secciones) la solución es la figura X2, mientras que la Figura X3 es el conjunto dominante mínimo. Entonces, no podemos afirmar que El Señor de los Caballos pueda adaptarse a un problema de CIDM. 
 
+\vspace*{0.1cm}
 
 De todos modos, cabe preguntarse en qué situaciones de la vida real podría aplicarse este problema. Veamos algunos ejemplos realistas y alguno no tanto.
 
@@ -123,11 +136,13 @@ Cuando la aguja escarlata toca un sector energético de un cuerpo, éste y todos
 
 Dado que el uso de una aguja escarlata, resulta en un fuerte uso del cosmos de Milo, se nos pide que, dado un oponente y la información sobre todos sus sectores energéticos y correspondencias, nosotros le fabriquemos un algoritmo tal que le diga en qué sectores del cuerpo debe usar la aguja escarlata, de manera tal que deba utilizar la mínima cantidad de agujas escarlata posibles. Milo nos asegura que el tiempo de dicho algoritmo no tiene importancia, dado que le pidió prestada la habitación del tiempo\footnote{\url{http://es.dragonball.wikia.com/wiki/Habitacion_del_Tiempo}} a Kamisama\footnote{\url{http://es.wikipedia.org/wiki/Kamisama_(personaje)}}, que está equipada con una notebook y un enchufe para dejar la bateria cargada (eso sí, no tiene wifi dado a una muy mala señal, por lo que debemos darle un pendrive con el código).
 
-
-
 %\newpage
 
+\vspace*{0.6cm}
+
 \section{Propiedades}
+
+\vspace*{0.3cm}
 
 En esta sección demostraremos ciertas propiedades que serán usadas para elaborar una conclusión que nos ayudará a abordar el problema propuesto.
 
@@ -140,18 +155,26 @@ Lo probaremos por absurdo.  Supongamos que existe un grafo $G = (V,E)$ tal que t
 \subsection{Conclusión}
 Por las propiedades anteriormente demostradas, se puede concluir que el problema de buscar un CIDM es idéntico al problema de buscar un conjunto independiente maximal mínimo(CIMM), o sea, de todos los conjuntos independientes maximales que son posibles formar dado un grafo cualquiera, aquel cuya cardinalidad es la menor. Por esta razón, nuestros algoritmos buscarán encontrar o aproximar un CIMM para un grafo dado.
 
+\vspace*{0.6cm}
+
 \section{Plataforma de pruebas}
+
+\vspace*{0.3cm}
 
 Para toda la experimentación se utilizará un procesador Intel Core i3, de 4 nucleos a 2.20 GHZ.
 
 El software utilizado será Ubuntu 14.04, y G++ 4.8.2.
 
+\vspace*{0.6cm}
 
 \section{Algoritmo Exacto}
+\vspace*{0.3cm}
 \input{1exacto}
 
-\newpage
+%\newpage
+\vspace*{0.6cm}
 \section{Heurística Golosa Constructiva}
+\vspace*{0.3cm}
 \input{2goloso}
 
 \newpage

@@ -7,8 +7,8 @@ Para resolver el problema de CIDM de manera exacta hemos decidido utilizar la t�
 Para esto, le daremos a los nodos un orden en particular, y para cada nodo consideraremos las siguientes dos opciones o ``ramas'':
 
 \begin{itemize}
-	\item Tomar el nodo como parte del conjunto solución. Esta rama sólo será considerada cuando el nodo no sea adyacente a otro nodo que ya fue colocado anteriormente en el conjunto.  Por eso, en caso de tomar el nodo actual, marcaremos a este nodo y a todos sus vecinos, de manera de no tomarlos nuevamente en el futuro de esa rama, puesto que si tomásemos a alguno de ellos en el conjunto, este no sería independiente. 
-	\item No tomar el nodo como parte del conjunto solución.  En este caso no se hará nada, y se avanzará hacia el próximo nodo, de existir éste.
+	\item {\bf Tomar el nodo como parte del conjunto solución.} Esta rama sólo será considerada cuando el nodo no sea adyacente a otro nodo que ya fue colocado anteriormente en el conjunto.  Por eso, en caso de tomar el nodo actual, marcaremos a este nodo y a todos sus vecinos, de manera de no tomarlos nuevamente en el futuro de esa rama, puesto que si tomásemos a alguno de ellos en el conjunto, este no sería independiente. 
+	\item {\bf No tomar el nodo como parte del conjunto solución.}  En este caso no se hará nada, y se avanzará hacia el próximo nodo, de existir éste.
 \end{itemize}
 
 Luego de la elección tomada para un determinado nodo, consultaremos las siguientes posibilidades:
@@ -30,9 +30,9 @@ Para poder afirmar que nuestro algoritmo es correcto, basta con poder probar que
 Para mejorar la velocidad de ejecución del algoritmo, se han aplicado las siguientes podas:
 
 \begin{itemize}
-	\item Poda Clásica: Si en la rama actual que está revisando nuestro algoritmo, la cantidad de elementos del conjunto maximal de esta rama es mayor a la cantidad de elementos de la mejor solución encontrada hasta el momento, esta rama deja de ser considerada, puesto que, de conseguir una solución, seguro no es la mejor.
-	\item Nodos solitarios: Si el grafo tiene algún nodo con grado 0, no tiene sentido considerar la opción de no tomarlo como parte de la solución, por lo cual dicha rama no será revisada cuando el nodo cumple esta característica.
-	\item El nodo decisivo: Si durante el procesamiento de un nodo, al tomarlo, cubre a todos los que estaban libres hasta el momento, entonces no se considerará la rama resultante de no tomarlo, ya que en el mejor de los casos uno de los nodos siguientes también cubre a todos y esto no mejora la cardinalidad del conjunto hallado, y en casos peores, será necesario tomar más de uno de los nodos siguientes para lograr un conjunto independiente maximal.
+	\item {\bf Poda Clásica:} Si en la rama actual que está revisando nuestro algoritmo, la cantidad de elementos del conjunto maximal de esta rama es mayor a la cantidad de elementos de la mejor solución encontrada hasta el momento, esta rama deja de ser considerada, puesto que, de conseguir una solución, seguro no es la mejor.
+	\item {\bf Nodos solitarios:} Si el grafo tiene algún nodo con grado 0, no tiene sentido considerar la opción de no tomarlo como parte de la solución, por lo cual dicha rama no será revisada cuando el nodo cumple esta característica.
+	\item {\bf El nodo decisivo:} Si durante el procesamiento de un nodo, al tomarlo, cubre a todos los que estaban libres hasta el momento, entonces no se considerará la rama resultante de no tomarlo, ya que en el mejor de los casos uno de los nodos siguientes también cubre a todos y esto no mejora la cardinalidad del conjunto hallado, y en casos peores, será necesario tomar más de uno de los nodos siguientes para lograr un conjunto independiente maximal.
 \end{itemize}
 
 \vspace*{0.6cm}
@@ -43,11 +43,13 @@ Para mejorar la velocidad de ejecución del algoritmo, se han aplicado las sigui
 
 \vspace*{0.3cm}
 
-Trataremos ahora de justificar que la complejidad de nuestro algoritmo es $\mathcal{O}(2^n * n)$.
+Trataremos ahora de justificar que la complejidad de nuestro algoritmo es $\mathcal{O}(2^n \cdot n)$.
 
-Observemos que, como también dijimos anteriormente, nuestro backtracking irá generando distintas soluciones mediante la generación de distintas ramas en base a si un nodo es tomado como parte de la solución o no. Notemos que partiendo de esto tenemos $2^n$ casos posibles. Como indica el pseudocódigo (Figura \ref{code:exacto}), sea cual sea la ruta que tomemos, nos vemos obligados a marcar a este nodo y a sus vecinos como ``no tomados'' o ``tomados''. Esto no es más que recorrer una lista de vecinos realizando operaciones $\mathcal{O}(1)$, llegando a tener un costo de, en el peor caso, $\mathcal{O}(n)$. Luego por cada uno de los $2^n$ casos tendriamos un costo de $\mathcal{O}(n)$.
+Observemos que, como también dijimos anteriormente, nuestro backtracking irá generando distintas soluciones mediante la generación de distintas ramas en base a si un nodo es tomado como parte de la solución o no. Así que partiendo de esto tenemos $2^n$ casos posibles. 
 
-Por otro lado hay que mencionar que si se llegara a una solución, esta tendría que ser comparada con la solución óptima obtenida hasta ese momento y, en caso de ser mejor, reemplazarla mediante la copia de todos los elementos que componen a esta solución: $\mathcal{O}(n)$. A este costo tendríamos que incurrir una cantidad $k$ de veces, donde $k$ es la cantidad de soluciones que resultan ser mejores que las que se poseían hasta el momento, la cual se ve acotada, tal vez de manera bruta pero efectiva, por $2^n$ (esto nos permite absorberla dentro del coste total $2^n*n$). Esta cota resulta casi trivial dado que implicaria que cada nodo puede ser una solución y la a vez no puede (hay casos que se contradicen).
+Como se muestra en el pseudocódigo (Figura \ref{code:exacto}), sea cual sea la ruta que tomemos, nos vemos obligados a marcar a este nodo y a sus vecinos como ``no tomados'' o ``tomados''. Esto no es más que recorrer una lista de vecinos realizando operaciones $\mathcal{O}(1)$, llegando a tener un costo de, en el peor caso, $\mathcal{O}(n)$. Luego por cada uno de los $2^n$ casos tendriamos un costo de $\mathcal{O}(n)$.
+
+Por otro lado hay que mencionar que si se llegara a una solución, esta tendría que ser comparada con la solución óptima obtenida hasta ese momento y, en caso de ser mejor, reemplazarla mediante la copia de todos los elementos que componen a esta solución: $\mathcal{O}(n)$. A este costo tendríamos que incurrir una cantidad $k$ de veces, donde $k$ es la cantidad de soluciones que resultan ser mejores que las que se poseían hasta el momento, la cual se ve acotada, tal vez de manera bruta pero efectiva, por $2^n$ (esto nos permite absorberla dentro del coste total $\mathcal{O}(2^n\cdot n)$). Esta cota resulta casi trivial dado que implicaria que cada nodo puede ser una solución y la a vez no puede (hay casos que se contradicen).
 
 Teniendo todo esto en cuenta, y siendo $T(n)$ la complejidad de nuestro algoritmo tenemos:
 
@@ -57,10 +59,6 @@ T(n) = \mathcal{O}(n)*2^n + k\mathcal{O}(n)\\
 T(n) = \mathcal{O}(2^n *n)
 \end{array}
 \end{equation*}
-
-
-
-
 
 \begin{figure}
 \begin{codebox}
@@ -98,130 +96,128 @@ T(n) = \mathcal{O}(2^n *n)
 \subsection{Experimentación y gráficos.}
 
 \vspace*{0.3cm}
-En esta sección, trataremos de mostrar de manera empírica que nuestro algoritmo es exponencial, y la utilidad de las podas.
 
-\subsubsection{Exponencial}
-\vspace*{0.3cm}
+En esta sección, trataremos de mostrar de manera empírica la complejidad de nuestro algoritmo y la utilidad de las podas.
 
-Si fuera cierto que nuestro algoritmo es exponencial, entonces correr instancias muy grandes puede tardar horas, días, o siglos, dependiendo el caso, por lo tanto, se ha decidido correr instancias de a lo sumo 20 nodos. Por otro lado, debido a la gran variedad de posibles grafos que aún con pocos nodos se pueden generar, se ha decidido probar la complejidad acudiendo a la ley de los grandes números, y por lo tanto generando muchos grafos de manera aleatoria. Para esto, se han generado 1000 grafos de entre 5 y 18 nodos de manera aleatoria. Luego, se han tomado los tiempos de ejecución de estos grafos, y se ha calculado un promedio sobre aquellos grados que tenían la misma cantidad de nodos. Esto dió como resultado el gráfico de la Figura \ref{fig:1A}.
+\subsubsection{Complejidad}
+
+Si fuera cierto que nuestro algoritmo es exponencial, entonces correr instancias muy grandes puede tardar horas, días, o siglos, dependiendo el caso, por lo tanto, se ha decidido correr instancias de a lo sumo 20 nodos. Por otro lado, debido a la gran variedad de posibles grafos que aún con pocos nodos se pueden generar, se ha decidido probar la complejidad acudiendo a la ley de los grandes números, y por lo tanto generando muchos grafos de manera aleatoria. Para esto, se han generado 500 grafos de entre 5 y 18 nodos de manera aleatoria. Luego, se han tomado los tiempos de ejecución de estos grafos, y se ha calculado un promedio sobre aquellos grafos que tenían la misma cantidad de nodos. Esto dió como resultado el gráfico de la Figura \ref{fig:1A}.
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.6]{imagenes/exacto-aleatorio-sin.png}
+    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-sin.png}
 	\end{center}
 	\caption{Exacto - Sin podas}\label{fig:1A}
 \end{figure}
-\FloatBarrier
+%\FloatBarrier
 
 Luego, se ha tomado cada uno de estos valores, y se le ha aplicado la raíz n-ésima, siendo n la cantidad de nodos que el valor representa, y obteniendose el gráfico de la Figura \ref{fig:1B}.
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.6]{imagenes/exacto-aleatorio-sin-raiz.png}
+    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-sin-raiz.png}
 	\end{center}
 	\caption{Exacto - Raíz n-ésima}\label{fig:1B}
 \end{figure}
-\FloatBarrier
+%\FloatBarrier
 
-En esta Figura se puede observar como el número obtenido se aproxima al $2$, lo cual tiende a sugerir que realmente nuestro algoritmo tiene una forma del estilo $2^n$, o sea, que es exponencial.
+En esta Figura se puede observar cómo el número obtenido se aproxima a $2$, lo cual tiende a sugerir que realmente nuestro algoritmo tiene una complejidad del estilo $2^n$, o sea, que es exponencial.
 
-\vspace*{0.6cm}
 %\newpage
 
-\subsubsection{Podas:}
+\subsubsection{Podas}
 
-Además de la poda clásica, se han generado dos podas más, llamadas ``nodos solitarios'' y ``nodo decisivo'', explicadas anteriormente. Trataremos de ver en esta sección la utilidad de las mismas. Para ello veremos algunas familias de grafos y como repercuten en estas podas, y tomaremos las instancias aleatorias que usamos para mostrar la complejidad, para ver como mejoran con cada poda, y con la combinación de varias.
+Además de la poda clásica, se han generado dos podas más, llamadas ``nodos solitarios'' y ``nodo decisivo'', explicadas anteriormente. Trataremos de ver en esta sección la utilidad de las mismas. Para ello veremos cómo repercuten estas podas en algunas familias de grafos, y tomaremos las instancias aleatorias que usamos para mostrar la complejidad, para ver cómo mejoran con cada poda, y con la combinación de varias.
 
 \paragraph{Grafo compuesto por nodos de grado 0}
 
-Se han creado 18 instancias, con grafos que tienen nodos de grado 0 que tienen desde 3 a 20 nodos. Se han corrido nuestro programas de 5 maneras:
+Se han creado 18 instancias, con grafos que tienen nodos de grado 0 que tienen desde 3 a 20 nodos. Se han corrido nuestro programa de 5 maneras:
 
-\begin{itemize}
+\begin{enumerate}
 	\item Sin ninguna poda
 	\item Con todas las podas 
 	\item Con la poda Clásica
 	\item Con la poda Clásica y la poda de los nodos solitarios
 	\item Con la poda Clásica y la poda del nodo decisivo
-\end{itemize}
+\end{enumerate}
 
-Y el gráfico obtenido es el que se muestra en la Figura \ref{fig:1C}
+Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1C}.
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.6]{imagenes/exacto-solitarios.png}
+    		\includegraphics[scale=0.8]{imagenes/exacto-solitarios.png}
 	\end{center}
 	\caption{Exacto - Nodos solitarios}\label{fig:1C}
 \end{figure}
-\FloatBarrier
+%\FloatBarrier
 
 Por lo visto en este gráfico, la poda de los nodos solitarios tiene muy buena repercusión cuando el grafo tiene nodos de grado 0.
 
-\paragraph{Grafos k completos} 
+\paragraph{Grafos completos} 
 
-Se han creado 18 instancias, con grafos $k_n$ completos, con n desde 3 a 20. Se han corrido nuestro programas de 5 maneras:
+Se han creado 18 instancias, con grafos completos, con entre 3 y 20 nodos. Se ha corrido nuestro programa de 5 maneras:
 
-\begin{itemize}
+\begin{enumerate}
 	\item Sin ninguna poda
 	\item Con todas las podas 
 	\item Con la poda Clásica
 	\item Con la poda Clásica y la poda de los nodos solitarios
 	\item Con la poda Clásica y la poda del nodo decisivo
-\end{itemize}
+\end{enumerate}
 
-Y el gráfico obtenido es el que se muestra en la Figura \ref{fig:1D}
+Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1D}.
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.6]{imagenes/exacto-completos.png}
+    		\includegraphics[scale=0.8]{imagenes/exacto-completos.png}
 	\end{center}
 	\caption{Exacto - Grafos completos}\label{fig:1D}
 \end{figure}
-\FloatBarrier
-
+%\FloatBarrier
 
 Por lo visto en este gráfico, la poda del nodo decisivo tiene muy buena repercusión cuando el grafo tiene nodos de grado máximo.
 
+\paragraph{Grafo compuesto por varios $K_2$}
 
-\paragraph{Grafo compuesto por varios $k_2$}
+Se han creado 10 instancias, con grafos compuestos por $n$ $K_2$, con $n$ desde 1 a 10. Se ha corrido nuestro programa de 5 maneras:
 
-Se han creado 10 instancias, con grafos compuestos por $n$ $k_2$, con $n$ desde 3 a 20. Se han corrido nuestro programas de 5 maneras:
-
-\begin{itemize}
+\begin{enumerate}
 	\item Sin ninguna poda
 	\item Con todas las podas 
 	\item Con la poda Clásica
 	\item Con la poda Clásica y la poda de los nodos solitarios
 	\item Con la poda Clásica y la poda del nodo decisivo
-\end{itemize}
+\end{enumerate}
 
-Y el gráfico obtenido es el que se muestra en la Figura \ref{fig:1E}.
+Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1E}.
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.6]{imagenes/exacto-k2ord.png}
+    		\includegraphics[scale=0.8]{imagenes/exacto-k2ord.png}
 	\end{center}
 	\caption{Exacto -Grafos de los $k_2$}\label{fig:1E}
 \end{figure}
-\FloatBarrier
+%\FloatBarrier
 
-Por lo visto en este gráfico, existe por lo menos una familia tal que nuestras podas no surten efectos significativos.
+Por lo visto en este gráfico, se trata de una familia en la cual nuestras podas no surten efectos significativos.
 
 \paragraph{Grafos aleatorios}
 
-Se han creado 500 instancias aleatorias, con grafos compuestos por $n$ nodos, con $n$ desde 5 a 18. Se han corrido nuestro programas de 5 maneras:
+Se han creado 500 instancias aleatorias, con grafos compuestos por $n$ nodos, con $n$ desde 5 a 18. Se ha corrido nuestro programa de 2 maneras:
 
-\begin{itemize}
+\begin{enumerate}
 	\item Sin ninguna poda
 	\item Con todas las podas 
-\end{itemize}
+\end{enumerate}
 
-Y el gráfico obtenido es el que se muestra en la Figura \ref{fig:1F}
+Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1F}.
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.6]{imagenes/exacto-aleatorio-conysin.png}
+    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-conysin.png}
 	\end{center}
 	\caption{Exacto - Aleatorios Con y Sin podas\label{fig:1F}}
 \end{figure}
-\FloatBarrier
-Por lo visto en este gráfico, en general, parecería que usar las podas mejora ligeramente el tiempo de ejecución de nuestro algoritmo.
+%\FloatBarrier
+
+Por lo visto en este gráfico, en general, parecería que usar las podas mejora considerablemente el tiempo de ejecución de nuestro algoritmo.
