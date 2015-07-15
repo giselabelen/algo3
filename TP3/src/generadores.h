@@ -20,10 +20,12 @@ Vecinos generar_aleatorio(int n, int a);
 Vecinos generar_k2_ord(int k);
 Vecinos generar_k2_rnd(int k);
 Vecinos generar_completo(int n);
-Vecinos generar_estrella(int& n,int min,int max,int& sol);
+//~ Vecinos generar_estrella(int& n,int min,int max,int& sol);
+Vecinos generar_estrella(int grado_int, int& n);
 Vecinos generar_circuito_ord(int n);
 Vecinos generar_circuito_rnd(int n);
-Vecinos generar_galaxia(int& n,int min,int med,int max,int& sol);
+//~ Vecinos generar_galaxia(int& n,int min,int med,int max,int& sol);
+Vecinos generar_galaxia(int grado_int,int& n);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -188,27 +190,70 @@ Vecinos generar_aleatorio(int n, int a)
 	
 	return vec;
 }
+//~ 
+//~ Vecinos generar_estrella(int& n,int min,int max,int& sol)
+//~ {
+	//~ int aux1 = (rand() % (max-min+1)) + min;
+	//~ int aux2;
+	//~ int i;
+	//~ int j;
+	//~ list<int> cant_nodos;
+	//~ list<int>::iterator it;
+	//~ 
+	//~ cant_nodos.push_back(aux1);
+	//~ sol = aux1;
+	//~ 
+	//~ for(i = 0; i < aux1; i++)
+	//~ {
+		//~ aux2 = (rand() % (aux1 - 4)) + 3;
+		//~ cant_nodos.push_back(aux2);
+	//~ }
+	//~ 
+	//~ n = 1;
+	//~ for(it = cant_nodos.begin(); it != cant_nodos.end(); it++){	n = n + *it; }
+	//~ 
+	//~ Vecinos vec(n);
+	//~ i = 0;
+	//~ j = 1;
+	//~ 
+	//~ for(it = cant_nodos.begin(); it != cant_nodos.end(); it++)
+	//~ {
+		//~ for(int h = 0; h < *it; h++)
+		//~ {
+			//~ (vec[i].first).push_back(j);
+			//~ (vec[j].first).push_back(i);
+			//~ 
+			//~ if(i != 0){ vec[j].second = 1; }
+			//~ 
+			//~ j++;
+		//~ }
+		//~ 
+		//~ if(i == 0){	vec[i].second = *it; }
+		//~ else{ vec[i].second = *it + 1; }
+		//~ i++;
+	//~ }
+	//~ 
+	//~ return vec;
+//~ }
 
-Vecinos generar_estrella(int& n,int min,int max,int& sol)
+Vecinos generar_estrella(int grado_int, int& n)
 {
-	int aux1 = (rand() % (max-min+1)) + min;
-	int aux2;
+	int aux;
 	int i;
 	int j;
 	list<int> cant_nodos;
 	list<int>::iterator it;
 	
-	cant_nodos.push_back(aux1);
-	sol = aux1;
+	cant_nodos.push_back(grado_int);
 	
-	for(i = 0; i < aux1; i++)
+	for(i = 0; i < grado_int; i++)
 	{
-		aux2 = (rand() % (aux1 - 4)) + 3;
-		cant_nodos.push_back(aux2);
+		aux = (rand() % (grado_int - 4)) + 3;
+		cant_nodos.push_back(aux);
 	}
 	
 	n = 1;
-	for(it = cant_nodos.begin(); it != cant_nodos.end(); it++){	n = n + *it; }
+	for(it = cant_nodos.begin(); it != cant_nodos.end(); it++){	n += *it; }
 	
 	Vecinos vec(n);
 	i = 0;
@@ -302,22 +347,65 @@ Vecinos generar_circuito_rnd(int n)
 }
 
 
-Vecinos generar_galaxia(int& n,int min,int med,int max,int& sol)
+//~ Vecinos generar_galaxia(int& n,int min,int med,int max,int& sol)
+//~ {
+	//~ int aux1 = (rand() % (med-min+1)) + min;
+	//~ int aux2;
+	//~ int i;
+	//~ int j;
+	//~ list<int> cant_nodos;
+	//~ list<int>::iterator it;
+	//~ 
+	//~ cant_nodos.push_back(aux1);
+	//~ sol = aux1;
+	//~ 
+	//~ for(i = 0; i < aux1; i++)
+	//~ {
+		//~ aux2 = (rand() % ((max+1) - aux1)) + aux1;
+		//~ cant_nodos.push_back(aux2);
+	//~ }
+	//~ 
+	//~ n = 1;
+	//~ for(it = cant_nodos.begin(); it != cant_nodos.end(); it++){	n = n + *it; }
+	//~ 
+	//~ Vecinos vec(n);
+	//~ i = 0;
+	//~ j = 1;
+	//~ 
+	//~ for(it = cant_nodos.begin(); it != cant_nodos.end(); it++)
+	//~ {
+		//~ for(int h = 0; h < *it; h++)
+		//~ {
+			//~ (vec[i].first).push_back(j);
+			//~ (vec[j].first).push_back(i);
+			//~ 
+			//~ if(i != 0){ vec[j].second = 1; }
+			//~ 
+			//~ j++;
+		//~ }
+		//~ 
+		//~ if(i == 0){	vec[i].second = *it; }
+		//~ else{ vec[i].second = *it + 1; }
+		//~ i++;
+	//~ }
+	//~ 
+	//~ return vec;
+//~ }
+Vecinos generar_galaxia(int grado_int,int& n)
 {
-	int aux1 = (rand() % (med-min+1)) + min;
-	int aux2;
+	int max = 2*grado_int;
+	int aux;
 	int i;
 	int j;
 	list<int> cant_nodos;
 	list<int>::iterator it;
 	
-	cant_nodos.push_back(aux1);
-	sol = aux1;
+	cant_nodos.push_back(grado_int);
 	
-	for(i = 0; i < aux1; i++)
+	for(i = 0; i < grado_int; i++)
 	{
-		aux2 = (rand() % ((max+1) - aux1)) + aux1;
-		cant_nodos.push_back(aux2);
+		aux = (rand() % ((max+1) - grado_int)) + grado_int;
+		cant_nodos.push_back(aux);
 	}
 	
 	n = 1;
