@@ -18,7 +18,7 @@ int main()
 	//~ cout << "k2 random" << endl;
 	//~ exp_exacto_k2_rnd(10);
 	//~ cout << "aleatorio" << endl;
-	//~ exp_exacto_aleatorio(5,18,500);	
+	//~ exp_exacto_aleatorio(5,18,1);	
 	
 	//~ cout << "solitarios" << endl;
 	//~ exp_goloso_solitarios(10,1000);
@@ -42,8 +42,8 @@ int main()
 	//~ cout << "aleatorio_comp" << endl;
 	//~ exp_busqlocal_aleatorio_comp(4,15,1000);
 	
-	cout << "aleatorio" << endl;
-	exp_grasp_aleatorio(4,20,50);
-	cout << "aleatorio_comp" << endl;
-	exp_grasp_aleatorio_comp(4,15,100);
+	//~ cout << "aleatorio" << endl;
+	//~ exp_grasp_aleatorio(4,20,50);
+	//~ cout << "aleatorio_comp" << endl;
+	//~ exp_grasp_aleatorio_comp(4,15,100);
 }

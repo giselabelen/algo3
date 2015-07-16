@@ -16,6 +16,7 @@ using namespace std;
 void imp_instancia(FILE* pIn, int n, int a, Vecinos vec);
 void sacar_outliers(list<double>& lista);
 double promediar(list<double> lista);
+Vecinos copiar_vec(Vecinos vec, int n);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -74,6 +75,22 @@ double promediar(list<double> lista)
 	
 	return (suma/valor);
 }
+
+Vecinos copiar_vec(Vecinos vec, int n)
+{
+	Vecinos vec_aux(n);
+	
+	for(int j = 0; j < n; j++)
+	{
+		(vec_aux[j].first).clear();
+		for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
+		{ (vec_aux[j].first).push_back(*it); }
+		vec_aux[j].second = vec[j].second;
+	}
+	
+	return vec_aux;
+}
+
 
 
 #endif // AUXILIARES_H_INCLUDED

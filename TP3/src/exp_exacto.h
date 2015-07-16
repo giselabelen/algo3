@@ -15,7 +15,7 @@ void exp_exacto_k2_ord(int cant);
 void exp_exacto_k2_rnd(int cant);
 void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it);
 
-void correr(Vecinos vec, vector<int> estado, int n, FILE* pExp);
+void correr_exacto(Vecinos vec, vector<int> estado, int n, FILE* pExp);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -33,7 +33,7 @@ void exp_exacto_solitarios(int cant_min, int cant_max)
 		Vecinos vec = generar_solitarios(n);
 		vector<int> estado(n);
 		
-		correr(vec, estado, n, pExp);
+		correr_exacto(vec, estado, n, pExp);
 	}
 	
 	fclose(pExp);
@@ -53,7 +53,7 @@ void exp_exacto_completos(int cant_min, int cant_max)
 		Vecinos vec = generar_completo(n);
 		vector<int> estado(n);
 		
-		correr(vec, estado, n, pExp);
+		correr_exacto(vec, estado, n, pExp);
 	}
 	
 	fclose(pExp);
@@ -73,7 +73,7 @@ void exp_exacto_k2_ord(int cant)
 		Vecinos vec = generar_k2_ord(k);
 		vector<int> estado(2*k);
 		
-		correr(vec, estado, 2*k, pExp);
+		correr_exacto(vec, estado, 2*k, pExp);
 	}
 	
 	fclose(pExp);
@@ -96,7 +96,7 @@ void exp_exacto_k2_rnd(int cant)
 		
 		imp_instancia(pIn, 2*k, k, vec);
 		
-		correr(vec, estado, 2*k, pExp);
+		correr_exacto(vec, estado, 2*k, pExp);
 	}
 
 	// Cierro los archivos
@@ -125,7 +125,7 @@ void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it)
 		
 		imp_instancia(pIn, n, a, vec);
 		
-		correr(vec, estado, n, pExp);
+		correr_exacto(vec, estado, n, pExp);
 	}
 
 	// Cierro los archivos
@@ -134,7 +134,7 @@ void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it)
 }
 
 
-void correr(Vecinos vec, vector<int> estado, int n, FILE* pExp)
+void correr_exacto(Vecinos vec, vector<int> estado, int n, FILE* pExp)
 {
 	clock_t start;
 	clock_t end;
@@ -171,7 +171,6 @@ void correr(Vecinos vec, vector<int> estado, int n, FILE* pExp)
 	}
 	fprintf(pExp,"%i \n",cota);
 }
-
 
 
 #endif // EXP_EXACTO_H_INCLUDED

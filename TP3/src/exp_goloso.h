@@ -20,7 +20,7 @@ void exp_goloso_circuito_rnd(int min, int max);
 //~ void exp_goloso_galaxias(int min,int med,int max,int cant_it);
 void exp_goloso_galaxias(int min,int max);
 
-void correr(Vecinos vec, int n, int a, FILE* pExp);
+void correr_goloso(Vecinos vec, int n, int a, FILE* pExp);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -35,7 +35,7 @@ void exp_goloso_solitarios(int cant_min,int cant_max)
 		
 		Vecinos vec = generar_solitarios(n);
 		
-		correr(vec, n, 0, pExp);
+		correr_goloso(vec, n, 0, pExp);
 	}
 
 	fclose(pExp);
@@ -52,7 +52,7 @@ void exp_goloso_completos(int cant_min,int cant_max)
 	
 		Vecinos vec = generar_completo(n);
 	
-		correr(vec, n, -1, pExp);
+		correr_goloso(vec, n, -1, pExp);
 	}
 
 	fclose(pExp);
@@ -77,7 +77,7 @@ void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
 		
 		imp_instancia(pIn, n, a, vec);
 		
-		correr(vec, n, a, pExp);
+		correr_goloso(vec, n, a, pExp);
 	}
 
 	// Cierro los archivos
@@ -315,7 +315,7 @@ void exp_goloso_galaxias(int min,int max)
 }
 
 
-void correr(Vecinos vec, int n, int a, FILE* pExp)
+void correr_goloso(Vecinos vec, int n, int a, FILE* pExp)
 {
 	clock_t start;
 	clock_t end;
@@ -323,20 +323,13 @@ void correr(Vecinos vec, int n, int a, FILE* pExp)
 	int res;
 	list<int> cidm_sol;
 	list<double> tiempos;
-	Vecinos vec_aux(n);
 	
 	for(int i = 0; i < 20; i++)
 	{
 		// Acomodo las variables
 		cidm_sol.clear();
 		
-		for(int j = 0; j < n; j++)
-		{
-			(vec_aux[j].first).clear();
-			for(list<int>::iterator it = (vec[j].first).begin(); it != (vec[j].first).end(); it++)
-			{ (vec_aux[j].first).push_back(*it); }
-			vec_aux[j].second = vec[j].second;
-		}
+		Vecinos vec_aux = copiar_vec(vec,n);
 		
 		// Mido el tiempo
 		start = clock();
