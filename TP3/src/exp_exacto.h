@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "generadores.h"
+#include "auxiliares.h"
 
 using namespace std;
 
@@ -13,10 +14,8 @@ void exp_exacto_completos(int cant_min, int cant_max);
 void exp_exacto_k2_ord(int cant);
 void exp_exacto_k2_rnd(int cant);
 void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it);
-void sacar_outliers(list<double>& lista);
-double promediar(list<double> lista);
+
 void correr(Vecinos vec, vector<int> estado, int n, FILE* pExp);
-void imp_instancia(FILE* pIn, int n, int a, Vecinos vec);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -135,21 +134,6 @@ void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it)
 }
 
 
-void imp_instancia(FILE* pIn, int n, int a, Vecinos vec)
-{
-	fprintf(pIn,"%i %i \n",n,a);
-
-	for(int i = 0; i < n; i++)
-	{
-		for (list<int>::iterator it = (vec[i].first).begin(); it != (vec[i].first).end(); it++){
-			fprintf(pIn,"%i %i \n",i+1,*it + 1);
-		}
-	}
-	
-	fprintf(pIn,"\n");
-}
-
-
 void correr(Vecinos vec, vector<int> estado, int n, FILE* pExp)
 {
 	clock_t start;
@@ -189,44 +173,5 @@ void correr(Vecinos vec, vector<int> estado, int n, FILE* pExp)
 }
 
 
-void sacar_outliers(list<double>& lista)
-{
-	list<double>::iterator it;
-	list<double>::iterator min;
-	list<double>::iterator max;
-	
-	for(int i = 0; i < 2; i++)
-	{
-		it = lista.begin();
-		min = it;
-		max = it;
-		it++;
-		
-		while(it != lista.end())
-		{
-			if(*it < *min){ min = it; }
-			if(*it > *max){ max = it; }
-			it++;
-		}
-		
-		min = lista.erase(min);
-		max = lista.erase(max);
-	}
-}
-
-
-double promediar(list<double> lista)
-{
-	double suma = 0;
-	double valor = 0;
-	
-	for(list<double>::iterator it = lista.begin(); it != lista.end(); it++)
-	{ 
-		suma += *it;
-		valor++;
-	}
-	
-	return (suma/valor);
-}
 
 #endif // EXP_EXACTO_H_INCLUDED
