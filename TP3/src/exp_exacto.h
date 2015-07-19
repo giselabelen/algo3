@@ -87,16 +87,19 @@ void exp_exacto_k2_rnd(int cant)
 		
 	for(int k = 1; k < cant+1; k++)
 	{
-		cout << k << " componentes" << endl;
-		
-		fprintf(pExp,"%i, ",2*k);
-		
-		Vecinos vec = generar_k2_rnd(k);
-		vector<int> estado(2*k);
-		
-		imp_instancia(pIn, 2*k, k, vec);
-		
-		correr_exacto(vec, estado, 2*k, pExp);
+		for(int i = 0; i < 10; i++)
+		{
+			cout << k << " componentes, iteración " << i << endl;
+			
+			fprintf(pExp,"%i, ",2*k);
+			
+			Vecinos vec = generar_k2_rnd(k);
+			vector<int> estado(2*k);
+			
+			imp_instancia(pIn, 2*k, k, vec);
+			
+			correr_exacto(vec, estado, 2*k, pExp);
+		}
 	}
 
 	// Cierro los archivos
@@ -105,27 +108,28 @@ void exp_exacto_k2_rnd(int cant)
 }
 
 
-void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it)
+void exp_exacto_aleatorio(int cant_min,int cant_max)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/exacto/aleatorio.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/exacto/aleatorio.in","w");	// Instancias de entrada
 	int a;
-	int n;
 	
-	for(int k = 0; k < cant_it; k++)
+	for(int n = cant_min; n < cant_max; n++)
 	{
-		cout << "iteracion " << k << endl;
-		
-		n = (rand() % (cant_max-cant_min+1)) + cant_min;	
-		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
-		Vecinos vec = generar_aleatorio(n,a);
-		vector<int> estado(n);
-		
-		fprintf(pExp,"%i, %i, ",n,a);
-		
-		imp_instancia(pIn, n, a, vec);
-		
-		correr_exacto(vec, estado, n, pExp);
+		for(int i = 0; i < 10; i++)
+		{
+			cout << n << " nodos, iteración " << i << endl;
+			
+			a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
+			Vecinos vec = generar_aleatorio(n,a);
+			vector<int> estado(n);
+			
+			fprintf(pExp,"%i, %i, ",n,a);
+			
+			imp_instancia(pIn, n, a, vec);
+			
+			correr_exacto(vec, estado, n, pExp);
+		}
 	}
 
 	// Cierro los archivos

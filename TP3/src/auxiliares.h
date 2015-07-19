@@ -3,6 +3,7 @@
 
 #include <ctime>
 #include <cstdlib>
+#include <iostream>
 
 using namespace std;
 
@@ -52,10 +53,10 @@ void sacar_outliers(list<double>& lista)
 		while(it != lista.end())
 		{
 			if(*it < *min){ min = it; }
-			if(*it > *max){ max = it; }
+			if(*it >= *max){ max = it; }
 			it++;
 		}
-		
+		//~ cout << *min << " " << *max << endl;
 		min = lista.erase(min);
 		max = lista.erase(max);
 	}

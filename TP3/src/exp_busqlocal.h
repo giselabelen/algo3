@@ -10,8 +10,8 @@
 
 /********************** DECLARACIÓN DE FUNCIONES **********************/
 
-void exp_busqlocal_aleatorio(int cant_min,int cant_max,int cant_it);
-void exp_busqlocal_aleatorio_comp(int cant_min,int cant_max,int cant_it);
+void exp_busqlocal_aleatorio(int cant_min,int cant_max);
+void exp_busqlocal_aleatorio_comp(int cant_min,int cant_max);
 void exp_busqlocal_estrellas(int min,int max);
 void exp_busqlocal_circuito_ord(int min, int max);
 void exp_busqlocal_circuito_rnd(int min, int max);
@@ -22,29 +22,30 @@ void correr_busqlocal(Vecinos vec, int n, int p, FILE* pExp);
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
 
-void exp_busqlocal_aleatorio(int cant_min,int cant_max,int cant_it)
+void exp_busqlocal_aleatorio(int cant_min,int cant_max)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/busqlocal/aleatorio.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/busqlocal/aleatorio.in","w");	// Instancias de entrada
 	
 	int a;
-	int n;
 	
-	for(int k = 0; k < cant_it; k++)
+	for(int n = cant_min; n <= cant_max; n++)
 	{
-		cout << "iteracion " << k << endl;
-		
-		n = (rand() % (cant_max-cant_min+1)) + cant_min;
-		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
-		Vecinos vec = generar_aleatorio(n,a);
-		
-		fprintf(pExp,"%i, %i, ",n,a);
-		
-		imp_instancia(pIn, n, a, vec);
-		
-		for(int p = 1; p < 3; p++){ correr_busqlocal(vec, n, p, pExp); }
-		
-		fprintf(pExp,"\n");
+		for(int i = 0; i < 10; i++)
+		{
+			cout << n << " nodos, iteracion " << i << endl;
+			
+			a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
+			Vecinos vec = generar_aleatorio(n,a);
+			
+			fprintf(pExp,"%i, %i, ",n,a);
+			
+			imp_instancia(pIn, n, a, vec);
+			
+			for(int p = 1; p < 3; p++){ correr_busqlocal(vec, n, p, pExp); }
+			
+			fprintf(pExp,"\n");
+		}
 	}
 
 	// Cierro los archivos
@@ -52,58 +53,59 @@ void exp_busqlocal_aleatorio(int cant_min,int cant_max,int cant_it)
 	fclose(pIn);
 }
 
-void exp_busqlocal_aleatorio_comp(int cant_min,int cant_max,int cant_it)
+void exp_busqlocal_aleatorio_comp(int cant_min,int cant_max)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/busqlocal/aleatorio_comp.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/busqlocal/aleatorio_comp.in","w");	// Instancias de entrada
 	
 	int a;
-	int n;
 	int res1;
 	int res2;
 	list<int> cidm_sol1;
 	list<int> cidm_sol2;
 	int cota;
 	
-	for(int k = 0; k < cant_it; k++)
+	for(int n = cant_min; n <= cant_max; n++)
 	{
-		cout << "iteracion " << k << endl;
-		
-		n = (rand() % (cant_max-cant_min+1)) + cant_min;
-		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
-		Vecinos vec = generar_aleatorio(n,a);
-		Vecinos vec_aux(n);
-		
-		fprintf(pExp,"%i, %i, ",n,a);
-		
-		imp_instancia(pIn, n, a, vec);
-		
-		cota = n;
-		res1 = 0;
-		vector<int> estado(n,0);
-		
-		backtracking(cidm_sol2,cidm_sol1,estado,vec,0,n,cota,res1,0,1);
-
-		fprintf(pExp,"%i, ",cota);
-		
-		for(int p = 1; p < 3; p++)
+		for(int i = 0; i < 10; i++)
 		{
-			// Acomodo las variables
-			cidm_sol1.clear();
-			cidm_sol2.clear();
+			cout << n << " nodos, iteracion " << i << endl;
 			
-			Vecinos vec_aux = copiar_vec(vec,n);
+			a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
+			Vecinos vec = generar_aleatorio(n,a);
+			Vecinos vec_aux(n);
 			
-			res1 = goloso(cidm_sol1,vec_aux,n,0,0);
-			res2 = otro_inicio(cidm_sol2,vec,n);
+			fprintf(pExp,"%i, %i, ",n,a);
 			
-			busqueda(cidm_sol1,vec,n,res1,p);
-			busqueda(cidm_sol2,vec,n,res2,p);
-						
-			// Imprimo los resultados
-			fprintf(pExp,"%i, %i, ",res1,res2);
+			imp_instancia(pIn, n, a, vec);
+			
+			cota = n;
+			res1 = 0;
+			vector<int> estado(n,0);
+			
+			backtracking(cidm_sol2,cidm_sol1,estado,vec,0,n,cota,res1,0,1);
+
+			fprintf(pExp,"%i, ",cota);
+			
+			for(int p = 1; p < 3; p++)
+			{
+				// Acomodo las variables
+				cidm_sol1.clear();
+				cidm_sol2.clear();
+				
+				Vecinos vec_aux = copiar_vec(vec,n);
+				
+				res1 = goloso(cidm_sol1,vec_aux,n,0,0);
+				res2 = otro_inicio(cidm_sol2,vec,n);
+				
+				busqueda(cidm_sol1,vec,n,res1,p);
+				busqueda(cidm_sol2,vec,n,res2,p);
+							
+				// Imprimo los resultados
+				fprintf(pExp,"%i, %i, ",res1,res2);
+			}
+			fprintf(pExp,"\n");
 		}
-		fprintf(pExp,"\n");
 	}
 
 	// Cierro los archivos
@@ -121,9 +123,9 @@ void exp_busqlocal_estrellas(int min,int max)
 	int res;
 	list<int> cidm_sol;
 	
-	for(int grado_int = min; grado_int < max; grado_int += 10)
+	for(int grado_int = min; grado_int < max; grado_int++)
 	{	
-		for(int i = 0; i < 50; i++)
+		for(int i = 0; i < 20; i++)
 		{
 			cout << "grado " << grado_int << " iteracion " << i << endl;
 			
@@ -200,16 +202,16 @@ void exp_busqlocal_circuito_rnd(int min, int max)
 
 void exp_busqlocal_galaxias(int min,int max)
 {
-	FILE * pExp = fopen("../Resultados_experimentos/busqlocal/galaxias.txt","w");	// Resultados
-	FILE * pIn = fopen("../Resultados_experimentos/busqlocal/galaxias.in","w");	// Instancias de entrada
+	FILE * pExp = fopen("../Resultados_experimentos/busqlocal/galaxias.txt","a");	// Resultados
+	FILE * pIn = fopen("../Resultados_experimentos/busqlocal/galaxias.in","a");	// Instancias de entrada
 
 	int n;
 	int res;
 	list<int> cidm_sol;
 	
-	for(int grado_int = min; grado_int < max; grado_int += 10)
+	for(int grado_int = min; grado_int < max; grado_int++)
 	{
-		for(int i = 0; i < 50; i++)
+		for(int i = 0; i < 10; i++)
 		{
 			cout << "grado " << grado_int << " iteracion " << i << endl;
 			
@@ -278,7 +280,7 @@ void correr_busqlocal(Vecinos vec, int n, int p, FILE* pExp)
 		busqueda(cidm_sol2,vec,n,res2,p);
 		end = clock();
 		t2 = t2 + difftime(end,start);
-		tiempos1.push_back(t2);
+		tiempos2.push_back(t2);
 	}
 
 	// Imprimo los resultados

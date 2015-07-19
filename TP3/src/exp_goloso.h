@@ -11,8 +11,8 @@
 
 void exp_goloso_solitarios(int cant_min,int cant_max);
 void exp_goloso_completos(int cant_min,int cant_max);
-void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it);
-void exp_goloso_aleatorio_comp(int cant_min,int cant_max,int cant_it);
+void exp_goloso_aleatorio(int cant_min,int cant_max);
+void exp_goloso_aleatorio_comp(int cant_min,int cant_max);
 //~ void exp_goloso_estrellas(int min,int max,int cant_it);
 void exp_goloso_estrellas(int min,int max);
 void exp_goloso_circuito_ord(int min, int max);
@@ -59,25 +59,26 @@ void exp_goloso_completos(int cant_min,int cant_max)
 }
 
 
-void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
+void exp_goloso_aleatorio(int cant_min,int cant_max)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/goloso/aleatorio.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/goloso/aleatorio.in","w");	// Instancias de entrada
 	
 	int a;
-	int n;
 	
-	for(int k = 0; k < cant_it; k++)
+	for(int n = cant_min; n <= cant_max; n++)
 	{
-		cout << "iteracion " << k << endl;
-	
-		n = (rand() % (cant_max-cant_min+1)) + cant_min;
-		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
-		Vecinos vec = generar_aleatorio(n,a);
+		for(int i = 0; i < 10; i++)
+		{
+			cout << n << " nodos, iteracion " << i << endl;
 		
-		imp_instancia(pIn, n, a, vec);
-		
-		correr_goloso(vec, n, a, pExp);
+			a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
+			Vecinos vec = generar_aleatorio(n,a);
+			
+			imp_instancia(pIn, n, a, vec);
+			
+			correr_goloso(vec, n, a, pExp);
+		}
 	}
 
 	// Cierro los archivos
@@ -86,43 +87,44 @@ void exp_goloso_aleatorio(int cant_min,int cant_max,int cant_it)
 }
 
 
-void exp_goloso_aleatorio_comp(int cant_min,int cant_max,int cant_it)
+void exp_goloso_aleatorio_comp(int cant_min,int cant_max)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/goloso/aleatorio_comp.txt","w");	// Resultados
 	FILE * pIn = fopen("../Resultados_experimentos/goloso/aleatorio_comp.in","w");	// Instancias de entrada
 	
 	int a;
-	int n;
 	int res;
 	int cota;
 	list<int> cidm;	
 	list<int> cidm_sol;
 	
-	for(int k = 0; k < cant_it; k++)
+	for(int n = cant_min; n <= cant_max; n++)
 	{
-		cout << "iteracion " << k << endl;
-	
-		n = (rand() % (cant_max-cant_min+1)) + cant_min;
-		a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
-		Vecinos vec = generar_aleatorio(n,a);
+		for(int i = 0; i < 10; i++)
+		{
+			cout << n << " nodos, iteración" << i << endl;
 		
-		imp_instancia(pIn, n, a, vec);
-		
-		// Acomodo las variables
-		cota = n;
-		res = 0;
-		vector<int> estado(n,0);
-		
-		backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,0);
+			a = rand() % ((n*(n-1)/2)+1);			// Cantidad aleatoria de aristas
+			Vecinos vec = generar_aleatorio(n,a);
+			
+			imp_instancia(pIn, n, a, vec);
+			
+			// Acomodo las variables
+			cota = n;
+			res = 0;
+			vector<int> estado(n,0);
+			
+			backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,0);
 
-		fprintf(pExp,"%i, %i, %i, ",n,a,cota);
+			fprintf(pExp,"%i, %i, %i, ",n,a,cota);
 
-		cidm_sol.clear();
-		
-		res = goloso(cidm_sol,vec,n,0,0);
-		
-		// Imprimo los resultados
-		fprintf(pExp,"%i \n",res);
+			cidm_sol.clear();
+			
+			res = goloso(cidm_sol,vec,n,0,0);
+			
+			// Imprimo los resultados
+			fprintf(pExp,"%i \n",res);
+		}
 	}
 
 	// Cierro los archivos
