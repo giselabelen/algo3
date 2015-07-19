@@ -171,7 +171,7 @@ El software utilizado será Ubuntu 14.04, y G++ 4.8.2.
 
 \vspace*{0.3cm}
 
-En esta sección explicaremos de qué manera se tomó el tiempo de ejecución de los programas en los experimentos, cómo fueron procesadas estas mediciones, y de qué manera se generaron las instancias que luego llamaremos aleatorias.
+En esta sección explicaremos de qué manera se tomó el tiempo de ejecución de los programas en los experimentos, cómo fueron procesadas estas mediciones, y de qué manera se generaron las instancias que luego llamaremos $aleatorias$, $estrellas$ y $galaxias$.
 
 \subsection{Mediciones de tiempo}
 
@@ -190,10 +190,29 @@ De esta manera, la variable {\tt t} contendrá el tiempo incurrido por {\tt prog
 
 \subsection{Procesamiento de las mediciones}
 
-En los experimentos relativos al tiempo de ejecución los programas, cada instancia fue evaluada 20 veces y se ha recopilado el tiempo incurrido cada vez. Luego, fueron considerados outliers los 2 valores más grandes y los 2 valores más chicos, y se calculó el promedio de los tiempos obtenidos ignorando estos 4 valores (excepto en los casos llamados aleatorios).
+En los experimentos relativos al tiempo de ejecución los programas, cada instancia fue evaluada 20 veces y se ha recopilado el tiempo incurrido cada vez. Luego, fueron considerados outliers los 2 valores más grandes y los 2 valores más chicos, y se calculó el promedio de los tiempos obtenidos ignorando estos 4 valores (excepto en los casos llamados $aleatorios$).
 
-\subsection{Instancias aleatorias}
+\subsection{Generación de instancias particulares}
 
+Dentro de la experimentación, la aleatoriedad provee una herramienta muy útil ya que permite dar una idea de cómo funcionan los programas al ser aplicados a instancias generales. Sin embargo, la generación de aleatoriedad es un tema controversial.  Por este motivo, buscamos utilizar instancias pseudo-aleatorias para analizar el comportamiento de nuestros programas. Para ello, utilizaremos las funciones {\tt srand}\footnote{\url{http://www.cplusplus.com/reference/cstdlib/srand/}} y {\tt random}\footnote{\url{http://www.cplusplus.com/reference/cstdlib/rand/}} provistas por la librería {\tt cstdlib}\footnote{\url{http://www.cplusplus.com/reference/cstdlib/}} de C++.
+
+Pasaremos ahora a mostrar cómo fueron generadas dichas instancias. 
+
+\subsubsection{Aleatorios}
+
+Para generar un grafo que llamaremos $aleatorio$, dada una cantidad determinada de vértices y de aristas, se van tomando de forma pseudo-aleatoria pares de nodos no conectados para colocarlos como extremos de una arista, hasta completar la cantidad de aristas fijada.
+
+\subsubsection{Estrellas}
+
+Para generar un grafo que llamaremos $estrella$, dado el grado $\delta$ del vértice que llamaremos $central$, se genera 1 nodo que será el $central$ y $\delta$ nodos que se conectan a él. Luego, por cada uno de estos $\delta$ vértices se agregan $k$ nodos conectados a él, donde $k$ es un número generado pseudo-aleatoriamente entre 1 y $\delta - 1$.
+
+Más adelante definiremos mejor a este tipo de instancias y haremos un análisis sobre ellas.
+
+\subsubsection{Galaxias}
+
+Para generar un grafo que llamaremos $galaxia$, dado el grado $\delta$ del vértice que llamaremos $central$, se genera 1 nodo que será el $central$ y $\delta$ nodos que se conectan a él. Luego, por cada uno de estos $\delta$ vértices se agregan $k$ nodos conectados a él, donde $k$ es un número generado pseudo-aleatoriamente entre $\delta$ y $2 \times \delta$.
+
+Más adelante definiremos mejor a este tipo de instancias y haremos un análisis sobre ellas.
 
 
 \vspace*{0.6cm}
