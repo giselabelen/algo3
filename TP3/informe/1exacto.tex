@@ -102,24 +102,24 @@ En esta sección, trataremos de mostrar de manera empírica la complejidad de nu
 \subsubsection{Complejidad}
 
 Si fuera cierto que nuestro algoritmo es exponencial, entonces correr instancias muy grandes puede tardar horas, días, o siglos, dependiendo el caso, por lo tanto, se ha decidido correr instancias de a lo sumo 20 nodos. Por otro lado, debido a la gran variedad de posibles grafos que aún con pocos nodos se pueden generar, se ha decidido probar la complejidad acudiendo a la ley de los grandes números, y por lo tanto generando muchos grafos de manera aleatoria. Para esto, se han generado 500 grafos de entre 5 y 18 nodos de manera aleatoria. Luego, se han tomado los tiempos de ejecución de estos grafos, y se ha calculado un promedio sobre aquellos grafos que tenían la misma cantidad de nodos. Esto dió como resultado el gráfico de la Figura \ref{fig:1A}.
-
-\begin{figure}[htb]
-	\begin{center}
-    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-sin.png}
-	\end{center}
-	\caption{Exacto - Sin podas}\label{fig:1A}
-\end{figure}
-%\FloatBarrier
+%
+%\begin{figure}[htb]
+%	\begin{center}
+%    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-sin.png}
+%	\end{center}
+%	\caption{Exacto - Sin podas}\label{fig:1A}
+%\end{figure}
+%%\FloatBarrier
 
 Luego, se ha tomado cada uno de estos valores, y se le ha aplicado la raíz n-ésima, siendo n la cantidad de nodos que el valor representa, y obteniendose el gráfico de la Figura \ref{fig:1B}.
 
-\begin{figure}[htb]
-	\begin{center}
-    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-sin-raiz.png}
-	\end{center}
-	\caption{Exacto - Raíz n-ésima}\label{fig:1B}
-\end{figure}
-%\FloatBarrier
+%\begin{figure}[htb]
+%	\begin{center}
+%    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-sin-raiz.png}
+%	\end{center}
+%	\caption{Exacto - Raíz n-ésima}\label{fig:1B}
+%\end{figure}
+%%\FloatBarrier
 
 En esta Figura se puede observar cómo el número obtenido se aproxima a $2$, lo cual tiende a sugerir que realmente nuestro algoritmo tiene una complejidad del estilo $2^n$, o sea, que es exponencial.
 
@@ -191,12 +191,12 @@ Se han creado 10 instancias, con grafos compuestos por $n$ $K_2$, con $n$ desde 
 
 Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1E}.
 
-\begin{figure}[htb]
-	\begin{center}
-    		\includegraphics[scale=0.8]{imagenes/exacto-k2ord.png}
-	\end{center}
-	\caption{Exacto -Grafos de los $k_2$}\label{fig:1E}
-\end{figure}
+%\begin{figure}[htb]
+%	\begin{center}
+%    		\includegraphics[scale=0.8]{imagenes/exacto-k2ord.png}
+%	\end{center}
+%	\caption{Exacto -Grafos de los $k_2$}\label{fig:1E}
+%\end{figure}
 %\FloatBarrier
 
 Por lo visto en este gráfico, se trata de una familia en la cual nuestras podas no surten efectos significativos.
@@ -211,13 +211,13 @@ Se han creado 500 instancias aleatorias, con grafos compuestos por $n$ nodos, co
 \end{enumerate}
 
 Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1F}.
-
-\begin{figure}[htb]
-	\begin{center}
-    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-conysin.png}
-	\end{center}
-	\caption{Exacto - Aleatorios Con y Sin podas\label{fig:1F}}
-\end{figure}
-%\FloatBarrier
+%
+%\begin{figure}[htb]
+%	\begin{center}
+%    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-conysin.png}
+%	\end{center}
+%	\caption{Exacto - Aleatorios Con y Sin podas\label{fig:1F}}
+%\end{figure}
+%%\FloatBarrier
 
 Por lo visto en este gráfico, en general, parecería que usar las podas mejora considerablemente el tiempo de ejecución de nuestro algoritmo.

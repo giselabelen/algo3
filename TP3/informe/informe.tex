@@ -167,6 +167,37 @@ El software utilizado será Ubuntu 14.04, y G++ 4.8.2.
 
 \vspace*{0.6cm}
 
+\section{Acerca de los Experimentos}
+
+\vspace*{0.3cm}
+
+En esta sección explicaremos de qué manera se tomó el tiempo de ejecución de los programas en los experimentos, cómo fueron procesadas estas mediciones, y de qué manera se generaron las instancias que luego llamaremos aleatorias.
+
+\subsection{Mediciones de tiempo}
+
+Para medir el tiempo de ejecución de los programas implementados se utilizaron las funciones {\tt clock}\footnote{\url{http://www.cplusplus.com/reference/ctime/clock/}} y {\tt difftime}\footnote{\url{http://www.cplusplus.com/reference/ctime/difftime/}} provistas por la librería {\tt ctime}\footnote{\url{http://www.cplusplus.com/reference/ctime/}} de C++ como se muestra a continuación:
+
+\begin{verbatim}
+
+clock_t start = clock();
+programa_a_evaluar;
+clock_t end = clock();
+double t = difftime(end,start);
+
+\end{verbatim}
+
+De esta manera, la variable {\tt t} contendrá el tiempo incurrido por {\tt programa_a_evaluar} en ciclos de clock.
+
+\subsection{Procesamiento de las mediciones}
+
+En los experimentos relativos al tiempo de ejecución los programas, cada instancia fue evaluada 20 veces y se ha recopilado el tiempo incurrido cada vez. Luego, fueron considerados outliers los 2 valores más grandes y los 2 valores más chicos, y se calculó el promedio de los tiempos obtenidos ignorando estos 4 valores (excepto en los casos llamados aleatorios).
+
+\subsection{Instancias aleatorias}
+
+
+
+\vspace*{0.6cm}
+
 \section{Algoritmo Exacto}
 \vspace*{0.3cm}
 \input{1exacto}
