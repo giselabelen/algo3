@@ -3,6 +3,7 @@
 #include "exp_goloso.h"
 #include "exp_busqlocal.h"
 #include "exp_grasp.h"
+#include "exp_final.h"
 
 
 int main()
@@ -52,11 +53,22 @@ int main()
 	//~ exp_grasp_aleatorio(10,30);
 	//~ cout << "aleatorio_comp" << endl;
 	//~ exp_grasp_aleatorio_comp(4,15);
-	cout << "estrellas" << endl;
-	exp_grasp_estrellas(5,7);
+	//~ cout << "estrellas" << endl;
+	//~ exp_grasp_estrellas(5,7);
 	//~ cout << "circuitos" << endl;
 	//~ exp_grasp_circuito_rnd(10,30);
 	//~ cout << "galaxias" << endl;
 	//~ exp_grasp_galaxias(5,5);
+	
+	//~ cout << "aleatorio" << endl;
+	//~ exp_final_aleatorio(31,40);
+	//~ cout << "aleatorio_comp" << endl;
+	//~ exp_final_aleatorio_comp(4,15);
+	//~ cout << "estrellas" << endl;
+	//~ exp_final_estrellas(5,10);
+	cout << "circuitos" << endl;
+	exp_final_circuito_rnd(41,50);
+	//~ cout << "galaxias" << endl;
+	//~ exp_final_galaxias(5,7);
 	
 }

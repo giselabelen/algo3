@@ -16,6 +16,7 @@ void exp_exacto_k2_rnd(int cant);
 void exp_exacto_aleatorio(int cant_min,int cant_max,int cant_it);
 
 void correr_exacto(Vecinos vec, vector<int> estado, int n, FILE* pExp);
+void correr_exacto_bis(Vecinos vec, vector<int> estado, int n, FILE* pExp);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -174,6 +175,41 @@ void correr_exacto(Vecinos vec, vector<int> estado, int n, FILE* pExp)
 		fprintf(pExp,"%f, ",t);
 	}
 	fprintf(pExp,"%i \n",cota);
+}
+
+
+void correr_exacto_bis(Vecinos vec, vector<int> estado, int n, FILE* pExp)
+{
+	clock_t start;
+	clock_t end;
+	double t;
+	int res;
+	int cota;
+	list<int> cidm;	
+	list<int> cidm_sol;
+	list<double> tiempos;
+
+	for(int i = 0; i < 20; i++)
+	{				
+		// Limpio las variables
+		cidm.clear();
+		cidm_sol.clear();
+		for(int j = 0; j < n; j++){ estado[j] = 0; }
+		cota = n;	
+		res = 0;
+		
+		// Mido el tiempo
+		start = clock();
+		backtracking(cidm,cidm_sol,estado,vec,0,n,cota,res,0,1);
+		end = clock();
+		t = difftime(end,start);
+		tiempos.push_back(t);
+	}
+	
+	// Imprimo los resultados
+	sacar_outliers(tiempos);
+	t = promediar(tiempos);
+	fprintf(pExp,"%f, %i, ",t,cota);
 }
 
 

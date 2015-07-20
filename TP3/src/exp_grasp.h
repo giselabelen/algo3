@@ -18,6 +18,7 @@ void exp_grasp_circuito_rnd(int min, int max);
 void exp_grasp_galaxias(int min,int max);
 
 void correr_grasp(Vecinos vec, int n, int p, FILE* pExp);
+void correr_grasp_bis(Vecinos vec, int n, FILE* pExp);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -250,6 +251,35 @@ void correr_grasp(Vecinos vec, int n, int c, FILE* pExp)
 	t1 = promediar(tiempos1);
 	t2 = promediar(tiempos2);
 	fprintf(pExp,"%f, %i, %f, %i, ",t1,res1,t2,res2);
+}
+
+
+void correr_grasp_bis(Vecinos vec, int n, FILE* pExp)
+{
+	clock_t start;
+	clock_t end;
+	double t;
+	int res;
+	list<int> cidm_sol;
+	list<double> tiempos;
+	
+	for(int i = 0; i < 20; i++)
+	{
+		// Acomodo las variables
+		cidm_sol.clear();
+
+		// Mido el tiempo
+		start = clock();
+		res = grasp(cidm_sol,vec,n,0.1,0,10,1);
+		end = clock();
+		t = difftime(end,start);
+		tiempos.push_back(t);
+	}
+
+	// Imprimo los resultados
+	sacar_outliers(tiempos);
+	t = promediar(tiempos);
+	fprintf(pExp,"%f, %i, ",t,res);
 }
 
 

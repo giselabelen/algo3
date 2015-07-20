@@ -18,6 +18,7 @@ void exp_busqlocal_circuito_rnd(int min, int max);
 void exp_busqlocal_galaxias(int min,int max);
 
 void correr_busqlocal(Vecinos vec, int n, int p, FILE* pExp);
+void correr_busqlocal_bis(Vecinos vec, int n, FILE* pExp);
 
 
 /******************** IMPLEMENTACIÓN DE FUNCIONES ********************/
@@ -289,6 +290,42 @@ void correr_busqlocal(Vecinos vec, int n, int p, FILE* pExp)
 	t1 = promediar(tiempos1);
 	t2 = promediar(tiempos2);
 	fprintf(pExp,"%f, %i, %f, %i, ",t1,res1,t2,res2);
+}
+
+
+void correr_busqlocal_bis(Vecinos vec, int n, FILE* pExp)
+{
+	clock_t start;
+	clock_t end;
+	double t;
+	int res;
+	list<int> cidm_sol;
+	list<double> tiempos;
+
+	for(int i = 0; i < 20; i++)
+	{
+		// Acomodo las variables
+		cidm_sol.clear();
+		
+		Vecinos vec_aux = copiar_vec(vec,n);
+		
+		// Mido el tiempo
+		start = clock();
+		res = goloso(cidm_sol,vec_aux,n,0,0);
+		end = clock();
+		t = difftime(end,start);
+		
+		start = clock();
+		busqueda(cidm_sol,vec,n,res,2);
+		end = clock();
+		t += difftime(end,start);
+		tiempos.push_back(t);
+	}
+
+	// Imprimo los resultados
+	sacar_outliers(tiempos);
+	t = promediar(tiempos);
+	fprintf(pExp,"%f, %i, ",t,res);
 }
 
 

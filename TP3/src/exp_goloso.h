@@ -344,7 +344,7 @@ void correr_goloso(Vecinos vec, int n, int a, FILE* pExp)
 	// Imprimo los resultados
 	sacar_outliers(tiempos);
 	t = promediar(tiempos);
-	fprintf(pExp,"%i, %i, %f, %i \n",n,a,t,res);
+	fprintf(pExp,"%i, %i, %f, %i ",n,a,t,res);
 }
 
 
