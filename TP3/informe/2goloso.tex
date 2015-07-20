@@ -313,63 +313,47 @@ La Figura \ref{fig:familia3} muestra un ejemplo de grafo perteneciente a esta fa
 
 En esta sección, trataremos de mostrar de manera empírica que nuestro algoritmo posee complejidad cuadrática, y exponer una estimación de la calidad de las soluciones que presenta el mismo.
 
-\vspace*{0.6cm}
-
 \subsubsection{Complejidad:}
-\vspace*{0.3cm}
 
-Para empezar tratamos de analizar distintas instancias de grafos particulares, como son los grafos ``solitarios'' y los grafos ``completos''. Tal vez breve explicacion de que caracteristicas tiene cada uno.
-
-\begin{figure}[htb]
-	\begin{center}
-    		\includegraphics[scale=0.6]{imagenes/goloso-solitarios.png}
-	\end{center}
-	\caption{Goloso - Solitarios\label{fig:2A}}
-\end{figure}
-
-%\begin{figure}[htb]
-%	\begin{center}
-%    		\includegraphics[scale=0.6]{imagenes/goloso-solitarios-div.png}
-%	\end{center}
-%	\caption{Goloso - solitarios div n, y n2\label{fig:2B}}
-%\end{figure}
+Para mostrar que nuestro algoritmo tiene complejidad $\mathcal{O}(n^2)$ se generaron 1960 instancias $aleatorias$ con entre 4 y 200 nodos. Luego de correr el algoritmo y tomar las respectivas mediciones de tiempo, se colocaron las mismas en un gráfico al cual se agregó la curva correspondiente a la función $2 \cdot n^2$.  Dicho gráfico se muestra en la Figura \ref{fig:2A}, y como puede apreciarse, todas las mediciones caen por debajo de la curva cuadrática. 
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.6]{imagenes/goloso-completos.png}
+    		\includegraphics[scale=0.8]{imagenes/goloso-aleatorios.png}
 	\end{center}
-	\caption{Goloso - completos\label{fig:2C}}
+	\caption{Goloso - Grafos aleatorios\label{fig:2A}}
 \end{figure}
-%
-%\begin{figure}[htb]
-%	\begin{center}
-%    		\includegraphics[scale=0.6]{imagenes/goloso-completos-div.png}
-%	\end{center}
-%	\caption{Goloso - completos div n, n2\label{fig:2D}}
-%\end{figure}
-%
-%\begin{figure}[htb]
-%	\begin{center}
-%    		\includegraphics[scale=0.6]{imagenes/goloso-aleatorio.png}
-%	\end{center}
-%	\caption{Goloso - Aleatorios\label{fig:2E}}
-%\end{figure}
-%
-%\begin{figure}[htb]
-%	\begin{center}
-%    		\includegraphics[scale=0.6]{imagenes/goloso-aleatorio-div.png}
-%	\end{center}
-%	\caption{Goloso - Aleatorios div n, n2\label{fig:2F}}
-%\end{figure}
-%\FloatBarrier
-Se puede observar que ambas funciones de complejidad, al ser divididas por $n$ nos perimten ver lo que serían rectas. En cambio, al ser divididas por $n^2$ asemejan a una curva cuadrática. Inicialmente esto parece justificar nuestra afirmación sobre que la complejidad de nuestro algoritmo es $\mathcal{O}(n^2)$.
 
-Para un análisis más general del algortimo planteamos también distintas instancias generadas de manera aleatoria. Parecería ser, de nuevo, que la curva descripta por la complejidad en estos casos, es una función cuadrática.
+\subsubsection{Calidad:}
 
-Todo lo previamente indicado nos permitiría llegar a la conclusión de que, resultararía dificil describir un contexto para el algoritmo que se pudiera calificar como el peor caso. Todas las corridas realizadas estarían diciendo que, cualquiera sea el caso, la complejidad de nuestro algoritmo es $\mathcal{O}(n^2)$, que era lo que queríamos observar en definitiva.  
+Para evaluar la calidad de las soluciones obtenidas mediante nuestra heurística, se han generado instancias de tipo $circuito$, $estrella$, $galaxia$ y $aleatorio$.
+
+\paragraph{Circuitos} Se han creado 95 $circuitos$ de entre 5 y 200 nodos.  El orden de los nodos fue aleatorizado para no depender de un rotulado en particular.
+
+La Figura \ref{fig:2B} muestra el tamaño de las soluciones obtenidas en comparación con el tamaño de la solución exacta. Para una cantidad de nodos suficientemente chica, nuestro algoritmo parece tener un error pequeño (en ocasiones nulo), pero a medida que la cantidad de nodos incrementa, el margen de error también parece incrementarse.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.8]{imagenes/goloso-circuito.png}
+	\end{center}
+	\caption{Goloso - Circuitos \label{fig:2B}}
+\end{figure}
+
+\paragraph{Estrella} Se han creado 500 instancias de $estrellas$ de manera que el grado máximo se encuentre entre 10 y 100.
+
+La Figura \ref{fig:2C} muestra el tamaño de las soluciones obtenidas para estas instancias, en comparación con el tamaño de la solución óptima y con la cota superior hallada teóricamente en secciones anteriores. Se puede apreciar que el tamaño de las soluciones efectivamente se ve acotado por el cuadrado del grado máximo, y que además se encuentra mucho más cerca de este valor que del resultado exacto. La experimentación parecería confirmar, entonces, que se trata de una familia de grafos para los cuales nuestra heurística arroja resultados poco precisos.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.8]{imagenes/goloso-estrella.png}
+	\end{center}
+	\caption{Goloso - Estrellas \label{fig:2C}}
+\end{figure}
+
+\paragraph{Galaxia} Se han creado 500 instancias de $galaxias$ de manera que el grado del nodo central se encuentre entre 5 y 100.
+
+Para estos casos, el tamaño de las soluciones obtenidas coinciden exactamente con el tamaño de la solución exacta. Esto indicaría que se trata de una familia de grafos para los cuales nuestra heurística arroja resultados exactos.
+
+\paragraph{Aleatorios} Se han creado 120 instancias $aleatorias$ con entre 4 y 15 nodos, de manera de poder comparar los resultados de nuestra heurística con los resultados del algoritmo exacto. El porcentaje de respuestas coincidentes entre la heurística y el exacto fue de $89.167\%$. Podemos decir, bajo esta experimentación, que si bien el algoritmo no es exacto, proporciona una buena respuesta en el caso general.
 
 \vspace*{0.6cm}
-%\newpage
-
-%\subsubsection{Calidad: }
-
