@@ -253,13 +253,55 @@ La Figura \ref{fig:3C} muestra los resultados obtenidos respecto al tiempo de ej
 \end{figure}
 %\FloatBarrier
 
-\paragraph{Calidad} Para estas instancias, la solución inicial provista por nuestra heurística golosa fue la exacta, mientras que la solución inicial alternativa se encontraron lejos de la solución exacta. Así que se ha comparado el tamaño de la solución mejorada con el tamaño de la solución exacta, y la calidad de las mejoras obtenidas.  Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
+\paragraph{Calidad} Para estas instancias, la solución inicial provista por nuestra heurística golosa fue la exacta, mientras que la solución inicial alternativa se encontró lejos de la solución exacta. Así que se ha comparado el tamaño de la solución mejorada con el tamaño de la solución exacta, y la calidad de las mejoras obtenidas.  Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
 
 \begin{verbatim}
-Configuración 1: 100%
+Configuración 1: 0%
 Configuración 2: 100%
 Configuración 3: 0%
 Configuración 4: 0%
 \end{verbatim}
 
-Las configuraciones que utilizan la Vecindad 1 no sólo no tuvieron ningún acierto sino que además no mostraron mejora alguna respecto de las soluciones iniciales, mientras que las configuraciones que utilizan la Vecindad 2 lograron mejorar completamente ambas soluciones iniciales.
+La Configuración 2 no sólo no tuvo ningún acierto sino que además no mostró mejora alguna respecto de la solución inicial, mientras que la Configuración 4 logró mejorarla completamente.  Es importante destacar que, dado que las Configuraciones 1 y 3 partieron de una solución inicial exacta, no aportan información significativa respecto de las mejoras.
+
+\subsubsection{Aleatorios}
+
+Para estos experimentos se han generado dos sets de instancias $aleatorias$. Uno contiene 110 grafos de entre 4 y 15 nodos, para poder contrastar con el algoritmo exacto (sólo se utilizara para la parte de calidad). El otro contiene 460 grafos de entre 4 y 50 nodos, que si bien no serán comparadas con el algoritmo exacto, posibilitará apreciar los tiempos de ejecución más ampliamente y tener una idea más general respecto a la calidad de las soluciones obtenidas.
+
+\paragraph{Performance} La Figura \ref{fig:3D} muestra los resultados obtenidos respecto al tiempo de ejecución. Podemos apreciar que las configuraciones que utilizan la Vecnidad 1 tienen, en general, un desempeño peor que las otras, y entre las configuraciones que utilizan la Vecindad 2, la configuración 3 parecería mostrarse como la más óptima.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.8]{imagenes/busqlocal-aleatorios-tiempo.png}
+	\end{center}
+	\caption{Búsqueda local - Aleatorios}\label{fig:3D}
+\end{figure}
+%\FloatBarrier
+
+\paragraph{Calidad} 
+
+\subparagraph{Set 1} Se ha comparado el tamaño de la solución obtenida con el tamaño de la solución exacta.  Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
+
+\begin{verbatim}
+Configuración 1: 0.833%
+Configuración 2: 38.333%
+Configuración 3: 2.5%
+Configuración 4: 7.5%
+\end{verbatim}
+
+La Configuración 2 muestra un porcentaje de desaciertos muy elevado respecto de las demás, mientras que la Configuración 1 se presenta como la más acertada.  Sin embargo, el porcentaje de error de la Configuración 3 no se aleja tanto de la Configuración 1.
+
+\subparagraph{Set 2} Como por el tamaño de estas instancias se dificulta la comparación con el algoritmo exacto, se consideró como la solución ``óptima'' en cada caso el menor valor obtenido entre las cuatro configuraciones, y se registró, para cada una, la cantidad de instancias en las que no se logró dicho valor. Los porcentajes de estos ``desaciertos'' sobre el total de instancias evaluadas son los siguientes:
+
+\begin{verbatim}
+Configuración 1: 4.68%
+Configuración 2: 26.59%
+Configuración 3: 9.57%
+Configuración 4: 21.7%
+\end{verbatim}
+
+Contrastando con los porcentajes obtenidos para el Set 1 de instancias, la Configuración 2 sigue siendo la que arroja peores resultados, aunque esta vez en un porcentaje menor, mientras que las demás incrementaron su porcentaje de error.  De todos modos, la Configuración 1 vuelve a ser la que obtiene mejores resultados, seguido de cerca por la Configuración 3, y la Configuración 4 se muestra con un margen de error más cercano a la peor.
+
+\subsubsection{Conclusiones} 
+
+Luego de realizar este análisis para distintas instancias, podemos observar que, en lo que respecta a la calidad de las soluciones obtenidas, las configuraciones 1 y 3 muestran, en general logran obtener mejores resultados, con un margen de error similar. Por otro lado, las configuraciones que utilizan la Vecindad 1 requieren un tiempo de ejecución considerablemente mayor que aquellas que utilizan la Vecindad 2.  Por este motivo, si bien la Configuración 1 es la que se muestra mejor en calidad, decidimos considerar a la Configuración 3 como la que mejor balancea calidad y performance.
