@@ -161,18 +161,105 @@ T(n) = \mathcal{O}(n^2)
 %\FloatBarrier
 
 
-%\vspace*{0.6cm}
-%%\newpage
-%\subsection{Experimentación y gráficos.}
-%
-%\vspace*{0.3cm}
-%
-%
-%\subsubsection{Test 1}
-%\vspace*{0.3cm}
-%
-%\vspace*{0.6cm}
-%%\newpage
-%
-%\subsubsection{Test 2}
-%
+\vspace*{0.6cm}
+\newpage
+\subsection{Experimentación y gráficos.}
+
+\vspace*{0.3cm}
+
+En esta sección trataremos de encontrar, entre las posibles combinaciones de soluciones iniciales y vecindades explicadas anteriormente, aquella que tenga el mejor balance entre calidad de solución y performance. 
+
+Para facilitar la lectura, nombraremos a cada configuracón de la siguiente manera:
+
+\begin{itemize}
+	\item {\bf Configuración 1:} Utiliza como solución inicial la hallada por nuestra heurística golosa, y busca mejorar la solución con la Vecindad 1.
+	\item {\bf Configuración 2:} Utiliza como solución inicial la hallada por el algoritmo no goloso, y busca mejorar la solución con la Vecindad 1.
+	\item {\bf Configuración 3:} Utiliza como solución inicial la hallada por nuestra heurística golosa, y busca mejorar la solución con la Vecindad 2.
+	\item {\bf Configuración 4:} Utiliza como solución inicial la hallada por el algoritmo no goloso, y busca mejorar la solución con la Vecindad 2.
+
+\end{itemize}
+
+Plantearemos entonces, experimentos que nos permitan observar cómo se desenvuelve nuestro algoritmo con cada configuración, y con los resultados, tratar de elegir una de ellas. Para ello se ha decidido evaluar instancias de tipo $circuito$, $estrella$, $galaxia$ y $aleatorio$.
+ 
+\subsubsection{Circuitos}
+
+Se generaron 45 $circuitos$ con entre 5 y 50 nodos.  El orden de los nodos fue aleatorizado para no depender de un rotulado en particular.
+
+\paragraph{Performance} 
+
+El gráfico obtenido con las mediciones de tiempo es el que se muestra en la Figura \ref{fig:3A}.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.8]{imagenes/busqlocal-circuitos-tiempo.png}
+	\end{center}
+	\caption{Búsqueda local - Circuitos}\label{fig:3A}
+\end{figure}
+%\FloatBarrier
+
+La Figura parece indicar que aquellas configuraciones que utilizan la Vecindad 1  tienen un desempeño peor que aquellas que utilizan la Vecindad 2, y en la medida que se incrementa la cantidad de nodos la diferencia se hace más evidente. Además, entre las configuraciones que utilizan la Vecindad 2, la número 3 es la que aparenta tener un mejor rendimiento sobre las instancias evaluadas.
+
+\paragraph{Calidad} Se ha comparado el tamaño de la solución hallada con el tamaño de la solución exacta.  Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
+
+\begin{verbatim}
+Configuración 1: 34%
+Configuración 2: 32%
+Configuración 3: 54%
+Configuración 4: 54%
+\end{verbatim}
+
+En este caso, el menor porcentaje de error fue logrado por aquellas configuraciones que utilizan a la Vecindad 1.  De todos modos, se trata de un porcentaje bastante alto.
+
+\subsubsection{Estrellas}
+
+Se generaron 100 grafos $estrellas$ con grado máximo entre 5 y 10.
+
+\paragraph{Performance}
+
+La Figura \ref{fig:3B} muestra los resultados obtenidos respecto al tiempo de ejecución. Nuevamente, las configuraciones que utilizan la Vecindad 2 muestran un desempeño considerablemente mejor en términos de performance que aquellas que utilizan la Vecnidad 1.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.8]{imagenes/busqlocal-estrellas-tiempo.png}
+	\end{center}
+	\caption{Búsqueda local - Estrellas}\label{fig:3B}
+\end{figure}
+%\FloatBarrier
+
+\paragraph{Calidad} Para estas instancias, ambas soluciones iniciales se encontraron lejos de la solución exacta. Así que se ha comparado el tamaño de la solución mejorada con el tamaño de la solución exacta, y la calidad de las mejoras obtenidas.  Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
+
+\begin{verbatim}
+Configuración 1: 100%
+Configuración 2: 100%
+Configuración 3: 0%
+Configuración 4: 0%
+\end{verbatim}
+
+Las configuraciones que utilizan la Vecindad 1 no sólo no tuvieron ningún acierto sino que además no mostraron mejora alguna respecto de las soluciones iniciales, mientras que las configuraciones que utilizan la Vecindad 2 lograron mejorar completamente ambas soluciones iniciales.
+
+\subsubsection{Galaxias}
+
+Se generaron 40 grafos $galaxia$ con entre 35 y 115 nodos.
+
+\paragraph{Performance}
+
+La Figura \ref{fig:3C} muestra los resultados obtenidos respecto al tiempo de ejecución. Nuevamente, las configuraciones que utilizan la Vecindad 2 muestran un desempeño considerablemente mejor en términos de performance que aquellas que utilizan la Vecnidad 1, y entre las configuraciones que utilizan la Vecindad 2, la configuración 3 se muestra claramente como la más óptima.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.8]{imagenes/busqlocal-galaxias-tiempo.png}
+	\end{center}
+	\caption{Búsqueda local - Galaxias}\label{fig:3C}
+\end{figure}
+%\FloatBarrier
+
+\paragraph{Calidad} Para estas instancias, la solución inicial provista por nuestra heurística golosa fue la exacta, mientras que la solución inicial alternativa se encontraron lejos de la solución exacta. Así que se ha comparado el tamaño de la solución mejorada con el tamaño de la solución exacta, y la calidad de las mejoras obtenidas.  Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
+
+\begin{verbatim}
+Configuración 1: 100%
+Configuración 2: 100%
+Configuración 3: 0%
+Configuración 4: 0%
+\end{verbatim}
+
+Las configuraciones que utilizan la Vecindad 1 no sólo no tuvieron ningún acierto sino que además no mostraron mejora alguna respecto de las soluciones iniciales, mientras que las configuraciones que utilizan la Vecindad 2 lograron mejorar completamente ambas soluciones iniciales.
