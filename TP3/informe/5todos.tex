@@ -2,142 +2,144 @@
 
 \vspace*{0.3cm}
 
-En esta sección trataremos de encontrar, entre las posibles combinaciones de criterios de parada y listas restrictas de candidatos explicadas anteriormente, aquella que tenga el mejor balance entre calidad de solución y performance. Se ha elegido utilizar la segunda vecindad explicada en la sección de busqueda local, debido a su balance entre tiempo de ejecución y solución obtenida.  
+En esta sección trataremos de encontrar, entre las heurísticas anteriormente estudiadas, aquella que tenga el mejor balance entre calidad de solución y performance. 
 
-Para facilitar la lectura, nombraremos a cada configuracón de la siguiente manera:
+En el caso de la búsqueda local, se consideró tomar la solución inicial provista por la heurística golosa, y mejorarla mediante la Vecindad 2. En el caso de GRASP, se tomó como criterio de parada la ejecución de 10 iteraciones sin mejoras, y generar la RCL con los nodos candidatos cuya cantidad de vecinos ``libres'' sea no menor a un $10 \%$ de la cantidad de vecinos ``libres'' del mejor candidato.
 
-\begin{itemize}
-	\item {\bf Configuración 1:} Utiliza como como criterio de parada realizar 10 iteraciones sin mejoras, y el primer RCL .
-	\item {\bf Configuración 2:} Utiliza como como criterio de parada realizar 10 iteraciones sin mejoras, y el segundo RCL .
-	\item {\bf Configuración 3:} Utiliza como como criterio de parada realizar 50 iteraciones, y el primer RCL .
-	\item {\bf Configuración 4:} Utiliza como como criterio de parada realizar 50 iteraciones, y el segundo RCL .
-
-\end{itemize}
-
-Plantearemos entonces, experimentos que nos permitan observar cómo se desenvuelve nuestro algoritmo con cada configuración, y con los resultados, tratar de elegir una de ellas. Para ello se ha decidido evaluar instancias de tipo $circuito$, $estrella$, $galaxia$ y $aleatorio$.
+Plantearemos entonces, experimentos que nos permitan observar cómo se desenvuelven nuestros algoritmos, evaluando instancias de tipo $circuito$, $estrella$, $galaxia$ y $aleatorio$.
  
 \subsubsection{Circuitos}
 
-Se generaron 20 $circuitos$ con entre 10 y 30 nodos.  El orden de los nodos fue aleatorizado para no depender de un rotulado en particular.
+Se generaron 40 $circuitos$ con entre 10 y 50 nodos.  El orden de los nodos fue aleatorizado para no depender de un rotulado en particular.
 
 \paragraph{Performance} 
 
-El gráfico obtenido con las mediciones de tiempo es el que se muestra en la Figura \ref{fig:4A}.
+El gráfico obtenido con las mediciones de tiempo es el que se muestra en la Figura \ref{fig:5A}.
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.8]{imagenes/grasp-circuitos-tiempo.png}
+    		\includegraphics[scale=0.8]{imagenes/final-circuitos.png}
 	\end{center}
-	\caption{GRASP - Circuitos}\label{fig:4A}
+	\caption{Comparación - Circuitos}\label{fig:5A}
 \end{figure}
 %\FloatBarrier
 
-La Figura parece indicar que aquellas configuraciones que utilizan el criterio de parada de 50 iteraciones(desde ahora llamado segundo criterio) tienen un desempeño peor que aquellas que utilizan el criterio de parada de 10 iteraciones sin mejora(desde ahora llamado primer criterio). Entre las configuraciones que utilizan el mismo criterio de parada, no parece ser posible indicar de manera precisa cual RCL optimiza más el tiempo de corrida del algoritmo.
+La Figura muestra claramente que el tiempo de ejecución del algoritmo goloso es menor a los otros dos algoritmos, el tiempo de ejecución de la búsqueda local es algo mayor al goloso, y que el tiempo de ejecución de GRASP es mucho mayor a los otros dos.
 
-\paragraph{Calidad} Se ha comparado el tamaño de la solución hallada con el tamaño de la solución exacta.  Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
+\paragraph{Calidad} Se ha comparado el tamaño de las soluciones halladas con el tamaño de la solución exacta.  Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
 
 \begin{verbatim}
-Configuración 1: 0%
-Configuración 2: 0%
-Configuración 3: 0%
-Configuración 4: 0%
+Goloso: 85.37%
+Búsqueda Local: 53.65%
+GRASP: 4.87%
 \end{verbatim}
 
-Pareciera entonces, que sin importar la configuración, para este tipo de grafos GRASP no provoca errores.
+El algoritmo goloso muestra una tasa de error muy grande, la búsqueda local tiene un porcentaje de error menor pero bastante significativo, y GRASP muestra una tasa de error mínima.
+
 \subsubsection{Estrellas}
 
-Se generaron 30 grafos $estrellas$ con grado máximo entre 5 y 7.
+Se generaron 60 grafos $estrellas$ con entre 20 y 60 nodos.
 
 \paragraph{Performance}
 
-La Figura \ref{fig:4B} muestra los resultados obtenidos respecto al tiempo de ejecución. Nuevamente, las configuraciones que utilizan el primer criterio de parada muestran un desempeño considerablemente mejor en términos de performance que aquellas que utilizan el segundo.
-Se puede destacar, que la configuración 1 tiene el menor tiempo de ejecución.
+La Figura \ref{fig:5B} muestra los resultados obtenidos respecto al tiempo de ejecución. La Figura muestra claramente que el tiempo de ejecución del algoritmo goloso es menor a los otros dos algoritmos, el tiempo de ejecución de la búsqueda local es algo mayor al goloso, y que el tiempo de ejecución de GRASP es mucho mayor a los otros dos.
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.8]{imagenes/grasp-estrellas-tiempo.png}
+    		\includegraphics[scale=0.8]{imagenes/final-estrellas.png}
 	\end{center}
-	\caption{GRASP - Estrellas}\label{fig:4B}
+	\caption{Comparación - Estrellas}\label{fig:5B}
 \end{figure}
 %\FloatBarrier
 
 \paragraph{Calidad} Se ha comparado el tamaño de la solución obtenida con el tamaño de la solución exacta. Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
 
 \begin{verbatim}
-Configuración 1: 3.34%
-Configuración 2: 63.34%
-Configuración 3: 0%
-Configuración 4: 13.34%
+Goloso: 100%
+Búsqueda Local: 0%
+GRASP: 4%
 \end{verbatim}
 
-Podemos observar como la configuración 1 y 3 tienen las mejores tasas de acierto, llegando esta última a no cometer errores. Cabe destacar que la configuración 2 tiene para este tipo de grafos, un porcentaje de desaciertos muy amplio.
+Podemos observar que el algoritmo goloso nunca encuentra una solución exacta, mientras que la búsqueda local siempre la encuentra y GRASP tiene un porcentaje de desaciertos mínimo.
 
 \subsubsection{Galaxias}
 
-Se generaron 20 grafos $galaxia$ con entre 7 y 38 nodos.
+Se generaron 30 grafos $galaxia$ con entre 35 y 90 nodos.
 
 \paragraph{Performance}
 
-La Figura \ref{fig:4C} muestra los resultados obtenidos respecto al tiempo de ejecución. Aquí, las configuracion 1 es claramente la de mejor performance mientras que la 4 es claramente la de peor tiempo de ejecución. A priori, no podemos determinar según este gráfico quien tiene un mejor desempeño entre las configuraciones 2 y 3. 
+La Figura \ref{fig:5C} muestra los resultados obtenidos respecto al tiempo de ejecución. La Figura muestra claramente que el tiempo de ejecución del algoritmo goloso es menor a los otros dos algoritmos, el tiempo de ejecución de la búsqueda local es algo mayor al goloso, y que el tiempo de ejecución de GRASP es mucho mayor a los otros dos.
 
 \begin{figure}[htb]
 	\begin{center}
-    		\includegraphics[scale=0.8]{imagenes/grasp-galaxias-tiempos.png}
+    		\includegraphics[scale=0.8]{imagenes/final-galaxias.png}
 	\end{center}
-	\caption{GRASP - Galaxias}\label{fig:4C}
+	\caption{Comparación - Galaxias}\label{fig:5C}
 \end{figure}
 %\FloatBarrier
 
 \paragraph{Calidad} 
-Se ha comparado el tamaño de la solución obtenida con el tamaño de la solución exacta. Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
+Se ha comparado el tamaño de las soluciones obtenidas con el tamaño de la solución exacta. Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
 
 \begin{verbatim}
-Configuración 1: 0%
-Configuración 2: 50%
-Configuración 3: 0%
-Configuración 4: 10%
+Goloso: 0%
+Búsqueda Local: 0%
+GRASP: 0%
 \end{verbatim}
 
-Podemos observar como las configuraciones 1 y 3 no tuvieron errores, como la configuración 4 vuelve a tener un error aceptable, y como la configuración 2 vuelve a tener una tasa de aciertos muy baja
+Es decir, los tres algoritmos encuentran la solución exacta.
 
 \subsubsection{Aleatorios}
 
-Para estos experimentos se han generado dos sets de instancias $aleatorias$. Uno contiene 120 grafos de entre 4 y 15 nodos, para poder contrastar con el algoritmo exacto (sólo se utilizara para la parte de calidad). El otro contiene 210 grafos de entre 10 y 30 nodos, que si bien no serán comparadas con el algoritmo exacto, posibilitará apreciar los tiempos de ejecución más ampliamente y tener una idea más general respecto a la calidad de las soluciones obtenidas.
+Para estos experimentos se han generado dos sets de instancias $aleatorias$. Uno contiene 120 grafos de entre 4 y 15 nodos, para poder contrastar con el algoritmo exacto. El otro contiene 250 grafos de entre 16 y 40 nodos, que si bien no serán comparadas con el algoritmo exacto, posibilitará apreciar los tiempos de ejecución más ampliamente y tener una idea más general respecto a la calidad de las soluciones obtenidas.
 
-\paragraph{Performance} La Figura \ref{fig:4D} muestra los resultados obtenidos respecto al tiempo de ejecución. Podemos apreciar que las configuraciones que utilizan el primer criterio de parada tienen un desempeño peor que las otras, y entre las configuraciones que utilizan el segundo criterio, la configuración 1 parecería mostrarse como la más óptima.
+\paragraph{Performance} Las Figuras \ref{fig:5D} y \ref{fig:5E} muestran los resultados obtenidos respecto al tiempo de ejecución para los sets 1 y 2 respectivamente. 
 
-\begin{figure}[htb]
-	\begin{center}
-    		\includegraphics[scale=0.8]{imagenes/grasp-aleatorios-tiempo.png}
-	\end{center}
-	\caption{GRASP - Aleatorios}\label{fig:4D}
+\subparagraph{Set 1} La Figura \ref{fig:5D} muestra que el tiempo de ejecución del algoritmo goloso es menor a los otros tres algoritmos, el tiempo de ejecución de la búsqueda local es algo mayor al goloso, y que el tiempo de ejecución de GRASP es mayor incluso al del exacto.
+
+\subparagraph{Set 2} La Figura \ref{fig:5E} muestra claramente que el tiempo de ejecución del algoritmo goloso es menor a los otros dos algoritmos, el tiempo de ejecución de la búsqueda local es algo mayor al goloso, y que el tiempo de ejecución de GRASP es mucho mayor a los otros dos.
+
+\begin{figure}[!htb]
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.6]{imagenes/final-aleatorios-comp.png}
+\end{center}
+  \caption{Comparación - Aleatorios - Set 1}\label{fig:5D}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.6]{imagenes/final-aleatorios.png}
+\end{center}
+  \caption{Comparación - Aleatorios - Set 2}\label{fig:5E}
+\endminipage
 \end{figure}
-%\FloatBarrier
+
 
 \paragraph{Calidad} 
 
 \subparagraph{Set 1} Se ha comparado el tamaño de la solución obtenida con el tamaño de la solución exacta.  Los porcentajes de desaciertos sobre el total de instancias evaluadas son los siguientes:
 
 \begin{verbatim}
-Configuración 1: 1.667%
-Configuración 2: 0.833%
-Configuración 3: 0%
-Configuración 4: 0%
+Goloso: 11.67%
+Búsqueda Local: 6.67%
+GRASP: 0%
 \end{verbatim}
 
-Podemos observar que todas las configuraciones tienen una tasa de error muy baja, destacando la 3 y 4 que no tienen errores.
+Podemos observar que GRASP nuevamente tiene una tasa de error nula, búsqueda local tiene una tasa de error pequeña y el algoritmo goloso tiene una tasa de error algo mayor.
 
 \subparagraph{Set 2} Como por el tamaño de estas instancias se dificulta la comparación con el algoritmo exacto, se consideró como la solución ``óptima'' en cada caso el menor valor obtenido entre las cuatro configuraciones, y se registró, para cada una, la cantidad de instancias en las que no se logró dicho valor. Los porcentajes de estos ``desaciertos'' sobre el total de instancias evaluadas son los siguientes:
 
 \begin{verbatim}
-Configuración 1: 1.90%
-Configuración 2: 1.43%
-Configuración 3: 0.48%
-Configuración 4: 0.48%
+Goloso: 36.8%
+Búsqueda Local: 25.2%
+GRASP: 1.6%
 \end{verbatim}
 
-Podemos notar nuevamente como en el set 1, tasas de error muy bajas, destacando que las configuraciones 3 y 4 ahora tienen algún error.
+Podemos notar que GRASP ahora tiene un mínimo porcentaje de error, búsqueda local tiene una tasa de error bastante mayor a lo visto en el Set 1, y el algoritmo goloso tiene una tasa de error algo mayor.
 
-\subsubsection{Conclusiones} 
+\subsubsection{Discusión} 
 
-Luego de realizar este análisis para distintas instancias, podemos observar que, en lo que respecta a la calidad de las soluciones obtenidas, la configuracion 3 es la que logra obtener mejores resultados. Cabe destacar que si bien para las familias analizadas la configuración 2 arrojo muchos desaciertos, para casos generales esto no sucede. Por otro lado, las configuraciones que utilizan el segundo criterio, requieren un tiempo de ejecución considerablemente mayor que aquellas que utilizan el primero.  Por este motivo, si bien la Configuración 3 es la que se muestra mejor en calidad, decidimos considerar a la Configuración 1 como la que mejor balancea calidad y performance. Notece, que si bien la configuración 2 tiene mejor calidad para aleatorios, configuración 1 no tiene calidad mucho peor para estos casos, tiene una considerable mejor calidad para las familias estudiadas, y es ligeramente más optimo en tiempo.
+Podemos observar que en terminos de cálidad, GRASP obtiene en su amplia mayoría el mejor resultado. Sin embargo, a costa de una solución muy precisa, tiene un tiempo de ejecución más de 50 veces mayor que las otras heurísticas propuestas.
+Por otro lado, Goloso en términos de performance aparece como el mejor, pero a costa de una solución poco precisa en la mayoría de los casos evaluados.
+Búsqueda local se muestra con una calidad mejor a la del goloso y sin demasiado incremento en el tiempo de ejecución, pero aún así no puede compararse con GRASP en términos de calidad.
+Se puede concluir entonces que de elegir alguno de estos métodos se dependerá mucho de las características de las instancias a resolver.
