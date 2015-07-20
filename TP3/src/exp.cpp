@@ -45,25 +45,18 @@ int main()
 	//~ exp_busqlocal_estrellas(5,10);
 	//~ cout << "circuitos" << endl;
 	//~ exp_busqlocal_circuito_rnd(5,50);
-	cout << "galaxias" << endl;
-	exp_busqlocal_galaxias(8,9);
+	//~ cout << "galaxias" << endl;
+	//~ exp_busqlocal_galaxias(8,9);
 	
 	//~ cout << "aleatorio" << endl;
-	//~ exp_grasp_aleatorio(4,20,50);
-	//~ cout << "aleatorio_comp" << endl;
-	//~ exp_grasp_aleatorio_comp(4,15,100);
-	
-	//~ list<double> lista;
-	//~ for(double i = 0; i < 10; i++)
-	//~ {
-		//~ lista.push_back(i);
-	//~ }
-	//~ sacar_outliers(lista);
-	//~ for(list<double>::iterator it = lista.begin(); it != lista.end(); it++)
-	//~ {
-		//~ printf("%f ",*it);
-	//~ }
-	//~ double cosa = 9870.867976;
-	//~ cout << cosa << endl;
+	//~ exp_grasp_aleatorio(10,200);
+	cout << "aleatorio_comp" << endl;
+	exp_grasp_aleatorio_comp(4,15);
+	//~ cout << "estrellas" << endl;
+	//~ exp_grasp_estrellas(10,100);
+	cout << "circuitos" << endl;
+	exp_grasp_circuito_rnd(10,200);
+	//~ cout << "galaxias" << endl;
+	//~ exp_grasp_galaxias(10,100);
 	
 }
