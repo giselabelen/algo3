@@ -393,7 +393,8 @@ Vecinos generar_circuito_rnd(int n)
 //~ }
 Vecinos generar_galaxia(int grado_int,int& n)
 {
-	int max = 2*grado_int;
+	//~ int max = 2*grado_int;
+	int max = 2+grado_int;
 	int aux;
 	int i;
 	int j;

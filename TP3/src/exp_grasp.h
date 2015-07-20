@@ -56,7 +56,7 @@ void exp_grasp_aleatorio(int cant_min,int cant_max)
 void exp_grasp_aleatorio_comp(int cant_min,int cant_max)
 {
 	FILE * pExp = fopen("../Resultados_experimentos/grasp/aleatorio_comp.txt","w");	// Resultados
-	FILE * pIn = fopen("../Resultados_experimentos/grsap/aleatorio_comp.in","w");	// Instancias de entrada
+	FILE * pIn = fopen("../Resultados_experimentos/grasp/aleatorio_comp.in","w");	// Instancias de entrada
 	
 	int a;
 	int res1;
@@ -121,9 +121,9 @@ void exp_grasp_estrellas(int min,int max)
 	int res;
 	list<int> cidm_sol;
 	
-	for(int grado_int = min; grado_int < max; grado_int += 10)
+	for(int grado_int = min; grado_int <= max; grado_int++)
 	{	
-		for(int i = 0; i < 20; i++)
+		for(int i = 0; i < 10; i++)
 		{
 			cout << "grado " << grado_int << " iteracion " << i << endl;
 			
@@ -133,7 +133,7 @@ void exp_grasp_estrellas(int min,int max)
 			
 			fprintf(pExp,"%i, ",n);
 		
-			for(int c = 1; c < 3; c++){ correr_busqlocal(vec, n, c, pExp); }
+			for(int c = 1; c < 3; c++){ correr_grasp(vec, n, c, pExp); }
 			
 			fprintf(pExp,"\n");
 		}
@@ -176,16 +176,16 @@ void exp_grasp_circuito_rnd(int min, int max)
 
 void exp_grasp_galaxias(int min,int max)
 {
-	FILE * pExp = fopen("../Resultados_experimentos/grasp/galaxias.txt","w");	// Resultados
-	FILE * pIn = fopen("../Resultados_experimentos/grasp/galaxias.in","w");	// Instancias de entrada
+	FILE * pExp = fopen("../Resultados_experimentos/grasp/galaxias.txt","a");	// Resultados
+	FILE * pIn = fopen("../Resultados_experimentos/grasp/galaxias.in","a");	// Instancias de entrada
 
 	int n;
 	int res;
 	list<int> cidm_sol;
 	
-	for(int grado_int = min; grado_int < max; grado_int += 10)
+	for(int grado_int = min; grado_int <= max; grado_int++)
 	{
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < 5; i++)
 		{
 			cout << "grado " << grado_int << " iteracion " << i << endl;
 			

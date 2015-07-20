@@ -49,14 +49,14 @@ int main()
 	//~ exp_busqlocal_galaxias(8,9);
 	
 	//~ cout << "aleatorio" << endl;
-	//~ exp_grasp_aleatorio(10,200);
-	cout << "aleatorio_comp" << endl;
-	exp_grasp_aleatorio_comp(4,15);
-	//~ cout << "estrellas" << endl;
-	//~ exp_grasp_estrellas(10,100);
-	cout << "circuitos" << endl;
-	exp_grasp_circuito_rnd(10,200);
+	//~ exp_grasp_aleatorio(10,30);
+	//~ cout << "aleatorio_comp" << endl;
+	//~ exp_grasp_aleatorio_comp(4,15);
+	cout << "estrellas" << endl;
+	exp_grasp_estrellas(5,7);
+	//~ cout << "circuitos" << endl;
+	//~ exp_grasp_circuito_rnd(10,30);
 	//~ cout << "galaxias" << endl;
-	//~ exp_grasp_galaxias(10,100);
+	//~ exp_grasp_galaxias(5,5);
 	
 }
