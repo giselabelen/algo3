@@ -101,37 +101,32 @@ En esta sección, trataremos de mostrar de manera empírica la complejidad de nu
 
 \subsubsection{Complejidad}
 
-Si fuera cierto que nuestro algoritmo es exponencial, entonces correr instancias muy grandes puede tardar horas, días, o siglos, dependiendo el caso, por lo tanto, se ha decidido correr instancias de a lo sumo 20 nodos. Por otro lado, debido a la gran variedad de posibles grafos que aún con pocos nodos se pueden generar, se ha decidido probar la complejidad acudiendo a la ley de los grandes números, y por lo tanto generando muchos grafos de manera aleatoria. Para esto, se han generado 500 grafos de entre 5 y 18 nodos de manera aleatoria. Luego, se han tomado los tiempos de ejecución de estos grafos, y se ha calculado un promedio sobre aquellos grafos que tenían la misma cantidad de nodos. Esto dió como resultado el gráfico de la Figura \ref{fig:1A}.
-%
-%\begin{figure}[htb]
-%	\begin{center}
-%    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-sin.png}
-%	\end{center}
-%	\caption{Exacto - Sin podas}\label{fig:1A}
-%\end{figure}
-%%\FloatBarrier
+Si fuera cierto que nuestro algoritmo es exponencial, entonces correr instancias muy grandes puede tardar horas, días, o siglos, dependiendo el caso, por lo tanto, se ha decidido correr instancias de a lo sumo 20 nodos. Por otro lado, debido a la gran variedad de posibles grafos que aún con pocos nodos se pueden generar, se ha decidido probar la complejidad acudiendo a la ley de los grandes números, y por lo tanto generando muchos grafos de manera aleatoria. Para esto, se han generado 100 grafos $aleatorios$ de entre 5 y 15 nodos. Luego, se ha corrido el algoritmo exacto sin podas, tomando los tiempos de ejecución, y se ha calculado un promedio sobre aquellos grafos que tenían la misma cantidad de nodos. Esto dio como resultado el gráfico de la Figura \ref{fig:1A}.
 
-Luego, se ha tomado cada uno de estos valores, y se le ha aplicado la raíz n-ésima, siendo n la cantidad de nodos que el valor representa, y obteniendose el gráfico de la Figura \ref{fig:1B}.
+Luego, se ha tomado cada uno de estos valores, se lo ha dividido por la cantidad de $n$ nodos, y se le ha aplicado la raíz $n$-ésima, obteniendose el gráfico de la Figura \ref{fig:1B}. En esta Figura se puede observar cómo el número obtenido se mantiene dentro de una constante cercana al 2, lo cual tiende a sugerir que realmente nuestro algoritmo tiene una complejidad del estilo $\mathcal{O}(2^n \cdot n)$, o sea, que es exponencial.
 
-%\begin{figure}[htb]
-%	\begin{center}
-%    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-sin-raiz.png}
-%	\end{center}
-%	\caption{Exacto - Raíz n-ésima}\label{fig:1B}
-%\end{figure}
-%%\FloatBarrier
-
-En esta Figura se puede observar cómo el número obtenido se aproxima a $2$, lo cual tiende a sugerir que realmente nuestro algoritmo tiene una complejidad del estilo $2^n$, o sea, que es exponencial.
+\begin{figure}[!htb]
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.7]{imagenes/exacto-tiempo.png}
+\end{center}
+  \caption{Exacto - Tiempo de ejecución}\label{fig:1A}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\begin{center}
+  \includegraphics[scale=0.7]{imagenes/exacto-tiempo-raiz.png}
+\end{center}
+  \caption{Exacto - Tiempo de ejecución}\label{fig:1B}
+\endminipage
+\end{figure}
 
 %\newpage
 
 \subsubsection{Podas}
 
-Además de la poda clásica, se han generado dos podas más, llamadas ``nodos solitarios'' y ``nodo decisivo'', explicadas anteriormente. Trataremos de ver en esta sección la utilidad de las mismas. Para ello veremos cómo repercuten estas podas en algunas familias de grafos, y tomaremos las instancias aleatorias que usamos para mostrar la complejidad, para ver cómo mejoran con cada poda, y con la combinación de varias.
+Además de la poda clásica, se han generado dos podas más, llamadas ``nodos solitarios'' y ``nodo decisivo'', explicadas anteriormente. Trataremos de ver en esta sección la utilidad de las mismas. Para ello veremos cómo repercuten estas podas en algunas familias de grafos, y tomaremos las instancias $aleatorias$ que usamos para mostrar la complejidad, para ver cómo mejoran con cada poda, y con la combinación de varias.
 
-\paragraph{Grafo compuesto por nodos de grado 0}
-
-Se han creado 18 instancias, con grafos que tienen nodos de grado 0 que tienen desde 3 a 20 nodos. Se han corrido nuestro programa de 5 maneras:
+Para ello, cada instancia se ha corrido de 5 maneras:
 
 \begin{enumerate}
 	\item Sin ninguna poda
@@ -141,7 +136,17 @@ Se han creado 18 instancias, con grafos que tienen nodos de grado 0 que tienen d
 	\item Con la poda Clásica y la poda del nodo decisivo
 \end{enumerate}
 
-Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1C}.
+Los experimentos propuestos son los siguientes:
+
+\paragraph{Grafo compuesto por nodos de grado 0}
+
+Se han creado 18 instancias, con grafos que tienen de 3 a 20 nodos, todos de grado 0. 
+
+\subparagraph{Hipótesis} Dadas las características de estos grafos, esperamos ver en los resultados que la poda de los {\it nodos solitarios} tiene mayor impacto en la eficiencia que las demás.
+
+\vspace*{0.3cm}
+
+Luego de ejecutar el programa con las instancias mencionadas, el gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1C}.
 
 \begin{figure}[htb]
 	\begin{center}
@@ -151,21 +156,17 @@ Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref
 \end{figure}
 %\FloatBarrier
 
-Por lo visto en este gráfico, la poda de los nodos solitarios tiene muy buena repercusión cuando el grafo tiene nodos de grado 0.
+Por lo visto en este gráfico, la poda de los {\it nodos solitarios} es la que más optimiza el tiempo de ejecución para cuando el grafo está formado por nodos de grado 0.
 
 \paragraph{Grafos completos} 
 
-Se han creado 18 instancias, con grafos completos, con entre 3 y 20 nodos. Se ha corrido nuestro programa de 5 maneras:
+Se han creado 18 instancias, con grafos completos, de entre 3 y 20 nodos. 
 
-\begin{enumerate}
-	\item Sin ninguna poda
-	\item Con todas las podas 
-	\item Con la poda Clásica
-	\item Con la poda Clásica y la poda de los nodos solitarios
-	\item Con la poda Clásica y la poda del nodo decisivo
-\end{enumerate}
+\subparagraph{Hipótesis} Dadas las características de estos grafos, esperamos ver en los resultados que la poda del {\it nodo decisivo} tiene mayor impacto en la eficiencia que las demás.
 
-Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1D}.
+\vspace*{0.3cm}
+
+El gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1D}.
 
 \begin{figure}[htb]
 	\begin{center}
@@ -175,49 +176,44 @@ Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref
 \end{figure}
 %\FloatBarrier
 
-Por lo visto en este gráfico, la poda del nodo decisivo tiene muy buena repercusión cuando el grafo tiene nodos de grado máximo.
+Por lo visto en este gráfico, la poda del {\it nodo decisivo} es la que mayor impacto parece tener en el tiempo de ejecución cuando el grafo tiene nodos de grado máximo.
 
 \paragraph{Grafo compuesto por varios $K_2$}
 
-Se han creado 10 instancias, con grafos compuestos por $n$ $K_2$, con $n$ desde 1 a 10. Se ha corrido nuestro programa de 5 maneras:
+Se han creado 9 instancias, con grafos compuestos por $n$ $K_2$, con $n$ desde 1 a 9. El orden de los nodos fue aleatorizado para no depender de un rotulado en particular.
 
-\begin{enumerate}
-	\item Sin ninguna poda
-	\item Con todas las podas 
-	\item Con la poda Clásica
-	\item Con la poda Clásica y la poda de los nodos solitarios
-	\item Con la poda Clásica y la poda del nodo decisivo
-\end{enumerate}
+\subparagraph{Hipótesis} Esperamos ver en los resultados que ninguna combinación de las podas produce un impacto relevante en la eficiencia, ya que la poda de los {\it nodos solitarios} funciona sólo sobre nodos de grado 0 (que estos grafos no poseen) y la poda del {\it nodo decisivo} funcionará de manera diferente dependiendo el orden en el que se consulten los nodos dentro del programa.
 
-Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1E}.
+\vspace*{0.3cm}
 
-%\begin{figure}[htb]
-%	\begin{center}
-%    		\includegraphics[scale=0.8]{imagenes/exacto-k2ord.png}
-%	\end{center}
-%	\caption{Exacto -Grafos de los $k_2$}\label{fig:1E}
-%\end{figure}
+El gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1E}.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.8]{imagenes/exacto-k2.png}
+	\end{center}
+	\caption{Exacto - Grafos formados por $K_2$}\label{fig:1E}
+\end{figure}
 %\FloatBarrier
 
 Por lo visto en este gráfico, se trata de una familia en la cual nuestras podas no surten efectos significativos.
 
 \paragraph{Grafos aleatorios}
 
-Se han creado 500 instancias aleatorias, con grafos compuestos por $n$ nodos, con $n$ desde 5 a 18. Se ha corrido nuestro programa de 2 maneras:
+Se han utilizado las mismas instancias creadas para contrastar la complejidad del algoritmo.
 
-\begin{enumerate}
-	\item Sin ninguna poda
-	\item Con todas las podas 
-\end{enumerate}
+\subparagraph{Hipótesis} Esperamos ver en los resultados que la combinación de todas las podas mejora la performance de manera más significativa que cada poda por separado, ya que considerarlas a todas descarta más ramas de decisión.
 
-Y el gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1F}.
-%
-%\begin{figure}[htb]
-%	\begin{center}
-%    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorio-conysin.png}
-%	\end{center}
-%	\caption{Exacto - Aleatorios Con y Sin podas\label{fig:1F}}
-%\end{figure}
-%%\FloatBarrier
+\vspace*{0.3cm}
 
-Por lo visto en este gráfico, en general, parecería que usar las podas mejora considerablemente el tiempo de ejecución de nuestro algoritmo.
+El gráfico obtenido con los resultados es el que se muestra en la Figura \ref{fig:1F}.
+
+\begin{figure}[htb]
+	\begin{center}
+    		\includegraphics[scale=0.8]{imagenes/exacto-aleatorios.png}
+	\end{center}
+	\caption{Exacto - Grafos aleatorios\label{fig:1F}}
+\end{figure}
+%\FloatBarrier
+
+Por lo visto en este gráfico, en general, parecería que usar todas las podas mejora el tiempo de ejecución de nuestro algoritmo, más que utilizar las podas por separado.
